@@ -5,5 +5,5 @@
 [node name="Bucket" type="Node2D"]
 
 [node name="BucketImage" type="Sprite2D" parent="."]
-position = Vector2(348, 419)
+position = Vector2(359, 966)
 texture = ExtResource("1_76cs6")
