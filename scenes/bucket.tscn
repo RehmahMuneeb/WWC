@@ -1,0 +1,9 @@
+[gd_scene load_steps=2 format=3 uid="uid://bwgm6kbg6ol6q"]
+
+[ext_resource type="Texture2D" uid="uid://cy4n3unjkt3lf" path="res://assets/bucket.png" id="1_76cs6"]
+
+[node name="Bucket" type="Node2D"]
+
+[node name="BucketImage" type="Sprite2D" parent="."]
+position = Vector2(348, 419)
+texture = ExtResource("1_76cs6")
