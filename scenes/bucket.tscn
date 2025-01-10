@@ -1,9 +1,15 @@
-[gd_scene load_steps=2 format=3 uid="uid://bwgm6kbg6ol6q"]
+[gd_scene load_steps=3 format=3 uid="uid://bwgm6kbg6ol6q"]
 
 [ext_resource type="Texture2D" uid="uid://cy4n3unjkt3lf" path="res://assets/bucket.png" id="1_76cs6"]
+[ext_resource type="Script" path="res://scenes/bucket.gd" id="1_jnwf0"]
 
-[node name="Bucket" type="Node2D"]
+[node name="Bucket" type="CharacterBody2D"]
+script = ExtResource("1_jnwf0")
 
 [node name="BucketImage" type="Sprite2D" parent="."]
 position = Vector2(242, 736)
 texture = ExtResource("1_76cs6")
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="."]
+position = Vector2(242, 736)
+polygon = PackedVector2Array(2, -58, 27, -49, 45, -30, 43, 0, 37, 39, 33, 58, -39, 62, -50, -20, -50, -30, -31, -54)
