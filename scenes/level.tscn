@@ -8,4 +8,4 @@
 [node name="WallBg" parent="." instance=ExtResource("1_frcah")]
 
 [node name="Bucket" parent="." instance=ExtResource("2_2ur1x")]
-position = Vector2(1, 14)
+position = Vector2(1, 13)
