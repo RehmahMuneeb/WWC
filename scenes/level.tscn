@@ -1,5 +1,6 @@
-[gd_scene load_steps=5 format=3 uid="uid://btndkc1nmjdx0"]
+[gd_scene load_steps=6 format=3 uid="uid://btndkc1nmjdx0"]
 
+[ext_resource type="Script" path="res://scenes/level.gd" id="1_24m71"]
 [ext_resource type="PackedScene" uid="uid://be3ml7efg7568" path="res://scenes/wall_bg.tscn" id="1_frcah"]
 [ext_resource type="PackedScene" uid="uid://bwgm6kbg6ol6q" path="res://scenes/bucket.tscn" id="2_2ur1x"]
 
@@ -10,6 +11,7 @@ size = Vector2(527.5, 61)
 size = Vector2(31, 357)
 
 [node name="Level" type="Node2D"]
+script = ExtResource("1_24m71")
 
 [node name="WallBg" parent="." instance=ExtResource("1_frcah")]
 
@@ -31,3 +33,10 @@ shape = SubResource("RectangleShape2D_e51a2")
 [node name="CollisionShape2D3" type="CollisionShape2D" parent="Borders/StaticBody2D"]
 position = Vector2(493, 629)
 shape = SubResource("RectangleShape2D_e51a2")
+
+[node name="RockTimer" type="Timer" parent="."]
+autostart = true
+
+[node name="Rocks" type="Node2D" parent="."]
+
+[connection signal="timeout" from="RockTimer" to="." method="_on_rock_timer_timeout"]
