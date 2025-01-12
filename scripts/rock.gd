@@ -17,3 +17,11 @@ func _process(delta):
 		
 	self.position += Vector2(0, 1.0) * speed * delta 
 	
+
+#collision
+func _on_body_entered(body: Node2D) -> void:
+	if body is CharacterBody2D:
+		print("Collision detected with CharacterBody2D!")
+		get_tree().quit()
+	 
+		
