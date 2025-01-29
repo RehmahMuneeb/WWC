@@ -27,11 +27,14 @@ var spawn_interval = 1.0  # Interval in seconds between jewel spawns
 
 # Screen boundaries
 var screen_left_boundary = 50
-var screen_right_boundary = 1240  # Adjust according to your screen width
+var screen_right_boundary = 0
 
 func _ready():
 	# Start the jewel spawning process
 	spawn_timer = spawn_interval
+	
+	var screen_size = get_viewport_rect().size
+	screen_right_boundary = screen_size.x - 50
 
 # This function is called every frame
 func _process(delta):
