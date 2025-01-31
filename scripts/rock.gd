@@ -22,6 +22,6 @@ func _process(delta):
 func _on_body_entered(body: Node2D) -> void:
 	if body is CharacterBody2D:
 		print("Collision detected with CharacterBody2D!")
-		get_tree().quit()
+		#get_tree().quit() 
 	 
 		
