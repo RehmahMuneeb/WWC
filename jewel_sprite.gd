@@ -36,7 +36,6 @@ func _ready():
 	var screen_size = get_viewport_rect().size
 	screen_right_boundary = screen_size.x - 50
 
-# This function is called every frame
 func _process(delta):
 	# Update the spawn timer
 	spawn_timer -= delta
@@ -47,7 +46,8 @@ func _process(delta):
 		spawn_timer = spawn_interval  # Reset the timer for the next spawn
 
 	# Update positions of jewels on screen
-	for child in jewels_on_screen:
+	for i in range(jewels_on_screen.size() - 1, -1, -1):
+		var child = jewels_on_screen[i]
 		if child is Sprite2D and child.has_meta("velocity"):
 			# Update position based on velocity
 			var velocity = child.get_meta("velocity") as Vector2
@@ -57,13 +57,17 @@ func _process(delta):
 			if child.position.y > get_viewport().size.y + 50:
 				# Remove jewel from the scene when it falls off-screen
 				child.queue_free()
-				jewels_on_screen.erase(child)
+				jewels_on_screen.remove_at(i)
+				continue
 
 			# Horizontal boundary check (left and right walls)
 			if child.position.x <= screen_left_boundary or child.position.x >= screen_right_boundary:
 				# Reverse horizontal velocity when hitting the left or right boundary (bouncing effect)
 				velocity.x = -velocity.x  # Reverse the horizontal movement
 				child.set_meta("velocity", velocity)  # Update the jewel's velocity
+
+			# Clamp position to screen bounds
+			child.position.x = clamp(child.position.x, screen_left_boundary, screen_right_boundary)
 
 # Function to spawn a single jewel
 func spawn_jewel():
@@ -78,8 +82,12 @@ func spawn_jewel():
 func create_jewel() -> Sprite2D:
 	var jewel = Sprite2D.new()
 
-	# Create a new AtlasTexture instance for this jewel
-	var atlas_texture = load(atlas_texture_path).duplicate() as AtlasTexture
+	# Load the atlas texture
+	var atlas_texture = load(atlas_texture_path)
+	if not atlas_texture:
+		print("Error: Failed to load atlas texture at path ", atlas_texture_path)
+		return jewel
+	atlas_texture = atlas_texture.duplicate() as AtlasTexture
 
 	# Randomly select one of the jewel regions
 	var random_index = randi() % jewel_regions.size()
@@ -98,9 +106,6 @@ func create_jewel() -> Sprite2D:
 
 	# Set the spawn position
 	jewel.position = Vector2(randf_range(0, get_viewport().size.x), -50)  # Random X, above the screen
-
-	# Enable _process for the jewel
-	jewel.set_process(true)
 
 	return jewel
 
