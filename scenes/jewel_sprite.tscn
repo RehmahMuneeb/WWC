@@ -1,6 +1,7 @@
-[gd_scene load_steps=2 format=3 uid="uid://2f1btmhwtx4s"]
+[gd_scene load_steps=3 format=3 uid="uid://2f1btmhwtx4s"]
 
 [ext_resource type="Script" path="res://jewel_sprite.gd" id="1_x66n5"]
+[ext_resource type="Script" path="res://scenes/area_2d.gd" id="2_ras2q"]
 
 [node name="JewelSprite" type="Node2D"]
 script = ExtResource("1_x66n5")
@@ -8,5 +9,8 @@ script = ExtResource("1_x66n5")
 [node name="JewelTimer" type="Timer" parent="."]
 wait_time = 2.0
 autostart = true
+
+[node name="Area2D" type="Area2D" parent="."]
+script = ExtResource("2_ras2q")
 
 [connection signal="timeout" from="JewelTimer" to="." method="_on_jewel_timer_timeout"]
