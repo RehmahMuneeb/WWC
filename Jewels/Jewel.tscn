@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3 uid="uid://dl7qefe032h4l"]
+[gd_scene load_steps=15 format=3 uid="uid://dl7qefe032h4l"]
 
 [ext_resource type="Script" path="res://Jewels/jewel.gd" id="1_hu4h5"]
 [ext_resource type="Texture2D" uid="uid://dr2rgs4m4gepn" path="res://Jewels/Jewel1.png" id="2_v1gio"]
@@ -10,6 +10,9 @@
 [ext_resource type="Texture2D" uid="uid://d0a3lar6hniri" path="res://Jewels/Jewel7.png" id="8_qnxnb"]
 [ext_resource type="Texture2D" uid="uid://qf0h3sqrpler" path="res://Jewels/Jewel8.png" id="9_a47ek"]
 [ext_resource type="Texture2D" uid="uid://dul2u0qhnpdd1" path="res://Jewels/Jewel9.png" id="10_f5oj4"]
+[ext_resource type="Texture2D" uid="uid://dnsp8cp6bmdcy" path="res://Jewels/Jewel10.png" id="11_5k6sy"]
+[ext_resource type="Texture2D" uid="uid://cmctvil6mcxac" path="res://Jewels/Jewel12.png" id="12_5wshh"]
+[ext_resource type="Texture2D" uid="uid://cl2ok35s2xm7b" path="res://Jewels/Jewel13.png" id="13_c24jg"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ufugi"]
 size = Vector2(59, 63)
@@ -19,9 +22,9 @@ position = Vector2(63, 55)
 collision_mask = 2
 slide_on_ceiling = false
 script = ExtResource("1_hu4h5")
-fall_speed = 200.0
-horizontal_speed = 500.0
-jewel_textures = Array[Texture2D]([ExtResource("2_v1gio"), ExtResource("3_yl7ys"), ExtResource("4_3oo4a"), ExtResource("5_66ukb"), ExtResource("6_eicqb"), ExtResource("7_3ppwq"), ExtResource("8_qnxnb"), ExtResource("9_a47ek"), ExtResource("10_f5oj4"), null, null, null])
+fall_speed = 300.0
+horizontal_speed = 200.0
+jewel_textures = Array[Texture2D]([ExtResource("2_v1gio"), ExtResource("3_yl7ys"), ExtResource("4_3oo4a"), ExtResource("5_66ukb"), ExtResource("6_eicqb"), ExtResource("7_3ppwq"), ExtResource("8_qnxnb"), ExtResource("9_a47ek"), ExtResource("10_f5oj4"), ExtResource("11_5k6sy"), ExtResource("12_5wshh"), ExtResource("13_c24jg")])
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 texture = ExtResource("2_v1gio")

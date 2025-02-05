@@ -39,3 +39,4 @@ func _process(delta: float) -> void:
 	# Bounce the jewel off the screen boundaries
 	if position.x < 0 or position.x > get_viewport_rect().size.x:
 		horizontal_direction *= -1  # Reverse horizontal direction
+		
