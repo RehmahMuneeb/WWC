@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://btndkc1nmjdx0"]
+[gd_scene load_steps=12 format=3 uid="uid://btndkc1nmjdx0"]
 
 [ext_resource type="Script" path="res://scripts/level.gd" id="1_24m71"]
 [ext_resource type="PackedScene" uid="uid://be3ml7efg7568" path="res://scenes/wall_bg.tscn" id="1_frcah"]
@@ -9,6 +9,43 @@
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_dsm1j"]
 radius = 50.0
 height = 120.0
+
+[sub_resource type="Animation" id="Animation_lt6t4"]
+resource_name = "drop"
+length = 1.5
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0.0333333, 1.36667),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(4, -794), Vector2(8, -54)]
+}
+
+[sub_resource type="Animation" id="Animation_glc3k"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(4, -794)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_05bwb"]
+_data = {
+"RESET": SubResource("Animation_glc3k"),
+"drop": SubResource("Animation_lt6t4")
+}
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_d4r43"]
 size = Vector2(527.5, 61)
@@ -22,16 +59,21 @@ script = ExtResource("1_24m71")
 [node name="WallBg" parent="." instance=ExtResource("1_frcah")]
 
 [node name="Bucket" parent="." groups=["bucket"] instance=ExtResource("2_2ur1x")]
-position = Vector2(4, 14)
+position = Vector2(4, -794)
 collision_layer = 2
 
 [node name="Area2D" type="Area2D" parent="Bucket"]
-position = Vector2(237, 771)
+position = Vector2(267, 797)
 collision_layer = 2
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Bucket/Area2D"]
-position = Vector2(2, -39)
+position = Vector2(-17, -61)
 shape = SubResource("CapsuleShape2D_dsm1j")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Bucket"]
+libraries = {
+"": SubResource("AnimationLibrary_05bwb")
+}
 
 [node name="Borders" type="Node2D" parent="."]
 
