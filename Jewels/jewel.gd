@@ -12,6 +12,10 @@ var horizontal_direction: int = 1
 # Array to hold jewel textures
 @export var jewel_textures: Array[Texture2D] = []
 
+# Gameplay screen boundaries (adjust these to match your gameplay area)
+@export var gameplay_left_boundary: float = 0
+@export var gameplay_right_boundary: float = 500  # Example: Set this to your gameplay screen width
+
 func _ready() -> void:
 	# Randomly assign a jewel texture
 	if jewel_textures.size() > 0:
@@ -32,11 +36,15 @@ func _process(delta: float) -> void:
 
 	move_and_slide()
 
-	# Remove the jewel if it goes off-screen
+	# Remove the jewel if it goes off-screen vertically
 	if position.y > get_viewport_rect().size.y:
 		queue_free()
 
-	# Bounce the jewel off the screen boundaries
-	if position.x < 0 or position.x > get_viewport_rect().size.x:
-		horizontal_direction *= -1  # Reverse horizontal direction
-		
+	# Get the width of the jewel's texture
+	var jewel_width: float = $Sprite2D.texture.get_width() if $Sprite2D.texture else 0
+
+	# Bounce the jewel off the gameplay screen boundaries
+	if position.x < gameplay_left_boundary:
+		horizontal_direction = 1  # Move right
+	elif position.x + jewel_width > gameplay_right_boundary:
+		horizontal_direction = -1  # Move left
