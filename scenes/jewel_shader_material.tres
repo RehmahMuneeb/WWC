@@ -1,0 +1,6 @@
+[gd_resource type="ShaderMaterial" load_steps=2 format=3 uid="uid://dnywl3hi660mv"]
+
+[ext_resource type="Shader" path="res://scenes/jewel_shader.gdshader" id="1_xnnfd"]
+
+[resource]
+shader = ExtResource("1_xnnfd")

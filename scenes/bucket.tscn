@@ -20,4 +20,4 @@ texture = ExtResource("3_3rh06")
 texture_mode = 1
 
 [node name="JewelContainer" type="Node2D" parent="."]
-position = Vector2(243, 669)
+position = Vector2(246, 687)

@@ -9,6 +9,9 @@ const MAX_ROTATION = 30.0  # Maximum rotation angle
 
 @onready var jewel_container = $JewelContainer
 
+# Load the shader material
+var jewel_shader_material = preload("res://scenes/jewel_shader_material.tres")
+
 func _ready() -> void:
 	$Area2D.body_entered.connect(_on_body_entered)
 	$AnimationPlayer.play("drop")
@@ -57,11 +60,15 @@ func _on_body_entered(body: Node2D) -> void:
 		var new_jewel_sprite = Sprite2D.new()
 		new_jewel_sprite.texture = jewel_texture
 		
+		# Apply the shader material to the jewel sprite
+		new_jewel_sprite.material = jewel_shader_material
+		
 		# Add the new Sprite2D to the JewelContainer
 		jewel_container.add_child(new_jewel_sprite)
 		
-		# Position the jewel at the center of the container
-		new_jewel_sprite.position = Vector2.ZERO
+		# Position the jewel a little lower (adjust the offset as needed)
+		var offset = 5  # Adjust this value to move the jewels lower
+		new_jewel_sprite.position = Vector2(0, -jewel_texture.get_height() * 0.2 + offset)
 		
 		# Remove the original jewel node from the scene
 		body.queue_free()
@@ -73,4 +80,3 @@ func _on_body_entered(body: Node2D) -> void:
 	elif body.is_in_group("stone"):
 		print("Stone collided with bucket! Game over!")
 		get_tree().quit()
-		
