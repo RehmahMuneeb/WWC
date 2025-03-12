@@ -2,7 +2,7 @@ shader_type canvas_item;
 
 void fragment() {
     // Clip the bottom 30% of the texture
-    if (UV.y > 0.7) {  // 0.7 means 70% from the top (30% from the bottom)
+    if (UV.y > 0.5) {  // 0.7 means 70% from the top (30% from the bottom)
         discard;  // Discard fragments in the bottom 30%
     }
 
