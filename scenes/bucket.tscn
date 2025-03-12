@@ -8,14 +8,14 @@
 script = ExtResource("1_jnwf0")
 
 [node name="BucketImage" type="Sprite2D" parent="."]
-position = Vector2(245, 698)
-scale = Vector2(0.33, 0.33)
+position = Vector2(245, 699)
+scale = Vector2(0.351, 0.351)
 texture = ExtResource("2_2oo6i")
 
 [node name="Line2D" type="Line2D" parent="."]
 position = Vector2(-1.52588e-05, -2.55297)
 scale = Vector2(1, 0.96727)
-points = PackedVector2Array(250, -69.7293, 248, 647.754, 245.921, 627.608, 209, 661.194, 228, 645.687, 256, 646.72, 251, 633.28, 266, 645.687, 272, 650.856, 291, 664.296)
+points = PackedVector2Array(250, -69.7293, 248, 647.754, 245.921, 627.608, 207, 657.058, 228, 645.687, 256, 646.72, 251, 633.28, 266, 645.687, 278, 651.889, 287, 657.058)
 texture = ExtResource("3_3rh06")
 texture_mode = 1
 
