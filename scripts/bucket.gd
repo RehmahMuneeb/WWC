@@ -69,8 +69,9 @@ func _on_body_entered(body: Node2D) -> void:
 		# Add the new Sprite2D to the JewelContainer
 		jewel_container.add_child(new_jewel_sprite)
 		
-		# Position the jewel so that only the top 70% is visible
-		new_jewel_sprite.position = Vector2(0, -jewel_texture.get_height() * 0.3)  # Adjust for 30% clipping
+		# Position the jewel a little lower (adjust the offset as needed)
+		var offset = 10  # Adjust this value to move the jewels lower
+		new_jewel_sprite.position = Vector2(0, -jewel_texture.get_height() * 0.3 + offset)
 		
 		# Remove the original jewel node from the scene
 		body.queue_free()
