@@ -1,15 +1,20 @@
-[gd_scene load_steps=3 format=3 uid="uid://bwgm6kbg6ol6q"]
+[gd_scene load_steps=4 format=3 uid="uid://bwgm6kbg6ol6q"]
 
-[ext_resource type="Texture2D" uid="uid://2ljerx5p0g76" path="res://assets/bucket.png" id="1_76cs6"]
 [ext_resource type="Script" path="res://scripts/bucket.gd" id="1_jnwf0"]
+[ext_resource type="Texture2D" uid="uid://bume63me30ecm" path="res://Jewels/Bucket1.png" id="2_2oo6i"]
+[ext_resource type="Texture2D" uid="uid://bt6bblqgui8l8" path="res://Rope text.webp" id="3_3rh06"]
 
 [node name="Bucket" type="CharacterBody2D"]
 script = ExtResource("1_jnwf0")
 
 [node name="BucketImage" type="Sprite2D" parent="."]
-position = Vector2(242, 736)
-texture = ExtResource("1_76cs6")
+position = Vector2(245, 698)
+scale = Vector2(0.33, 0.33)
+texture = ExtResource("2_2oo6i")
 
-[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="."]
-position = Vector2(242, 736)
-polygon = PackedVector2Array(2, -58, 27, -49, 45, -30, 43, 0, 37, 39, 33, 58, -39, 62, -50, -20, -50, -30, -31, -54)
+[node name="Line2D" type="Line2D" parent="."]
+position = Vector2(-1.52588e-05, -2.55297)
+scale = Vector2(1, 0.96727)
+points = PackedVector2Array(250, -69.7293, 248, 647.754, 245.921, 627.608, 209, 661.194, 228, 645.687, 256, 646.72, 251, 633.28, 266, 645.687, 272, 650.856, 291, 664.296)
+texture = ExtResource("3_3rh06")
+texture_mode = 1
