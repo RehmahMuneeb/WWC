@@ -7,6 +7,8 @@ var drag_previous_position = Vector2.ZERO
 const DRAG_THRESHOLD = 6.0  
 const MAX_ROTATION = 30.0  # Maximum rotation angle
 
+@onready var jewel_container = $JewelContainer
+
 func _ready() -> void:
 	$Area2D.body_entered.connect(_on_body_entered)
 	$AnimationPlayer.play("drop")
@@ -42,11 +44,33 @@ func _input(event: InputEvent) -> void:
 
 func _on_body_entered(body: Node2D) -> void:
 	if body.is_in_group("jewel"):
+		# Get the jewel's texture
+		var jewel_texture = body.get_node("Sprite2D").texture
+		
+		# Remove the existing jewel in the container (if any)
+		if jewel_container.get_child_count() > 0:
+			var existing_jewel = jewel_container.get_child(0)
+			jewel_container.remove_child(existing_jewel)
+			existing_jewel.queue_free()
+		
+		# Create a new Sprite2D node with the jewel's texture
+		var new_jewel_sprite = Sprite2D.new()
+		new_jewel_sprite.texture = jewel_texture
+		
+		# Add the new Sprite2D to the JewelContainer
+		jewel_container.add_child(new_jewel_sprite)
+		
+		# Position the jewel at the center of the container
+		new_jewel_sprite.position = Vector2.ZERO
+		
+		# Remove the original jewel node from the scene
 		body.queue_free()
+		
 		print("Jewel collected!")
 		Global.score += 50
 		print("Score: ", Global.score)
-
+		
 	elif body.is_in_group("stone"):
 		print("Stone collided with bucket! Game over!")
 		get_tree().quit()
+		
