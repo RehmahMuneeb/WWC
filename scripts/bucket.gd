@@ -23,6 +23,9 @@ func _physics_process(delta: float) -> void:
 
 	move_and_slide()
 
+	# Synchronize jewel rotation with bucket rotation
+	jewel_container.rotation_degrees = $BucketImage.rotation_degrees
+
 func _input(event: InputEvent) -> void:
 	if event is InputEventScreenTouch:
 		if event.pressed:
@@ -66,9 +69,8 @@ func _on_body_entered(body: Node2D) -> void:
 		# Add the new Sprite2D to the JewelContainer
 		jewel_container.add_child(new_jewel_sprite)
 		
-		# Position the jewel a little lower (adjust the offset as needed)
-		var offset = 5  # Adjust this value to move the jewels lower
-		new_jewel_sprite.position = Vector2(0, -jewel_texture.get_height() * 0.2 + offset)
+		# Position the jewel so that only the top 70% is visible
+		new_jewel_sprite.position = Vector2(0, -jewel_texture.get_height() * 0.3)  # Adjust for 30% clipping
 		
 		# Remove the original jewel node from the scene
 		body.queue_free()
