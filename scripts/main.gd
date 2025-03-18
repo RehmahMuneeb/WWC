@@ -1,16 +1,31 @@
 extends Control
 
+@onready var coin_label = $Coinslabel
+@onready var capacity_button =$"infopanel/Bucket Capacity/Button" 
 
-# Called when the node enters the scene tree for the first time.
+var bucket_capacity = 5  # Initial bucket capacity
+var capacity_upgrade_cost = 50  # Initial cost
+
 func _ready() -> void:
-	pass # Replace with function body.
+	update_ui()
+	capacity_button.pressed.connect(upgrade_capacity)
 
+func _process(_delta):
+	update_ui()  # Refresh UI every frame to show updated coins
 
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta: float) -> void:
-	pass
+func update_ui():
+	coin_label.text = "Coins: " + str(Global.score)  # Use global coins
+	capacity_button.text = "Upgrade (" + str(capacity_upgrade_cost) + " Coins)"
+	capacity_button.disabled = Global.score < capacity_upgrade_cost  # Disable if not enough coins
 
+func upgrade_capacity():
+	if Global.score >= capacity_upgrade_cost:
+		Global.score -= capacity_upgrade_cost  # Deduct coins
+		bucket_capacity += 1  # Increase bucket space
+		capacity_upgrade_cost += 50  # Cost increases per upgrade
+		update_ui()
+	else:
+		print("Not enough coins!")
 
 func _on_play_pressed():
-	#var game_scene = load("res://scenes/level.tscn")
 	get_tree().change_scene_to_file("res://scenes/level.tscn")
