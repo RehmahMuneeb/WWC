@@ -1,8 +1,12 @@
-[gd_scene load_steps=4 format=3 uid="uid://bwgm6kbg6ol6q"]
+[gd_scene load_steps=5 format=3 uid="uid://bwgm6kbg6ol6q"]
 
 [ext_resource type="Script" path="res://scripts/bucket.gd" id="1_jnwf0"]
 [ext_resource type="Texture2D" uid="uid://bume63me30ecm" path="res://Jewels/Bucket1.png" id="2_2oo6i"]
 [ext_resource type="Texture2D" uid="uid://bt6bblqgui8l8" path="res://Rope text.webp" id="3_3rh06"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_sf5e5"]
+radius = 46.0
+height = 118.0
 
 [node name="Bucket" type="CharacterBody2D"]
 script = ExtResource("1_jnwf0")
@@ -21,3 +25,7 @@ texture_mode = 1
 
 [node name="JewelContainer" type="Node2D" parent="."]
 position = Vector2(246, 687)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(247, 717)
+shape = SubResource("CapsuleShape2D_sf5e5")
