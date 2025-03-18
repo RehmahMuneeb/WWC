@@ -18,4 +18,4 @@ func _process(delta):
 
 	if score >= Global.well_depth_limit:  
 		print("Reached max depth! Returning to home screen.")
-		get_tree().change_scene_to_file("res://scripts/main.gd")  # Go back to home screen
+		get_tree().change_scene_to_file("res://scenes/main.tscn")  # Go back to home screen
