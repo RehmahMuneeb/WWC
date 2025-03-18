@@ -5,8 +5,8 @@ extends Control
 @onready var well_button = $infopanel/Button  # Well depth upgrade button
 
 # New Labels for Bucket Capacity & Well Depth
-@onready var bucket_capacity_label = $CapacityLabel
-@onready var well_depth_label = $DepthLabel
+@onready var bucket_capacity_label = $infopanel/CapacityLabel
+@onready var well_depth_label = $infopanel/DepthLabel
 
 func _ready() -> void:
 	update_ui()

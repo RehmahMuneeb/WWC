@@ -88,6 +88,20 @@ offset_right = 478.0
 offset_bottom = 851.0
 theme_override_styles/panel = SubResource("StyleBoxFlat_lw57c")
 
+[node name="CapacityLabel" type="Label" parent="infopanel"]
+layout_mode = 1
+offset_right = 230.0
+offset_bottom = 107.0
+
+[node name="DepthLabel" type="Label" parent="infopanel"]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -194.0
+offset_bottom = 119.0
+grow_horizontal = 0
+
 [node name="Bucket Capacity" type="Panel" parent="infopanel"]
 layout_mode = 0
 offset_left = 25.0
@@ -124,15 +138,5 @@ offset_left = 296.0
 offset_top = 157.0
 offset_right = 426.0
 offset_bottom = 222.0
-
-[node name="CapacityLabel" type="Label" parent="."]
-layout_mode = 0
-offset_right = 40.0
-offset_bottom = 23.0
-
-[node name="DepthLabel" type="Label" parent="."]
-layout_mode = 0
-offset_right = 40.0
-offset_bottom = 23.0
 
 [connection signal="pressed" from="Play" to="." method="_on_play_pressed"]
