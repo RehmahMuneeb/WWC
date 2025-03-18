@@ -125,4 +125,14 @@ offset_top = 157.0
 offset_right = 426.0
 offset_bottom = 222.0
 
+[node name="CapacityLabel" type="Label" parent="."]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 23.0
+
+[node name="DepthLabel" type="Label" parent="."]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 23.0
+
 [connection signal="pressed" from="Play" to="." method="_on_play_pressed"]
