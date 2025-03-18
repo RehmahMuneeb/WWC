@@ -14,8 +14,8 @@ func _process(_delta):
 
 func update_ui():
 	coin_label.text = "Coins: " + str(Global.score)  
-	capacity_button.text = "Upgrade (" + str(Global.bucket_upgrade_cost) + " Coins)"
-	well_button.text = "Upgrade (" + str(Global.well_upgrade_cost) + " Coins)"
+	capacity_button.text = str(Global.bucket_upgrade_cost) + "\nUpgrade"
+	well_button.text = str(Global.well_upgrade_cost) + "\nUpgrade"
 
 	capacity_button.disabled = Global.score < Global.bucket_upgrade_cost
 	well_button.disabled = Global.score < Global.well_upgrade_cost
