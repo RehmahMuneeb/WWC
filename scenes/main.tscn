@@ -67,10 +67,10 @@ text = "Play"
 
 [node name="Coins" type="Panel" parent="."]
 layout_mode = 0
-offset_left = 139.0
-offset_top = 566.0
-offset_right = 338.0
-offset_bottom = 622.0
+offset_left = 140.0
+offset_top = 500.0
+offset_right = 339.0
+offset_bottom = 556.0
 theme_override_styles/panel = SubResource("StyleBoxFlat_3rs0h")
 
 [node name="Coinslabel" type="Label" parent="Coins"]
@@ -83,47 +83,38 @@ text = "Coins"
 
 [node name="infopanel" type="Panel" parent="."]
 layout_mode = 2
-offset_top = 614.0
+offset_top = 553.0
 offset_right = 478.0
 offset_bottom = 851.0
 theme_override_styles/panel = SubResource("StyleBoxFlat_lw57c")
 
-[node name="CapacityLabel" type="Label" parent="infopanel"]
-layout_mode = 1
-offset_right = 230.0
-offset_bottom = 107.0
-
-[node name="DepthLabel" type="Label" parent="infopanel"]
-layout_mode = 1
-anchors_preset = 1
-anchor_left = 1.0
-anchor_right = 1.0
-offset_left = -194.0
-offset_bottom = 119.0
-grow_horizontal = 0
-
 [node name="Bucket Capacity" type="Panel" parent="infopanel"]
 layout_mode = 0
-offset_left = 25.0
-offset_top = 18.0
-offset_right = 192.0
-offset_bottom = 172.0
+offset_left = 19.0
+offset_top = 19.0
+offset_right = 250.0
+offset_bottom = 279.0
 theme_override_styles/panel = SubResource("StyleBoxFlat_lmr5y")
 
 [node name="TextureRect" type="TextureRect" parent="infopanel/Bucket Capacity"]
 layout_mode = 0
 offset_left = 17.0
-offset_top = 14.0
+offset_top = 57.0
 offset_right = 145.0
-offset_bottom = 142.0
+offset_bottom = 185.0
 texture = ExtResource("2_dfu7b")
 
 [node name="Button" type="Button" parent="infopanel/Bucket Capacity"]
 layout_mode = 0
-offset_left = 10.0
-offset_top = 143.0
-offset_right = 140.0
-offset_bottom = 208.0
+offset_left = 20.0
+offset_top = 180.0
+offset_right = 150.0
+offset_bottom = 245.0
+
+[node name="CapacityLabel" type="Label" parent="infopanel/Bucket Capacity"]
+layout_mode = 1
+offset_right = 230.0
+offset_bottom = 107.0
 
 [node name="Well Depth" type="Panel" parent="infopanel"]
 layout_mode = 0
@@ -131,6 +122,15 @@ offset_left = 288.0
 offset_top = 23.0
 offset_right = 427.0
 offset_bottom = 142.0
+
+[node name="DepthLabel" type="Label" parent="infopanel/Well Depth"]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -151.0
+offset_bottom = 86.0
+grow_horizontal = 0
 
 [node name="Button" type="Button" parent="infopanel"]
 layout_mode = 0
