@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=3 uid="uid://b1bt4udrrmx0d"]
+[gd_scene load_steps=6 format=3 uid="uid://b1bt4udrrmx0d"]
 
 [ext_resource type="Script" path="res://scripts/main.gd" id="1_fsboc"]
 [ext_resource type="Texture2D" uid="uid://bhrf3ksx88g41" path="res://Full-bucket1.png" id="2_dfu7b"]
@@ -11,9 +11,6 @@ border_width_right = 8
 border_width_bottom = 8
 corner_radius_top_left = 10
 corner_radius_top_right = 10
-
-[sub_resource type="LabelSettings" id="LabelSettings_gcdha"]
-font_size = 45
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_lw57c"]
 bg_color = Color(0.815686, 0.701961, 0.145098, 1)
@@ -68,14 +65,6 @@ offset_right = 272.0
 offset_bottom = 470.0
 text = "Play"
 
-[node name="Coinslabel" type="Label" parent="."]
-layout_mode = 0
-offset_left = 121.0
-offset_top = 96.0
-offset_right = 330.0
-offset_bottom = 219.0
-text = "Coins"
-
 [node name="Coins" type="Panel" parent="."]
 layout_mode = 0
 offset_left = 139.0
@@ -84,15 +73,13 @@ offset_right = 338.0
 offset_bottom = 622.0
 theme_override_styles/panel = SubResource("StyleBoxFlat_3rs0h")
 
-[node name="Label" type="Label" parent="Coins"]
+[node name="Coinslabel" type="Label" parent="Coins"]
 layout_mode = 0
-offset_left = 16.0
-offset_top = -7.0
-offset_right = 186.0
-offset_bottom = 56.0
-text = "123213"
-label_settings = SubResource("LabelSettings_gcdha")
-horizontal_alignment = 2
+offset_left = 22.0
+offset_top = 14.0
+offset_right = 177.0
+offset_bottom = 46.0
+text = "Coins"
 
 [node name="infopanel" type="Panel" parent="."]
 layout_mode = 2

@@ -5,7 +5,9 @@ var is_dragging = false
 var drag_start_position = Vector2.ZERO
 var drag_previous_position = Vector2.ZERO
 const DRAG_THRESHOLD = 6.0  
-const MAX_ROTATION = 30.0  # Maximum rotation angle
+const MAX_ROTATION = 30.0  
+
+var collected_jewels = 0  # Count collected jewels
 
 @onready var jewel_container = $JewelContainer
 
@@ -19,10 +21,10 @@ func _ready() -> void:
 func _physics_process(delta: float) -> void:
 	if not is_dragging:
 		velocity.x = move_toward(velocity.x, 0, SPEED * delta)
-		$BucketImage.rotation_degrees = lerp($BucketImage.rotation_degrees, 0.0, 0.1)  # Smoothly reset rotation
+		$BucketImage.rotation_degrees = lerp($BucketImage.rotation_degrees, 0.0, 0.1)  
 
 	move_and_slide()
-
+	
 	# Synchronize jewel rotation with bucket rotation
 	jewel_container.rotation_degrees = $BucketImage.rotation_degrees
 
@@ -50,36 +52,42 @@ func _input(event: InputEvent) -> void:
 
 func _on_body_entered(body: Node2D) -> void:
 	if body.is_in_group("jewel"):
-		# Get the jewel's texture
-		var jewel_texture = body.get_node("Sprite2D").texture
-		
-		# Remove the existing jewel in the container (if any)
-		if jewel_container.get_child_count() > 0:
-			var existing_jewel = jewel_container.get_child(0)
-			jewel_container.remove_child(existing_jewel)
-			existing_jewel.queue_free()
-		
-		# Create a new Sprite2D node with the jewel's texture
-		var new_jewel_sprite = Sprite2D.new()
-		new_jewel_sprite.texture = jewel_texture
-		
-		# Apply the shader material to the jewel sprite
-		new_jewel_sprite.material = jewel_shader_material
-		
-		# Add the new Sprite2D to the JewelContainer
-		jewel_container.add_child(new_jewel_sprite)
-		
-		# Position the jewel a little lower (adjust the offset as needed)
-		var offset = 25  # Adjust this value to move the jewels lower
-		new_jewel_sprite.position = Vector2(0, -jewel_texture.get_height() * 0.3 + offset)
-		
-		# Remove the original jewel node from the scene
-		body.queue_free()
-		
-		print("Jewel collected!")
-		Global.score += 50
-		print("Score: ", Global.score)
-		
+		if collected_jewels < Global.bucket_capacity:  # Check if bucket has space
+			var jewel_texture = body.get_node("Sprite2D").texture
+
+			if jewel_container.get_child_count() > 0:
+				var existing_jewel = jewel_container.get_child(0)
+				jewel_container.remove_child(existing_jewel)
+				existing_jewel.queue_free()
+
+			var new_jewel_sprite = Sprite2D.new()
+			new_jewel_sprite.texture = jewel_texture
+			new_jewel_sprite.material = jewel_shader_material
+			jewel_container.add_child(new_jewel_sprite)
+			
+			var offset = 25  
+			new_jewel_sprite.position = Vector2(0, -jewel_texture.get_height() * 0.3 + offset)
+			body.queue_free()
+			
+			collected_jewels += 1  
+			Global.score += 50
+			Global.save_game()  # Save progress
+			print("Jewel collected! Score saved.")
+
+			# **NEW: Check if bucket is full**
+			if collected_jewels >= Global.bucket_capacity:
+				print("Bucket full! Returning to home screen...")
+				return_to_home()
+		else:
+			print("Bucket is full! Can't collect more jewels.")
+
 	elif body.is_in_group("stone"):
 		print("Stone collided with bucket! Game over!")
 		get_tree().quit()
+
+func return_to_home():
+	await get_tree().create_timer(1.0).timeout  # **Wait 1 second before switching**
+	get_tree().change_scene_to_file("res://scenes/main.tscn")  # **Go to home screen**
+
+func reset_bucket():
+	collected_jewels = 0  # Reset jewels when restarting level
