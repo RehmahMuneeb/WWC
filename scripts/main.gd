@@ -2,46 +2,39 @@ extends Control
 
 @onready var coin_label = $Coins/Coinslabel
 @onready var capacity_button = $"infopanel/Bucket Capacity/Button"
-@onready var depth_button = $infopanel/Button
-
-var capacity_upgrade_cost = 50  
-var depth_upgrade_cost = 100  
+@onready var well_button = $infopanel/Button # New button
 
 func _ready() -> void:
 	update_ui()
 	capacity_button.pressed.connect(upgrade_capacity)
-	depth_button.pressed.connect(upgrade_depth)
+	well_button.pressed.connect(upgrade_well_depth)  # Connect button
 
 func _process(_delta):
-	update_ui()  
+	update_ui()  # Refresh UI
 
 func update_ui():
 	coin_label.text = "Coins: " + str(Global.score)  
-	capacity_button.text = "Upgrade Bucket (" + str(capacity_upgrade_cost) + " Coins)"
-	depth_button.text = "Upgrade Well (" + str(depth_upgrade_cost) + " Coins)"
+	capacity_button.text = "Upgrade (" + str(Global.bucket_upgrade_cost) + " Coins)"
+	well_button.text = "Upgrade (" + str(Global.well_upgrade_cost) + " Coins)"
 
-	capacity_button.disabled = Global.score < capacity_upgrade_cost
-	depth_button.disabled = Global.score < depth_upgrade_cost
+	capacity_button.disabled = Global.score < Global.bucket_upgrade_cost
+	well_button.disabled = Global.score < Global.well_upgrade_cost
 
 func upgrade_capacity():
-	if Global.score >= capacity_upgrade_cost:
-		Global.score -= capacity_upgrade_cost  
+	if Global.score >= Global.bucket_upgrade_cost:
+		Global.score -= Global.bucket_upgrade_cost  
 		Global.bucket_capacity += 1  
-		capacity_upgrade_cost += 50  
-		Global.save_game()  # Save after upgrading
+		Global.bucket_upgrade_cost += 50  
+		Global.save_game()
 		update_ui()
-	else:
-		print("Not enough coins!")
 
-func upgrade_depth():
-	if Global.score >= depth_upgrade_cost:
-		Global.score -= depth_upgrade_cost  
-		Global.well_depth += 5  
-		depth_upgrade_cost += 100  
-		Global.save_game()  # Save after upgrading
+func upgrade_well_depth():
+	if Global.score >= Global.well_upgrade_cost:
+		Global.score -= Global.well_upgrade_cost  
+		Global.well_depth_limit += 500  # Increase depth limit
+		Global.well_upgrade_cost += 100  
+		Global.save_game()
 		update_ui()
-	else:
-		print("Not enough coins!")
 
 func _on_play_pressed():
 	get_tree().change_scene_to_file("res://scenes/level.tscn")

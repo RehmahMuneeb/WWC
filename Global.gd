@@ -1,38 +1,30 @@
 extends Node
 
+# Global variables
 var score: int = 0
-var bucket_capacity: int = 5  
-var well_depth: int = 10  
+var bucket_capacity: int = 5
+var bucket_upgrade_cost: int = 50
 
-const SAVE_PATH = "user://save_data.json"
-
-func _ready():
-	load_game()  # Load saved progress when game starts
+# Well Depth Variables
+var well_depth_limit: int = 500  # Default max depth
+var well_upgrade_cost: int = 100  # Initial upgrade cost
 
 func save_game():
 	var save_data = {
 		"score": score,
 		"bucket_capacity": bucket_capacity,
-		"well_depth": well_depth
+		"well_depth_limit": well_depth_limit
 	}
-	var file = FileAccess.open(SAVE_PATH, FileAccess.WRITE)
-	file.store_string(JSON.stringify(save_data))
+	var file = FileAccess.open("user://savegame.dat", FileAccess.WRITE)
+	file.store_var(save_data)
 	file.close()
 
 func load_game():
-	if FileAccess.file_exists(SAVE_PATH):
-		var file = FileAccess.open(SAVE_PATH, FileAccess.READ)
-		var content = file.get_as_text()
+	if FileAccess.file_exists("user://savegame.dat"):
+		var file = FileAccess.open("user://savegame.dat", FileAccess.READ)
+		var save_data = file.get_var()
 		file.close()
 
-		var save_data = JSON.parse_string(content)
-		if save_data:
-			score = save_data.get("score", 0)
-			bucket_capacity = save_data.get("bucket_capacity", 5)
-			well_depth = save_data.get("well_depth", 10)
-
-func reset_game():
-	score = 0
-	bucket_capacity = 5
-	well_depth = 10
-	save_game()  # Save reset data
+		score = save_data.get("score", 0)
+		bucket_capacity = save_data.get("bucket_capacity", 5)
+		well_depth_limit = save_data.get("well_depth_limit", 500)
