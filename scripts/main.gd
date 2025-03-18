@@ -2,7 +2,7 @@ extends Control
 
 @onready var coin_label = $Coins/Coinslabel
 @onready var capacity_button = $"infopanel/Bucket Capacity/Button"
-@onready var well_button = $infopanel/Button # New button
+@onready var well_button = $infopanel/Button  # Well depth upgrade button
 
 func _ready() -> void:
 	update_ui()
@@ -23,16 +23,16 @@ func update_ui():
 func upgrade_capacity():
 	if Global.score >= Global.bucket_upgrade_cost:
 		Global.score -= Global.bucket_upgrade_cost  
-		Global.bucket_capacity += 1  
-		Global.bucket_upgrade_cost += 50  
+		Global.bucket_capacity += 1  # Increase by 1  
+		Global.bucket_upgrade_cost *= 2  # Multiply upgrade cost by 3  
 		Global.save_game()
 		update_ui()
 
 func upgrade_well_depth():
 	if Global.score >= Global.well_upgrade_cost:
 		Global.score -= Global.well_upgrade_cost  
-		Global.well_depth_limit += 500  # Increase depth limit
-		Global.well_upgrade_cost += 100  
+		Global.well_depth_limit += 500  # Increase depth limit by 500  
+		Global.well_upgrade_cost *= 2  # Multiply upgrade cost by 3  
 		Global.save_game()
 		update_ui()
 
