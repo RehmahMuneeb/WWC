@@ -18,11 +18,11 @@ func _process(_delta):
 
 func update_ui():
 	# Update Coins Display
-	coin_label.text = "Coins: " + str(Global.score)  
+	coin_label.text = "COINS: " + str(Global.score)  
 
 	# Update Button Text
-	capacity_button.text = str(Global.bucket_upgrade_cost) + "\nUpgrade"
-	well_button.text = str(Global.well_upgrade_cost) + "\nUpgrade"
+	capacity_button.text = str(Global.bucket_upgrade_cost) + "\nUPGRADE"
+	well_button.text = str(Global.well_upgrade_cost) + "\nUPGRADE"
 
 	# Update Labels for Bucket Capacity & Well Depth
 	bucket_capacity_label.text ="CAPACITY: " + str(Global.bucket_capacity)  
