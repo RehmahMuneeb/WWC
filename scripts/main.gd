@@ -25,8 +25,8 @@ func update_ui():
 	well_button.text = str(Global.well_upgrade_cost) + "\nUpgrade"
 
 	# Update Labels for Bucket Capacity & Well Depth
-	bucket_capacity_label.text = "Bucket Space: " + str(Global.bucket_capacity)
-	well_depth_label.text = "Well Depth: " + str(Global.well_depth_limit)
+	bucket_capacity_label.text ="CAPACITY: " + str(Global.bucket_capacity)  
+	well_depth_label.text = "DEPTH: " + str(Global.well_depth_limit)
 
 	# Disable Buttons if Not Enough Coins
 	capacity_button.disabled = Global.score < Global.bucket_upgrade_cost

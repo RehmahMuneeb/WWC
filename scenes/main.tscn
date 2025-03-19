@@ -1,8 +1,9 @@
-[gd_scene load_steps=8 format=3 uid="uid://b1bt4udrrmx0d"]
+[gd_scene load_steps=9 format=3 uid="uid://b1bt4udrrmx0d"]
 
 [ext_resource type="Script" path="res://scripts/main.gd" id="1_fsboc"]
 [ext_resource type="Texture2D" uid="uid://bhrf3ksx88g41" path="res://Full-bucket1.png" id="2_dfu7b"]
 [ext_resource type="Texture2D" uid="uid://rd7r0kf4b2bj" path="res://scenes/well.png" id="3_g2cem"]
+[ext_resource type="FontFile" uid="uid://b2clys7lbyd3t" path="res://scenes/Kid Games.ttf" id="3_nak5y"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_3rs0h"]
 bg_color = Color(0.815686, 0.701961, 0.145098, 1)
@@ -91,7 +92,9 @@ offset_left = 22.0
 offset_top = 14.0
 offset_right = 177.0
 offset_bottom = 46.0
-text = "Coins"
+theme_override_fonts/font = ExtResource("3_nak5y")
+theme_override_font_sizes/font_size = 22
+text = "COINS"
 
 [node name="infopanel" type="Panel" parent="."]
 layout_mode = 2
@@ -134,12 +137,15 @@ offset_bottom = 256.0
 [node name="CapacityLabel" type="Label" parent="infopanel/Bucket Capacity"]
 layout_mode = 1
 offset_left = 20.0
-offset_top = 11.0
+offset_top = 18.0
 offset_right = 223.0
-offset_bottom = 84.0
-theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+offset_bottom = 91.0
+theme_override_constants/shadow_offset_x = 6
+theme_override_constants/outline_size = 6
+theme_override_constants/shadow_outline_size = 6
+theme_override_fonts/font = ExtResource("3_nak5y")
 theme_override_font_sizes/font_size = 22
-text = "Capacity"
+text = "CAPACITY"
 
 [node name="Well Depth" type="Panel" parent="infopanel"]
 layout_mode = 0
@@ -151,13 +157,16 @@ theme_override_styles/panel = SubResource("StyleBoxFlat_58b8x")
 
 [node name="DepthLabel" type="Label" parent="infopanel/Well Depth"]
 layout_mode = 1
-offset_left = 16.0
-offset_top = 9.0
-offset_right = 167.0
-offset_bottom = 54.0
-theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+offset_left = 18.0
+offset_top = 16.0
+offset_right = 231.0
+offset_bottom = 53.0
+theme_override_constants/shadow_offset_x = 6
+theme_override_constants/outline_size = 6
+theme_override_constants/shadow_outline_size = 6
+theme_override_fonts/font = ExtResource("3_nak5y")
 theme_override_font_sizes/font_size = 22
-text = "Well depth"
+text = "DEPTH: 5000"
 
 [node name="TextureRect" type="TextureRect" parent="infopanel/Well Depth"]
 layout_mode = 1
