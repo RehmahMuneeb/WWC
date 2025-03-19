@@ -1,9 +1,11 @@
-[gd_scene load_steps=13 format=3 uid="uid://b1bt4udrrmx0d"]
+[gd_scene load_steps=15 format=3 uid="uid://b1bt4udrrmx0d"]
 
 [ext_resource type="Script" path="res://scripts/main.gd" id="1_fsboc"]
 [ext_resource type="Texture2D" uid="uid://bhrf3ksx88g41" path="res://Full-bucket1.png" id="2_dfu7b"]
+[ext_resource type="Texture2D" uid="uid://bl7g0sdvr5piw" path="res://scenes/Background.jpg" id="3_cnd1n"]
 [ext_resource type="Texture2D" uid="uid://rd7r0kf4b2bj" path="res://scenes/well.png" id="3_g2cem"]
 [ext_resource type="FontFile" uid="uid://b2clys7lbyd3t" path="res://scenes/Kid Games.ttf" id="3_nak5y"]
+[ext_resource type="Texture2D" uid="uid://cuyv54tmnimb8" path="res://withoutrope3.png" id="6_1nad6"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_fjo2v"]
 bg_color = Color(0, 0.94902, 0, 1)
@@ -69,6 +71,7 @@ corner_radius_top_left = 20
 corner_radius_top_right = 20
 corner_radius_bottom_right = 20
 corner_radius_bottom_left = 20
+shadow_color = Color(0, 0, 0, 1)
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_lmr5y"]
 bg_color = Color(0.964706, 0.792157, 0.0980392, 1)
@@ -104,6 +107,12 @@ grow_vertical = 2
 theme = SubResource("Theme_w6dyy")
 script = ExtResource("1_fsboc")
 
+[node name="Background" type="TextureRect" parent="."]
+layout_mode = 0
+offset_right = 480.0
+offset_bottom = 855.0
+texture = ExtResource("3_cnd1n")
+
 [node name="VBoxContainer" type="VBoxContainer" parent="."]
 layout_mode = 1
 anchors_preset = 8
@@ -120,10 +129,10 @@ grow_vertical = 2
 
 [node name="Play" type="Button" parent="."]
 layout_mode = 2
-offset_left = 231.0
-offset_top = 439.0
-offset_right = 272.0
-offset_bottom = 470.0
+offset_left = 363.0
+offset_top = 269.0
+offset_right = 419.0
+offset_bottom = 301.0
 text = "Play"
 
 [node name="Coins" type="Panel" parent="."]
@@ -241,5 +250,11 @@ offset_left = 250.0
 offset_top = 212.0
 offset_right = 455.0
 offset_bottom = 277.0
+
+[node name="Withoutrope3" type="Sprite2D" parent="."]
+y_sort_enabled = true
+position = Vector2(250, 386)
+scale = Vector2(0.370117, 0.370117)
+texture = ExtResource("6_1nad6")
 
 [connection signal="pressed" from="Play" to="." method="_on_play_pressed"]
