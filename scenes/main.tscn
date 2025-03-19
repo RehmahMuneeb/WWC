@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=3 uid="uid://b1bt4udrrmx0d"]
+[gd_scene load_steps=17 format=3 uid="uid://b1bt4udrrmx0d"]
 
 [ext_resource type="Script" path="res://scripts/main.gd" id="1_fsboc"]
 [ext_resource type="Texture2D" uid="uid://bhrf3ksx88g41" path="res://Full-bucket1.png" id="2_dfu7b"]
@@ -6,6 +6,7 @@
 [ext_resource type="Texture2D" uid="uid://rd7r0kf4b2bj" path="res://scenes/well.png" id="3_g2cem"]
 [ext_resource type="FontFile" uid="uid://b2clys7lbyd3t" path="res://scenes/Kid Games.ttf" id="3_nak5y"]
 [ext_resource type="Texture2D" uid="uid://cuyv54tmnimb8" path="res://withoutrope3.png" id="6_1nad6"]
+[ext_resource type="Shader" path="res://scenes/bucket.gdshader" id="6_ruh5g"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_fjo2v"]
 bg_color = Color(0, 0.94902, 0, 1)
@@ -96,6 +97,9 @@ corner_radius_top_left = 20
 corner_radius_top_right = 20
 corner_radius_bottom_right = 20
 corner_radius_bottom_left = 20
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_if5ee"]
+shader = ExtResource("6_ruh5g")
 
 [node name="HomeScreen" type="Control"]
 layout_mode = 3
@@ -253,8 +257,9 @@ offset_bottom = 277.0
 
 [node name="Withoutrope3" type="Sprite2D" parent="."]
 y_sort_enabled = true
-position = Vector2(250, 386)
-scale = Vector2(0.370117, 0.370117)
+material = SubResource("ShaderMaterial_if5ee")
+position = Vector2(244, 377)
+scale = Vector2(0.390137, 0.390137)
 texture = ExtResource("6_1nad6")
 
 [connection signal="pressed" from="Play" to="." method="_on_play_pressed"]
