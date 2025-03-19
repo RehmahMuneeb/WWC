@@ -57,6 +57,7 @@ border_width_left = 22
 border_width_top = 22
 border_width_right = 22
 border_width_bottom = 22
+border_color = Color(1, 1, 1, 1)
 border_blend = true
 corner_radius_top_left = 10
 corner_radius_top_right = 10
@@ -135,14 +136,6 @@ offset_right = 105.0
 offset_bottom = 20.0
 grow_horizontal = 2
 grow_vertical = 2
-
-[node name="Play" type="Button" parent="."]
-layout_mode = 2
-offset_left = 167.0
-offset_top = 257.0
-offset_right = 335.0
-offset_bottom = 318.0
-text = "PLAY"
 
 [node name="Coins" type="Panel" parent="."]
 layout_mode = 0
@@ -266,5 +259,84 @@ material = SubResource("ShaderMaterial_if5ee")
 position = Vector2(244, 377)
 scale = Vector2(0.390137, 0.390137)
 texture = ExtResource("6_1nad6")
+
+[node name="CRAFT" type="Button" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -239.0
+offset_top = -297.0
+offset_right = 1.0
+offset_bottom = -234.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 44
+text = "CRAFT"
+
+[node name="CRAFT2" type="Button" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -1.0
+offset_top = -298.0
+offset_right = 244.0
+offset_bottom = -235.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 44
+text = "ITEMS"
+
+[node name="Inventory" type="Button" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -148.0
+offset_top = -235.0
+offset_right = 170.0
+offset_bottom = -166.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 44
+text = "BUY/ SELL"
+
+[node name="Play" type="Button" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -73.0
+offset_top = -168.0
+offset_right = 85.0
+offset_bottom = -103.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 44
+text = "PLAY"
+
+[node name="Label" type="Label" parent="."]
+layout_mode = 0
+offset_left = 17.0
+offset_top = 29.0
+offset_right = 489.0
+offset_bottom = 114.0
+theme_override_colors/font_color = Color(0.964706, 0.792157, 0.0980392, 1)
+theme_override_colors/font_shadow_color = Color(0, 0.94902, 0, 1)
+theme_override_constants/shadow_offset_x = 6
+theme_override_constants/outline_size = 14
+theme_override_constants/shadow_outline_size = 8
+theme_override_fonts/font = ExtResource("3_nak5y")
+theme_override_font_sizes/font_size = 73
+text = "GEMMANIA"
 
 [connection signal="pressed" from="Play" to="." method="_on_play_pressed"]
