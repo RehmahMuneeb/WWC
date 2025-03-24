@@ -1,6 +1,8 @@
-[gd_scene load_steps=2 format=3 uid="uid://cebv8sqummfnp"]
+[gd_scene load_steps=3 format=3 uid="uid://cebv8sqummfnp"]
 
 [ext_resource type="Texture2D" uid="uid://cl2ok35s2xm7b" path="res://Jewels/Jewel13.png" id="1_srha4"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_uplpu"]
 
 [node name="RareItems" type="Node2D"]
 
@@ -87,3 +89,13 @@ layout_mode = 2
 size_flags_horizontal = 4
 theme_override_font_sizes/font_size = 33
 text = "300 COINS"
+
+[node name="PanelContainer" type="PanelContainer" parent="."]
+offset_left = 1.0
+offset_top = 728.0
+offset_right = 480.0
+offset_bottom = 855.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_uplpu")
+
+[node name="JewelContainer" type="HBoxContainer" parent="PanelContainer"]
+layout_mode = 2
