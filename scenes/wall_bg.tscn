@@ -1,7 +1,8 @@
-[gd_scene load_steps=4 format=3 uid="uid://be3ml7efg7568"]
+[gd_scene load_steps=5 format=3 uid="uid://be3ml7efg7568"]
 
 [ext_resource type="Texture2D" uid="uid://cewtqkuj46x3l" path="res://assets/wall3.jpg" id="1_c6cgs"]
 [ext_resource type="Shader" path="res://scenes/wall_bg.gdshader" id="1_lt5r1"]
+[ext_resource type="PackedScene" uid="uid://ccco2hrybi6kp" path="res://3dModels/untitled.glb" id="3_bl4hu"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_c1xl2"]
 shader = ExtResource("1_lt5r1")
@@ -15,3 +16,6 @@ material = SubResource("ShaderMaterial_c1xl2")
 position = Vector2(238.5, 429)
 scale = Vector2(0.491, 0.871587)
 texture = ExtResource("1_c6cgs")
+
+[node name="untitled" parent="." instance=ExtResource("3_bl4hu")]
+transform = Transform3D(0.890602, 0.370411, -0.263865, -0.384937, 0.922936, -0.00363843, 0.242183, 0.104812, 0.964553, 0, 0, 0)
