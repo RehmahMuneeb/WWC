@@ -16,7 +16,8 @@ func search_and_connect_texture_rects(parent_node: Node):
 	for child in parent_node.get_children():
 		if child is TextureRect:
 			child.mouse_filter = Control.MOUSE_FILTER_STOP  # Enable input detection
-			child.gui_input.connect(_on_item_clicked.bind(child))  # Connect click event
+			# Connect click event properly with a Callable
+			child.connect("gui_input", Callable(self, "_on_item_clicked").bind(child))  # Connect click event
 		elif child is Node:  # If the child is a container or group node
 			search_and_connect_texture_rects(child)  # Recurse into its children
 
@@ -27,11 +28,12 @@ func _on_item_clicked(event: InputEvent, item: TextureRect):
 		selected_item = item
 		inventory_panel.visible = true
 
-		# Hide all other items except the selected one
-		for child in scroll_container.get_children():
-			if child is Node:
-				for item_container in child.get_children():
-					if item_container is TextureRect:
-						item_container.visible = (item_container == selected_item)
+		# Hide the ScrollContainer entirely
+		scroll_container.visible = false
+
+		# Show the selected item alone, you can either display it in a new container or panel
+		var selected_item_container = TextureRect.new()
+		selected_item_container.texture = selected_item.texture  # Assign the selected texture
+		add_child(selected_item_container)  # Add the item to the current scene for display
 
 		print("Item clicked:", item.name)
