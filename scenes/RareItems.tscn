@@ -7,6 +7,7 @@
 bg_color = Color(0.842256, 0.490162, 0.419638, 1)
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_uplpu"]
+bg_color = Color(0.0483442, 0.662762, 0.824566, 1)
 
 [node name="RareItems" type="Control"]
 layout_mode = 3
