@@ -9,42 +9,53 @@ func _ready():
 	update_inventory()
 
 func update_inventory():
-	# Clear existing items in both rows
+	# Clear existing items
 	for child in first_row.get_children():
 		child.queue_free()
 	for child in second_row.get_children():
 		child.queue_free()
 
-	# Distribute gems between two rows
-	var gem_count = Global.collected_gems.size()
-	var half_count = int(gem_count / 2)
+	# Count each unique gem texture
+	var gem_counts := {}
+	for gem in Global.collected_gems:
+		gem_counts[gem] = gem_counts.get(gem, 0) + 1
 
-	# Add gems to the first row
-	for i in range(half_count):
-		var texture = Global.collected_gems[i]
+	var gem_idx = 0
+	var half = int(gem_counts.size() / 2.0 + 0.5)
+
+	for gem_texture in gem_counts.keys():
+		var count = gem_counts[gem_texture]
+
+		# Create TextureButton
 		var gem_button = TextureButton.new()
-		gem_button.texture_normal = texture
-		gem_button.custom_minimum_size = Vector2(64, 64)  # Sets size of the button
+		gem_button.texture_normal = gem_texture
+		gem_button.custom_minimum_size = Vector2(64, 64)
 		gem_button.stretch_mode = TextureButton.STRETCH_KEEP_ASPECT_CENTERED
+		gem_button.connect("pressed", Callable(self, "_on_gem_clicked").bind(gem_texture))
 
-		# Connect click
-		gem_button.connect("pressed", Callable(self, "_on_gem_clicked").bind(texture))
+		# Tooltip version (optional)
+		gem_button.tooltip_text = "x" + str(count)
 
-		first_row.add_child(gem_button)
+		# Add small label for count
+		if count > 1:
+			var label = Label.new()
+			label.text = "x" + str(count)
+			label.horizontal_alignment = HORIZONTAL_ALIGNMENT_RIGHT
+			label.vertical_alignment = VERTICAL_ALIGNMENT_BOTTOM
+			label.anchor_right = 1.0
+			label.anchor_bottom = 1.0
+			label.offset_right = -5
+			label.offset_bottom = -5
+			label.mouse_filter = Control.MOUSE_FILTER_IGNORE
+			gem_button.add_child(label)
 
-	# Add gems to the second row
-	for i in range(half_count, gem_count):
-		var texture = Global.collected_gems[i]
-		var gem_button = TextureButton.new()
-		gem_button.texture_normal = texture
-		gem_button.custom_minimum_size = Vector2(64, 64)  # Sets size of the button
-		gem_button.stretch_mode = TextureButton.STRETCH_KEEP_ASPECT_CENTERED
+		if gem_idx < half:
+			first_row.add_child(gem_button)
+		else:
+			second_row.add_child(gem_button)
 
-		# Connect click
-		gem_button.connect("pressed", Callable(self, "_on_gem_clicked").bind(texture))
-
-		second_row.add_child(gem_button)
+		gem_idx += 1
 
 func _on_gem_clicked(texture):
 	print("Gem clicked: ", texture)
-	emit_signal("gem_clicked", texture)  # You can handle selling using this signal
+	emit_signal("gem_clicked", texture)
