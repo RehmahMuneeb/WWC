@@ -1,6 +1,7 @@
 extends Control
 
-@onready var item_container := $ScrollContainer/HBoxContainer
+@onready var first_row := $ScrollContainer/VBoxContainer/HBoxContainer
+@onready var second_row := $ScrollContainer/VBoxContainer/HBoxContainer2
 
 signal gem_clicked(texture)
 
@@ -8,14 +9,19 @@ func _ready():
 	update_inventory()
 
 func update_inventory():
-	# Clear existing items
-	for child in item_container.get_children():
+	# Clear existing items in both rows
+	for child in first_row.get_children():
+		child.queue_free()
+	for child in second_row.get_children():
 		child.queue_free()
 
-	# Add each gem as a TextureButton
-	for texture in Global.collected_gems:
-		print("Adding gem to inventory: ", texture)
+	# Distribute gems between two rows
+	var gem_count = Global.collected_gems.size()
+	var half_count = int(gem_count / 2)
 
+	# Add gems to the first row
+	for i in range(half_count):
+		var texture = Global.collected_gems[i]
 		var gem_button = TextureButton.new()
 		gem_button.texture_normal = texture
 		gem_button.custom_minimum_size = Vector2(64, 64)  # Sets size of the button
@@ -24,7 +30,20 @@ func update_inventory():
 		# Connect click
 		gem_button.connect("pressed", Callable(self, "_on_gem_clicked").bind(texture))
 
-		item_container.add_child(gem_button)
+		first_row.add_child(gem_button)
+
+	# Add gems to the second row
+	for i in range(half_count, gem_count):
+		var texture = Global.collected_gems[i]
+		var gem_button = TextureButton.new()
+		gem_button.texture_normal = texture
+		gem_button.custom_minimum_size = Vector2(64, 64)  # Sets size of the button
+		gem_button.stretch_mode = TextureButton.STRETCH_KEEP_ASPECT_CENTERED
+
+		# Connect click
+		gem_button.connect("pressed", Callable(self, "_on_gem_clicked").bind(texture))
+
+		second_row.add_child(gem_button)
 
 func _on_gem_clicked(texture):
 	print("Gem clicked: ", texture)

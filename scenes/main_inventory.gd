@@ -26,3 +26,7 @@ func _on_sell_pressed():
 func update_coin_label():
 	if coin_label:
 		coin_label.text = "COINS: " + str(Global.score)  # Access score as coins
+
+
+func _on_button_pressed() -> void:
+	get_tree().change_scene_to_file("res://scenes/main.tscn") 
