@@ -260,7 +260,7 @@ position = Vector2(244, 377)
 scale = Vector2(0.390137, 0.390137)
 texture = ExtResource("6_1nad6")
 
-[node name="CRAFT" type="Button" parent="."]
+[node name="Items" type="Button" parent="."]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -274,9 +274,10 @@ offset_bottom = -234.0
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_font_sizes/font_size = 44
-text = "CRAFT"
+text = "ITEMS
+"
 
-[node name="RareItems" type="Button" parent="."]
+[node name="Crafting" type="Button" parent="."]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -290,7 +291,7 @@ offset_bottom = -235.0
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_font_sizes/font_size = 44
-text = "ITEMS"
+text = "CRAFTS"
 
 [node name="Inventory" type="Button" parent="."]
 layout_mode = 1
@@ -339,5 +340,6 @@ theme_override_fonts/font = ExtResource("3_nak5y")
 theme_override_font_sizes/font_size = 73
 text = "GEMMANIA"
 
-[connection signal="pressed" from="RareItems" to="." method="_on_rare_items_pressed"]
+[connection signal="pressed" from="Items" to="." method="_on_items_pressed"]
+[connection signal="pressed" from="Crafting" to="." method="_on_rare_items_pressed"]
 [connection signal="pressed" from="Play" to="." method="_on_play_pressed"]

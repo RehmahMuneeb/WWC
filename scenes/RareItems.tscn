@@ -1,15 +1,13 @@
 [gd_scene load_steps=5 format=3 uid="uid://cebv8sqummfnp"]
 
 [ext_resource type="Texture2D" uid="uid://cl2ok35s2xm7b" path="res://Jewels/Jewel13.png" id="1_srha4"]
-[ext_resource type="Script" path="res://scenes/rare_items.gd" id="1_wxeuu"]
+[ext_resource type="Script" path="res://scenes/Crafting.gd" id="1_wxeuu"]
+[ext_resource type="PackedScene" uid="uid://bdig3whyspi8a" path="res://Jewels/Inventory.tscn" id="3_bh17i"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ruhyg"]
 bg_color = Color(0.842256, 0.490162, 0.419638, 1)
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_uplpu"]
-bg_color = Color(0.0483442, 0.662762, 0.824566, 1)
-
-[node name="RareItems" type="Control"]
+[node name="Crafting" type="Control"]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -21,6 +19,7 @@ grow_vertical = 2
 script = ExtResource("1_wxeuu")
 
 [node name="Panel" type="Panel" parent="."]
+layout_mode = 0
 offset_right = 481.0
 offset_bottom = 855.0
 theme_override_styles/panel = SubResource("StyleBoxFlat_ruhyg")
@@ -105,12 +104,14 @@ size_flags_horizontal = 4
 theme_override_font_sizes/font_size = 33
 text = "300 COINS"
 
-[node name="PanelContainer" type="PanelContainer" parent="."]
-offset_left = 1.0
-offset_top = 728.0
-offset_right = 480.0
-offset_bottom = 855.0
-theme_override_styles/panel = SubResource("StyleBoxFlat_uplpu")
-
-[node name="JewelContainer" type="HBoxContainer" parent="PanelContainer"]
-layout_mode = 2
+[node name="Inventory" parent="." instance=ExtResource("3_bh17i")]
+layout_mode = 1
+anchors_preset = 0
+anchor_right = 0.0
+anchor_bottom = 0.0
+offset_left = 6.0
+offset_top = 726.0
+offset_right = 484.0
+offset_bottom = 856.0
+grow_horizontal = 1
+grow_vertical = 1

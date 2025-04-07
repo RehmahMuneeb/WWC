@@ -1,0 +1,46 @@
+[gd_scene load_steps=3 format=3 uid="uid://cb8ije7e88qq1"]
+
+[ext_resource type="Script" path="res://scenes/main_inventory.gd" id="1_twab3"]
+[ext_resource type="PackedScene" uid="uid://bdig3whyspi8a" path="res://Jewels/Inventory.tscn" id="2_34e6m"]
+
+[node name="MainInventory" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = -480.0
+offset_bottom = -854.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_twab3")
+
+[node name="Tabs" type="TabContainer" parent="."]
+layout_mode = 0
+offset_left = -1.0
+offset_right = 490.0
+offset_bottom = 529.0
+current_tab = 0
+
+[node name="GemsTab" type="Control" parent="Tabs"]
+layout_mode = 2
+metadata/_tab_index = 0
+
+[node name="Inventory" parent="Tabs/GemsTab" instance=ExtResource("2_34e6m")]
+layout_mode = 1
+offset_right = -4.0
+offset_bottom = 7.0
+
+[node name="Control" type="Control" parent="Tabs"]
+visible = false
+layout_mode = 2
+metadata/_tab_index = 1
+
+[node name="SellButton" type="Button" parent="."]
+layout_mode = 0
+offset_left = 150.0
+offset_top = 31.0
+offset_right = 482.0
+offset_bottom = 180.0
+text = "SELL"
+
+[connection signal="pressed" from="SellButton" to="." method="_on_sell_button_pressed"]

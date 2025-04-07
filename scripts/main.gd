@@ -54,3 +54,7 @@ func _on_play_pressed():
 
 func _on_rare_items_pressed() -> void:
 	get_tree().change_scene_to_file("res://scenes/RareItems.tscn")
+
+
+func _on_items_pressed() -> void:
+	get_tree().change_scene_to_file("res://scenes/MainInventory.tscn")
