@@ -1,6 +1,6 @@
 extends Control
 
-@onready var gem_inventory = $Tabs/GemsTab/Inventory
+@onready var gem_inventory = $Tabs/GEMS/Inventory
 @onready var sell_button = $SellButton  # Your button
 @onready var coin_label = $Coins/Coinslabel
 

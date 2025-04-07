@@ -1,7 +1,31 @@
-[gd_scene load_steps=3 format=3 uid="uid://cb8ije7e88qq1"]
+[gd_scene load_steps=7 format=3 uid="uid://cb8ije7e88qq1"]
 
 [ext_resource type="Script" path="res://scenes/main_inventory.gd" id="1_twab3"]
+[ext_resource type="FontFile" uid="uid://b2clys7lbyd3t" path="res://scenes/Kid Games.ttf" id="2_7xl33"]
 [ext_resource type="PackedScene" uid="uid://bdig3whyspi8a" path="res://Jewels/Inventory.tscn" id="2_34e6m"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_6ob34"]
+bg_color = Color(0, 0.729412, 0.941176, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_6tn6c"]
+bg_color = Color(2.31028e-06, 0.729571, 0.941375, 1)
+border_width_right = 10
+border_width_bottom = 10
+border_color = Color(0, 0.824954, 0.916006, 1)
+corner_radius_bottom_right = 6
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_bn8jy"]
+bg_color = Color(0.964706, 0.792157, 0.0980392, 1)
+border_width_left = 17
+border_width_top = 27
+border_width_right = 17
+border_width_bottom = 17
+border_color = Color(1, 1, 1, 1)
+border_blend = true
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+shadow_color = Color(0, 0, 0, 1)
+shadow_size = 12
 
 [node name="MainInventory" type="Control"]
 layout_mode = 3
@@ -17,30 +41,80 @@ script = ExtResource("1_twab3")
 [node name="Tabs" type="TabContainer" parent="."]
 layout_mode = 0
 offset_left = -1.0
-offset_right = 490.0
-offset_bottom = 529.0
+offset_right = 480.0
+offset_bottom = 656.0
+theme_override_colors/font_selected_color = Color(0.964706, 0.792157, 0.0980392, 1)
+theme_override_fonts/font = ExtResource("2_7xl33")
+theme_override_font_sizes/font_size = 37
 current_tab = 0
 
-[node name="GemsTab" type="Control" parent="Tabs"]
+[node name="GEMS" type="Control" parent="Tabs"]
 layout_mode = 2
 metadata/_tab_index = 0
 
-[node name="Inventory" parent="Tabs/GemsTab" instance=ExtResource("2_34e6m")]
+[node name="Inventory" parent="Tabs/GEMS" instance=ExtResource("2_34e6m")]
 layout_mode = 1
-offset_right = -4.0
+offset_right = -6.0
 offset_bottom = 7.0
 
-[node name="Control" type="Control" parent="Tabs"]
+[node name="Label" type="Label" parent="Tabs/GEMS"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.272529
+anchor_right = 0.789841
+anchor_bottom = 0.251559
+grow_horizontal = 2
+theme_override_colors/font_color = Color(0.964706, 0.792157, 0.0980392, 1)
+theme_override_colors/font_shadow_color = Color(0, 0.94902, 0, 1)
+theme_override_constants/shadow_offset_x = 3
+theme_override_constants/outline_size = 6
+theme_override_constants/shadow_outline_size = 6
+theme_override_fonts/font = ExtResource("2_7xl33")
+theme_override_font_sizes/font_size = 64
+text = "GEMS"
+metadata/_edit_use_anchors_ = true
+
+[node name="ITEMS" type="Control" parent="Tabs"]
 visible = false
 layout_mode = 2
 metadata/_tab_index = 1
 
+[node name="CRAFTS" type="Control" parent="Tabs"]
+visible = false
+layout_mode = 2
+metadata/_tab_index = 2
+
 [node name="SellButton" type="Button" parent="."]
 layout_mode = 0
-offset_left = 150.0
-offset_top = 31.0
-offset_right = 482.0
-offset_bottom = 180.0
+offset_left = 1.0
+offset_top = 771.0
+offset_right = 479.0
+offset_bottom = 856.0
+theme_override_fonts/font = ExtResource("2_7xl33")
+theme_override_font_sizes/font_size = 38
+theme_override_styles/pressed = SubResource("StyleBoxFlat_6ob34")
+theme_override_styles/normal = SubResource("StyleBoxFlat_6tn6c")
 text = "SELL"
+
+[node name="Coins" type="Panel" parent="."]
+layout_mode = 0
+offset_left = 3.0
+offset_top = 686.0
+offset_right = 478.0
+offset_bottom = 767.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_bn8jy")
+
+[node name="Coinslabel" type="Label" parent="Coins"]
+layout_mode = 0
+offset_left = 22.0
+offset_top = 14.0
+offset_right = 177.0
+offset_bottom = 46.0
+theme_override_constants/shadow_offset_x = 6
+theme_override_constants/outline_size = 6
+theme_override_constants/shadow_outline_size = 6
+theme_override_fonts/font = ExtResource("2_7xl33")
+theme_override_font_sizes/font_size = 22
+text = "COINS"
 
 [connection signal="pressed" from="SellButton" to="." method="_on_sell_button_pressed"]
