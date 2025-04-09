@@ -84,9 +84,9 @@ func _on_body_entered(body: Node2D) -> void:
 			print("Jewel collected! Score saved.")
 
 			# Check if bucket is full
-			if collected_jewels >= Global.bucket_capacity:
-				print("Bucket full! Returning to home screen...")
-				return_to_home()
+			#if collected_jewels >= Global.bucket_capacity:
+				#print("Bucket full! Returning to home screen...")
+				#return_to_home()
 		else:
 			print("Bucket is full! Can't collect more jewels.")
 

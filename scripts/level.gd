@@ -16,6 +16,6 @@ func _process(delta):
 	var score_label = $UI/Score
 	score_label.text = str(score) + "m"
 
-	if score >= Global.well_depth_limit:  
-		print("Reached max depth! Returning to home screen.")
-		get_tree().change_scene_to_file("res://scenes/main.tscn")  # Go back to home screen
+	#if score >= Global.well_depth_limit:  
+	#	print("Reached max depth! Returning to home screen.")
+	#	get_tree().change_scene_to_file("res://scenes/main.tscn")  # Go back to home screen
