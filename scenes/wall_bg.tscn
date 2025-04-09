@@ -1,5 +1,6 @@
-[gd_scene load_steps=11 format=3 uid="uid://be3ml7efg7568"]
+[gd_scene load_steps=12 format=3 uid="uid://be3ml7efg7568"]
 
+[ext_resource type="Script" path="res://scenes/Background.gd" id="1_5afwl"]
 [ext_resource type="Shader" path="res://scenes/wall_bg.gdshader" id="1_lt5r1"]
 [ext_resource type="Texture2D" uid="uid://y75dd18x8oyj" path="res://scenes/stone-seamless-pattern-stone-wall-texture-solid-background-rock-pattern-gray-rough-surface_1150412-2275.jpg" id="2_7mnps"]
 
@@ -47,7 +48,8 @@ width = 3
 height = 33
 fill_to = Vector2(0, 1)
 
-[node name="WallBg" type="Node2D"]
+[node name="Bacground" type="Node2D"]
+script = ExtResource("1_5afwl")
 
 [node name="WallImg" type="Sprite2D" parent="."]
 texture_repeat = 2
@@ -56,8 +58,9 @@ position = Vector2(236.5, 426.5)
 scale = Vector2(0.572639, 1.01574)
 texture = ExtResource("2_7mnps")
 
-[node name="GPUParticles2D" type="GPUParticles2D" parent="."]
-position = Vector2(411, 98)
+[node name="AirEffect" type="GPUParticles2D" parent="."]
+position = Vector2(352, 98)
+emitting = false
 amount = 33
 process_material = SubResource("ParticleProcessMaterial_3y65k")
 texture = SubResource("GradientTexture2D_bgklu")
