@@ -23,8 +23,8 @@ position = Vector2(63, 55)
 collision_mask = 2
 slide_on_ceiling = false
 script = ExtResource("1_hu4h5")
-fall_speed = 300.0
-horizontal_speed = 200.0
+fall_speed = 700.0
+horizontal_speed = 220.0
 jewel_textures = Array[Texture2D]([ExtResource("2_qoier"), ExtResource("3_52lnq"), ExtResource("4_adlde"), ExtResource("5_27ic6"), ExtResource("6_8qg24"), ExtResource("7_nwhdr"), ExtResource("8_1rgg3"), ExtResource("9_wqxf1"), ExtResource("10_vd6w5"), ExtResource("11_c38dh"), ExtResource("12_y8va4"), ExtResource("14_hixi6")])
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
