@@ -1,28 +1,36 @@
 extends Node2D
 
-@onready var air_effect = $AirEffect  # Adjust the path as necessary
-var score = 0  # Depth in meters
-var activation_depth = 1000
-var deactivation_depth = activation_depth + 1000
-var effect_active = false
+@onready var air_effect = $AirEffect
+@onready var main_bg = $WallImg     # Normal background
+@onready var lava_bg = $WallImg2     # Lava background
+
+var score = 0
 
 func _ready():
-	air_effect.emitting = false
 	air_effect.visible = false
+	air_effect.emitting = false
+	main_bg.visible = true
+	lava_bg.visible = false
 
 func _process(delta):
-	score += 1  # Update depth; adjust this logic as per your game's mechanics
+	score += 1  # Update this based on your game logic
 
-	if score >= activation_depth and score < deactivation_depth:
-		if not effect_active:
+	var depth_in_cycle = score % 6000
+
+	# --- Handle Air Effect (2000–2999 in every 6000 cycle) ---
+	if depth_in_cycle >= 2000 and depth_in_cycle < 3000:
+		if not air_effect.emitting:
 			air_effect.visible = true
 			air_effect.emitting = true
-			effect_active = true
-	elif score >= deactivation_depth:
-		if effect_active:
-			air_effect.emitting = false
+	else:
+		if air_effect.emitting:
 			air_effect.visible = false
-			effect_active = false
-			# Set the next activation depth after a 1000m gap
-			activation_depth = deactivation_depth + 1000
-			deactivation_depth = activation_depth + 1000
+			air_effect.emitting = false
+
+	# --- Handle Lava Background (5000–5999 in every 6000 cycle) ---
+	if depth_in_cycle >= 5000 and depth_in_cycle < 6000:
+		lava_bg.visible = true
+		main_bg.visible = false
+	else:
+		lava_bg.visible = false
+		main_bg.visible = true

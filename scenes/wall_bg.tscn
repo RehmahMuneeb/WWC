@@ -1,8 +1,9 @@
-[gd_scene load_steps=12 format=3 uid="uid://be3ml7efg7568"]
+[gd_scene load_steps=13 format=3 uid="uid://be3ml7efg7568"]
 
 [ext_resource type="Script" path="res://scenes/Background.gd" id="1_5afwl"]
 [ext_resource type="Shader" path="res://scenes/wall_bg.gdshader" id="1_lt5r1"]
 [ext_resource type="Texture2D" uid="uid://y75dd18x8oyj" path="res://scenes/stone-seamless-pattern-stone-wall-texture-solid-background-rock-pattern-gray-rough-surface_1150412-2275.jpg" id="2_7mnps"]
+[ext_resource type="Texture2D" uid="uid://c63him66v8lho" path="res://Lava B.jpg" id="4_lmrhv"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_c1xl2"]
 shader = ExtResource("1_lt5r1")
@@ -57,6 +58,12 @@ material = SubResource("ShaderMaterial_c1xl2")
 position = Vector2(236.5, 426.5)
 scale = Vector2(0.572639, 1.01574)
 texture = ExtResource("2_7mnps")
+
+[node name="WallImg2" type="Sprite2D" parent="."]
+texture_repeat = 2
+material = SubResource("ShaderMaterial_c1xl2")
+position = Vector2(242, 427)
+texture = ExtResource("4_lmrhv")
 
 [node name="AirEffect" type="GPUParticles2D" parent="."]
 position = Vector2(352, 98)
