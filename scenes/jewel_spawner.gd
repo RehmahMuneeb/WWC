@@ -10,6 +10,8 @@ extends Node2D
 # Maximum number of jewels allowed on screen
 @export var max_jewels: int = 12
 
+var is_lava_active = false
+
 func _ready() -> void:
 	randomize()
 	start_spawn_timer()
@@ -21,6 +23,9 @@ func start_spawn_timer():
 	$SpawnTimer.start()
 
 func _on_spawn_timer_timeout() -> void:
+	if is_lava_active:
+		return  # Don't spawn jewels if lava is active
+
 	var current_jewels = get_tree().get_nodes_in_group("jewel").size()
 	var remaining = max_jewels - current_jewels
 
@@ -45,3 +50,6 @@ func spawn_jewel() -> void:
 	jewel.position = Vector2(spawn_x, spawn_y)
 
 	add_child(jewel)
+
+func set_lava_active(active: bool) -> void:
+	is_lava_active = active

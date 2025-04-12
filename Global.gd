@@ -2,7 +2,7 @@ extends Node
 
 # Global variables
 var score: int = 0
-var bucket_capacity: int = 5
+var bucket_capacity: int = 5000
 var bucket_upgrade_cost: int = 150  # Starts at 150 instead of 50
 
 # Well Depth Variables
