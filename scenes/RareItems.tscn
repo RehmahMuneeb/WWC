@@ -1,7 +1,8 @@
-[gd_scene load_steps=5 format=3 uid="uid://cebv8sqummfnp"]
+[gd_scene load_steps=6 format=3 uid="uid://cebv8sqummfnp"]
 
 [ext_resource type="Texture2D" uid="uid://cl2ok35s2xm7b" path="res://Jewels/Jewel13.png" id="1_srha4"]
 [ext_resource type="Script" path="res://scenes/Crafting.gd" id="1_wxeuu"]
+[ext_resource type="Texture2D" uid="uid://c2knblevfw4o7" path="res://scenes/gem (2).png" id="2_gilml"]
 [ext_resource type="PackedScene" uid="uid://bdig3whyspi8a" path="res://Jewels/Inventory.tscn" id="3_bh17i"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ruhyg"]
@@ -53,10 +54,52 @@ text = "RING"
 [node name="TextureRect" type="TextureRect" parent="Panel/ScrollContainer/VBoxContainer/Item1"]
 custom_minimum_size = Vector2(280, 280)
 layout_mode = 2
-texture = ExtResource("1_srha4")
+texture = ExtResource("2_gilml")
 expand_mode = 1
 
 [node name="Label2" type="Label" parent="Panel/ScrollContainer/VBoxContainer/Item1"]
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_font_sizes/font_size = 33
+text = "300 COINS"
+
+[node name="Item4" type="VBoxContainer" parent="Panel/ScrollContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="Panel/ScrollContainer/VBoxContainer/Item4"]
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_font_sizes/font_size = 33
+text = "RING"
+
+[node name="TextureRect" type="TextureRect" parent="Panel/ScrollContainer/VBoxContainer/Item4"]
+custom_minimum_size = Vector2(280, 280)
+layout_mode = 2
+texture = ExtResource("1_srha4")
+expand_mode = 1
+
+[node name="Label2" type="Label" parent="Panel/ScrollContainer/VBoxContainer/Item4"]
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_font_sizes/font_size = 33
+text = "300 COINS"
+
+[node name="Item5" type="VBoxContainer" parent="Panel/ScrollContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="Panel/ScrollContainer/VBoxContainer/Item5"]
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_font_sizes/font_size = 33
+text = "RING"
+
+[node name="TextureRect" type="TextureRect" parent="Panel/ScrollContainer/VBoxContainer/Item5"]
+custom_minimum_size = Vector2(280, 280)
+layout_mode = 2
+texture = ExtResource("1_srha4")
+expand_mode = 1
+
+[node name="Label2" type="Label" parent="Panel/ScrollContainer/VBoxContainer/Item5"]
 layout_mode = 2
 size_flags_horizontal = 4
 theme_override_font_sizes/font_size = 33
@@ -69,7 +112,7 @@ layout_mode = 2
 layout_mode = 2
 size_flags_horizontal = 4
 theme_override_font_sizes/font_size = 33
-text = "RING"
+text = "CROWN"
 
 [node name="TextureRect" type="TextureRect" parent="Panel/ScrollContainer/VBoxContainer/Item2"]
 custom_minimum_size = Vector2(280, 280)

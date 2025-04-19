@@ -32,7 +32,7 @@ func _process(delta):
 			air_effect.emitting = false
 
 	# --- Lava Background (5000–5999) ---
-	if depth_in_cycle >= 1000 and depth_in_cycle < 2000:
+	if depth_in_cycle >= 3000 and depth_in_cycle < 4000:
 		lava_bg.visible = true
 		main_bg.visible = false
 		# Disable jewel spawner when lava is active
@@ -44,7 +44,7 @@ func _process(delta):
 		jewel_spawner.set_lava_active(false)
 
 	# --- Show Warning Before Lava (4900–5000) ---
-	if depth_in_cycle >= 950 and depth_in_cycle < 1000:
+	if depth_in_cycle >= 2900 and depth_in_cycle < 3000:
 		if not warning_shown:
 			show_warning("DANGER\nAHEAD!")
 			warning_shown = true

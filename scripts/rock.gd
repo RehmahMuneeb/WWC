@@ -25,4 +25,4 @@ func _on_body_entered(body: Node2D) -> void:
 	print("Rock collided with: ", body.name)
 	if body.is_in_group("bucket"):
 		print("Rock collided with bucket! Game over!")
-		#get_tree().quit()
+		#get_tree().change_scene_to_file("res://scenes/main.tscn") 
