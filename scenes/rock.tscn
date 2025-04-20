@@ -1,7 +1,14 @@
-[gd_scene load_steps=4 format=3 uid="uid://dreaj536wlhxm"]
+[gd_scene load_steps=6 format=3 uid="uid://dreaj536wlhxm"]
 
+[ext_resource type="Shader" path="res://scenes/rock.gdshader" id="1_dv050"]
 [ext_resource type="Texture2D" uid="uid://fp4iws06mrnn" path="res://assets/rock.png" id="1_hpbej"]
 [ext_resource type="Script" path="res://scripts/rock.gd" id="1_y6rui"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_g30uh"]
+shader = ExtResource("1_dv050")
+shader_parameter/glow_color = Vector4(1, 0, 0, 1)
+shader_parameter/thickness = 8.0
+shader_parameter/blink_speed = 11.0
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_qkbiy"]
 radius = 32.249
@@ -13,9 +20,11 @@ fall_speed = 666.0
 horizontal_speed = 733.0
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
+material = SubResource("ShaderMaterial_g30uh")
 texture = ExtResource("1_hpbej")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+visible = false
 position = Vector2(-1, 1)
 shape = SubResource("CircleShape2D_qkbiy")
 
