@@ -1,6 +1,6 @@
 extends CharacterBody2D
 
-const SPEED = 500.0
+const SPEED = 533.0
 var is_dragging = false
 var drag_start_position = Vector2.ZERO
 var drag_previous_position = Vector2.ZERO

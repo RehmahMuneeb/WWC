@@ -65,13 +65,13 @@ func _process(delta):
 func update_rock_spawn_speed():
 	var depth = score % 12000
 	if depth >= 3000 and depth < 4000:
-		set_rock_spawn_rate(0.5)  # Lava 1
+		set_rock_spawn_rate(1.0)  # Lava 1
 	elif depth >= 7000 and depth < 8000:
 		set_rock_spawn_rate(0.3)  # Lava 2
 	elif depth >= 11000 and depth < 12000:
 		set_rock_spawn_rate(0.2)  # Lava 3
 	else:
-		set_rock_spawn_rate(3.0)  # Normal
+		set_rock_spawn_rate(3.5)  # Normal
 
 func set_rock_spawn_rate(rate: float):
 	if rock_timer.wait_time != rate:
