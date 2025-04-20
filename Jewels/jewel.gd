@@ -3,8 +3,12 @@ extends CharacterBody2D
 # Speed at which the jewel falls
 @export var fall_speed: float = 100
 
-# Speed at which the jewel moves horizontally
-@export var horizontal_speed: float = 50
+# Base horizontal speed (will be overridden with random on spawn)
+@export var horizontal_speed: float = 300
+
+# Minimum and maximum horizontal speed range
+@export var min_horizontal_speed: float = 100
+@export var max_horizontal_speed: float = 300
 
 # Direction of horizontal movement (1 for right, -1 for left)
 var horizontal_direction: int = 1
@@ -23,6 +27,9 @@ func _ready() -> void:
 
 	# Randomize the initial horizontal direction
 	horizontal_direction = 1 if randf() > 0.5 else -1
+
+	# Randomize the horizontal speed within the specified range
+	horizontal_speed = randf_range(min_horizontal_speed, max_horizontal_speed)
 
 	# Add the jewel to the "jewel" group
 	add_to_group("jewel")
