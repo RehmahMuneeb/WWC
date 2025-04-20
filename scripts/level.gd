@@ -3,75 +3,80 @@ extends Node2D
 var rock_scene: PackedScene = load("res://scenes/rock.tscn")
 
 var score = 0
-var in_danger_zone = false  # Flag to track danger zone status
-var reset_zone = false  # Flag for 1000m empty zone after 3000m
+var in_danger_zone = false
+var reset_zone = false
 
 @onready var rock_timer = $Rocks/RockTimer
 @onready var score_label = $UI/Score
 @onready var depth_bar = $UI/ProgressBar
-@onready var anim_player = $UI/ProgressBar/AnimationPlayer  # Correct path to AnimationPlayer
+@onready var anim_player = $UI/ProgressBar/AnimationPlayer
 
 func _ready():
 	score = 0
 	depth_bar.min_value = 0
-	depth_bar.max_value = 3000  # Fills from 0–3000, danger zone at 3000–4000
+	depth_bar.max_value = 3000
 	rock_timer.wait_time = 2.0
 	rock_timer.start()
 
-	# Set the fill bar color to red initially
 	var fill_stylebox = depth_bar.get("custom_styles/fill")
 	if fill_stylebox:
-		fill_stylebox.bg_color = Color(1, 0, 0)  # Red color
+		fill_stylebox.bg_color = Color(1, 0, 0)
 
 func _process(delta):
 	score += 1
 	score_label.text = str(score) + "m"
 
-	var cycle_pos = score % 4000
+	var cycle_pos = score % 12000
 
-	# When in the 0 to 3000m range, the bar fills as usual
-	if cycle_pos <= 3000:
-		depth_bar.value = cycle_pos
-		reset_zone = false  # Reset the empty zone flag
+	# Check if we're in a lava phase (1000m after every 3000m normal)
+	if (cycle_pos > 3000 and cycle_pos <= 4000) or (cycle_pos > 7000 and cycle_pos <= 8000) or (cycle_pos > 11000 and cycle_pos <= 12000):
+		# Danger zone
+		depth_bar.value = 0
+		reset_zone = true
 
-		# Exit danger zone
+		if not in_danger_zone:
+			in_danger_zone = true
+			anim_player.play("DangerPulse")
+
+	else:
+		# Normal fill zone
+		var zone_offset = 0
+		if cycle_pos <= 3000:
+			zone_offset = 0
+		elif cycle_pos <= 7000:
+			zone_offset = 4000
+		elif cycle_pos <= 11000:
+			zone_offset = 8000
+
+		depth_bar.value = cycle_pos - zone_offset
+		reset_zone = false
+
 		if in_danger_zone:
 			in_danger_zone = false
 			if anim_player.is_playing():
 				anim_player.stop()
-	
-			# Reset to red (as the default fill color is red)
+
 			var fill_stylebox = depth_bar.get("custom_styles/fill")
 			if fill_stylebox:
 				fill_stylebox.modulate = Color(1, 0, 0)
 
-	# After 3000m, set the bar empty until 4000m (1000m empty zone)
-	elif cycle_pos > 3000 and cycle_pos <= 4000:
-		depth_bar.value = 0
-		reset_zone = true  # We're in the 1000m empty zone
-
-		# Enter danger zone
-		if not in_danger_zone:
-			in_danger_zone = true
-			anim_player.play("DangerPulse")  # Start the pulse animation
-
-	# After 4000m, start refilling the bar again (back to 0–3000 range)
-	else:
-		depth_bar.value = cycle_pos - 3000  # Reset the value to begin filling after 4000m
-		reset_zone = false
-
 	update_rock_spawn_speed()
 
 func update_rock_spawn_speed():
-	var depth_in_cycle = score % 6000
-	if depth_in_cycle >= 3000 and depth_in_cycle < 4000:
-		if rock_timer.wait_time != 0.5:
-			rock_timer.wait_time = 0.5
-			rock_timer.start()
+	var depth = score % 12000
+	if depth >= 3000 and depth < 4000:
+		set_rock_spawn_rate(0.5)  # Lava 1
+	elif depth >= 7000 and depth < 8000:
+		set_rock_spawn_rate(0.3)  # Lava 2
+	elif depth >= 11000 and depth < 12000:
+		set_rock_spawn_rate(0.2)  # Lava 3
 	else:
-		if rock_timer.wait_time != 3.0:
-			rock_timer.wait_time = 3.0
-			rock_timer.start()
+		set_rock_spawn_rate(3.0)  # Normal
+
+func set_rock_spawn_rate(rate: float):
+	if rock_timer.wait_time != rate:
+		rock_timer.wait_time = rate
+		rock_timer.start()
 
 func _on_rock_timer_timeout():
 	var rock = rock_scene.instantiate()

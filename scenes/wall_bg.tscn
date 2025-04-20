@@ -68,6 +68,18 @@ material = SubResource("ShaderMaterial_c1xl2")
 position = Vector2(242, 427)
 texture = ExtResource("4_lmrhv")
 
+[node name="WallImg3" type="Sprite2D" parent="."]
+texture_repeat = 2
+material = SubResource("ShaderMaterial_c1xl2")
+position = Vector2(242, 427)
+texture = ExtResource("4_lmrhv")
+
+[node name="WallImg4" type="Sprite2D" parent="."]
+texture_repeat = 2
+material = SubResource("ShaderMaterial_c1xl2")
+position = Vector2(242, 427)
+texture = ExtResource("4_lmrhv")
+
 [node name="AirEffect" type="GPUParticles2D" parent="."]
 position = Vector2(352, 98)
 emitting = false
