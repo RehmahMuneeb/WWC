@@ -45,8 +45,6 @@ radius = 32.249
 [node name="Rock" type="Area2D"]
 collision_mask = 2
 script = ExtResource("1_y6rui")
-fall_speed = 666.0
-horizontal_speed = 733.0
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 material = SubResource("ShaderMaterial_g30uh")
