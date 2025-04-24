@@ -2,10 +2,8 @@ extends Node2D
 
 var rock_scene: PackedScene = load("res://scenes/rock.tscn")
 var normal_texture = preload("res://assets/rock.png")
-var lava2_texture = preload("res://assets/Lavarock88.png") # 7000–8000m
-var lava3_texture = preload("res://assets/Lava-stone-33.png") # 11000–12000m
-
-var glow_shader = preload("res://scenes/rock.gdshader") # Make sure this exists
+var lava2_texture = preload("res://assets/Lavarock88.png") # for 7000–8000m
+var lava3_texture = preload("res://assets/Lava-stone-33.png") # for 11000–12000m
 
 var score = 0
 var in_danger_zone = false
@@ -15,7 +13,7 @@ var reset_zone = false
 @onready var score_label = $UI/Score
 @onready var depth_bar = $UI/ProgressBar
 @onready var anim_player = $UI/ProgressBar/AnimationPlayer
-@onready var jewel_spawner = $JewelSpawner
+@onready var jewel_spawner = $JewelSpawner  # Reference to the Jewel Spawner Node
 
 func _ready():
 	score = 0
@@ -74,7 +72,7 @@ func update_rock_spawn_speed():
 	elif depth >= 11000 and depth < 12000:
 		set_rock_spawn_rate(0.4)
 	elif depth >= 1000 and depth < 2000:
-		set_rock_spawn_rate(1000.0) # Disable in ice zone
+		set_rock_spawn_rate(1000.0) # Effectively disable spawn
 	else:
 		set_rock_spawn_rate(3.5)
 
@@ -86,16 +84,13 @@ func set_rock_spawn_rate(rate: float):
 func _on_rock_timer_timeout():
 	var depth = score % 12000
 
+	# Prevent rock spawning in the Ice Zone
 	if depth >= 1000 and depth < 2000:
 		return
 
 	var rock = rock_scene.instantiate()
 	var sprite = rock.get_node("Sprite2D")
-
-	# Create shader material
-	var material = ShaderMaterial.new()
-	material.shader = glow_shader
-	sprite.material = material
+	var particles = sprite.get_node("GPUParticles2D") # ✅ make sure it's under Sprite2D
 
 	var zone = 1
 	if depth >= 7000 and depth < 8000:
@@ -105,27 +100,37 @@ func _on_rock_timer_timeout():
 
 	rock.set_zone(zone)
 
+	# Get the ProcessMaterial from the GPUParticles2D node
+	var particle_material = particles.process_material
+
+	# Update the particle color based on the zone
 	match zone:
 		1:
 			sprite.texture = normal_texture
-			material.set_shader_parameter("texture_type", 0)
+			particles.emitting = true
+			# Set particle color to white
+			particle_material.color = Color(1, 1, 1)  # White color
 			rock.fall_speed = rock.fall_speed_zone1
 			rock.horizontal_speed = rock.horizontal_speed_zone1
 		2:
 			sprite.texture = lava2_texture
-			material.set_shader_parameter("texture_type", 1)
+			particles.emitting = true
+			# Set particle color to orange
+			particle_material.color = Color(1, 0.6, 0)  # Lava-like orange color
 			rock.fall_speed = rock.fall_speed_zone2
 			rock.horizontal_speed = rock.horizontal_speed_zone2
 		3:
 			sprite.texture = lava3_texture
-			material.set_shader_parameter("texture_type", 2)
+			particles.emitting = true
+			# Set particle color to red
+			particle_material.color = Color(1, 0.2, 0)  # Lava-like red color
 			rock.fall_speed = rock.fall_speed_zone3
 			rock.horizontal_speed = rock.horizontal_speed_zone3
 
 	$Rocks.add_child(rock)
 
 func update_spawn_rate_based_on_zone(depth: int):
-	if depth >= 1000 and depth < 2000:
+	if depth >= 1000 and depth < 2000:  # Ice Zone
 		jewel_spawner.min_spawn_interval = 0.1
 		jewel_spawner.max_spawn_interval = 0.3
 	else:

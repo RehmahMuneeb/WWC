@@ -8,8 +8,7 @@
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_g30uh"]
 shader = ExtResource("1_dv050")
 shader_parameter/texture_type = 0
-shader_parameter/outline_color_lava1 = Vector4(1, 0, 0, 1)
-shader_parameter/outline_color_lava2 = Vector4(1, 0.5, 0, 1)
+shader_parameter/fire_color = Vector4(1, 0.5, 0, 1)
 shader_parameter/outline_thickness = 1.0
 
 [sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_i5qix"]
