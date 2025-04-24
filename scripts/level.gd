@@ -13,6 +13,7 @@ var reset_zone = false
 @onready var score_label = $UI/Score
 @onready var depth_bar = $UI/ProgressBar
 @onready var anim_player = $UI/ProgressBar/AnimationPlayer
+@onready var jewel_spawner = $JewelSpawner  # Reference to the Jewel Spawner Node
 
 func _ready():
 	score = 0
@@ -30,6 +31,9 @@ func _process(delta):
 	score_label.text = str(score) + "m"
 
 	var cycle_pos = score % 12000
+
+	# Update spawn rate based on zone
+	update_spawn_rate_based_on_zone(cycle_pos)
 
 	if (cycle_pos > 3000 and cycle_pos <= 4000) or (cycle_pos > 7000 and cycle_pos <= 8000) or (cycle_pos > 11000 and cycle_pos <= 12000):
 		depth_bar.value = 0
@@ -112,3 +116,13 @@ func _on_rock_timer_timeout():
 			rock.horizontal_speed = rock.horizontal_speed_zone3
 
 	$Rocks.add_child(rock)
+
+# Method to update spawn rate for jewels based on the player's current depth
+func update_spawn_rate_based_on_zone(depth: int):
+	if depth >= 1000 and depth < 2000:  # Ice Zone (1000m to 2000m)
+		jewel_spawner.min_spawn_interval = 0.1  # Faster spawn rate
+		jewel_spawner.max_spawn_interval = 0.3  # Faster spawn rate
+	else:
+		# Reset to default spawn rate for other zones
+		jewel_spawner.min_spawn_interval = 0.5
+		jewel_spawner.max_spawn_interval = 2.0
