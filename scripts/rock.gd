@@ -1,9 +1,23 @@
 extends Area2D
 
-var fall_speed: float = 100
-var horizontal_speed: float = 50
+@export var fall_speed_zone1: float = 200.0
+@export var horizontal_speed_zone1: float = 100.0
+
+@export var fall_speed_zone2: float = 150.0
+@export var horizontal_speed_zone2: float = 60.0
+
+@export var fall_speed_zone3: float = 120.0
+@export var horizontal_speed_zone3: float = 50.0
+
+var fall_speed: float = 100.0
+var horizontal_speed: float = 50.0
 var horizontal_direction: int = 1
+var zone = 1
+
 const MARGIN: int = 24
+
+func set_zone(value: int) -> void:
+	zone = value
 
 func _ready():
 	var rng := RandomNumberGenerator.new()
@@ -33,4 +47,3 @@ func _process(delta: float) -> void:
 func _on_body_entered(body: Node2D) -> void:
 	if body.is_in_group("bucket"):
 		print("Rock collided with bucket! Game over!")
-		# Handle game over logic here

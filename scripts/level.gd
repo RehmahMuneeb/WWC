@@ -3,7 +3,7 @@ extends Node2D
 var rock_scene: PackedScene = load("res://scenes/rock.tscn")
 var normal_texture = preload("res://assets/rock.png")
 var lava2_texture = preload("res://assets/Lavarock88.png") # for 7000–8000m
-var lava3_texture = preload("res://assets/rock.png") # for 11000–12000m
+var lava3_texture = preload("res://assets/rock.png")       # for 11000–12000m
 
 var score = 0
 var in_danger_zone = false
@@ -13,15 +13,6 @@ var reset_zone = false
 @onready var score_label = $UI/Score
 @onready var depth_bar = $UI/ProgressBar
 @onready var anim_player = $UI/ProgressBar/AnimationPlayer
-
-@export var horizontal_speed: float = 100.0
-@export var fall_speed: float = 200.0
-
-@export var horizontal_speed_lava2: float = 60.0   # for 7000–8000m
-@export var fall_speed_lava2: float = 150.0
-
-@export var horizontal_speed_lava3: float = 50.0   # for 11000–12000m
-@export var fall_speed_lava3: float = 120.0
 
 func _ready():
 	score = 0
@@ -39,16 +30,6 @@ func _process(delta):
 	score_label.text = str(score) + "m"
 
 	var cycle_pos = score % 12000
-
-	if cycle_pos >= 7000 and cycle_pos < 8000:
-		horizontal_speed = horizontal_speed_lava2
-		fall_speed = fall_speed_lava2
-	elif cycle_pos >= 11000 and cycle_pos < 12000:
-		horizontal_speed = horizontal_speed_lava3
-		fall_speed = fall_speed_lava3
-	else:
-		horizontal_speed = 100.0
-		fall_speed = 200.0
 
 	if (cycle_pos > 3000 and cycle_pos <= 4000) or (cycle_pos > 7000 and cycle_pos <= 8000) or (cycle_pos > 11000 and cycle_pos <= 12000):
 		depth_bar.value = 0
@@ -85,9 +66,9 @@ func update_rock_spawn_speed():
 	if depth >= 3000 and depth < 4000:
 		set_rock_spawn_rate(1.0)
 	elif depth >= 7000 and depth < 8000:
-		set_rock_spawn_rate(0.3)
+		set_rock_spawn_rate(0.8)
 	elif depth >= 11000 and depth < 12000:
-		set_rock_spawn_rate(0.2)
+		set_rock_spawn_rate(0.4)
 	else:
 		set_rock_spawn_rate(3.5)
 
@@ -101,18 +82,27 @@ func _on_rock_timer_timeout():
 	var sprite = rock.get_node("Sprite2D")
 
 	var depth = score % 12000
+	var zone = 1
 
 	if depth >= 7000 and depth < 8000:
-		sprite.texture = lava2_texture
-		rock.fall_speed = fall_speed_lava2
-		rock.horizontal_speed = horizontal_speed_lava2
+		zone = 2
 	elif depth >= 11000 and depth < 12000:
-		sprite.texture = lava3_texture
-		rock.fall_speed = fall_speed_lava3
-		rock.horizontal_speed = horizontal_speed_lava3
-	else:
-		sprite.texture = normal_texture
-		rock.fall_speed = fall_speed
-		rock.horizontal_speed = horizontal_speed
+		zone = 3
+
+	rock.set_zone(zone)
+
+	match zone:
+		1:
+			sprite.texture = normal_texture
+			rock.fall_speed = rock.fall_speed_zone1
+			rock.horizontal_speed = rock.horizontal_speed_zone1
+		2:
+			sprite.texture = lava2_texture
+			rock.fall_speed = rock.fall_speed_zone2
+			rock.horizontal_speed = rock.horizontal_speed_zone2
+		3:
+			sprite.texture = lava3_texture
+			rock.fall_speed = rock.fall_speed_zone3
+			rock.horizontal_speed = rock.horizontal_speed_zone3
 
 	$Rocks.add_child(rock)
