@@ -4,7 +4,8 @@ extends Node2D
 @onready var main_bg = $WallImg         # Normal background
 @onready var lava_bg = $WallImg2        # Lava 1 background
 @onready var lava_bg2 = $WallImg3       # Lava 2 background
-@onready var lava_bg3 = $WallImg4     # Lava 3 background
+@onready var lava_bg3 = $WallImg4       # Lava 3 background
+@onready var ice_bg =   $WallImg5   # Ice background
 @onready var warning_label = $WarningLabel
 @onready var jewel_spawner = $"../JewelSpawner"
 
@@ -18,6 +19,7 @@ func _ready():
 	lava_bg.visible = false
 	lava_bg2.visible = false
 	lava_bg3.visible = false
+	ice_bg.visible = false
 	warning_label.visible = false
 	warning_label.modulate.a = 0.0
 
@@ -39,20 +41,24 @@ func _process(delta):
 	if depth >= 3000 and depth < 4000:
 		_set_lava_zone(1)
 		jewel_spawner.set_lava_active(true)
-	# Lava 2: 6000–6999
+	# Lava 2: 7000–7999
 	elif depth >= 7000 and depth < 8000:
 		_set_lava_zone(2)
 		jewel_spawner.set_lava_active(true)
-	# Lava 3: 9000–9999
+	# Lava 3: 11000–11999
 	elif depth >= 11000 and depth < 12000:
 		_set_lava_zone(3)
 		jewel_spawner.set_lava_active(true)
+	# Ice: 5000–5999
+	elif depth >= 1000 and depth < 2000:
+		_set_lava_zone(4)
+		jewel_spawner.set_lava_active(false)  # Or true if ice affects spawning
 	else:
 		_set_lava_zone(0)
 		jewel_spawner.set_lava_active(false)
 
-	# Warning zones before lava
-	if (depth >= 2900 and depth < 3000) or (depth >= 5900 and depth < 6000) or (depth >= 8900 and depth < 9000):
+	# Warning zones before lava/ice
+	if (depth >= 2900 and depth < 3000) or (depth >= 4900 and depth < 5000) or (depth >= 5900 and depth < 6000) or (depth >= 8900 and depth < 9000):
 		if not warning_shown:
 			show_warning("DANGER\nAHEAD!")
 			warning_shown = true
@@ -64,6 +70,7 @@ func _set_lava_zone(zone: int):
 	lava_bg.visible = (zone == 1)
 	lava_bg2.visible = (zone == 2)
 	lava_bg3.visible = (zone == 3)
+	ice_bg.visible = (zone == 4)
 
 func show_warning(text: String):
 	warning_label.text = text

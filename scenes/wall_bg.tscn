@@ -1,10 +1,11 @@
-[gd_scene load_steps=15 format=3 uid="uid://be3ml7efg7568"]
+[gd_scene load_steps=16 format=3 uid="uid://be3ml7efg7568"]
 
 [ext_resource type="Script" path="res://scenes/Background.gd" id="1_5afwl"]
 [ext_resource type="Shader" path="res://scenes/wall_bg.gdshader" id="1_lt5r1"]
 [ext_resource type="Texture2D" uid="uid://y75dd18x8oyj" path="res://scenes/stone-seamless-pattern-stone-wall-texture-solid-background-rock-pattern-gray-rough-surface_1150412-2275.jpg" id="2_7mnps"]
 [ext_resource type="Texture2D" uid="uid://c63him66v8lho" path="res://Lava B.jpg" id="4_lmrhv"]
 [ext_resource type="Script" path="res://scenes/wall_img.gd" id="4_qb60b"]
+[ext_resource type="Texture2D" uid="uid://nuj2a5n2fvn4" path="res://assets/Ice Wallpaper 2.png" id="5_av1f8"]
 [ext_resource type="FontFile" uid="uid://b2clys7lbyd3t" path="res://scenes/Kid Games.ttf" id="5_b7862"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_c1xl2"]
@@ -68,6 +69,13 @@ material = SubResource("ShaderMaterial_c1xl2")
 position = Vector2(242, 422.5)
 scale = Vector2(1, 1.08009)
 texture = ExtResource("4_lmrhv")
+
+[node name="WallImg5" type="Sprite2D" parent="."]
+texture_repeat = 2
+material = SubResource("ShaderMaterial_c1xl2")
+position = Vector2(242, 422.5)
+scale = Vector2(1, 1.08009)
+texture = ExtResource("5_av1f8")
 
 [node name="WallImg3" type="Sprite2D" parent="."]
 texture_repeat = 2

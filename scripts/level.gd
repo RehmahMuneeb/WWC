@@ -3,7 +3,7 @@ extends Node2D
 var rock_scene: PackedScene = load("res://scenes/rock.tscn")
 var normal_texture = preload("res://assets/rock.png")
 var lava2_texture = preload("res://assets/Lavarock88.png") # for 7000–8000m
-var lava3_texture = preload("res://assets/Lava-stone-33.png")       # for 11000–12000m
+var lava3_texture = preload("res://assets/Lava-stone-33.png") # for 11000–12000m
 
 var score = 0
 var in_danger_zone = false
@@ -69,6 +69,8 @@ func update_rock_spawn_speed():
 		set_rock_spawn_rate(0.6)
 	elif depth >= 11000 and depth < 12000:
 		set_rock_spawn_rate(0.4)
+	elif depth >= 1000 and depth < 2000:
+		set_rock_spawn_rate(1000.0) # Effectively disable spawn
 	else:
 		set_rock_spawn_rate(3.5)
 
@@ -78,12 +80,16 @@ func set_rock_spawn_rate(rate: float):
 		rock_timer.start()
 
 func _on_rock_timer_timeout():
+	var depth = score % 12000
+
+	# Prevent rock spawning in the Ice Zone
+	if depth >= 1000 and depth < 2000:
+		return
+
 	var rock = rock_scene.instantiate()
 	var sprite = rock.get_node("Sprite2D")
 
-	var depth = score % 12000
 	var zone = 1
-
 	if depth >= 7000 and depth < 8000:
 		zone = 2
 	elif depth >= 11000 and depth < 12000:
