@@ -46,9 +46,9 @@ radius = 32.249
 collision_mask = 2
 script = ExtResource("1_y6rui")
 fall_speed_zone1 = 700.0
-horizontal_speed_zone1 = 350.0
-fall_speed_zone2 = 777.0
-horizontal_speed_zone2 = 333.0
+horizontal_speed_zone1 = 444.0
+fall_speed_zone2 = 888.0
+horizontal_speed_zone2 = 444.0
 fall_speed_zone3 = 444.0
 horizontal_speed_zone3 = 0.0
 
@@ -66,7 +66,6 @@ lifetime = 0.2
 speed_scale = 1.5
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-visible = false
 position = Vector2(-1, 1)
 shape = SubResource("CircleShape2D_qkbiy")
 

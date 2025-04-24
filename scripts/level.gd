@@ -3,7 +3,7 @@ extends Node2D
 var rock_scene: PackedScene = load("res://scenes/rock.tscn")
 var normal_texture = preload("res://assets/rock.png")
 var lava2_texture = preload("res://assets/Lavarock88.png") # for 7000–8000m
-var lava3_texture = preload("res://assets/rock.png")       # for 11000–12000m
+var lava3_texture = preload("res://assets/Lava-stone-33.png")       # for 11000–12000m
 
 var score = 0
 var in_danger_zone = false
@@ -66,7 +66,7 @@ func update_rock_spawn_speed():
 	if depth >= 3000 and depth < 4000:
 		set_rock_spawn_rate(1.0)
 	elif depth >= 7000 and depth < 8000:
-		set_rock_spawn_rate(0.8)
+		set_rock_spawn_rate(0.6)
 	elif depth >= 11000 and depth < 12000:
 		set_rock_spawn_rate(0.4)
 	else:

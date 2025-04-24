@@ -65,7 +65,8 @@ script = ExtResource("4_qb60b")
 [node name="WallImg2" type="Sprite2D" parent="."]
 texture_repeat = 2
 material = SubResource("ShaderMaterial_c1xl2")
-position = Vector2(242, 427)
+position = Vector2(242, 422.5)
+scale = Vector2(1, 1.08009)
 texture = ExtResource("4_lmrhv")
 
 [node name="WallImg3" type="Sprite2D" parent="."]
