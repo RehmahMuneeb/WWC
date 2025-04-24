@@ -1,27 +1,34 @@
 shader_type canvas_item;
 
-uniform vec4 glow_color = vec4(1.0, 0.0, 0.0, 1.0); // Red
-uniform float thickness = 1.0;
-uniform float blink_speed = 6.0; // Fast blink
+uniform int texture_type = 0; // 0: Lava1 (Red), 1: Lava2 (Fire), 2: Lava3 (None)
+uniform vec4 outline_color_lava1 = vec4(1.0, 0.0, 0.0, 1.0);      // Red
+uniform vec4 outline_color_lava2 = vec4(1.0, 0.5, 0.0, 1.0);      // Fire/Orange
+uniform float outline_thickness = 1.0;
 
 void fragment() {
-    vec4 tex = texture(TEXTURE, UV);
-    float a = tex.a;
+	vec4 tex = texture(TEXTURE, UV);
 
-    // Glow sample offset
-    float glow = 0.0;
-    glow += texture(TEXTURE, UV + vec2(thickness, 0.0) / 100.0).a;
-    glow += texture(TEXTURE, UV + vec2(-thickness, 0.0) / 100.0).a;
-    glow += texture(TEXTURE, UV + vec2(0.0, thickness) / 100.0).a;
-    glow += texture(TEXTURE, UV + vec2(0.0, -thickness) / 100.0).a;
+	// If visible pixel, draw normally
+	if (tex.a > 0.1) {
+		COLOR = tex;
+	}
+	else {
+		// Skip outline for Lava3
+		if (texture_type == 2) {
+			COLOR = vec4(0.0);
+		} else {
+			float alpha_sum = 0.0;
+			alpha_sum += texture(TEXTURE, UV + vec2(outline_thickness, 0.0) / 100.0).a;
+			alpha_sum += texture(TEXTURE, UV + vec2(-outline_thickness, 0.0) / 100.0).a;
+			alpha_sum += texture(TEXTURE, UV + vec2(0.0, outline_thickness) / 100.0).a;
+			alpha_sum += texture(TEXTURE, UV + vec2(0.0, -outline_thickness) / 100.0).a;
 
-    // Smooth blinking (from red to transparent)
-    float blink = abs(sin(TIME * blink_speed)); // Smooth blink, fade from 0 to 1
-
-    // If current pixel is transparent, but neighbors have alpha, add smooth red glow
-    if (a < 0.1 && glow > 0.6) {
-        COLOR = glow_color * blink; // Apply the smooth blink effect
-    } else {
-        COLOR = tex; // Keep original texture
-    }
+			if (alpha_sum > 0.1) {
+				vec4 outline_color = texture_type == 1 ? outline_color_lava2 : outline_color_lava1;
+				COLOR = outline_color;
+			} else {
+				COLOR = vec4(0.0);
+			}
+		}
+	}
 }
