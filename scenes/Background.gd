@@ -1,33 +1,38 @@
 extends Node2D
 
 @onready var air_effect = $AirEffect
-@onready var main_bg = $WallImg         # Normal background
-@onready var lava_bg = $WallImg2        # Lava 1 background
-@onready var lava_bg2 = $WallImg3       # Lava 2 background
-@onready var lava_bg3 = $WallImg4       # Lava 3 background
-@onready var ice_bg =   $WallImg5   # Ice background
+@onready var normal_bg = $WallImg  # Normal background
+@onready var lava_bg = $WallImg2    # Single lava background for all danger zones
+@onready var ice_bg = $WallImg5      # Ice background
 @onready var warning_label = $WarningLabel
 @onready var jewel_spawner = $"../JewelSpawner"
 
+var main_script: Node
 var score = 0
 var warning_shown = false
+var last_warning_zone = -1
 
 func _ready():
+	main_script = get_parent()  # Main script is parent node
 	air_effect.visible = false
 	air_effect.emitting = false
-	main_bg.visible = true
+	normal_bg.visible = true
 	lava_bg.visible = false
-	lava_bg2.visible = false
-	lava_bg3.visible = false
 	ice_bg.visible = false
 	warning_label.visible = false
 	warning_label.modulate.a = 0.0
 
 func _process(delta):
-	score += 1
+	score = main_script.score  # Sync score with main script
 	var depth = score % 12000
-
-	# Air effect: 2000–2999
+	
+	# Check for upcoming danger zones (100m before)
+	_check_upcoming_danger_zones(depth)
+	
+	# Check current zone and update background
+	_update_background_based_on_zone(depth)
+	
+	# Air effect: 2000-2999
 	if depth >= 2000 and depth < 3000:
 		if not air_effect.emitting:
 			air_effect.visible = true
@@ -37,40 +42,46 @@ func _process(delta):
 			air_effect.visible = false
 			air_effect.emitting = false
 
-	# Lava 1: 3000–3999
-	if depth >= 3000 and depth < 4000:
-		_set_lava_zone(1)
+func _check_upcoming_danger_zones(depth: int):
+	# Check all zones for upcoming danger (100m before)
+	for i in range(main_script.zone_depths.size()):
+		var zone_start = main_script.zone_depths[i]
+		var warning_start = zone_start - 100
+		
+		# Check if we're in the warning zone but haven't shown the warning yet
+		if depth >= warning_start and depth < zone_start and last_warning_zone != i:
+			show_warning("DANGER\nAHEAD!")
+			last_warning_zone = i
+			break
+		# Reset warning tracking when we pass the zone
+		elif depth >= zone_start and last_warning_zone == i:
+			last_warning_zone = -1
+
+func _update_background_based_on_zone(depth: int):
+	var in_danger_zone = false
+	
+	# Check if we're in any danger zone
+	for i in range(main_script.zone_depths.size()):
+		if depth >= main_script.zone_depths[i] and depth < main_script.zone_depths[i] + main_script.zone_width:
+			in_danger_zone = true
+			break
+	
+	# Ice zone (special case)
+	if depth >= 1000 and depth < 2000:
+		_set_background_zone(2)  # Ice
+		jewel_spawner.set_lava_active(false)
+	elif in_danger_zone:
+		_set_background_zone(1)  # Lava (all danger zones use same background)
 		jewel_spawner.set_lava_active(true)
-	# Lava 2: 7000–7999
-	elif depth >= 7000 and depth < 8000:
-		_set_lava_zone(2)
-		jewel_spawner.set_lava_active(true)
-	# Lava 3: 11000–11999
-	elif depth >= 11000 and depth < 12000:
-		_set_lava_zone(3)
-		jewel_spawner.set_lava_active(true)
-	# Ice: 5000–5999
-	elif depth >= 1000 and depth < 2000:
-		_set_lava_zone(4)
-		jewel_spawner.set_lava_active(false)  # Or true if ice affects spawning
 	else:
-		_set_lava_zone(0)
+		_set_background_zone(0)  # Normal
 		jewel_spawner.set_lava_active(false)
 
-	# Warning zones before lava/ice
-	if (depth >= 2900 and depth < 3000) or (depth >= 4900 and depth < 5000) or (depth >= 5900 and depth < 6000) or (depth >= 8900 and depth < 9000):
-		if not warning_shown:
-			show_warning("DANGER\nAHEAD!")
-			warning_shown = true
-	else:
-		warning_shown = false
-
-func _set_lava_zone(zone: int):
-	main_bg.visible = (zone == 0)
+func _set_background_zone(zone: int):
+	# 0 = Normal, 1 = Lava, 2 = Ice
+	normal_bg.visible = (zone == 0)
 	lava_bg.visible = (zone == 1)
-	lava_bg2.visible = (zone == 2)
-	lava_bg3.visible = (zone == 3)
-	ice_bg.visible = (zone == 4)
+	ice_bg.visible = (zone == 2)
 
 func show_warning(text: String):
 	warning_label.text = text

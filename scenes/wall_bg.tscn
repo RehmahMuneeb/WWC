@@ -78,12 +78,14 @@ scale = Vector2(1, 1.08009)
 texture = ExtResource("5_av1f8")
 
 [node name="WallImg3" type="Sprite2D" parent="."]
+visible = false
 texture_repeat = 2
 material = SubResource("ShaderMaterial_c1xl2")
 position = Vector2(242, 427)
 texture = ExtResource("4_lmrhv")
 
 [node name="WallImg4" type="Sprite2D" parent="."]
+visible = false
 texture_repeat = 2
 material = SubResource("ShaderMaterial_c1xl2")
 position = Vector2(242, 427)
