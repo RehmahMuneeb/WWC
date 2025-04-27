@@ -138,7 +138,7 @@ func update_rock_spawn_speed(depth: int):
 			match zone_types[i]:
 				0: spawn_rate = 1.0   # Normal rock zone
 				1: spawn_rate = 0.6   # Lava zone 1
-				2: spawn_rate = 0.4   # Lava zone 2
+				2: spawn_rate = 0.5   # Lava zone 2
 			break
 	
 	# Special case for ice zone
@@ -205,7 +205,7 @@ func _on_rock_timer_timeout():
 	$Rocks.add_child(rock)
 
 func update_spawn_rate_based_on_zone(depth: int):
-	if depth >= 1000 and depth < 2000:  # Ice Zone
+	if depth >= 10000 and depth < 11000:  # Ice Zone
 		jewel_spawner.min_spawn_interval = 0.1
 		jewel_spawner.max_spawn_interval = 0.3
 	else:

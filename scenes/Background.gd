@@ -67,7 +67,7 @@ func _update_background_based_on_zone(depth: int):
 			break
 	
 	# Ice zone (special case)
-	if depth >= 1000 and depth < 2000:
+	if depth >= 10000 and depth < 11000:
 		_set_background_zone(2)  # Ice
 		jewel_spawner.set_lava_active(false)
 	elif in_danger_zone:
