@@ -49,7 +49,7 @@ func randomize_zones():
 	zone_types = types.duplicate()
 	
 	# Calculate available space (after safe start area)
-	var available_space = 12000 - safe_start_area - (total_zones * zone_width) - ((total_zones - 1) * min_zone_gap)
+	var available_space = 11000 - safe_start_area - (total_zones * zone_width) - ((total_zones - 1) * min_zone_gap)
 	
 	# Create random split points for the available space
 	var positions = []
@@ -76,7 +76,7 @@ func _process(delta):
 	score += 1
 	score_label.text = str(score) + "m"
 	
-	var cycle_pos = score % 12000
+	var cycle_pos = score % 11000
 	
 	# Check if we're in any danger zone
 	var in_any_danger_zone = false
@@ -113,7 +113,7 @@ func _process(delta):
 		
 		if not zone_found:
 			depth_bar.value = cycle_pos
-			depth_bar.max_value = 12000
+			depth_bar.max_value = 11000
 		
 		reset_zone = false
 		
@@ -142,7 +142,7 @@ func update_rock_spawn_speed(depth: int):
 			break
 	
 	# Special case for ice zone
-	if depth >= 1000 and depth < 2000:
+	if depth >= 10000 and depth < 11000:
 		spawn_rate = 1000.0  # Effectively disable spawn
 	
 	set_rock_spawn_rate(spawn_rate)
@@ -153,10 +153,10 @@ func set_rock_spawn_rate(rate: float):
 		rock_timer.start()
 
 func _on_rock_timer_timeout():
-	var depth = score % 12000
+	var depth = score % 11000
 
 	# Prevent rock spawning in the Ice Zone
-	if depth >= 1000 and depth < 2000:
+	if depth >= 10000 and depth < 11000:
 		return
 
 	var rock = rock_scene.instantiate()
