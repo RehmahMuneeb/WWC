@@ -1,9 +1,9 @@
 extends Node2D
 
 @onready var air_effect = $AirEffect
-@onready var normal_bg = $WallImg  # Normal background
-@onready var lava_bg = $WallImg2   # Lava background for all danger zones
-@onready var ice_bg = $WallImg5    # Ice background
+@onready var normal_bg = $WallImg
+@onready var lava_bg = $WallImg2
+@onready var ice_bg = $WallImg5
 @onready var warning_label = $WarningLabel
 @onready var jewel_spawner = $"../JewelSpawner"
 
@@ -11,6 +11,16 @@ var main_script: Node
 var score = 0
 var warning_shown = false
 var last_warning_zone = -1
+
+# Shake effect
+var shake_timer = 0.0
+var shake_duration = 0.8
+var shake_strength = 22.0
+var last_zone = -1
+var original_position = Vector2.ZERO
+var original_rotation = 0.0
+var shaking = false  # Flag to check if shaking is in progress
+var background_changed = false  # Flag to track if the background has changed
 
 func _ready():
 	main_script = get_parent()
@@ -22,14 +32,16 @@ func _ready():
 	warning_label.visible = false
 	warning_label.modulate.a = 0.0
 
+	original_position = position
+	original_rotation = rotation
+
 func _process(delta):
 	score = main_script.score
 	var depth = score % 11000
-	
+
 	_check_upcoming_danger_zones(depth)
 	_update_background_based_on_zone(depth)
 
-	# Air effect: 2000-2999
 	if depth >= 2000 and depth < 3000:
 		if not air_effect.emitting:
 			air_effect.visible = true
@@ -38,6 +50,22 @@ func _process(delta):
 		if air_effect.emitting:
 			air_effect.visible = false
 			air_effect.emitting = false
+
+	# Apply shake only after the background has changed
+	if background_changed and shake_timer > 0:
+		shake_timer -= delta
+		var offset = Vector2(randf_range(-1, 1), randf_range(-1, 1)) * shake_strength
+		var angle = deg_to_rad(randf_range(-3, 3))  # Small rotation shake
+		position = original_position + offset
+		rotation = original_rotation + angle
+		shaking = true
+	else:
+		if shaking:
+			# Once shaking ends, change background
+			_set_background_zone(last_zone)
+			shaking = false
+		position = original_position
+		rotation = original_rotation
 
 func _check_upcoming_danger_zones(depth: int):
 	for i in range(main_script.zone_depths.size()):
@@ -53,27 +81,34 @@ func _check_upcoming_danger_zones(depth: int):
 
 func _update_background_based_on_zone(depth: int):
 	var in_danger_zone = false
-	
+
 	for i in range(main_script.zone_depths.size()):
 		if depth >= main_script.zone_depths[i] and depth < main_script.zone_depths[i] + main_script.zone_width:
 			in_danger_zone = true
 			break
 
-	# Ice zone now recurs every 11000m, from 10000 to 10999
 	var in_ice_zone = depth >= 10000 and depth < 11000
 
 	if in_ice_zone:
-		_set_background_zone(2)  # Ice
+		_trigger_background_change(2)
 		jewel_spawner.set_lava_active(false)
 	elif in_danger_zone:
-		_set_background_zone(1)  # Lava
+		_trigger_background_change(1)
 		jewel_spawner.set_lava_active(true)
 	else:
-		_set_background_zone(0)  # Normal
+		_trigger_background_change(0)
 		jewel_spawner.set_lava_active(false)
 
+func _trigger_background_change(zone: int):
+	# Trigger shake and wait for it to finish before changing background
+	if zone != last_zone:
+		if last_zone != -1:  # Only trigger shake if it's not the initial background
+			shake_timer = shake_duration
+		last_zone = zone
+		background_changed = true  # Mark that the background has changed
+
 func _set_background_zone(zone: int):
-	# 0 = Normal, 1 = Lava, 2 = Ice
+	# Apply the new background
 	normal_bg.visible = (zone == 0)
 	lava_bg.visible = (zone == 1)
 	ice_bg.visible = (zone == 2)

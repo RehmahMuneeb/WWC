@@ -145,10 +145,12 @@ LAVA"
 horizontal_alignment = 1
 
 [node name="CanvasModulate" type="CanvasModulate" parent="."]
+visible = false
 position = Vector2(9, 15)
 color = Color(0.347817, 0.347817, 0.347817, 1)
 
 [node name="PointLight2D" type="PointLight2D" parent="."]
+visible = false
 position = Vector2(238.5, 553.5)
 scale = Vector2(7.0625, 16.8625)
 texture = ExtResource("8_h5esd")
