@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=3 uid="uid://be3ml7efg7568"]
+[gd_scene load_steps=17 format=3 uid="uid://be3ml7efg7568"]
 
 [ext_resource type="Script" path="res://scenes/Background.gd" id="1_5afwl"]
 [ext_resource type="Shader" path="res://scenes/wall_bg.gdshader" id="1_lt5r1"]
@@ -7,6 +7,7 @@
 [ext_resource type="Script" path="res://scenes/wall_img.gd" id="4_qb60b"]
 [ext_resource type="Texture2D" uid="uid://nuj2a5n2fvn4" path="res://assets/Ice Wallpaper 2.png" id="5_av1f8"]
 [ext_resource type="FontFile" uid="uid://b2clys7lbyd3t" path="res://scenes/Kid Games.ttf" id="5_b7862"]
+[ext_resource type="Texture2D" uid="uid://pbk1y8agfh5" path="res://assets/796.jpg" id="8_h5esd"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_c1xl2"]
 shader = ExtResource("1_lt5r1")
@@ -142,3 +143,14 @@ theme_override_font_sizes/font_size = 77
 text = "WARNING
 LAVA"
 horizontal_alignment = 1
+
+[node name="CanvasModulate" type="CanvasModulate" parent="."]
+position = Vector2(9, 15)
+color = Color(0.111197, 0.111197, 0.111197, 1)
+
+[node name="PointLight2D" type="PointLight2D" parent="."]
+position = Vector2(240.5, 548)
+scale = Vector2(8.1625, 17)
+energy = 1.46
+texture = ExtResource("8_h5esd")
+texture_scale = 0.01
