@@ -146,11 +146,10 @@ horizontal_alignment = 1
 
 [node name="CanvasModulate" type="CanvasModulate" parent="."]
 position = Vector2(9, 15)
-color = Color(0.111197, 0.111197, 0.111197, 1)
+color = Color(0.347817, 0.347817, 0.347817, 1)
 
 [node name="PointLight2D" type="PointLight2D" parent="."]
-position = Vector2(240.5, 548)
-scale = Vector2(8.1625, 17)
-energy = 1.46
+position = Vector2(238.5, 553.5)
+scale = Vector2(7.0625, 16.8625)
 texture = ExtResource("8_h5esd")
 texture_scale = 0.01
