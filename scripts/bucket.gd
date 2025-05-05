@@ -79,9 +79,10 @@ func _on_body_entered(body: Node2D) -> void:
 			body.queue_free()
 			
 			collected_jewels += 1  
-			Global.score += 50
+			Global.pending_score += 50
 			Global.save_game()  # Save progress
-			print("Jewel collected! Score saved.")
+			print("Jewel collected! Score will be added gradually.")
+
 
 			# Check if bucket is full
 			#if collected_jewels >= Global.bucket_capacity:

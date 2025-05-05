@@ -47,3 +47,7 @@ func _process(delta: float) -> void:
 func _on_body_entered(body: Node2D) -> void:
 	if body.is_in_group("bucket"):
 		print("Rock collided with bucket! Game over!")
+		call_deferred("_change_to_back_menu")
+
+func _change_to_back_menu():
+	get_tree().change_scene_to_file("res://back_menu.tscn")

@@ -32,11 +32,7 @@ func _on_spawn_timer_timeout() -> void:
 	if remaining > 0:
 		spawn_jewel()
 
-		# 30% chance to spawn a second jewel shortly after
-		#if remaining > 1 and randf() < 0.3:
-			#var delay = randf_range(0.5, 0.8)
-			#await get_tree().create_timer(delay).timeout
-			#spawn_jewel()
+
 
 	start_spawn_timer()
 
