@@ -49,6 +49,7 @@ theme_override_font_sizes/font_size = 62
 text = "PLAY AGAIN"
 
 [node name="Bucket Capacity2" type="Panel" parent="."]
+layout_mode = 0
 offset_left = 5.0
 offset_top = 1.0
 offset_right = 482.0
@@ -75,7 +76,7 @@ offset_top = 195.0
 offset_right = 453.0
 offset_bottom = 222.0
 
-[node name="TextureRect2" type="TextureRect" parent="Bucket Capacity2"]
+[node name="Bucket" type="TextureRect" parent="Bucket Capacity2"]
 layout_mode = 1
 anchors_preset = 7
 anchor_left = 0.5
@@ -102,6 +103,7 @@ text = "+300"
 script = ExtResource("4_07lmm")
 
 [node name="AD BAR" type="Panel" parent="."]
+layout_mode = 0
 offset_left = -2.0
 offset_top = 388.0
 offset_right = 469.0
@@ -127,13 +129,14 @@ theme_override_font_sizes/font_size = 68
 text = "300 * 3 =  900"
 
 [node name="AD BAR2" type="Panel" parent="."]
+layout_mode = 0
 offset_left = 694.0
 offset_top = 444.0
 offset_right = 1169.0
 offset_bottom = 607.0
 theme_override_styles/panel = SubResource("StyleBoxFlat_mymcd")
 
-[node name="TextureRect" type="TextureRect" parent="AD BAR2"]
+[node name="Chest" type="TextureRect" parent="AD BAR2"]
 layout_mode = 1
 anchors_preset = 7
 anchor_left = 0.5
@@ -148,6 +151,11 @@ grow_horizontal = 2
 grow_vertical = 0
 texture = ExtResource("4_mx43w")
 expand_mode = 1
+
+[node name="GemContainer" type="VBoxContainer" parent="."]
+layout_mode = 0
+offset_right = 467.0
+offset_bottom = 238.0
 
 [connection signal="pressed" from="MainMenu" to="." method="_on_main_menu_pressed"]
 [connection signal="pressed" from="PlayAgain" to="." method="_on_play_again_pressed"]
