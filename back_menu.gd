@@ -15,6 +15,8 @@ const FAST_SPEED := 0.2
 var speed_increased := false
 
 var current_session_score := 0
+var skip_animation := false
+var animation_running := false
 
 func _ready():
 	current_session_score = 0
@@ -40,10 +42,16 @@ func _input(event):
 		print("Animation speed increased permanently")
 
 func animate_gems_with_float_motion() -> void:
+	animation_running = true
 	var score_per_gem := 10
 
 	for gem_texture in Global.collected_gems:
 		if gem_texture == null:
+			continue
+
+		if skip_animation:
+			current_session_score += score_per_gem
+			Global.score += score_per_gem
 			continue
 
 		var gem = TextureRect.new()
@@ -63,6 +71,8 @@ func animate_gems_with_float_motion() -> void:
 		var frequency := 3.0
 
 		while elapsed < duration:
+			if skip_animation:
+				break
 			var t := elapsed / duration
 			var linear = start_pos.lerp(end_pos, t)
 			var offset = Vector2(0, sin(t * PI * frequency) * -amplitude)
@@ -74,13 +84,15 @@ func animate_gems_with_float_motion() -> void:
 
 		current_session_score += score_per_gem
 		Global.score += score_per_gem
-
-		# Update only this label
 		gem_score_label.text = "+%d" % current_session_score
 
 		update_chest_progress()
-		show_score_popup("+%d" % score_per_gem, chest_icon.get_global_position())
-		await get_tree().create_timer(0.2 * animation_speed).timeout
+
+		if not skip_animation:
+			show_score_popup("+%d" % score_per_gem, chest_icon.get_global_position())
+			await get_tree().create_timer(0.2 * animation_speed).timeout
+
+	animation_running = false
 
 func update_chest_progress():
 	chest_progress_bar.value = Global.score
@@ -92,11 +104,10 @@ func update_chest_progress():
 
 func unlock_chest():
 	print("Chest %d Unlocked!" % current_chest)
-	# Reset both global score and session score when chest is unlocked
 	Global.score = 0
 	current_session_score = 0
-	gem_score_label.text = "+0"  # Update the label to show 0
-	
+	gem_score_label.text = "+0"
+
 	if current_chest < 30:
 		current_chest += 1
 		current_target = BASE_COINS_TO_UNLOCK * current_chest
@@ -121,11 +132,21 @@ func show_score_popup(text: String, position: Vector2) -> void:
 	tween.tween_callback(label.queue_free)
 
 func _on_play_again_pressed() -> void:
+	skip_animation = true
+
+	while animation_running:
+		await get_tree().process_frame
+
 	Global.collected_gems = []
 	current_session_score = 0
 	get_tree().change_scene_to_file("res://scenes/level.tscn")
 
 func _on_main_menu_pressed() -> void:
+	skip_animation = true
+
+	while animation_running:
+		await get_tree().process_frame
+
 	Global.collected_gems = []
 	current_session_score = 0
 	get_tree().change_scene_to_file("res://scenes/main.tscn")
