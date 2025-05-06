@@ -26,7 +26,7 @@ func _ready():
 	gem_score_label = $"Bucket Capacity2/GemScoreLabel"
 
 	# Initialize UI
-	gem_score_label.text = "+"
+	gem_score_label.text = "+0"
 	chest_progress_bar.max_value = current_target
 	update_chest_progress()
 
@@ -92,6 +92,11 @@ func update_chest_progress():
 
 func unlock_chest():
 	print("Chest %d Unlocked!" % current_chest)
+	# Reset both global score and session score when chest is unlocked
+	Global.score = 0
+	current_session_score = 0
+	gem_score_label.text = "+0"  # Update the label to show 0
+	
 	if current_chest < 30:
 		current_chest += 1
 		current_target = BASE_COINS_TO_UNLOCK * current_chest
