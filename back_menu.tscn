@@ -1,9 +1,8 @@
-[gd_scene load_steps=7 format=3 uid="uid://usd6k245qee0"]
+[gd_scene load_steps=6 format=3 uid="uid://usd6k245qee0"]
 
 [ext_resource type="Script" path="res://back_menu.gd" id="1_mdwjp"]
 [ext_resource type="FontFile" uid="uid://b2clys7lbyd3t" path="res://scenes/Kid Games.ttf" id="2_8a7sk"]
 [ext_resource type="Texture2D" uid="uid://bhrf3ksx88g41" path="res://Full-bucket1.png" id="3_gu5me"]
-[ext_resource type="Script" path="res://score_label.gd" id="4_07lmm"]
 [ext_resource type="Texture2D" uid="uid://dnsp8cp6bmdcy" path="res://Jewels/Jewel10.png" id="4_mx43w"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_mymcd"]
@@ -98,15 +97,14 @@ grow_vertical = 0
 texture = ExtResource("3_gu5me")
 expand_mode = 1
 
-[node name="ScoreLabel" type="Label" parent="Bucket Capacity2"]
+[node name="GemScoreLabel" type="Label" parent="Bucket Capacity2"]
 layout_mode = 0
-offset_left = 123.0
-offset_top = 219.0
-offset_right = 447.0
-offset_bottom = 379.0
-theme_override_font_sizes/font_size = 68
-text = "+300"
-script = ExtResource("4_07lmm")
+offset_left = 19.0
+offset_top = 209.0
+offset_right = 250.0
+offset_bottom = 306.0
+theme_override_font_sizes/font_size = 60
+text = "+"
 
 [node name="AD BAR" type="Panel" parent="."]
 layout_mode = 0

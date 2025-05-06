@@ -4,36 +4,35 @@ var bucket_icon: TextureRect
 var chest_icon: TextureRect
 var chest_progress_bar: ProgressBar
 var progress_label: Label
+var gem_score_label: Label  # Only label now, for current session score
 
 const BASE_COINS_TO_UNLOCK := 1000
 var chest_unlocked := false
 var current_chest := 1
 var current_target := BASE_COINS_TO_UNLOCK
-var animation_speed := 1.0  # Normal speed by default
-const FAST_SPEED := 0.2     # 5x faster speed
-var speed_increased := false # Track if we've sped up
+var animation_speed := 1.0
+const FAST_SPEED := 0.2
+var speed_increased := false
 
-# Local score counter that will reset on play again
 var current_session_score := 0
 
 func _ready():
-	# Set initial score label using the local score counter
-	$"Bucket Capacity2/ScoreLabel".text = "Score: %d" % current_session_score
+	current_session_score = 0
 
 	bucket_icon = $"Bucket Capacity2/Bucket"
 	chest_icon = $"AD BAR2/Chest"
 	chest_progress_bar = $"Bucket Capacity2/ProgressBar"
 	progress_label = chest_progress_bar.get_node("ProgressLabel")
+	gem_score_label = $"Bucket Capacity2/GemScoreLabel"
 
-	# Initialize progress bar with global score
+	# Initialize UI
+	gem_score_label.text = "+"
 	chest_progress_bar.max_value = current_target
 	update_chest_progress()
 
-	# Start animated gem transfer
 	await animate_gems_with_float_motion()
 
 func _input(event):
-	# Speed up permanently on first tap
 	if not speed_increased and ((event is InputEventScreenTouch and event.pressed) or 
 	   (event is InputEventMouseButton and event.pressed and event.button_index == MOUSE_BUTTON_LEFT)):
 		speed_increased = true
@@ -54,12 +53,10 @@ func animate_gems_with_float_motion() -> void:
 		gem.custom_minimum_size = Vector2(64, 64)
 		add_child(gem)
 
-		# Start and end positions
 		var start_pos = bucket_icon.get_global_position()
 		var end_pos = chest_icon.get_global_position()
 		gem.global_position = start_pos
 
-		# Animate gem floaty movement
 		var duration := 1.0 * animation_speed
 		var elapsed := 0.0
 		var amplitude := 40
@@ -73,19 +70,16 @@ func animate_gems_with_float_motion() -> void:
 			await get_tree().process_frame
 			elapsed += get_process_delta_time()
 
-		# Remove gem
 		gem.queue_free()
 
-		# Update both local and global scores
 		current_session_score += score_per_gem
 		Global.score += score_per_gem
-		$"Bucket Capacity2/ScoreLabel".text = "Score: %d" % current_session_score
+
+		# Update only this label
+		gem_score_label.text = "+%d" % current_session_score
+
 		update_chest_progress()
-
-		# Show floating "+X" popup
 		show_score_popup("+%d" % score_per_gem, chest_icon.get_global_position())
-
-		# Delay between gems (affected by speed)
 		await get_tree().create_timer(0.2 * animation_speed).timeout
 
 func update_chest_progress():
@@ -98,15 +92,12 @@ func update_chest_progress():
 
 func unlock_chest():
 	print("Chest %d Unlocked!" % current_chest)
-	# Add your unlock effects here
-	
 	if current_chest < 30:
 		current_chest += 1
 		current_target = BASE_COINS_TO_UNLOCK * current_chest
 		chest_unlocked = false
 		chest_progress_bar.max_value = current_target
-		chest_progress_bar.value = Global.score
-		update_chest_progress()
+		progress_label.text = "%d / %d" % [Global.score, current_target]
 	else:
 		print("All chests unlocked!")
 
@@ -125,13 +116,11 @@ func show_score_popup(text: String, position: Vector2) -> void:
 	tween.tween_callback(label.queue_free)
 
 func _on_play_again_pressed() -> void:
-	# Only reset the collected gems and session score
 	Global.collected_gems = []
 	current_session_score = 0
 	get_tree().change_scene_to_file("res://scenes/level.tscn")
 
 func _on_main_menu_pressed() -> void:
-	# Only reset the collected gems and session score
 	Global.collected_gems = []
 	current_session_score = 0
 	get_tree().change_scene_to_file("res://scenes/main.tscn")
