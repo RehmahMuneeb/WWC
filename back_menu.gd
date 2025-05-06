@@ -4,7 +4,8 @@ var bucket_icon: TextureRect
 var chest_icon: TextureRect
 var chest_progress_bar: ProgressBar
 var progress_label: Label
-var gem_score_label: Label  # Only label now, for current session score
+var gem_score_label: Label
+var multiply_label: Label  # Added for showing x3 score
 
 const BASE_COINS_TO_UNLOCK := 1000
 var chest_unlocked := false
@@ -22,13 +23,15 @@ func _ready():
 	current_session_score = 0
 
 	bucket_icon = $"Bucket Capacity2/Bucket"
-	chest_icon = $"AD BAR2/Chest"
+	chest_icon = $"Bucket Capacity2/Chest"
 	chest_progress_bar = $"Bucket Capacity2/ProgressBar"
 	progress_label = chest_progress_bar.get_node("ProgressLabel")
 	gem_score_label = $"Bucket Capacity2/GemScoreLabel"
+	multiply_label = $"AD BAR2/Multiply"  # Get reference to Multiply label
 
 	# Initialize UI
 	gem_score_label.text = "+0"
+	multiply_label.text = "x3: 0"
 	chest_progress_bar.max_value = current_target
 	update_chest_progress()
 
@@ -85,6 +88,7 @@ func animate_gems_with_float_motion() -> void:
 		current_session_score += score_per_gem
 		Global.score += score_per_gem
 		gem_score_label.text = "+%d" % current_session_score
+		multiply_label.text = "x3: %d" % (current_session_score * 3)
 
 		update_chest_progress()
 
@@ -107,6 +111,7 @@ func unlock_chest():
 	Global.score = 0
 	current_session_score = 0
 	gem_score_label.text = "+0"
+	multiply_label.text = "x3: 0"
 
 	if current_chest < 30:
 		current_chest += 1

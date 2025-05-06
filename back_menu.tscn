@@ -3,23 +3,22 @@
 [ext_resource type="Script" path="res://back_menu.gd" id="1_mdwjp"]
 [ext_resource type="FontFile" uid="uid://b2clys7lbyd3t" path="res://scenes/Kid Games.ttf" id="2_8a7sk"]
 [ext_resource type="Texture2D" uid="uid://bhrf3ksx88g41" path="res://Full-bucket1.png" id="3_gu5me"]
+[ext_resource type="Texture2D" uid="uid://brjxfhii2j18c" path="res://scenes/WhatsApp Image 2025-05-07 at 02.36.16_ad0784d5.jpg" id="3_yd43k"]
 [ext_resource type="Texture2D" uid="uid://dnsp8cp6bmdcy" path="res://Jewels/Jewel10.png" id="4_mx43w"]
 [ext_resource type="Shader" path="res://back_menu.gdshader" id="5_1fbjo"]
-[ext_resource type="Texture2D" uid="uid://bxehif60h16xo" path="res://scenes/WhatsApp Image 2025-05-07 at 02.20.10_8d79d9ad.jpg" id="6_5x4d1"]
-[ext_resource type="Script" path="res://scenes/wall_img.gd" id="7_lc7ua"]
+[ext_resource type="Texture2D" uid="uid://1misolt5rykx" path="res://scenes/video-play-watch-player-black-icon-free-png-7017516949743594tmpczaclr.png" id="8_ddeit"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_j7ymm"]
 shader = ExtResource("5_1fbjo")
 shader_parameter/scroll_speed = 0.2
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_mymcd"]
-bg_color = Color(0.964706, 0.792157, 0.0980392, 1)
-border_width_left = 22
-border_width_top = 22
-border_width_right = 22
-border_width_bottom = 22
-border_color = Color(1, 1, 1, 1)
-border_blend = true
+bg_color = Color(0.235294, 0.415686, 0.615686, 0.913725)
+border_width_left = 11
+border_width_top = 11
+border_width_right = 11
+border_width_bottom = 11
+border_color = Color(0.954857, 0.970141, 1, 1)
 corner_radius_top_left = 20
 corner_radius_top_right = 20
 corner_radius_bottom_right = 20
@@ -36,13 +35,12 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_mdwjp")
 
-[node name="WallImg" type="Sprite2D" parent="."]
+[node name="backWall" type="Sprite2D" parent="."]
 texture_repeat = 2
 material = SubResource("ShaderMaterial_j7ymm")
-position = Vector2(241, 434)
-scale = Vector2(0.682065, 0.642202)
-texture = ExtResource("6_5x4d1")
-script = ExtResource("7_lc7ua")
+position = Vector2(239.5, 429)
+scale = Vector2(0.850267, 0.856)
+texture = ExtResource("3_yd43k")
 
 [node name="MainMenu" type="Button" parent="."]
 layout_mode = 0
@@ -64,11 +62,26 @@ text = "PLAY AGAIN"
 
 [node name="Bucket Capacity2" type="Panel" parent="."]
 layout_mode = 0
-offset_left = 5.0
 offset_top = 1.0
 offset_right = 482.0
 offset_bottom = 317.0
 theme_override_styles/panel = SubResource("StyleBoxFlat_mymcd")
+
+[node name="Chest" type="TextureRect" parent="Bucket Capacity2"]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = 28.0
+offset_top = -262.0
+offset_right = 236.0
+offset_bottom = -83.0
+grow_horizontal = 2
+grow_vertical = 0
+texture = ExtResource("4_mx43w")
+expand_mode = 1
 
 [node name="CapacityLabel" type="Label" parent="Bucket Capacity2"]
 layout_mode = 1
@@ -85,10 +98,10 @@ text = "GEM COLLECTED"
 
 [node name="ProgressBar" type="ProgressBar" parent="Bucket Capacity2"]
 layout_mode = 0
-offset_left = 255.0
-offset_top = 195.0
-offset_right = 453.0
-offset_bottom = 222.0
+offset_left = 265.0
+offset_top = 231.0
+offset_right = 463.0
+offset_bottom = 258.0
 show_percentage = false
 
 [node name="ProgressLabel" type="Label" parent="Bucket Capacity2/ProgressBar"]
@@ -103,9 +116,9 @@ anchor_left = 0.5
 anchor_top = 1.0
 anchor_right = 0.5
 anchor_bottom = 1.0
-offset_left = -228.5
+offset_left = -240.0
 offset_top = -261.0
-offset_right = -68.5
+offset_right = -80.0
 offset_bottom = -114.0
 grow_horizontal = 2
 grow_vertical = 0
@@ -149,27 +162,37 @@ text = "300 * 3 =  900"
 
 [node name="AD BAR2" type="Panel" parent="."]
 layout_mode = 0
-offset_left = 694.0
-offset_top = 444.0
-offset_right = 1169.0
-offset_bottom = 607.0
+offset_left = -1.0
+offset_top = 303.0
+offset_right = 474.0
+offset_bottom = 466.0
 theme_override_styles/panel = SubResource("StyleBoxFlat_mymcd")
 
-[node name="Chest" type="TextureRect" parent="AD BAR2"]
-layout_mode = 1
-anchors_preset = 7
-anchor_left = 0.5
-anchor_top = 1.0
-anchor_right = 0.5
-anchor_bottom = 1.0
-offset_left = -652.5
-offset_top = -566.0
-offset_right = -482.5
-offset_bottom = -421.0
-grow_horizontal = 2
-grow_vertical = 0
-texture = ExtResource("4_mx43w")
+[node name="TextureRect" type="TextureRect" parent="AD BAR2"]
+layout_mode = 0
+offset_left = 7.0
+offset_top = 4.0
+offset_right = 162.0
+offset_bottom = 159.0
+texture = ExtResource("8_ddeit")
 expand_mode = 1
+
+[node name="Label" type="Label" parent="AD BAR2"]
+visible = false
+layout_mode = 0
+offset_left = 188.0
+offset_top = 39.0
+offset_right = 263.0
+offset_bottom = 126.0
+theme_override_font_sizes/font_size = 63
+text = "X3"
+
+[node name="Multiply" type="Label" parent="AD BAR2"]
+layout_mode = 0
+offset_left = 291.0
+offset_top = 47.0
+offset_right = 434.0
+offset_bottom = 127.0
 
 [node name="GemContainer" type="VBoxContainer" parent="."]
 layout_mode = 0
