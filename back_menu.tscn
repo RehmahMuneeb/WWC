@@ -75,6 +75,12 @@ offset_left = 255.0
 offset_top = 195.0
 offset_right = 453.0
 offset_bottom = 222.0
+show_percentage = false
+
+[node name="ProgressLabel" type="Label" parent="Bucket Capacity2/ProgressBar"]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 23.0
 
 [node name="Bucket" type="TextureRect" parent="Bucket Capacity2"]
 layout_mode = 1
