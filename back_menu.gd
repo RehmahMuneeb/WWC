@@ -13,16 +13,19 @@ var animation_speed := 1.0  # Normal speed by default
 const FAST_SPEED := 0.2     # 5x faster speed
 var speed_increased := false # Track if we've sped up
 
+# Local score counter that will reset on play again
+var current_session_score := 0
+
 func _ready():
-	# Set initial score label
-	$"Bucket Capacity2/ScoreLabel".text = "Score: %d" % Global.score
+	# Set initial score label using the local score counter
+	$"Bucket Capacity2/ScoreLabel".text = "Score: %d" % current_session_score
 
 	bucket_icon = $"Bucket Capacity2/Bucket"
 	chest_icon = $"AD BAR2/Chest"
 	chest_progress_bar = $"Bucket Capacity2/ProgressBar"
 	progress_label = chest_progress_bar.get_node("ProgressLabel")
 
-	# Initialize progress bar
+	# Initialize progress bar with global score
 	chest_progress_bar.max_value = current_target
 	update_chest_progress()
 
@@ -73,9 +76,10 @@ func animate_gems_with_float_motion() -> void:
 		# Remove gem
 		gem.queue_free()
 
-		# Update score
+		# Update both local and global scores
+		current_session_score += score_per_gem
 		Global.score += score_per_gem
-		$"Bucket Capacity2/ScoreLabel".text = "Score: %d" % Global.score
+		$"Bucket Capacity2/ScoreLabel".text = "Score: %d" % current_session_score
 		update_chest_progress()
 
 		# Show floating "+X" popup
@@ -121,7 +125,13 @@ func show_score_popup(text: String, position: Vector2) -> void:
 	tween.tween_callback(label.queue_free)
 
 func _on_play_again_pressed() -> void:
+	# Only reset the collected gems and session score
+	Global.collected_gems = []
+	current_session_score = 0
 	get_tree().change_scene_to_file("res://scenes/level.tscn")
 
 func _on_main_menu_pressed() -> void:
+	# Only reset the collected gems and session score
+	Global.collected_gems = []
+	current_session_score = 0
 	get_tree().change_scene_to_file("res://scenes/main.tscn")
