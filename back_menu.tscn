@@ -1,9 +1,16 @@
-[gd_scene load_steps=6 format=3 uid="uid://usd6k245qee0"]
+[gd_scene load_steps=10 format=3 uid="uid://usd6k245qee0"]
 
 [ext_resource type="Script" path="res://back_menu.gd" id="1_mdwjp"]
 [ext_resource type="FontFile" uid="uid://b2clys7lbyd3t" path="res://scenes/Kid Games.ttf" id="2_8a7sk"]
 [ext_resource type="Texture2D" uid="uid://bhrf3ksx88g41" path="res://Full-bucket1.png" id="3_gu5me"]
 [ext_resource type="Texture2D" uid="uid://dnsp8cp6bmdcy" path="res://Jewels/Jewel10.png" id="4_mx43w"]
+[ext_resource type="Shader" path="res://back_menu.gdshader" id="5_1fbjo"]
+[ext_resource type="Texture2D" uid="uid://bxehif60h16xo" path="res://scenes/WhatsApp Image 2025-05-07 at 02.20.10_8d79d9ad.jpg" id="6_5x4d1"]
+[ext_resource type="Script" path="res://scenes/wall_img.gd" id="7_lc7ua"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_j7ymm"]
+shader = ExtResource("5_1fbjo")
+shader_parameter/scroll_speed = 0.2
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_mymcd"]
 bg_color = Color(0.964706, 0.792157, 0.0980392, 1)
@@ -28,6 +35,14 @@ offset_right = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_mdwjp")
+
+[node name="WallImg" type="Sprite2D" parent="."]
+texture_repeat = 2
+material = SubResource("ShaderMaterial_j7ymm")
+position = Vector2(241, 434)
+scale = Vector2(0.682065, 0.642202)
+texture = ExtResource("6_5x4d1")
+script = ExtResource("7_lc7ua")
 
 [node name="MainMenu" type="Button" parent="."]
 layout_mode = 0
