@@ -189,9 +189,9 @@ text = "X3"
 
 [node name="Multiply" type="Label" parent="AD BAR2"]
 layout_mode = 0
-offset_left = 165.0
+offset_left = 168.0
 offset_top = 28.0
-offset_right = 308.0
+offset_right = 311.0
 offset_bottom = 135.0
 theme_override_font_sizes/font_size = 72
 text = "3"
