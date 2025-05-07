@@ -1,11 +1,11 @@
-[gd_scene load_steps=12 format=3 uid="uid://usd6k245qee0"]
+[gd_scene load_steps=13 format=3 uid="uid://usd6k245qee0"]
 
 [ext_resource type="Script" path="res://back_menu.gd" id="1_mdwjp"]
 [ext_resource type="FontFile" uid="uid://b2clys7lbyd3t" path="res://scenes/Kid Games.ttf" id="2_8a7sk"]
 [ext_resource type="Texture2D" uid="uid://bhrf3ksx88g41" path="res://Full-bucket1.png" id="3_gu5me"]
 [ext_resource type="Texture2D" uid="uid://brjxfhii2j18c" path="res://scenes/WhatsApp Image 2025-05-07 at 02.36.16_ad0784d5.jpg" id="3_yd43k"]
-[ext_resource type="Texture2D" uid="uid://dnsp8cp6bmdcy" path="res://Jewels/Jewel10.png" id="4_mx43w"]
 [ext_resource type="Shader" path="res://back_menu.gdshader" id="5_1fbjo"]
+[ext_resource type="Texture2D" uid="uid://b8n734aibk4ld" path="res://scenes/Treasure Chest-Photoroom.png" id="5_cirfo"]
 [ext_resource type="Texture2D" uid="uid://1misolt5rykx" path="res://scenes/video-play-watch-player-black-icon-free-png-7017516949743594tmpczaclr.png" id="8_ddeit"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_j7ymm"]
@@ -44,6 +44,13 @@ corner_radius_top_right = 20
 corner_radius_bottom_right = 20
 corner_radius_bottom_left = 20
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_pwnqs"]
+bg_color = Color(0.870588, 0.694118, 0, 1)
+corner_radius_top_left = 6
+corner_radius_top_right = 6
+corner_radius_bottom_right = 6
+corner_radius_bottom_left = 6
+
 [node name="BackMenu" type="Control"]
 layout_mode = 3
 anchors_preset = 15
@@ -64,25 +71,25 @@ texture = ExtResource("3_yd43k")
 
 [node name="PlayAgain" type="Button" parent="."]
 layout_mode = 0
-offset_left = -3.0
-offset_top = 542.0
-offset_right = 484.0
-offset_bottom = 665.0
+offset_left = 63.0
+offset_top = 520.0
+offset_right = 413.0
+offset_bottom = 630.0
 theme_override_colors/font_color = Color(1, 1, 1, 1)
 theme_override_fonts/font = ExtResource("2_8a7sk")
-theme_override_font_sizes/font_size = 62
+theme_override_font_sizes/font_size = 44
 theme_override_styles/normal = SubResource("StyleBoxFlat_r8ppy")
 text = "PLAY AGAIN"
 
 [node name="MainMenu" type="Button" parent="."]
 layout_mode = 0
-offset_left = -1.0
-offset_top = 682.0
-offset_right = 483.0
-offset_bottom = 805.0
+offset_left = 64.0
+offset_top = 654.0
+offset_right = 413.0
+offset_bottom = 760.0
 theme_override_colors/font_color = Color(1, 1, 1, 1)
 theme_override_fonts/font = ExtResource("2_8a7sk")
-theme_override_font_sizes/font_size = 64
+theme_override_font_sizes/font_size = 44
 theme_override_styles/normal = SubResource("StyleBoxFlat_y2fye")
 text = "MAIN  MENU"
 
@@ -90,7 +97,7 @@ text = "MAIN  MENU"
 layout_mode = 0
 offset_top = 1.0
 offset_right = 479.0
-offset_bottom = 355.0
+offset_bottom = 313.0
 theme_override_styles/panel = SubResource("StyleBoxFlat_mymcd")
 
 [node name="Chest" type="TextureRect" parent="Bucket Capacity2"]
@@ -100,14 +107,16 @@ anchor_left = 0.5
 anchor_top = 1.0
 anchor_right = 0.5
 anchor_bottom = 1.0
-offset_left = 28.0
-offset_top = -262.0
-offset_right = 236.0
-offset_bottom = -83.0
+offset_left = 38.5001
+offset_top = -218.0
+offset_right = 209.5
+offset_bottom = -71.0
 grow_horizontal = 2
 grow_vertical = 0
-texture = ExtResource("4_mx43w")
+rotation = -0.136136
+texture = ExtResource("5_cirfo")
 expand_mode = 1
+flip_h = true
 
 [node name="CapacityLabel" type="Label" parent="Bucket Capacity2"]
 layout_mode = 1
@@ -124,16 +133,21 @@ text = "GEM COLLECTED"
 
 [node name="ProgressBar" type="ProgressBar" parent="Bucket Capacity2"]
 layout_mode = 0
-offset_left = 265.0
-offset_top = 271.0
-offset_right = 463.0
-offset_bottom = 298.0
+offset_left = 292.0
+offset_top = 241.0
+offset_right = 453.0
+offset_bottom = 261.0
+theme_override_styles/fill = SubResource("StyleBoxFlat_pwnqs")
 show_percentage = false
 
 [node name="ProgressLabel" type="Label" parent="Bucket Capacity2/ProgressBar"]
+visible = false
 layout_mode = 0
-offset_right = 40.0
-offset_bottom = 23.0
+offset_left = 37.0
+offset_top = -2.0
+offset_right = 193.0
+offset_bottom = 29.0
+theme_override_font_sizes/font_size = 22
 
 [node name="Bucket" type="TextureRect" parent="Bucket Capacity2"]
 layout_mode = 1
@@ -142,10 +156,10 @@ anchor_left = 0.5
 anchor_top = 1.0
 anchor_right = 0.5
 anchor_bottom = 1.0
-offset_left = -240.0
-offset_top = -261.0
-offset_right = -80.0
-offset_bottom = -114.0
+offset_left = -234.5
+offset_top = -219.0
+offset_right = -101.5
+offset_bottom = -97.0
 grow_horizontal = 2
 grow_vertical = 0
 texture = ExtResource("3_gu5me")
@@ -154,18 +168,17 @@ expand_mode = 1
 [node name="GemScoreLabel" type="Label" parent="Bucket Capacity2"]
 layout_mode = 0
 offset_left = 27.0
-offset_top = 230.0
-offset_right = 258.0
-offset_bottom = 327.0
-theme_override_font_sizes/font_size = 60
+offset_top = 216.0
+offset_right = 237.0
+offset_bottom = 292.0
+theme_override_font_sizes/font_size = 44
 text = "+"
 
 [node name="AD BAR2" type="Panel" parent="."]
 layout_mode = 0
-offset_left = -1.0
-offset_top = 344.0
-offset_right = 478.0
-offset_bottom = 507.0
+offset_top = 303.0
+offset_right = 479.0
+offset_bottom = 466.0
 theme_override_styles/panel = SubResource("StyleBoxFlat_mymcd")
 
 [node name="TextureRect" type="TextureRect" parent="AD BAR2"]
@@ -177,26 +190,17 @@ offset_bottom = 159.0
 texture = ExtResource("8_ddeit")
 expand_mode = 1
 
-[node name="Label" type="Label" parent="AD BAR2"]
-visible = false
-layout_mode = 0
-offset_left = 188.0
-offset_top = 39.0
-offset_right = 263.0
-offset_bottom = 126.0
-theme_override_font_sizes/font_size = 63
-text = "X3"
-
 [node name="Multiply" type="Label" parent="AD BAR2"]
 layout_mode = 0
-offset_left = 168.0
+offset_left = 165.0
 offset_top = 28.0
-offset_right = 311.0
+offset_right = 308.0
 offset_bottom = 135.0
 theme_override_font_sizes/font_size = 72
 text = "3"
 
 [node name="GemContainer" type="VBoxContainer" parent="."]
+visible = false
 layout_mode = 0
 offset_right = 467.0
 offset_bottom = 238.0

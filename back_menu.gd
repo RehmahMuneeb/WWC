@@ -100,7 +100,7 @@ func animate_gems_with_float_motion() -> void:
 
 func update_chest_progress():
 	chest_progress_bar.value = Global.score
-	progress_label.text = "%d / %d" % [Global.score, current_target]
+	progress_label.text = "%d    /    %d" % [Global.score, current_target]
 
 	if not chest_unlocked and Global.score >= current_target:
 		chest_unlocked = true
@@ -118,7 +118,7 @@ func unlock_chest():
 		current_target = BASE_COINS_TO_UNLOCK * current_chest
 		chest_unlocked = false
 		chest_progress_bar.max_value = current_target
-		progress_label.text = "%d / %d" % [Global.score, current_target]
+		progress_label.text = "%d    /    %d" % [Global.score, current_target]
 	else:
 		print("All chests unlocked!")
 
