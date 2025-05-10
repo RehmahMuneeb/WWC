@@ -8,7 +8,7 @@
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ruhyg"]
 bg_color = Color(0.842256, 0.490162, 0.419638, 1)
 
-[node name="Crafting" type="Control"]
+[node name="Crafting2" type="Control"]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0

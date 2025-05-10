@@ -342,4 +342,5 @@ text = "GEMMANIA"
 
 [connection signal="pressed" from="Items" to="." method="_on_items_pressed"]
 [connection signal="pressed" from="Crafting" to="." method="_on_rare_items_pressed"]
+[connection signal="pressed" from="Inventory" to="." method="_on_inventory_pressed"]
 [connection signal="pressed" from="Play" to="." method="_on_play_pressed"]

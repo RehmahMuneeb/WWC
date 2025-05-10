@@ -58,3 +58,7 @@ func _on_rare_items_pressed() -> void:
 
 func _on_items_pressed() -> void:
 	get_tree().change_scene_to_file("res://scenes/MainInventory.tscn")
+
+
+func _on_inventory_pressed() -> void:
+	get_tree().change_scene_to_file("res://crafting.tscn")
