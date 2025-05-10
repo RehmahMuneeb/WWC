@@ -1,0 +1,39 @@
+[gd_scene load_steps=2 format=3 uid="uid://gueqqqdhcfub"]
+
+[ext_resource type="Script" path="res://rare_gem_popup.gd" id="1_fo3y4"]
+
+[node name="RareGemPopup" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_fo3y4")
+
+[node name="Panel" type="Panel" parent="."]
+layout_mode = 0
+offset_right = 478.0
+offset_bottom = 294.0
+
+[node name="TextureRect" type="TextureRect" parent="Panel"]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+stretch_mode = 5
+
+[node name="Label" type="Label" parent="Panel"]
+layout_mode = 0
+offset_left = 131.0
+offset_top = 177.0
+offset_right = 317.0
+offset_bottom = 200.0
+text = "\"You found a rare gem!\""
+
+[node name="Button" type="Button" parent="Panel"]
+layout_mode = 0
+offset_left = 184.0
+offset_top = 206.0
+offset_right = 256.0
+offset_bottom = 251.0
+text = "OK"

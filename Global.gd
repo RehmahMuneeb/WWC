@@ -5,6 +5,8 @@ var score: int = 0
 var pending_score := 0
 var bucket_capacity: int = 5000
 var bucket_upgrade_cost: int = 150  # Starts at 150 instead of 50
+var rare_gems = []
+var owned_rare_gems = []
 
 # Well Depth Variables
 var well_depth_limit: int = 500  # Default max depth

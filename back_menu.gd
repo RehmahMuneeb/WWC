@@ -5,7 +5,7 @@ var chest_icon: TextureRect
 var chest_progress_bar: ProgressBar
 var progress_label: Label
 var gem_score_label: Label
-var multiply_label: Label  # Added for showing x3 score
+var multiply_label: Label  # Shows x3 score
 
 const BASE_COINS_TO_UNLOCK := 1000
 var chest_unlocked := false
@@ -18,6 +18,7 @@ var speed_increased := false
 var current_session_score := 0
 var skip_animation := false
 var animation_running := false
+var total_multiplied_score := 0  # Tracks accumulated x3 score
 
 func _ready():
 	current_session_score = 0
@@ -27,12 +28,13 @@ func _ready():
 	chest_progress_bar = $"Bucket Capacity2/ProgressBar"
 	progress_label = chest_progress_bar.get_node("ProgressLabel")
 	gem_score_label = $"Bucket Capacity2/GemScoreLabel"
-	multiply_label = $"AD BAR2/Multiply"  # Get reference to Multiply label
+	multiply_label = $"AD BAR2/Multiply"
 
 	# Initialize UI
 	gem_score_label.text = "+0"
 	multiply_label.text = "x3: 0"
 	chest_progress_bar.max_value = current_target
+	chest_progress_bar.value = 0
 	update_chest_progress()
 
 	await animate_gems_with_float_motion()
@@ -46,7 +48,7 @@ func _input(event):
 
 func animate_gems_with_float_motion() -> void:
 	animation_running = true
-	var score_per_gem := 10
+	var score_per_gem := 1000
 
 	for gem_texture in Global.collected_gems:
 		if gem_texture == null:
@@ -87,8 +89,9 @@ func animate_gems_with_float_motion() -> void:
 
 		current_session_score += score_per_gem
 		Global.score += score_per_gem
+		total_multiplied_score += score_per_gem * 3
 		gem_score_label.text = "+%d" % current_session_score
-		multiply_label.text = "x3: %d" % (current_session_score * 3)
+		multiply_label.text = "x3: %d" % total_multiplied_score
 
 		update_chest_progress()
 
@@ -108,19 +111,23 @@ func update_chest_progress():
 
 func unlock_chest():
 	print("Chest %d Unlocked!" % current_chest)
+
 	Global.score = 0
 	current_session_score = 0
-	gem_score_label.text = "+0"
-	multiply_label.text = "x3: 0"
+	chest_unlocked = true
 
 	if current_chest < 30:
 		current_chest += 1
 		current_target = BASE_COINS_TO_UNLOCK * current_chest
-		chest_unlocked = false
-		chest_progress_bar.max_value = current_target
-		progress_label.text = "%d    /    %d" % [Global.score, current_target]
 	else:
 		print("All chests unlocked!")
+
+	chest_progress_bar.max_value = current_target
+	chest_progress_bar.value = 0
+	progress_label.text = "0    /    %d" % current_target
+	gem_score_label.text = "+0"
+
+	chest_unlocked = false
 
 func show_score_popup(text: String, position: Vector2) -> void:
 	var label = Label.new()

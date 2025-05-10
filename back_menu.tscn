@@ -141,7 +141,6 @@ theme_override_styles/fill = SubResource("StyleBoxFlat_pwnqs")
 show_percentage = false
 
 [node name="ProgressLabel" type="Label" parent="Bucket Capacity2/ProgressBar"]
-visible = false
 layout_mode = 0
 offset_left = 37.0
 offset_top = -2.0

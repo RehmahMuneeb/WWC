@@ -1,6 +1,6 @@
 [gd_scene load_steps=6 format=3 uid="uid://cebv8sqummfnp"]
 
-[ext_resource type="Texture2D" uid="uid://cl2ok35s2xm7b" path="res://Jewels/Jewel13.png" id="1_srha4"]
+[ext_resource type="Texture2D" uid="uid://cl2ok35s2xm7b" path="res://raregems/Jewel13.png" id="1_srha4"]
 [ext_resource type="Script" path="res://scenes/Crafting.gd" id="1_wxeuu"]
 [ext_resource type="Texture2D" uid="uid://c2knblevfw4o7" path="res://scenes/gem (2).png" id="2_gilml"]
 [ext_resource type="PackedScene" uid="uid://bdig3whyspi8a" path="res://Jewels/Inventory.tscn" id="3_bh17i"]

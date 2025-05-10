@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" path="res://Jewels/jewel.gd" id="1_hu4h5"]
 [ext_resource type="Texture2D" uid="uid://xfqgf35w4smr" path="res://scenes/gem (1).png" id="2_qoier"]
-[ext_resource type="Texture2D" uid="uid://dr2rgs4m4gepn" path="res://Jewels/Jewel1.png" id="2_v1gio"]
+[ext_resource type="Texture2D" uid="uid://dr2rgs4m4gepn" path="res://raregems/Jewel1.png" id="2_v1gio"]
 [ext_resource type="Texture2D" uid="uid://c2knblevfw4o7" path="res://scenes/gem (2).png" id="3_52lnq"]
 [ext_resource type="Texture2D" uid="uid://b4ogrlydp5mp" path="res://scenes/gem (3).png" id="4_adlde"]
 [ext_resource type="Texture2D" uid="uid://dsskcjne74c7y" path="res://scenes/gem (4).png" id="5_27ic6"]
