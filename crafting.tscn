@@ -1,17 +1,15 @@
-[gd_scene load_steps=4 format=3 uid="uid://b8entio2lrrxg"]
+[gd_scene load_steps=5 format=3 uid="uid://b8entio2lrrxg"]
 
 [ext_resource type="Texture2D" uid="uid://b0wdau6yqqwn3" path="res://scenes/download (2).jpeg" id="1_n7vq4"]
 [ext_resource type="Script" path="res://forest_room.gd" id="2_3vvtb"]
 [ext_resource type="Texture2D" uid="uid://bsnglqfuuig6m" path="res://scenes/Owl.png" id="3_essyk"]
+[ext_resource type="PackedScene" uid="uid://bdig3whyspi8a" path="res://Jewels/Inventory.tscn" id="4_ufkku"]
 
 [node name="Crafting" type="Node2D"]
 
 [node name="ForestRoom" type="Sprite2D" parent="."]
-position = Vector2(216.162, 65.6768)
 scale = Vector2(1.03873, 1.03873)
 texture = ExtResource("1_n7vq4")
-centered = false
-offset = Vector2(-398, 0)
 script = ExtResource("2_3vvtb")
 
 [node name="Owl" type="TextureRect" parent="ForestRoom"]
@@ -23,7 +21,20 @@ texture = ExtResource("3_essyk")
 expand_mode = 1
 
 [node name="TextureButton2" type="TextureRect" parent="ForestRoom"]
-offset_left = -32.8882
-offset_top = 266.02
-offset_right = 223.112
-offset_bottom = 522.02
+visible = false
+offset_left = -28.0747
+offset_top = 9.93829
+offset_right = 227.926
+offset_bottom = 265.938
+expand_mode = 1
+
+[node name="Inventory" parent="." instance=ExtResource("4_ufkku")]
+anchors_preset = 0
+anchor_right = 0.0
+anchor_bottom = 0.0
+offset_left = -1.0
+offset_top = 350.0
+offset_right = 487.0
+offset_bottom = 705.0
+grow_horizontal = 1
+grow_vertical = 1

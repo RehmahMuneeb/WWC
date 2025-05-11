@@ -30,3 +30,7 @@ func _unhandled_input(event):
 
 		position.y += delta.y
 		position.y = clamp(position.y, min_y, max_y)
+
+
+func _on_button_pressed() -> void:
+	get_tree().change_scene_to_file("res://scenes/main.tscn")
