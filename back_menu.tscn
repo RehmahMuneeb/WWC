@@ -165,10 +165,10 @@ show_percentage = false
 
 [node name="ProgressLabel" type="Label" parent="Bucket Capacity2/ProgressBar"]
 layout_mode = 0
-offset_left = 37.0
-offset_top = -2.0
-offset_right = 193.0
-offset_bottom = 29.0
+offset_left = 8.0
+offset_top = -5.0
+offset_right = 164.0
+offset_bottom = 26.0
 theme_override_font_sizes/font_size = 22
 
 [node name="Bucket" type="TextureRect" parent="Bucket Capacity2"]
@@ -228,6 +228,7 @@ offset_right = 467.0
 offset_bottom = 238.0
 
 [node name="RewardPanel" type="Panel" parent="."]
+visible = false
 layout_mode = 0
 offset_left = 46.0
 offset_top = 69.0

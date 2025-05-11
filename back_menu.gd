@@ -1,5 +1,6 @@
 extends Control
 
+# UI elements
 var bucket_icon: TextureRect
 var chest_icon: TextureRect
 var chest_progress_bar: ProgressBar
@@ -7,6 +8,7 @@ var progress_label: Label
 var gem_score_label: Label
 var multiply_label: Label
 
+# Constants and variables
 const BASE_COINS_TO_UNLOCK := 1000
 var chest_unlocked := false
 var current_chest := 1
@@ -29,6 +31,7 @@ var reward_button: Button
 var reward_icon: TextureRect
 
 func _ready():
+	# Initialize UI elements
 	current_session_score = 0
 	is_exiting = false
 
@@ -39,7 +42,7 @@ func _ready():
 	gem_score_label = $"Bucket Capacity2/GemScoreLabel"
 	multiply_label = $"AD BAR2/Multiply"
 
-	# Initialize UI
+	# Initialize progress and score labels
 	gem_score_label.text = "+0"
 	multiply_label.text = "x3: 0"
 	chest_progress_bar.max_value = current_target
@@ -57,6 +60,7 @@ func _ready():
 	await animate_gems_with_float_motion()
 
 func _input(event):
+	# Speed increase on first touch/click
 	if not speed_increased and ((event is InputEventScreenTouch and event.pressed) or 
 	   (event is InputEventMouseButton and event.pressed and event.button_index == MOUSE_BUTTON_LEFT)):
 		speed_increased = true
@@ -67,6 +71,7 @@ func animate_gems_with_float_motion() -> void:
 	animation_running = true
 	var score_per_gem := 1000
 
+	# Animate each gem collected in Global.collected_gems
 	for gem_texture in Global.collected_gems:
 		if gem_texture == null:
 			continue
@@ -92,6 +97,7 @@ func animate_gems_with_float_motion() -> void:
 		var amplitude := 40
 		var frequency := 3.0
 
+		# Animate gem motion
 		while elapsed < duration:
 			if skip_animation:
 				break
@@ -102,6 +108,7 @@ func animate_gems_with_float_motion() -> void:
 			await get_tree().process_frame
 			elapsed += get_process_delta_time()
 
+		# Free gem after animation
 		gem.queue_free()
 
 		current_session_score += score_per_gem
@@ -119,14 +126,17 @@ func animate_gems_with_float_motion() -> void:
 	animation_running = false
 
 func update_chest_progress():
+	# Update chest progress bar
 	chest_progress_bar.value = Global.score
 	progress_label.text = "%d    /    %d" % [Global.score, current_target]
 
+	# Unlock chest when target is reached
 	if not chest_unlocked and Global.score >= current_target:
 		chest_unlocked = true
 		unlock_chest()
 
 func unlock_chest():
+	# Handle chest unlocking logic
 	print("Chest %d Unlocked!" % current_chest)
 
 	Global.score = 0
@@ -135,6 +145,7 @@ func unlock_chest():
 
 	show_reward_panel()
 
+	# Update next chest target or max chests
 	if current_chest < 30:
 		current_chest += 1
 		current_target = BASE_COINS_TO_UNLOCK * current_chest
@@ -149,6 +160,7 @@ func unlock_chest():
 	chest_unlocked = false
 
 func show_score_popup(text: String, position: Vector2) -> void:
+	# Show score pop-up animation
 	var label = Label.new()
 	label.text = text
 	label.add_theme_color_override("font_color", Color(1, 1, 0))
@@ -163,30 +175,34 @@ func show_score_popup(text: String, position: Vector2) -> void:
 	tween.tween_callback(label.queue_free)
 
 func show_reward_panel():
+	# Show reward panel after unlocking chest
 	if is_exiting or reward_panel == null:
 		return
 
 	reward_panel.show()
 	reward_label.text = "YOU RECEIVED A RARE GEM!"
 
+	# Give a random rare gem from Global.rare_gems
 	var rare_gem = get_random_rare_gem()
 	if rare_gem:
 		reward_icon.texture = rare_gem
 		reward_icon.visible = true
 		reward_icon.expand = true
 		reward_icon.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
-		Global.collected_gems.append(rare_gem)
+		Global.rare_gems.append(rare_gem)  # Add to rare gems inventory
 	else:
 		print("Failed to load rare gem!")
 		reward_icon.texture = null
 		reward_icon.visible = false
 
 func _on_claim_reward_pressed():
+	# Close reward panel when claimed
 	if is_exiting or reward_panel == null:
 		return
 	reward_panel.hide()
 
 func get_random_rare_gem() -> Texture:
+	# Get a random rare gem from a pre-defined folder
 	var dir = DirAccess.open("res://raregems")
 	if dir == null:
 		print("Error: Cannot open raregems directory")
@@ -209,6 +225,7 @@ func get_random_rare_gem() -> Texture:
 	return load(random_path) as Texture
 
 func _on_play_again_pressed() -> void:
+	# Restart the game
 	is_exiting = true
 	skip_animation = true
 
@@ -220,6 +237,7 @@ func _on_play_again_pressed() -> void:
 	get_tree().change_scene_to_file("res://scenes/level.tscn")
 
 func _on_main_menu_pressed() -> void:
+	# Return to main menu
 	is_exiting = true
 	skip_animation = true
 
