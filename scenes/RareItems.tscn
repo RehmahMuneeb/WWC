@@ -171,14 +171,38 @@ size_flags_horizontal = 4
 theme_override_font_sizes/font_size = 33
 text = "300 COINS"
 
-[node name="Inventory" parent="." instance=ExtResource("3_bh17i")]
+[node name="ZoomedItemPanel" type="Panel" parent="."]
+layout_mode = 0
+offset_right = 483.0
+offset_bottom = 723.0
+
+[node name="TextureRect" type="TextureRect" parent="ZoomedItemPanel"]
+layout_mode = 0
+offset_left = 32.0
+offset_top = 139.0
+offset_right = 443.0
+offset_bottom = 470.0
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Label" type="Label" parent="ZoomedItemPanel"]
+layout_mode = 0
+offset_right = 467.0
+offset_bottom = 151.0
+theme_override_font_sizes/font_size = 44
+text = "OWL"
+horizontal_alignment = 1
+
+[node name="CloseButton" type="Button" parent="ZoomedItemPanel"]
+layout_mode = 0
+offset_left = 171.0
+offset_top = 625.0
+offset_right = 312.0
+offset_bottom = 713.0
+text = "Close"
+
+[node name="Inventory" parent="ZoomedItemPanel" instance=ExtResource("3_bh17i")]
 layout_mode = 1
-anchors_preset = 0
-anchor_right = 0.0
-anchor_bottom = 0.0
-offset_left = 6.0
-offset_top = 726.0
-offset_right = 484.0
-offset_bottom = 856.0
-grow_horizontal = 1
-grow_vertical = 1
+anchors_preset = 12
+anchor_top = 1.0
+grow_vertical = 0
