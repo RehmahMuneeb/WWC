@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3 uid="uid://usd6k245qee0"]
+[gd_scene load_steps=16 format=3 uid="uid://usd6k245qee0"]
 
 [ext_resource type="Script" path="res://back_menu.gd" id="1_mdwjp"]
 [ext_resource type="FontFile" uid="uid://b2clys7lbyd3t" path="res://scenes/Kid Games.ttf" id="2_8a7sk"]
@@ -6,6 +6,7 @@
 [ext_resource type="Texture2D" uid="uid://brjxfhii2j18c" path="res://scenes/WhatsApp Image 2025-05-07 at 02.36.16_ad0784d5.jpg" id="3_yd43k"]
 [ext_resource type="Shader" path="res://back_menu.gdshader" id="5_1fbjo"]
 [ext_resource type="Texture2D" uid="uid://b8n734aibk4ld" path="res://scenes/Treasure Chest-Photoroom.png" id="5_cirfo"]
+[ext_resource type="Texture2D" uid="uid://ccyxk8qnlnxe" path="res://raregems/Jewel5.png" id="8_63l0p"]
 [ext_resource type="Texture2D" uid="uid://1misolt5rykx" path="res://scenes/video-play-watch-player-black-icon-free-png-7017516949743594tmpczaclr.png" id="8_ddeit"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_j7ymm"]
@@ -50,6 +51,28 @@ corner_radius_top_left = 6
 corner_radius_top_right = 6
 corner_radius_bottom_right = 6
 corner_radius_bottom_left = 6
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_cexus"]
+bg_color = Color(0.235869, 0.518458, 0.893768, 1)
+border_width_left = 10
+border_width_top = 10
+border_width_right = 10
+border_width_bottom = 10
+border_color = Color(1, 0.788235, 0, 1)
+corner_radius_top_left = 22
+corner_radius_top_right = 22
+corner_radius_bottom_right = 22
+corner_radius_bottom_left = 22
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_htmp6"]
+bg_color = Color(0.121569, 0.729412, 0.901961, 1)
+border_width_right = 2
+border_width_bottom = 3
+border_color = Color(0.188235, 0.317647, 0.494118, 1)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
 
 [node name="BackMenu" type="Control"]
 layout_mode = 3
@@ -204,5 +227,50 @@ layout_mode = 0
 offset_right = 467.0
 offset_bottom = 238.0
 
+[node name="RewardPanel" type="Panel" parent="."]
+layout_mode = 0
+offset_left = 46.0
+offset_top = 69.0
+offset_right = 437.0
+offset_bottom = 271.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_cexus")
+
+[node name="RewardLabel" type="Label" parent="RewardPanel"]
+layout_mode = 0
+offset_left = 27.0
+offset_top = 27.0
+offset_right = 395.0
+offset_bottom = 135.0
+theme_override_colors/font_color = Color(1, 0.788235, 0, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/shadow_offset_x = 2
+theme_override_constants/shadow_offset_y = 3
+theme_override_constants/outline_size = 3
+theme_override_constants/shadow_outline_size = 2
+theme_override_fonts/font = ExtResource("2_8a7sk")
+theme_override_font_sizes/font_size = 22
+text = "YOU RECIEVED A NEW GEM"
+
+[node name="ClaimButton" type="Button" parent="RewardPanel"]
+layout_mode = 0
+offset_left = 146.0
+offset_top = 157.0
+offset_right = 230.0
+offset_bottom = 187.0
+theme_override_fonts/font = ExtResource("2_8a7sk")
+theme_override_styles/normal = SubResource("StyleBoxFlat_htmp6")
+text = "CLAIM"
+
+[node name="GemIcon" type="TextureRect" parent="RewardPanel"]
+layout_mode = 0
+offset_left = 88.0
+offset_top = 54.0
+offset_right = 286.0
+offset_bottom = 154.0
+texture = ExtResource("8_63l0p")
+stretch_mode = 5
+
 [connection signal="pressed" from="PlayAgain" to="." method="_on_play_again_pressed"]
 [connection signal="pressed" from="MainMenu" to="." method="_on_main_menu_pressed"]
+[connection signal="pressed" from="RewardPanel/ClaimButton" to="." method="_on_reward_button_pressed"]

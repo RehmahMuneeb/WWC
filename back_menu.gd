@@ -5,7 +5,7 @@ var chest_icon: TextureRect
 var chest_progress_bar: ProgressBar
 var progress_label: Label
 var gem_score_label: Label
-var multiply_label: Label  # Shows x3 score
+var multiply_label: Label
 
 const BASE_COINS_TO_UNLOCK := 1000
 var chest_unlocked := false
@@ -18,10 +18,19 @@ var speed_increased := false
 var current_session_score := 0
 var skip_animation := false
 var animation_running := false
-var total_multiplied_score := 0  # Tracks accumulated x3 score
+var total_multiplied_score := 0
+
+var is_exiting := false
+
+# Reward panel UI elements
+var reward_panel: Control
+var reward_label: Label
+var reward_button: Button
+var reward_icon: TextureRect
 
 func _ready():
 	current_session_score = 0
+	is_exiting = false
 
 	bucket_icon = $"Bucket Capacity2/Bucket"
 	chest_icon = $"Bucket Capacity2/Chest"
@@ -36,6 +45,14 @@ func _ready():
 	chest_progress_bar.max_value = current_target
 	chest_progress_bar.value = 0
 	update_chest_progress()
+
+	# Initialize reward panel
+	reward_panel = $RewardPanel
+	reward_label = reward_panel.get_node("RewardLabel")
+	reward_button = reward_panel.get_node("ClaimButton")
+	reward_icon = reward_panel.get_node("GemIcon")  # Ensure GemIcon exists
+	reward_panel.hide()
+	reward_button.pressed.connect(_on_claim_reward_pressed)
 
 	await animate_gems_with_float_motion()
 
@@ -116,6 +133,8 @@ func unlock_chest():
 	current_session_score = 0
 	chest_unlocked = true
 
+	show_reward_panel()
+
 	if current_chest < 30:
 		current_chest += 1
 		current_target = BASE_COINS_TO_UNLOCK * current_chest
@@ -143,7 +162,54 @@ func show_score_popup(text: String, position: Vector2) -> void:
 	tween.tween_property(label, "position:y", label.position.y - 30, 1.0)
 	tween.tween_callback(label.queue_free)
 
+func show_reward_panel():
+	if is_exiting or reward_panel == null:
+		return
+
+	reward_panel.show()
+	reward_label.text = "YOU RECEIVED A RARE GEM!"
+
+	var rare_gem = get_random_rare_gem()
+	if rare_gem:
+		reward_icon.texture = rare_gem
+		reward_icon.visible = true
+		reward_icon.expand = true
+		reward_icon.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
+		Global.collected_gems.append(rare_gem)
+	else:
+		print("Failed to load rare gem!")
+		reward_icon.texture = null
+		reward_icon.visible = false
+
+func _on_claim_reward_pressed():
+	if is_exiting or reward_panel == null:
+		return
+	reward_panel.hide()
+
+func get_random_rare_gem() -> Texture:
+	var dir = DirAccess.open("res://raregems")
+	if dir == null:
+		print("Error: Cannot open raregems directory")
+		return null
+
+	var textures := []
+	dir.list_dir_begin()
+	var file_name = dir.get_next()
+	while file_name != "":
+		if not dir.current_is_dir() and file_name.ends_with(".png"):
+			textures.append("res://raregems/" + file_name)
+		file_name = dir.get_next()
+	dir.list_dir_end()
+
+	if textures.size() == 0:
+		print("No gem textures found in raregems/")
+		return null
+
+	var random_path = textures[randi() % textures.size()]
+	return load(random_path) as Texture
+
 func _on_play_again_pressed() -> void:
+	is_exiting = true
 	skip_animation = true
 
 	while animation_running:
@@ -154,6 +220,7 @@ func _on_play_again_pressed() -> void:
 	get_tree().change_scene_to_file("res://scenes/level.tscn")
 
 func _on_main_menu_pressed() -> void:
+	is_exiting = true
 	skip_animation = true
 
 	while animation_running:
