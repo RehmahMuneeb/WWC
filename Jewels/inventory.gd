@@ -1,6 +1,6 @@
 extends Control
 
-@onready var rare_gems_list := $ScrollContainer/VBoxContainer
+@onready var rare_gems_list := $TextureRect/ScrollContainer/VBoxContainer
 
 func _ready():
 	display_rare_gems()

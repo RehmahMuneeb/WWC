@@ -1,29 +1,55 @@
-[gd_scene load_steps=2 format=3 uid="uid://bdig3whyspi8a"]
+[gd_scene load_steps=4 format=3 uid="uid://bdig3whyspi8a"]
 
 [ext_resource type="Script" path="res://Jewels/inventory.gd" id="1_v6gsh"]
+[ext_resource type="Texture2D" uid="uid://c1e2jkd6cwk30" path="res://scenes/Screenshot 2025-05-15 174147.png" id="2_onq6w"]
+[ext_resource type="Texture2D" uid="uid://cl2ok35s2xm7b" path="res://raregems/Jewel13.png" id="3_i3auc"]
 
 [node name="Inventory" type="Control"]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
+offset_top = 642.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_v6gsh")
 
-[node name="ScrollContainer" type="ScrollContainer" parent="."]
+[node name="TextureRect" type="TextureRect" parent="."]
+layout_mode = 2
+offset_left = 1.0
+offset_top = -137.0
+offset_right = 483.0
+offset_bottom = 166.0
+texture = ExtResource("2_onq6w")
+expand_mode = 1
+stretch_mode = 5
+flip_v = true
+
+[node name="ScrollContainer" type="ScrollContainer" parent="TextureRect"]
+custom_minimum_size = Vector2(70, 70)
 layout_mode = 1
 anchors_preset = 12
 anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = 2.0
-offset_top = -111.0
-offset_right = 2.0
-offset_bottom = -2.0
+offset_left = 26.0
+offset_top = -195.0
+offset_right = -22.0
+offset_bottom = -124.0
 grow_horizontal = 2
 grow_vertical = 0
 
-[node name="VBoxContainer" type="GridContainer" parent="ScrollContainer"]
+[node name="VBoxContainer" type="GridContainer" parent="TextureRect/ScrollContainer"]
 layout_mode = 2
+theme_override_constants/h_separation = 9
 columns = 6
+
+[node name="TextureRect2" type="TextureRect" parent="TextureRect/ScrollContainer/VBoxContainer"]
+visible = false
+layout_mode = 2
+texture = ExtResource("3_i3auc")
+
+[node name="TextureRect" type="TextureRect" parent="TextureRect/ScrollContainer/VBoxContainer"]
+visible = false
+layout_mode = 2
+texture = ExtResource("3_i3auc")
