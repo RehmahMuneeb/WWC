@@ -5,7 +5,7 @@ extends Control
 @onready var item_name_label = $ZoomedItemPanel/Label
 @onready var item_display_container = $ZoomedItemPanel/ItemDisplayContainer
 @onready var close_button = $ZoomedItemPanel/CloseButton
-@onready var inventory_instance = $ZoomedItemPanel/Inventory
+@onready var inventory_instance = $Inventory
 
 func _ready():
 	item_zoom_panel.visible = false
@@ -15,6 +15,10 @@ func _ready():
 
 func search_and_connect_texture_rects(parent_node: Node):
 	for child in parent_node.get_children():
+		# Skip inventory items completely
+		if parent_node == inventory_instance.rare_gems_list:
+			continue
+			
 		if child is TextureRect:
 			child.mouse_filter = Control.MOUSE_FILTER_STOP
 			child.connect("gui_input", Callable(self, "_on_item_clicked").bind(child))
@@ -23,32 +27,38 @@ func search_and_connect_texture_rects(parent_node: Node):
 
 func _on_item_clicked(event: InputEvent, item: TextureRect):
 	if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT and event.pressed:
+		# Additional check to prevent handling inventory items
+		var parent = item.get_parent()
+		while parent != null:
+			if parent == inventory_instance:
+				return
+			parent = parent.get_parent()
+
 		item_name_label.text = item.name if item.name != "" else "Unnamed Item"
 
 		# Clear previous display
 		for c in item_display_container.get_children():
 			c.queue_free()
 
-		# Duplicate the full item with its children (like slot overlays)
+		# Create display clone
 		var clone = item.duplicate(true)
 		clone.scale = Vector2.ONE
 		clone.position = Vector2.ZERO
 		item_display_container.add_child(clone)
 
-		await get_tree().process_frame  # Wait one frame for size info
+		await get_tree().process_frame
 
-		# Scale to fit the container
+		# Scale to fit container
 		var container_size = item_display_container.size
 		var original_size = clone.size
 
 		if original_size.x > 0 and original_size.y > 0:
-			var scale_x = container_size.x / original_size.x
-			var scale_y = container_size.y / original_size.y
-			var final_scale = min(scale_x, scale_y)
-			clone.scale = Vector2(final_scale, final_scale)
-
-			var new_size = original_size * final_scale
-			clone.position = (container_size - new_size) / 2
+			var scale_factor = min(
+				container_size.x / original_size.x,
+				container_size.y / original_size.y
+			) * 0.9  # 90% of container to add some padding
+			clone.scale = Vector2(scale_factor, scale_factor)
+			clone.position = (container_size - (original_size * scale_factor)) / 2
 
 		item_zoom_panel.visible = true
 		inventory_instance.visible = true
