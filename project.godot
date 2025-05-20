@@ -26,6 +26,10 @@ window/size/viewport_height=854
 window/stretch/mode="canvas_items"
 window/handheld/orientation=1
 
+[global_group]
+
+black_overlays=""
+
 [rendering]
 
 textures/canvas_textures/default_texture_repeat=1
