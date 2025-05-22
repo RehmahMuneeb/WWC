@@ -9,6 +9,7 @@ extends Control
 
 var current_zoomed_item: TextureRect = null
 var zoom_panel_overlays = []
+var overlay_map = {} # Maps clone overlay -> original overlay
 
 func _ready():
 	item_zoom_panel.visible = false
@@ -37,6 +38,7 @@ func _on_item_clicked(event: InputEvent, item: TextureRect):
 		for c in item_display_container.get_children():
 			c.queue_free()
 		zoom_panel_overlays.clear()
+		overlay_map.clear()
 
 		# Duplicate the item with children
 		var clone = item.duplicate(true)
@@ -44,10 +46,10 @@ func _on_item_clicked(event: InputEvent, item: TextureRect):
 		clone.position = Vector2.ZERO
 		item_display_container.add_child(clone)
 
-		# Dynamically add "black_overlays" group to relevant children in the clone
-		register_zoom_panel_overlays(clone)
+		# Register black overlays in the clone and original
+		register_zoom_panel_overlays(clone, item)
 
-		await get_tree().process_frame  # Wait for one frame so sizes are updated
+		await get_tree().process_frame  # Wait one frame for size update
 
 		# Scale clone to fit container nicely
 		var container_size = item_display_container.size
@@ -61,22 +63,25 @@ func _on_item_clicked(event: InputEvent, item: TextureRect):
 		item_zoom_panel.visible = true
 		inventory_instance.visible = true
 
-func register_zoom_panel_overlays(node: Node):
-	# Detect black overlay nodes by texture or name, add to group, register for drag-drop
-	if node is TextureRect:
-		if _is_black_overlay(node):
-			node.add_to_group("black_overlays")
-			zoom_panel_overlays.append(node)
-			node.mouse_filter = Control.MOUSE_FILTER_STOP
-	for child in node.get_children():
-		register_zoom_panel_overlays(child)
+func register_zoom_panel_overlays(clone_node: Node, original_node: Node = null):
+	if clone_node is TextureRect:
+		if _is_black_overlay(clone_node):
+			clone_node.add_to_group("black_overlays")
+			zoom_panel_overlays.append(clone_node)
+			clone_node.mouse_filter = Control.MOUSE_FILTER_STOP
+			if original_node:
+				overlay_map[clone_node] = original_node
+
+	var original_children = original_node.get_children() if original_node else []
+	var clone_children = clone_node.get_children()
+
+	for i in range(clone_children.size()):
+		var orig_child = original_children[i] if i < original_children.size() else null
+		register_zoom_panel_overlays(clone_children[i], orig_child)
 
 func _is_black_overlay(node: TextureRect) -> bool:
-	# Customize this detection to your actual black overlay texture or node name
-	# Example 1: Check node name:
 	if "black" in node.name.to_lower():
 		return true
-	# Example 2: Check texture file name (replace 'black_overlay.png' with your file)
 	if node.texture and node.texture.get_path().to_lower().ends_with("black_overlay.png"):
 		return true
 	return false
@@ -89,9 +94,14 @@ func get_black_overlay_at_position(pos: Vector2) -> TextureRect:
 
 func remove_black_overlay(overlay: TextureRect):
 	overlay.visible = false
+	if overlay_map.has(overlay):
+		var original_overlay = overlay_map[overlay]
+		if is_instance_valid(original_overlay):
+			original_overlay.visible = false
 
 func _on_close_pressed():
 	item_zoom_panel.visible = false
 	inventory_instance.visible = false
 	current_zoomed_item = null
 	zoom_panel_overlays.clear()
+	overlay_map.clear()
