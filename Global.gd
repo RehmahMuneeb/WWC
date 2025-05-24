@@ -1,5 +1,25 @@
 extends Node
 
+var gem_slot_map: Dictionary = {}
+
+func _ready():
+	load_gem_slot_map()
+
+func load_gem_slot_map():
+	var file := FileAccess.open("res://gem_slot_map.json", FileAccess.READ)
+	if file:
+		var json_text := file.get_as_text()
+		var json := JSON.new()
+		var result := json.parse(json_text)
+
+		if result == OK:
+			gem_slot_map = json.data
+			print("Gem-slot map loaded:", gem_slot_map)
+		else:
+			push_error("Failed to parse JSON")
+	else:
+		push_error("Could not open JSON file")
+
 # Global variables
 var score: int = 0
 var pending_score := 0

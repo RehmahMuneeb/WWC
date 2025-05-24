@@ -37,7 +37,6 @@ func _on_gem_input(event: InputEvent, icon: TextureRect):
 			start_drag(icon, event.global_position)
 		elif is_dragging:
 			handle_drop(event.global_position)
-	
 	elif event is InputEventMouseMotion and is_dragging:
 		dragging_icon.global_position = event.global_position + drag_offset
 
@@ -55,30 +54,48 @@ func start_drag(icon: TextureRect, mouse_pos: Vector2):
 func handle_drop(drop_pos: Vector2):
 	var main = get_parent()
 	
-	# Check zoom panel first if visible
+	if not dragging_icon:
+		reset_drag_state()
+		return
+	
+	# Extract the gem name (assumes texture resource path as identifier)
+	var dragged_gem_name = dragging_icon.texture.resource_path.get_file().get_basename().to_lower()
+	
 	if main.item_zoom_panel.visible:
 		var black_overlay = main.get_black_overlay_at_position(drop_pos)
 		if black_overlay:
-			main.remove_black_overlay(black_overlay)  # Only removes the black PNG
+			var overlay_name = black_overlay.name.to_lower()
+			
+			# Check if gem fits this overlay slot
+			if Global.gem_slot_map.has(overlay_name) and Global.gem_slot_map[overlay_name].to_lower() == dragged_gem_name:
+				# Hide black overlay on zoom item to reveal gem
+				black_overlay.visible = false
+				
+				# Also hide corresponding black overlay on actual item (sync)
+				if main.overlay_map.has(black_overlay):
+					var original_overlay = main.overlay_map[black_overlay]
+					if is_instance_valid(original_overlay):
+						original_overlay.visible = false
+				
+				# Remove gem icon from inventory UI
+				dragging_icon.queue_free()
+				reset_drag_state()
+				return
+			
+			# If mismatch, return gem
 			reset_drag_state()
 			return
 	
-	# Check regular scene overlays
-	var overlays = get_tree().get_nodes_in_group("black_overlays")
-	for overlay in overlays:
-		if overlay.get_global_rect().has_point(drop_pos):
-			overlay.queue_free()
-			reset_drag_state()
-			return
-	
-	# If no overlay found, return to inventory
+	# If not dropped on zoom panel overlay, return gem to inventory
 	reset_drag_state()
 
 func reset_drag_state():
 	if is_dragging and dragging_icon:
-		drag_layer.remove_child(dragging_icon)
-		original_parent.add_child(dragging_icon)
-		dragging_icon.global_position = original_position
+		if dragging_icon.get_parent() == drag_layer:
+			drag_layer.remove_child(dragging_icon)
+		if original_parent and not dragging_icon.is_queued_for_deletion():
+			original_parent.add_child(dragging_icon)
+			dragging_icon.global_position = original_position
 	is_dragging = false
 	dragging_icon = null
 

@@ -11,6 +11,7 @@ var current_zoomed_item: TextureRect = null
 var zoom_panel_overlays = []
 var overlay_map = {} # Maps clone overlay -> original overlay
 
+
 func _ready():
 	item_zoom_panel.visible = false
 	inventory_instance.visible = false

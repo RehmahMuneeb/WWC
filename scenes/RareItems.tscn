@@ -55,7 +55,7 @@ offset_top = 58.0
 offset_right = 126.0
 offset_bottom = 102.0
 
-[node name="blackpng" type="TextureRect" parent="Panel/ItemHolder/Item" groups=["Black_Overlays", "black_overlays"]]
+[node name="BlackOverlayRuby" type="TextureRect" parent="Panel/ItemHolder/Item" groups=["Black_Overlays", "black_overlays"]]
 modulate = Color(0, 0, 0, 1)
 layout_mode = 0
 offset_left = 87.0

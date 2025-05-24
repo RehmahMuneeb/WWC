@@ -202,27 +202,35 @@ func _on_claim_reward_pressed():
 	reward_panel.hide()
 
 func get_random_rare_gem() -> Texture:
-	# Get a random rare gem from a pre-defined folder
+	# Get a random rare gem from a pre-defined folder, excluding ones already collected
 	var dir = DirAccess.open("res://raregems")
 	if dir == null:
 		print("Error: Cannot open raregems directory")
 		return null
 
-	var textures := []
+	var available_paths := []
 	dir.list_dir_begin()
 	var file_name = dir.get_next()
 	while file_name != "":
 		if not dir.current_is_dir() and file_name.ends_with(".png"):
-			textures.append("res://raregems/" + file_name)
+			var full_path = "res://raregems/" + file_name
+			var already_has := false
+			for gem_texture in Global.rare_gems:
+				if gem_texture.resource_path == full_path:
+					already_has = true
+					break
+			if not already_has:
+				available_paths.append(full_path)
 		file_name = dir.get_next()
 	dir.list_dir_end()
 
-	if textures.size() == 0:
-		print("No gem textures found in raregems/")
+	if available_paths.size() == 0:
+		print("No new rare gem textures available in raregems/")
 		return null
 
-	var random_path = textures[randi() % textures.size()]
+	var random_path = available_paths[randi() % available_paths.size()]
 	return load(random_path) as Texture
+
 
 func _on_play_again_pressed() -> void:
 	# Restart the game
