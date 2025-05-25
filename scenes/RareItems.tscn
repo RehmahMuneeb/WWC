@@ -1,13 +1,31 @@
-[gd_scene load_steps=11 format=3 uid="uid://cebv8sqummfnp"]
+[gd_scene load_steps=29 format=3 uid="uid://cebv8sqummfnp"]
 
 [ext_resource type="Script" path="res://scenes/Crafting.gd" id="1_wxeuu"]
 [ext_resource type="Texture2D" uid="uid://b0wdau6yqqwn3" path="res://scenes/download (2).jpeg" id="2_jkfcr"]
-[ext_resource type="Texture2D" uid="uid://bsnglqfuuig6m" path="res://scenes/Owl.png" id="3_3bi61"]
 [ext_resource type="PackedScene" uid="uid://bdig3whyspi8a" path="res://Jewels/Inventory.tscn" id="3_bh17i"]
-[ext_resource type="Texture2D" uid="uid://b8e25d2wus3ok" path="res://assets/OWL-RED-GEM.png" id="4_olrf7"]
+[ext_resource type="Texture2D" uid="uid://blvuuh07nlfet" path="res://Antiques/Owl.png" id="3_di7ww"]
+[ext_resource type="Texture2D" uid="uid://nf3wv3w3kmn8" path="res://scenes/Banner.png" id="3_ga7kw"]
+[ext_resource type="Texture2D" uid="uid://b8e25d2wus3ok" path="res://raregems/OWL-RED-GEM.png" id="4_olrf7"]
+[ext_resource type="Texture2D" uid="uid://h50wquumhdyb" path="res://raregems/OwlGem.png" id="4_vdn3a"]
+[ext_resource type="Texture2D" uid="uid://wowjyntckr15" path="res://Antiques/Crab.png" id="6_ov6aq"]
 [ext_resource type="FontFile" uid="uid://b2clys7lbyd3t" path="res://scenes/Kid Games.ttf" id="6_rk72g"]
 [ext_resource type="Texture2D" uid="uid://bk1iayolf8s03" path="res://scenes/Label.png" id="7_7d50y"]
+[ext_resource type="Texture2D" uid="uid://lq6hecu40omw" path="res://Antiques/Crocodile.png" id="7_sxvxf"]
+[ext_resource type="Texture2D" uid="uid://coxlwaw0kt62g" path="res://Antiques/cup.png" id="8_dmigt"]
 [ext_resource type="Texture2D" uid="uid://y0umew614lea" path="res://scenes/cROSS.png" id="8_o2yai"]
+[ext_resource type="Texture2D" uid="uid://bl63hgecq31dl" path="res://raregems/CrabGem.png" id="9_ytwjw"]
+[ext_resource type="Texture2D" uid="uid://ck5gnpqq2dsbe" path="res://Antiques/Dragon.png" id="10_al14a"]
+[ext_resource type="Texture2D" uid="uid://dx3rlu83lxxv8" path="res://Antiques/Mermaid.png" id="11_8ph77"]
+[ext_resource type="Texture2D" uid="uid://bxy8m0yi0hjjd" path="res://raregems/CrocodileGem.png" id="11_aesfo"]
+[ext_resource type="Texture2D" uid="uid://c6yhma1xvtfbq" path="res://Antiques/Skull.png" id="12_d4qxi"]
+[ext_resource type="Texture2D" uid="uid://b5a8xdh7kiydr" path="res://Antiques/Snake.png" id="13_4k78o"]
+[ext_resource type="Texture2D" uid="uid://ciq65ix4upsf5" path="res://raregems/CupGem.png" id="13_vv81l"]
+[ext_resource type="Texture2D" uid="uid://cva2ky0envfyr" path="res://Antiques/Tiger.png" id="14_nc2mo"]
+[ext_resource type="Texture2D" uid="uid://bboif8orondxk" path="res://raregems/Dragon Gem.png" id="15_wwp0r"]
+[ext_resource type="Texture2D" uid="uid://c3db72x2ggo18" path="res://raregems/MermaidGem.png" id="17_w858j"]
+[ext_resource type="Texture2D" uid="uid://bodujvxjeptrj" path="res://raregems/SkullGem.png" id="19_ux38g"]
+[ext_resource type="Texture2D" uid="uid://t514myfj7bn3" path="res://raregems/SnakeGem.png" id="21_22b4c"]
+[ext_resource type="Texture2D" uid="uid://s7hwqn3a8uui" path="res://raregems/TigerGem.png" id="23_0gn17"]
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_vqipp"]
 texture = ExtResource("2_jkfcr")
@@ -29,44 +47,286 @@ script = ExtResource("1_wxeuu")
 
 [node name="Panel" type="Panel" parent="."]
 layout_mode = 0
+offset_top = 2.0
 offset_right = 481.0
 offset_bottom = 855.0
 theme_override_styles/panel = SubResource("StyleBoxTexture_vqipp")
 
+[node name="Sprite2D" type="Sprite2D" parent="Panel"]
+position = Vector2(239, 92)
+scale = Vector2(0.84, 0.84)
+texture = ExtResource("3_ga7kw")
+
+[node name="Label" type="Label" parent="Panel/Sprite2D"]
+offset_left = -152.381
+offset_top = -65.4762
+offset_right = 224.619
+offset_bottom = 15.5238
+theme_override_colors/font_color = Color(0.980392, 0.870588, 0, 1)
+theme_override_colors/font_shadow_color = Color(0.866667, 0, 0.258824, 1)
+theme_override_colors/font_outline_color = Color(0.866667, 0.109804, 0.180392, 1)
+theme_override_constants/shadow_offset_x = 4
+theme_override_constants/shadow_offset_y = 12
+theme_override_constants/outline_size = 22
+theme_override_constants/shadow_outline_size = 7
+theme_override_fonts/font = ExtResource("6_rk72g")
+theme_override_font_sizes/font_size = 66
+text = "JUNGLE"
+
 [node name="ItemHolder" type="Control" parent="Panel"]
 anchors_preset = 0
-offset_right = 475.0
-offset_bottom = 856.0
+offset_left = 2.0
+offset_top = -2.0
+offset_right = 477.0
+offset_bottom = 854.0
 
 [node name="Item" type="TextureRect" parent="Panel/ItemHolder"]
-custom_minimum_size = Vector2(280, 280)
-layout_mode = 2
-offset_left = 2.0
-offset_right = 282.0
-offset_bottom = 280.0
-texture = ExtResource("3_3bi61")
+custom_minimum_size = Vector2(180, 180)
+layout_mode = 1
+offset_left = -12.0
+offset_top = 175.0
+offset_right = 168.0
+offset_bottom = 355.0
+texture = ExtResource("3_di7ww")
 expand_mode = 1
 stretch_mode = 5
 
-[node name="Slot" type="TextureRect" parent="Panel/ItemHolder/Item"]
+[node name="OwlSlot" type="TextureRect" parent="Panel/ItemHolder/Item"]
+modulate = Color(0, 0, 0, 1)
 layout_mode = 0
-offset_left = 85.0
-offset_top = 58.0
-offset_right = 126.0
-offset_bottom = 102.0
+offset_left = 89.0
+offset_top = 28.0
+offset_right = 134.0
+offset_bottom = 75.0
+texture = ExtResource("4_vdn3a")
+expand_mode = 1
+
+[node name="OwlSlot2" type="TextureRect" parent="Panel/ItemHolder/Item"]
+modulate = Color(0, 0, 0, 1)
+layout_mode = 0
+offset_left = 44.0
+offset_top = 25.0
+offset_right = 93.0
+offset_bottom = 77.0
+texture = ExtResource("4_vdn3a")
+expand_mode = 1
 
 [node name="BlackOverlayRuby" type="TextureRect" parent="Panel/ItemHolder/Item" groups=["Black_Overlays", "black_overlays"]]
 modulate = Color(0, 0, 0, 1)
 layout_mode = 0
-offset_left = 87.0
-offset_top = 116.0
-offset_right = 194.0
-offset_bottom = 203.0
+offset_left = 55.0
+offset_top = 76.0
+offset_right = 125.0
+offset_bottom = 130.0
 texture = ExtResource("4_olrf7")
 expand_mode = 1
 stretch_mode = 5
 
+[node name="Item2" type="TextureRect" parent="Panel/ItemHolder"]
+custom_minimum_size = Vector2(180, 180)
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = 57.5
+offset_top = 581.0
+offset_right = 237.5
+offset_bottom = 761.0
+grow_horizontal = 2
+texture = ExtResource("6_ov6aq")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="CrabSLot" type="TextureRect" parent="Panel/ItemHolder/Item2"]
+modulate = Color(0, 0, 0, 1)
+layout_mode = 0
+offset_left = 27.0
+offset_top = 39.0
+offset_right = 144.0
+offset_bottom = 156.0
+texture = ExtResource("9_ytwjw")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Item3" type="TextureRect" parent="Panel/ItemHolder"]
+custom_minimum_size = Vector2(190, 190)
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -247.5
+offset_top = 574.0
+offset_right = -57.5
+offset_bottom = 764.0
+grow_horizontal = 2
+texture = ExtResource("7_sxvxf")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="CrocGem" type="TextureRect" parent="Panel/ItemHolder/Item3"]
+modulate = Color(0, 0, 0, 1)
+layout_mode = 0
+offset_left = 31.0
+offset_top = 43.0
+offset_right = 106.0
+offset_bottom = 118.0
+texture = ExtResource("11_aesfo")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Item4" type="TextureRect" parent="Panel/ItemHolder"]
+custom_minimum_size = Vector2(180, 180)
+layout_mode = 0
+offset_left = -15.0
+offset_top = 374.0
+offset_right = 165.0
+offset_bottom = 554.0
+texture = ExtResource("8_dmigt")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="CupGem" type="TextureRect" parent="Panel/ItemHolder/Item4"]
+modulate = Color(0, 0, 0, 1)
+layout_mode = 0
+offset_left = 51.0
+offset_top = 21.0
+offset_right = 129.0
+offset_bottom = 99.0
+texture = ExtResource("13_vv81l")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Item6" type="TextureRect" parent="Panel/ItemHolder"]
+custom_minimum_size = Vector2(180, 180)
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -318.0
+offset_top = 179.0
+offset_right = -138.0
+offset_bottom = 359.0
+grow_horizontal = 0
+texture = ExtResource("10_al14a")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="DragonGem" type="TextureRect" parent="Panel/ItemHolder/Item6"]
+modulate = Color(0, 0, 0, 1)
+layout_mode = 0
+offset_left = 46.0
+offset_top = 39.0
+offset_right = 138.0
+offset_bottom = 131.0
+texture = ExtResource("15_wwp0r")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Item7" type="TextureRect" parent="Panel/ItemHolder"]
+custom_minimum_size = Vector2(180, 180)
+layout_mode = 1
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_left = 145.0
+offset_top = 159.0
+offset_right = 325.0
+offset_bottom = 339.0
+grow_vertical = 2
+texture = ExtResource("11_8ph77")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="MermaidGem" type="TextureRect" parent="Panel/ItemHolder/Item7"]
+modulate = Color(0, 0, 0, 1)
+layout_mode = 0
+offset_left = 70.0
+offset_top = 11.0
+offset_right = 146.0
+offset_bottom = 87.0
+texture = ExtResource("17_w858j")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Item8" type="TextureRect" parent="Panel/ItemHolder"]
+custom_minimum_size = Vector2(180, 180)
+layout_mode = 0
+offset_left = 312.0
+offset_top = 189.0
+offset_right = 492.0
+offset_bottom = 369.0
+texture = ExtResource("12_d4qxi")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="SkullGem" type="TextureRect" parent="Panel/ItemHolder/Item8"]
+modulate = Color(0, 0, 0, 1)
+layout_mode = 0
+offset_left = 42.0
+offset_top = 39.0
+offset_right = 93.0
+offset_bottom = 90.0
+texture = ExtResource("19_ux38g")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="SkullGem2" type="TextureRect" parent="Panel/ItemHolder/Item8"]
+modulate = Color(0, 0, 0, 1)
+layout_mode = 0
+offset_left = 83.0
+offset_top = 39.0
+offset_right = 134.0
+offset_bottom = 90.0
+texture = ExtResource("19_ux38g")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Item9" type="TextureRect" parent="Panel/ItemHolder"]
+custom_minimum_size = Vector2(190, 190)
+layout_mode = 0
+offset_left = 301.0
+offset_top = 378.0
+offset_right = 491.0
+offset_bottom = 568.0
+texture = ExtResource("13_4k78o")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="SnakeGem" type="TextureRect" parent="Panel/ItemHolder/Item9"]
+modulate = Color(0, 0, 0, 1)
+layout_mode = 0
+offset_left = 62.0
+offset_top = 41.0
+offset_right = 123.0
+offset_bottom = 102.0
+texture = ExtResource("21_22b4c")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Item10" type="TextureRect" parent="Panel/ItemHolder"]
+custom_minimum_size = Vector2(200, 200)
+layout_mode = 0
+offset_left = 144.0
+offset_top = 367.0
+offset_right = 344.0
+offset_bottom = 567.0
+texture = ExtResource("14_nc2mo")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="TigerGem" type="TextureRect" parent="Panel/ItemHolder/Item10"]
+modulate = Color(0, 0, 0, 1)
+layout_mode = 0
+offset_left = 78.0
+offset_top = 35.0
+offset_right = 126.0
+offset_bottom = 83.0
+texture = ExtResource("23_0gn17")
+expand_mode = 1
+stretch_mode = 5
+
 [node name="ZoomedItemPanel" type="Panel" parent="."]
+visible = false
 layout_mode = 0
 offset_top = 1.0
 offset_right = 483.0
@@ -133,6 +393,7 @@ offset_bottom = 605.0
 grow_horizontal = 2
 
 [node name="Inventory" parent="." instance=ExtResource("3_bh17i")]
+visible = false
 layout_mode = 1
 anchors_preset = -1
 anchor_right = 0.0

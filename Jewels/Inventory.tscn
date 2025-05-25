@@ -2,7 +2,9 @@
 
 [ext_resource type="Script" path="res://Jewels/inventory.gd" id="1_v6gsh"]
 [ext_resource type="Texture2D" uid="uid://c1e2jkd6cwk30" path="res://scenes/Screenshot 2025-05-15 174147.png" id="2_onq6w"]
-[ext_resource type="Texture2D" uid="uid://cl2ok35s2xm7b" path="res://raregems/Jewel13.png" id="3_i3auc"]
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_x0h32"]
+load_path = "res://.godot/imported/Jewel13.png-4335875164f54ebb0203d84f9e2b49f4.ctex"
 
 [node name="Inventory" type="Control"]
 layout_mode = 3
@@ -47,9 +49,9 @@ columns = 6
 [node name="TextureRect2" type="TextureRect" parent="TextureRect/ScrollContainer/VBoxContainer"]
 visible = false
 layout_mode = 2
-texture = ExtResource("3_i3auc")
+texture = SubResource("CompressedTexture2D_x0h32")
 
 [node name="TextureRect" type="TextureRect" parent="TextureRect/ScrollContainer/VBoxContainer"]
 visible = false
 layout_mode = 2
-texture = ExtResource("3_i3auc")
+texture = SubResource("CompressedTexture2D_x0h32")

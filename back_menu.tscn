@@ -6,7 +6,6 @@
 [ext_resource type="Texture2D" uid="uid://brjxfhii2j18c" path="res://scenes/WhatsApp Image 2025-05-07 at 02.36.16_ad0784d5.jpg" id="3_yd43k"]
 [ext_resource type="Shader" path="res://back_menu.gdshader" id="5_1fbjo"]
 [ext_resource type="Texture2D" uid="uid://b8n734aibk4ld" path="res://scenes/Treasure Chest-Photoroom.png" id="5_cirfo"]
-[ext_resource type="Texture2D" uid="uid://ccyxk8qnlnxe" path="res://raregems/Jewel5.png" id="8_63l0p"]
 [ext_resource type="Texture2D" uid="uid://1misolt5rykx" path="res://scenes/video-play-watch-player-black-icon-free-png-7017516949743594tmpczaclr.png" id="8_ddeit"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_j7ymm"]
@@ -73,6 +72,9 @@ corner_radius_top_left = 8
 corner_radius_top_right = 8
 corner_radius_bottom_right = 8
 corner_radius_bottom_left = 8
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_xke0a"]
+load_path = "res://.godot/imported/Jewel5.png-e8b871a7a26af4655a01aaa3ebc81210.ctex"
 
 [node name="BackMenu" type="Control"]
 layout_mode = 3
@@ -269,7 +271,7 @@ offset_left = 88.0
 offset_top = 54.0
 offset_right = 286.0
 offset_bottom = 154.0
-texture = ExtResource("8_63l0p")
+texture = SubResource("CompressedTexture2D_xke0a")
 stretch_mode = 5
 
 [connection signal="pressed" from="PlayAgain" to="." method="_on_play_again_pressed"]
