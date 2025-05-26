@@ -1,4 +1,4 @@
-[gd_scene load_steps=29 format=3 uid="uid://cebv8sqummfnp"]
+[gd_scene load_steps=30 format=3 uid="uid://cebv8sqummfnp"]
 
 [ext_resource type="Script" path="res://scenes/Crafting.gd" id="1_wxeuu"]
 [ext_resource type="Texture2D" uid="uid://b0wdau6yqqwn3" path="res://scenes/download (2).jpeg" id="2_jkfcr"]
@@ -12,6 +12,7 @@
 [ext_resource type="Texture2D" uid="uid://bk1iayolf8s03" path="res://scenes/Label.png" id="7_7d50y"]
 [ext_resource type="Texture2D" uid="uid://lq6hecu40omw" path="res://Antiques/Crocodile.png" id="7_sxvxf"]
 [ext_resource type="Texture2D" uid="uid://coxlwaw0kt62g" path="res://Antiques/cup.png" id="8_dmigt"]
+[ext_resource type="Texture2D" uid="uid://ji1p78q65t0e" path="res://Jewels/Lock.png" id="8_kjw3m"]
 [ext_resource type="Texture2D" uid="uid://y0umew614lea" path="res://scenes/cROSS.png" id="8_o2yai"]
 [ext_resource type="Texture2D" uid="uid://bl63hgecq31dl" path="res://raregems/CrabGem.png" id="9_ytwjw"]
 [ext_resource type="Texture2D" uid="uid://ck5gnpqq2dsbe" path="res://Antiques/Dragon.png" id="10_al14a"]
@@ -81,7 +82,6 @@ offset_right = 477.0
 offset_bottom = 854.0
 
 [node name="Item" type="TextureRect" parent="Panel/ItemHolder"]
-modulate = Color(0, 0, 0, 1)
 custom_minimum_size = Vector2(180, 180)
 layout_mode = 1
 offset_left = -12.0
@@ -123,6 +123,40 @@ texture = ExtResource("4_olrf7")
 expand_mode = 1
 stretch_mode = 5
 
+[node name="Black" type="TextureRect" parent="Panel/ItemHolder/Item"]
+self_modulate = Color(0, 0, 0, 1)
+custom_minimum_size = Vector2(180, 180)
+layout_mode = 1
+offset_right = 180.0
+offset_bottom = 180.0
+texture = ExtResource("3_di7ww")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="TextureRect" type="TextureRect" parent="Panel/ItemHolder/Item/Black"]
+custom_minimum_size = Vector2(64, 64)
+layout_mode = 0
+offset_left = 55.0
+offset_top = 44.0
+offset_right = 119.0
+offset_bottom = 108.0
+texture = ExtResource("8_kjw3m")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Label" type="Label" parent="Panel/ItemHolder/Item/Black"]
+layout_mode = 0
+offset_left = 23.0
+offset_top = 89.0
+offset_right = 162.0
+offset_bottom = 131.0
+theme_override_colors/font_color = Color(0.980392, 0.870588, 0, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 13
+theme_override_fonts/font = ExtResource("6_rk72g")
+theme_override_font_sizes/font_size = 30
+text = "LOCKED"
+
 [node name="Item2" type="TextureRect" parent="Panel/ItemHolder"]
 custom_minimum_size = Vector2(180, 180)
 layout_mode = 1
@@ -146,6 +180,32 @@ offset_top = 39.0
 offset_right = 144.0
 offset_bottom = 156.0
 texture = ExtResource("9_ytwjw")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Black2" type="TextureRect" parent="Panel/ItemHolder/Item2"]
+self_modulate = Color(0, 0, 0, 1)
+custom_minimum_size = Vector2(180, 180)
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -90.0
+offset_right = 90.0
+offset_bottom = 180.0
+grow_horizontal = 2
+texture = ExtResource("6_ov6aq")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="TextureRect2" type="TextureRect" parent="Panel/ItemHolder/Item2/Black2"]
+custom_minimum_size = Vector2(64, 64)
+layout_mode = 0
+offset_left = 57.0
+offset_top = 67.0
+offset_right = 121.0
+offset_bottom = 131.0
+texture = ExtResource("8_kjw3m")
 expand_mode = 1
 stretch_mode = 5
 
@@ -175,6 +235,32 @@ texture = ExtResource("11_aesfo")
 expand_mode = 1
 stretch_mode = 5
 
+[node name="Black" type="TextureRect" parent="Panel/ItemHolder/Item3"]
+self_modulate = Color(0, 0, 0, 1)
+custom_minimum_size = Vector2(190, 190)
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -95.0
+offset_right = 95.0
+offset_bottom = 190.0
+grow_horizontal = 2
+texture = ExtResource("7_sxvxf")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="TextureRect3" type="TextureRect" parent="Panel/ItemHolder/Item3/Black"]
+custom_minimum_size = Vector2(64, 64)
+layout_mode = 0
+offset_left = 69.0
+offset_top = 69.0
+offset_right = 133.0
+offset_bottom = 133.0
+texture = ExtResource("8_kjw3m")
+expand_mode = 1
+stretch_mode = 5
+
 [node name="Item4" type="TextureRect" parent="Panel/ItemHolder"]
 custom_minimum_size = Vector2(180, 180)
 layout_mode = 0
@@ -194,6 +280,27 @@ offset_top = 21.0
 offset_right = 129.0
 offset_bottom = 99.0
 texture = ExtResource("13_vv81l")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Black" type="TextureRect" parent="Panel/ItemHolder/Item4"]
+self_modulate = Color(0, 0, 0, 1)
+custom_minimum_size = Vector2(180, 180)
+layout_mode = 0
+offset_right = 180.0
+offset_bottom = 180.0
+texture = ExtResource("8_dmigt")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="TextureRect4" type="TextureRect" parent="Panel/ItemHolder/Item4/Black"]
+custom_minimum_size = Vector2(64, 64)
+layout_mode = 0
+offset_left = 61.0
+offset_top = 53.0
+offset_right = 125.0
+offset_bottom = 117.0
+texture = ExtResource("8_kjw3m")
 expand_mode = 1
 stretch_mode = 5
 
@@ -223,6 +330,31 @@ texture = ExtResource("15_wwp0r")
 expand_mode = 1
 stretch_mode = 5
 
+[node name="Black" type="TextureRect" parent="Panel/ItemHolder/Item6"]
+self_modulate = Color(0, 0, 0, 1)
+custom_minimum_size = Vector2(180, 180)
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -180.0
+offset_bottom = 180.0
+grow_horizontal = 0
+texture = ExtResource("10_al14a")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="TextureRect5" type="TextureRect" parent="Panel/ItemHolder/Item6/Black"]
+custom_minimum_size = Vector2(64, 64)
+layout_mode = 0
+offset_left = 55.0
+offset_top = 53.0
+offset_right = 119.0
+offset_bottom = 117.0
+texture = ExtResource("8_kjw3m")
+expand_mode = 1
+stretch_mode = 5
+
 [node name="Item7" type="TextureRect" parent="Panel/ItemHolder"]
 custom_minimum_size = Vector2(180, 180)
 layout_mode = 1
@@ -246,6 +378,32 @@ offset_top = 11.0
 offset_right = 146.0
 offset_bottom = 87.0
 texture = ExtResource("17_w858j")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Black" type="TextureRect" parent="Panel/ItemHolder/Item7"]
+self_modulate = Color(0, 0, 0, 1)
+custom_minimum_size = Vector2(180, 180)
+layout_mode = 1
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_top = -90.0
+offset_right = 180.0
+offset_bottom = 90.0
+grow_vertical = 2
+texture = ExtResource("11_8ph77")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="TextureRect4" type="TextureRect" parent="Panel/ItemHolder/Item7/Black"]
+custom_minimum_size = Vector2(64, 64)
+layout_mode = 0
+offset_left = 63.0
+offset_top = 58.0
+offset_right = 127.0
+offset_bottom = 122.0
+texture = ExtResource("8_kjw3m")
 expand_mode = 1
 stretch_mode = 5
 
@@ -282,6 +440,27 @@ texture = ExtResource("19_ux38g")
 expand_mode = 1
 stretch_mode = 5
 
+[node name="Black" type="TextureRect" parent="Panel/ItemHolder/Item8"]
+self_modulate = Color(0, 0, 0, 1)
+custom_minimum_size = Vector2(180, 180)
+layout_mode = 0
+offset_right = 180.0
+offset_bottom = 180.0
+texture = ExtResource("12_d4qxi")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="TextureRect5" type="TextureRect" parent="Panel/ItemHolder/Item8/Black"]
+custom_minimum_size = Vector2(64, 64)
+layout_mode = 0
+offset_left = 56.0
+offset_top = 43.0
+offset_right = 120.0
+offset_bottom = 107.0
+texture = ExtResource("8_kjw3m")
+expand_mode = 1
+stretch_mode = 5
+
 [node name="Item9" type="TextureRect" parent="Panel/ItemHolder"]
 custom_minimum_size = Vector2(190, 190)
 layout_mode = 0
@@ -304,6 +483,27 @@ texture = ExtResource("21_22b4c")
 expand_mode = 1
 stretch_mode = 5
 
+[node name="Black" type="TextureRect" parent="Panel/ItemHolder/Item9"]
+self_modulate = Color(0, 0, 0, 1)
+custom_minimum_size = Vector2(190, 190)
+layout_mode = 0
+offset_right = 190.0
+offset_bottom = 190.0
+texture = ExtResource("13_4k78o")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="TextureRect6" type="TextureRect" parent="Panel/ItemHolder/Item9/Black"]
+custom_minimum_size = Vector2(64, 64)
+layout_mode = 0
+offset_left = 61.0
+offset_top = 54.0
+offset_right = 125.0
+offset_bottom = 118.0
+texture = ExtResource("8_kjw3m")
+expand_mode = 1
+stretch_mode = 5
+
 [node name="Item10" type="TextureRect" parent="Panel/ItemHolder"]
 custom_minimum_size = Vector2(200, 200)
 layout_mode = 0
@@ -323,6 +523,27 @@ offset_top = 35.0
 offset_right = 126.0
 offset_bottom = 83.0
 texture = ExtResource("23_0gn17")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Black" type="TextureRect" parent="Panel/ItemHolder/Item10"]
+self_modulate = Color(0, 0, 0, 1)
+custom_minimum_size = Vector2(200, 200)
+layout_mode = 0
+offset_right = 200.0
+offset_bottom = 200.0
+texture = ExtResource("14_nc2mo")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="TextureRect7" type="TextureRect" parent="Panel/ItemHolder/Item10/Black"]
+custom_minimum_size = Vector2(64, 64)
+layout_mode = 0
+offset_left = 68.0
+offset_top = 65.0
+offset_right = 132.0
+offset_bottom = 129.0
+texture = ExtResource("8_kjw3m")
 expand_mode = 1
 stretch_mode = 5
 
