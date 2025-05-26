@@ -5,7 +5,7 @@
 [ext_resource type="PackedScene" uid="uid://bdig3whyspi8a" path="res://Jewels/Inventory.tscn" id="3_bh17i"]
 [ext_resource type="Texture2D" uid="uid://blvuuh07nlfet" path="res://Antiques/Owl.png" id="3_di7ww"]
 [ext_resource type="Texture2D" uid="uid://nf3wv3w3kmn8" path="res://scenes/Banner.png" id="3_ga7kw"]
-[ext_resource type="Texture2D" uid="uid://b8e25d2wus3ok" path="res://raregems/OWL-RED-GEM.png" id="4_olrf7"]
+[ext_resource type="Texture2D" uid="uid://b8e25d2wus3ok" path="res://raregems/OWLREDGEM.png" id="4_olrf7"]
 [ext_resource type="Texture2D" uid="uid://h50wquumhdyb" path="res://raregems/OwlGem.png" id="4_vdn3a"]
 [ext_resource type="Texture2D" uid="uid://wowjyntckr15" path="res://Antiques/Crab.png" id="6_ov6aq"]
 [ext_resource type="FontFile" uid="uid://b2clys7lbyd3t" path="res://scenes/Kid Games.ttf" id="6_rk72g"]
@@ -81,6 +81,7 @@ offset_right = 477.0
 offset_bottom = 854.0
 
 [node name="Item" type="TextureRect" parent="Panel/ItemHolder"]
+modulate = Color(0, 0, 0, 1)
 custom_minimum_size = Vector2(180, 180)
 layout_mode = 1
 offset_left = -12.0
@@ -91,7 +92,7 @@ texture = ExtResource("3_di7ww")
 expand_mode = 1
 stretch_mode = 5
 
-[node name="OwlSlot" type="TextureRect" parent="Panel/ItemHolder/Item"]
+[node name="BlackoverlayGreen" type="TextureRect" parent="Panel/ItemHolder/Item" groups=["Black_Overlays", "black_overlays"]]
 modulate = Color(0, 0, 0, 1)
 layout_mode = 0
 offset_left = 89.0
@@ -101,7 +102,7 @@ offset_bottom = 75.0
 texture = ExtResource("4_vdn3a")
 expand_mode = 1
 
-[node name="OwlSlot2" type="TextureRect" parent="Panel/ItemHolder/Item"]
+[node name="BlackOverlayGreen2" type="TextureRect" parent="Panel/ItemHolder/Item" groups=["Black_Overlays", "black_overlays"]]
 modulate = Color(0, 0, 0, 1)
 layout_mode = 0
 offset_left = 44.0
@@ -137,7 +138,7 @@ texture = ExtResource("6_ov6aq")
 expand_mode = 1
 stretch_mode = 5
 
-[node name="CrabSLot" type="TextureRect" parent="Panel/ItemHolder/Item2"]
+[node name="Blackoverlaycrab" type="TextureRect" parent="Panel/ItemHolder/Item2" groups=["Black_Overlays", "black_overlays"]]
 modulate = Color(0, 0, 0, 1)
 layout_mode = 0
 offset_left = 27.0
@@ -163,7 +164,7 @@ texture = ExtResource("7_sxvxf")
 expand_mode = 1
 stretch_mode = 5
 
-[node name="CrocGem" type="TextureRect" parent="Panel/ItemHolder/Item3"]
+[node name="Blackoverlaycroc" type="TextureRect" parent="Panel/ItemHolder/Item3" groups=["Black_Overlays", "black_overlays"]]
 modulate = Color(0, 0, 0, 1)
 layout_mode = 0
 offset_left = 31.0
@@ -185,7 +186,7 @@ texture = ExtResource("8_dmigt")
 expand_mode = 1
 stretch_mode = 5
 
-[node name="CupGem" type="TextureRect" parent="Panel/ItemHolder/Item4"]
+[node name="Blackoverlaycup" type="TextureRect" parent="Panel/ItemHolder/Item4" groups=["Black_Overlays", "black_overlays"]]
 modulate = Color(0, 0, 0, 1)
 layout_mode = 0
 offset_left = 51.0
@@ -211,7 +212,7 @@ texture = ExtResource("10_al14a")
 expand_mode = 1
 stretch_mode = 5
 
-[node name="DragonGem" type="TextureRect" parent="Panel/ItemHolder/Item6"]
+[node name="Blackoverlaydragon" type="TextureRect" parent="Panel/ItemHolder/Item6" groups=["Black_Overlays", "black_overlays"]]
 modulate = Color(0, 0, 0, 1)
 layout_mode = 0
 offset_left = 46.0
@@ -237,7 +238,7 @@ texture = ExtResource("11_8ph77")
 expand_mode = 1
 stretch_mode = 5
 
-[node name="MermaidGem" type="TextureRect" parent="Panel/ItemHolder/Item7"]
+[node name="Blackoverlaymermaid" type="TextureRect" parent="Panel/ItemHolder/Item7" groups=["Black_Overlays", "black_overlays"]]
 modulate = Color(0, 0, 0, 1)
 layout_mode = 0
 offset_left = 70.0
@@ -259,7 +260,7 @@ texture = ExtResource("12_d4qxi")
 expand_mode = 1
 stretch_mode = 5
 
-[node name="SkullGem" type="TextureRect" parent="Panel/ItemHolder/Item8"]
+[node name="Blackoverlayskull" type="TextureRect" parent="Panel/ItemHolder/Item8" groups=["Black_Overlays", "black_overlays"]]
 modulate = Color(0, 0, 0, 1)
 layout_mode = 0
 offset_left = 42.0
@@ -270,7 +271,7 @@ texture = ExtResource("19_ux38g")
 expand_mode = 1
 stretch_mode = 5
 
-[node name="SkullGem2" type="TextureRect" parent="Panel/ItemHolder/Item8"]
+[node name="Blackoverlayskull2" type="TextureRect" parent="Panel/ItemHolder/Item8" groups=["Black_Overlays", "black_overlays"]]
 modulate = Color(0, 0, 0, 1)
 layout_mode = 0
 offset_left = 83.0
@@ -292,7 +293,7 @@ texture = ExtResource("13_4k78o")
 expand_mode = 1
 stretch_mode = 5
 
-[node name="SnakeGem" type="TextureRect" parent="Panel/ItemHolder/Item9"]
+[node name="Blackoverlaysnake" type="TextureRect" parent="Panel/ItemHolder/Item9" groups=["Black_Overlays", "black_overlays"]]
 modulate = Color(0, 0, 0, 1)
 layout_mode = 0
 offset_left = 62.0
@@ -314,7 +315,7 @@ texture = ExtResource("14_nc2mo")
 expand_mode = 1
 stretch_mode = 5
 
-[node name="TigerGem" type="TextureRect" parent="Panel/ItemHolder/Item10"]
+[node name="Blackoverlaytiger" type="TextureRect" parent="Panel/ItemHolder/Item10" groups=["Black_Overlays", "black_overlays"]]
 modulate = Color(0, 0, 0, 1)
 layout_mode = 0
 offset_left = 78.0

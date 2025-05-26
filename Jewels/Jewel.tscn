@@ -15,7 +15,6 @@
 [ext_resource type="Texture2D" uid="uid://cfv2n3fifc5j1" path="res://scenes/gem (6).png" id="14_hixi6"]
 
 [sub_resource type="CompressedTexture2D" id="CompressedTexture2D_8ughg"]
-load_path = "res://.godot/imported/Jewel1.png-9789c2b2cc49e9fcf50ec5c2342dcc5e.ctex"
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ufugi"]
 size = Vector2(59, 63)

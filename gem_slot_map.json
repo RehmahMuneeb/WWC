@@ -1,3 +1,14 @@
 {
- "blackoverlayruby": "jewel1"
+ "blackoverlayruby": "owlredgem",
+ "blackoverlaygreen": "owlgem",
+ "blackoverlaygreen2": "owlgem2",
+ "blackoverlaycrab": "crabgem",
+ "blackoverlaycroc": "crocodilegem",
+ "blackoverlaycup": "cupgem",
+ "blackoverlaydragon": "dragon gem",
+ "blackoverlaymermaid": "mermaaidgem",
+ "blackoverlayskull": "skullgem",
+ "blackoverlayskull2": "skullgem2",
+ "blackoverlaysnake": "snakegem",
+ "blackoverlaytiger": "tigergem"
 }

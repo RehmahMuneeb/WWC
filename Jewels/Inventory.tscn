@@ -4,7 +4,6 @@
 [ext_resource type="Texture2D" uid="uid://c1e2jkd6cwk30" path="res://scenes/Screenshot 2025-05-15 174147.png" id="2_onq6w"]
 
 [sub_resource type="CompressedTexture2D" id="CompressedTexture2D_x0h32"]
-load_path = "res://.godot/imported/Jewel13.png-4335875164f54ebb0203d84f9e2b49f4.ctex"
 
 [node name="Inventory" type="Control"]
 layout_mode = 3

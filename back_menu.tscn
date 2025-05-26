@@ -74,7 +74,6 @@ corner_radius_bottom_right = 8
 corner_radius_bottom_left = 8
 
 [sub_resource type="CompressedTexture2D" id="CompressedTexture2D_xke0a"]
-load_path = "res://.godot/imported/Jewel5.png-e8b871a7a26af4655a01aaa3ebc81210.ctex"
 
 [node name="BackMenu" type="Control"]
 layout_mode = 3
