@@ -123,7 +123,7 @@ texture = ExtResource("4_olrf7")
 expand_mode = 1
 stretch_mode = 5
 
-[node name="Black" type="TextureRect" parent="Panel/ItemHolder/Item"]
+[node name="LockOverlay" type="TextureRect" parent="Panel/ItemHolder/Item"]
 self_modulate = Color(0, 0, 0, 1)
 custom_minimum_size = Vector2(180, 180)
 layout_mode = 1
@@ -133,7 +133,7 @@ texture = ExtResource("3_di7ww")
 expand_mode = 1
 stretch_mode = 5
 
-[node name="TextureRect" type="TextureRect" parent="Panel/ItemHolder/Item/Black"]
+[node name="TextureRect" type="TextureRect" parent="Panel/ItemHolder/Item/LockOverlay"]
 custom_minimum_size = Vector2(64, 64)
 layout_mode = 0
 offset_left = 55.0
@@ -144,7 +144,7 @@ texture = ExtResource("8_kjw3m")
 expand_mode = 1
 stretch_mode = 5
 
-[node name="Label" type="Label" parent="Panel/ItemHolder/Item/Black"]
+[node name="Label" type="Label" parent="Panel/ItemHolder/Item/LockOverlay"]
 layout_mode = 0
 offset_left = 23.0
 offset_top = 89.0
@@ -183,7 +183,7 @@ texture = ExtResource("9_ytwjw")
 expand_mode = 1
 stretch_mode = 5
 
-[node name="Black2" type="TextureRect" parent="Panel/ItemHolder/Item2"]
+[node name="LockOverlay" type="TextureRect" parent="Panel/ItemHolder/Item2"]
 self_modulate = Color(0, 0, 0, 1)
 custom_minimum_size = Vector2(180, 180)
 layout_mode = 1
@@ -198,7 +198,7 @@ texture = ExtResource("6_ov6aq")
 expand_mode = 1
 stretch_mode = 5
 
-[node name="TextureRect2" type="TextureRect" parent="Panel/ItemHolder/Item2/Black2"]
+[node name="TextureRect2" type="TextureRect" parent="Panel/ItemHolder/Item2/LockOverlay"]
 custom_minimum_size = Vector2(64, 64)
 layout_mode = 0
 offset_left = 57.0
@@ -235,7 +235,7 @@ texture = ExtResource("11_aesfo")
 expand_mode = 1
 stretch_mode = 5
 
-[node name="Black" type="TextureRect" parent="Panel/ItemHolder/Item3"]
+[node name="LockOverlay" type="TextureRect" parent="Panel/ItemHolder/Item3"]
 self_modulate = Color(0, 0, 0, 1)
 custom_minimum_size = Vector2(190, 190)
 layout_mode = 1
@@ -250,7 +250,7 @@ texture = ExtResource("7_sxvxf")
 expand_mode = 1
 stretch_mode = 5
 
-[node name="TextureRect3" type="TextureRect" parent="Panel/ItemHolder/Item3/Black"]
+[node name="TextureRect3" type="TextureRect" parent="Panel/ItemHolder/Item3/LockOverlay"]
 custom_minimum_size = Vector2(64, 64)
 layout_mode = 0
 offset_left = 69.0
@@ -283,7 +283,7 @@ texture = ExtResource("13_vv81l")
 expand_mode = 1
 stretch_mode = 5
 
-[node name="Black" type="TextureRect" parent="Panel/ItemHolder/Item4"]
+[node name="LockOverlay" type="TextureRect" parent="Panel/ItemHolder/Item4"]
 self_modulate = Color(0, 0, 0, 1)
 custom_minimum_size = Vector2(180, 180)
 layout_mode = 0
@@ -293,7 +293,7 @@ texture = ExtResource("8_dmigt")
 expand_mode = 1
 stretch_mode = 5
 
-[node name="TextureRect4" type="TextureRect" parent="Panel/ItemHolder/Item4/Black"]
+[node name="TextureRect4" type="TextureRect" parent="Panel/ItemHolder/Item4/LockOverlay"]
 custom_minimum_size = Vector2(64, 64)
 layout_mode = 0
 offset_left = 61.0
@@ -330,7 +330,7 @@ texture = ExtResource("15_wwp0r")
 expand_mode = 1
 stretch_mode = 5
 
-[node name="Black" type="TextureRect" parent="Panel/ItemHolder/Item6"]
+[node name="LockOverlay" type="TextureRect" parent="Panel/ItemHolder/Item6"]
 self_modulate = Color(0, 0, 0, 1)
 custom_minimum_size = Vector2(180, 180)
 layout_mode = 1
@@ -344,7 +344,7 @@ texture = ExtResource("10_al14a")
 expand_mode = 1
 stretch_mode = 5
 
-[node name="TextureRect5" type="TextureRect" parent="Panel/ItemHolder/Item6/Black"]
+[node name="TextureRect5" type="TextureRect" parent="Panel/ItemHolder/Item6/LockOverlay"]
 custom_minimum_size = Vector2(64, 64)
 layout_mode = 0
 offset_left = 55.0
@@ -381,7 +381,7 @@ texture = ExtResource("17_w858j")
 expand_mode = 1
 stretch_mode = 5
 
-[node name="Black" type="TextureRect" parent="Panel/ItemHolder/Item7"]
+[node name="LockOverlay" type="TextureRect" parent="Panel/ItemHolder/Item7"]
 self_modulate = Color(0, 0, 0, 1)
 custom_minimum_size = Vector2(180, 180)
 layout_mode = 1
@@ -396,7 +396,7 @@ texture = ExtResource("11_8ph77")
 expand_mode = 1
 stretch_mode = 5
 
-[node name="TextureRect4" type="TextureRect" parent="Panel/ItemHolder/Item7/Black"]
+[node name="TextureRect4" type="TextureRect" parent="Panel/ItemHolder/Item7/LockOverlay"]
 custom_minimum_size = Vector2(64, 64)
 layout_mode = 0
 offset_left = 63.0
@@ -440,7 +440,7 @@ texture = ExtResource("19_ux38g")
 expand_mode = 1
 stretch_mode = 5
 
-[node name="Black" type="TextureRect" parent="Panel/ItemHolder/Item8"]
+[node name="LockOverlay" type="TextureRect" parent="Panel/ItemHolder/Item8"]
 self_modulate = Color(0, 0, 0, 1)
 custom_minimum_size = Vector2(180, 180)
 layout_mode = 0
@@ -450,7 +450,7 @@ texture = ExtResource("12_d4qxi")
 expand_mode = 1
 stretch_mode = 5
 
-[node name="TextureRect5" type="TextureRect" parent="Panel/ItemHolder/Item8/Black"]
+[node name="TextureRect5" type="TextureRect" parent="Panel/ItemHolder/Item8/LockOverlay"]
 custom_minimum_size = Vector2(64, 64)
 layout_mode = 0
 offset_left = 56.0
@@ -483,7 +483,7 @@ texture = ExtResource("21_22b4c")
 expand_mode = 1
 stretch_mode = 5
 
-[node name="Black" type="TextureRect" parent="Panel/ItemHolder/Item9"]
+[node name="LockOverlay" type="TextureRect" parent="Panel/ItemHolder/Item9"]
 self_modulate = Color(0, 0, 0, 1)
 custom_minimum_size = Vector2(190, 190)
 layout_mode = 0
@@ -493,7 +493,7 @@ texture = ExtResource("13_4k78o")
 expand_mode = 1
 stretch_mode = 5
 
-[node name="TextureRect6" type="TextureRect" parent="Panel/ItemHolder/Item9/Black"]
+[node name="TextureRect6" type="TextureRect" parent="Panel/ItemHolder/Item9/LockOverlay"]
 custom_minimum_size = Vector2(64, 64)
 layout_mode = 0
 offset_left = 61.0
@@ -526,7 +526,7 @@ texture = ExtResource("23_0gn17")
 expand_mode = 1
 stretch_mode = 5
 
-[node name="Black" type="TextureRect" parent="Panel/ItemHolder/Item10"]
+[node name="LockOverlay" type="TextureRect" parent="Panel/ItemHolder/Item10"]
 self_modulate = Color(0, 0, 0, 1)
 custom_minimum_size = Vector2(200, 200)
 layout_mode = 0
@@ -536,7 +536,7 @@ texture = ExtResource("14_nc2mo")
 expand_mode = 1
 stretch_mode = 5
 
-[node name="TextureRect7" type="TextureRect" parent="Panel/ItemHolder/Item10/Black"]
+[node name="TextureRect7" type="TextureRect" parent="Panel/ItemHolder/Item10/LockOverlay"]
 custom_minimum_size = Vector2(64, 64)
 layout_mode = 0
 offset_left = 68.0

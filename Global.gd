@@ -1,10 +1,52 @@
 extends Node
 
+# Item unlock thresholds (how many full cycles needed to unlock each item)
+var unlock_thresholds = {
+	"Item0": 1,
+	"Item1": 2,
+	"Item2": 3,
+	"Item3": 4,
+	"Item4": 5,
+	"Item5": 6,
+	"Item6": 7,
+	"Item7": 8,
+	"Item8": 9,
+	"Item9": 10
+}
+
+# Track progress and unlocks
+var bar_fill_count = 0
+var unlocked_items = []
+
+# Gem and Game Progress System
 var gem_slot_map: Dictionary = {}
+var score: int = 0
+var pending_score := 0
+var bucket_capacity: int = 5000
+var bucket_upgrade_cost: int = 150
+var rare_gems: Array = []
+var well_depth_limit: int = 500
+var well_upgrade_cost: int = 300
+var collected_gems: Array[Texture2D] = []
 
 func _ready():
+	load_game()
 	load_gem_slot_map()
 
+# Item Unlock System
+func unlock_next_item():
+	bar_fill_count += 1
+	save_game()
+	
+	# Check which items should be unlocked at this count
+	for item_name in unlock_thresholds:
+		if unlock_thresholds[item_name] <= bar_fill_count and not item_name in unlocked_items:
+			unlocked_items.append(item_name)
+			save_game()
+			return item_name
+	return null
+
+# Gem Slot Mapping
 func load_gem_slot_map():
 	var file := FileAccess.open("res://gem_slot_map.json", FileAccess.READ)
 	if file:
@@ -20,50 +62,118 @@ func load_gem_slot_map():
 	else:
 		push_error("Could not open JSON file")
 
-# Global variables
-var score: int = 0
-var pending_score := 0
-var bucket_capacity: int = 5000
-var bucket_upgrade_cost: int = 150  # Starts at 150 instead of 50
-var rare_gems: Array = []  # Array to store rare gems obtained from chests
+# Gem Collection
+func collect_gem(texture: Texture2D) -> void:
+	collected_gems.append(texture)
+	save_game()
 
-# Well Depth Variables
-var well_depth_limit: int = 500  # Default max depth
-var well_upgrade_cost: int = 300  # Starts at 300 instead of 100
-
-# Collected Gems
-var collected_gems: Array[Texture2D] = []
-
-# Save/Load Functions
+# Save/Load System
 func save_game():
 	var save_data = {
+		"version": 2,  # Updated version number
+		"bar_fill_count": bar_fill_count,
+		"unlocked_items": unlocked_items,
 		"score": score,
 		"bucket_capacity": bucket_capacity,
 		"bucket_upgrade_cost": bucket_upgrade_cost,
 		"well_depth_limit": well_depth_limit,
 		"well_upgrade_cost": well_upgrade_cost,
-		"collected_gems": collected_gems # Save collected gems as well
+		"collected_gems": collected_gems,
+		"rare_gems": rare_gems
 	}
-	var file = FileAccess.open("user://savegame.dat", FileAccess.WRITE)
-	file.store_var(save_data)
-	file.close()
+	
+	var dir = DirAccess.open("user://")
+	if not dir.dir_exists("saves"):
+		dir.make_dir("saves")
+	
+	var save_path = "user://saves/game_save.dat"
+	var file = FileAccess.open_encrypted_with_pass(save_path, FileAccess.WRITE, "your_encryption_key")
+	
+	if file:
+		file.store_var(save_data)
+		file.close()
+		print("Game saved successfully")
+	else:
+		printerr("Failed to save game: ", FileAccess.get_open_error())
 
 func load_game():
-	if FileAccess.file_exists("user://savegame.dat"):
-		var file = FileAccess.open("user://savegame.dat", FileAccess.READ)
-		var save_data = file.get_var()
-		file.close()
-
-		# Load game data
-		score = save_data.get("score", 0)
-		bucket_capacity = save_data.get("bucket_capacity", 5)
-		bucket_upgrade_cost = save_data.get("bucket_upgrade_cost", 150)
-		well_depth_limit = save_data.get("well_depth_limit", 500)
-		well_upgrade_cost = save_data.get("well_upgrade_cost", 300)
+	var save_path = "user://saves/game_save.dat"
+	
+	if FileAccess.file_exists(save_path):
+		var file = FileAccess.open_encrypted_with_pass(save_path, FileAccess.READ, "your_encryption_key")
 		
-		# Load collected gems from saved data
-		collected_gems = save_data.get("collected_gems", [])
+		if file:
+			var save_data = file.get_var()
+			file.close()
+			
+			if save_data.has("version"):
+				# Version 2 save file
+				if save_data.version == 2:
+					bar_fill_count = save_data.get("bar_fill_count", 0)
+					unlocked_items = save_data.get("unlocked_items", [])
+					score = save_data.get("score", 0)
+					bucket_capacity = save_data.get("bucket_capacity", 5000)
+					bucket_upgrade_cost = save_data.get("bucket_upgrade_cost", 150)
+					well_depth_limit = save_data.get("well_depth_limit", 500)
+					well_upgrade_cost = save_data.get("well_upgrade_cost", 300)
+				
+					
+					print("Game loaded successfully (v2)")
+				# Version 1 save file (legacy)
+				elif save_data.version == 1:
+					bar_fill_count = save_data.get("bar_fill_count", 0)
+					unlocked_items = save_data.get("unlocked_items", [])
+					# Initialize other variables with defaults
+					score = 0
+					bucket_capacity = 5000
+					bucket_upgrade_cost = 150
+					well_depth_limit = 500
+					well_upgrade_cost = 300
+					collected_gems = []
+					rare_gems = []
+					print("Legacy save file loaded - some progress may be reset")
+	else:
+		print("No save file found, starting new game")
 
-# Gem Collection Function
-func collect_gem(texture: Texture2D) -> void:
-	collected_gems.append(texture)
+func reset_game():
+	bar_fill_count = 0
+	unlocked_items = []
+	score = 0
+	pending_score = 0
+	bucket_capacity = 5000
+	bucket_upgrade_cost = 150
+	rare_gems = []
+	well_depth_limit = 500
+	well_upgrade_cost = 300
+	collected_gems = []
+	save_game()
+	print("Game progress reset")
+
+# Helper functions
+func add_score(amount: int) -> void:
+	pending_score += amount
+	if pending_score >= bucket_capacity:
+		pending_score = bucket_capacity
+
+func claim_score() -> void:
+	score += pending_score
+	pending_score = 0
+	save_game()
+
+func upgrade_bucket() -> bool:
+	if score >= bucket_upgrade_cost:
+		score -= bucket_upgrade_cost
+		bucket_capacity += 1000
+		bucket_upgrade_cost += 100  # Increase cost by 100 each time
+		save_game()
+		return true
+	return false
+
+func upgrade_well() -> bool:
+	if score >= well_upgrade_cost:
+		score -= well_upgrade_cost
+		well_depth_limit += 100
+		well_upgrade_cost += 200  # Increase cost by 200 each time
+		save_game()
+		return true
+	return false

@@ -9,22 +9,69 @@ extends Control
 
 var current_zoomed_item: TextureRect = null
 var zoom_panel_overlays = []
-var overlay_map = {} # Maps clone overlay -> original overlay
-
+var overlay_map = {}
+var previously_unlocked_items = []
 
 func _ready():
+	setup_ui()
+	initialize_items()
+	connect_signals()
+
+func setup_ui():
 	item_zoom_panel.visible = false
 	inventory_instance.visible = false
-	close_button.pressed.connect(_on_close_pressed)
-	search_and_connect_texture_rects(item_holder)
 
-func search_and_connect_texture_rects(parent_node: Node):
-	for child in parent_node.get_children():
-		if child is TextureRect:
-			child.mouse_filter = Control.MOUSE_FILTER_STOP
-			child.connect("gui_input", Callable(self, "_on_item_clicked").bind(child))
-		elif child.get_child_count() > 0:
-			search_and_connect_texture_rects(child)
+func initialize_items():
+	lock_all_items()
+	previously_unlocked_items = Global.unlocked_items.duplicate()
+	update_unlocked_items()
+
+func connect_signals():
+	close_button.pressed.connect(_on_close_pressed)
+
+func _process(delta):
+	check_for_new_unlocks()
+
+func check_for_new_unlocks():
+	if Global.unlocked_items.size() > previously_unlocked_items.size():
+		var new_items = []
+		for item in Global.unlocked_items:
+			if not item in previously_unlocked_items:
+				new_items.append(item)
+		previously_unlocked_items = Global.unlocked_items.duplicate()
+		for item in new_items:
+			unlock_item(item)
+
+func update_unlocked_items():
+	for item_name in Global.unlocked_items:
+		unlock_item(item_name)
+
+func lock_all_items():
+	_for_each_item(item_holder, func(item: TextureRect):
+		var lock = item.get_node_or_null("LockOverlay")
+		if lock:
+			lock.visible = true
+		item.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	)
+
+func unlock_item(item_name: String):
+	var item = find_item_by_name(item_holder, item_name)
+	if item:
+		var lock = item.get_node_or_null("LockOverlay")
+		if lock:
+			lock.visible = false
+		item.mouse_filter = Control.MOUSE_FILTER_STOP
+		if not item.is_connected("gui_input", _on_item_clicked):
+			item.gui_input.connect(_on_item_clicked.bind(item))
+
+func find_item_by_name(node: Node, name: String) -> TextureRect:
+	if node.name == name and node is TextureRect:
+		return node
+	for child in node.get_children():
+		var found = find_item_by_name(child, name)
+		if found:
+			return found
+	return null
 
 func _on_item_clicked(event: InputEvent, item: TextureRect):
 	if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT and event.pressed:
@@ -81,28 +128,24 @@ func register_zoom_panel_overlays(clone_node: Node, original_node: Node = null):
 		register_zoom_panel_overlays(clone_children[i], orig_child)
 
 func _is_black_overlay(node: TextureRect) -> bool:
-	if "black" in node.name.to_lower():
-		return true
-	if node.texture and node.texture.get_path().to_lower().ends_with("black_overlay.png"):
-		return true
-	return false
-
-func get_black_overlay_at_position(pos: Vector2) -> TextureRect:
-	for overlay in zoom_panel_overlays:
-		if overlay.get_global_rect().has_point(pos):
-			return overlay
-	return null
-
-func remove_black_overlay(overlay: TextureRect):
-	overlay.visible = false
-	if overlay_map.has(overlay):
-		var original_overlay = overlay_map[overlay]
-		if is_instance_valid(original_overlay):
-			original_overlay.visible = false
+	return "black" in node.name.to_lower() or \
+		   (node.texture and "black_overlay" in node.texture.resource_path.to_lower())
 
 func _on_close_pressed():
 	item_zoom_panel.visible = false
 	inventory_instance.visible = false
 	current_zoomed_item = null
-	zoom_panel_overlays.clear()
-	overlay_map.clear()
+
+func _for_each_item(node: Node, action: Callable):
+	for child in node.get_children():
+		if child is TextureRect:
+			action.call(child)
+		elif child.get_child_count() > 0:
+			_for_each_item(child, action)
+
+# 🟡 Utility for gem placement logic
+func get_black_overlay_at_position(global_pos: Vector2) -> TextureRect:
+	for overlay in zoom_panel_overlays:
+		if overlay.get_global_rect().has_point(global_pos):
+			return overlay
+	return null

@@ -19,7 +19,7 @@ var safe_start_area = 2000
 # Flash control
 var flashing = false
 var flash_elapsed = 0.0
-var flash_duration = 20.0
+var flash_duration = 12.0
 var flash_interval = 0.5
 var time_since_last_flash = 0.0
 var already_triggered = false
@@ -30,6 +30,8 @@ var already_triggered = false
 @onready var anim_player = $UI/ProgressBar/AnimationPlayer
 @onready var jewel_spawner = $JewelSpawner
 @onready var treasure_label = $Treasure
+
+
 
 func _ready():
 	score = 0
@@ -45,6 +47,52 @@ func _ready():
 	var fill_stylebox = depth_bar.get("custom_styles/fill")
 	if fill_stylebox:
 		fill_stylebox.bg_color = Color(0.2, 0.6, 1.0)
+
+func _process(delta):
+	score += 1
+	score_label.text = str(score) + "m"
+
+	var current_cycle = score / 11000
+	if current_cycle != last_cycle:
+		randomize_zones()
+		last_cycle = current_cycle
+
+	var cycle_depth = score % 11000
+	depth_bar.value = min(cycle_depth, 10000)
+
+	# Check for bar completion and unlock items
+	if depth_bar.value >= depth_bar.max_value and not flashing and not already_triggered:
+		handle_bar_completion()
+
+	update_flashing(delta)
+	update_rock_spawn_speed(score)
+	update_jewel_spawn(score)
+
+func handle_bar_completion():
+	flashing = true
+	already_triggered = true
+	flash_elapsed = 0.0
+	time_since_last_flash = 0.0
+	treasure_label.visible = true
+	
+	# Unlock next item
+	var newly_unlocked = Global.unlock_next_item()
+
+
+
+func update_flashing(delta):
+	if flashing:
+		flash_elapsed += delta
+		time_since_last_flash += delta
+
+		if time_since_last_flash >= flash_interval:
+			treasure_label.visible = not treasure_label.visible
+			time_since_last_flash = 0.0
+
+		if flash_elapsed >= flash_duration:
+			flashing = false
+			treasure_label.visible = false
+			already_triggered = false
 
 func randomize_zones():
 	zone_depths = []
@@ -75,44 +123,6 @@ func randomize_zones():
 		last_pos = zone_depths[i] + zone_width + min_zone_gap
 
 	print("New zones randomized at depths: ", zone_depths, " with types: ", zone_types)
-
-func _process(delta):
-	score += 1
-	score_label.text = str(score) + "m"
-
-	var current_cycle = score / 11000
-	if current_cycle != last_cycle:
-		randomize_zones()
-		last_cycle = current_cycle
-
-	var cycle_depth = score % 11000
-	if cycle_depth < 10000:
-		depth_bar.value = cycle_depth
-	else:
-		depth_bar.value = 10000
-
-	# Flashing label logic
-	if depth_bar.value >= depth_bar.max_value and not flashing and not already_triggered:
-		flashing = true
-		already_triggered = true
-		flash_elapsed = 0.0
-		time_since_last_flash = 0.0
-		treasure_label.visible = true
-
-	if flashing:
-		flash_elapsed += delta
-		time_since_last_flash += delta
-
-		if time_since_last_flash >= flash_interval:
-			treasure_label.visible = not treasure_label.visible
-			time_since_last_flash = 0.0
-
-		if flash_elapsed >= flash_duration:
-			flashing = false
-			treasure_label.visible = false
-
-	update_rock_spawn_speed(score)
-	update_jewel_spawn(score)
 
 func update_rock_spawn_speed(depth: int):
 	var spawn_rate = 3.5

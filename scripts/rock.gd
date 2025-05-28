@@ -49,5 +49,5 @@ func _on_body_entered(body: Node2D) -> void:
 		print("Rock collided with bucket! Game over!")
 		call_deferred("_change_to_back_menu")
 
-#func _change_to_back_menu():
-	#get_tree().change_scene_to_file("res://back_menu.tscn")
+func _change_to_back_menu():
+	get_tree().change_scene_to_file("res://back_menu.tscn")
