@@ -16,11 +16,20 @@ var total_zones = 3
 var min_zone_gap = 2000
 var safe_start_area = 2000
 
+# Flash control
+var flashing = false
+var flash_elapsed = 0.0
+var flash_duration = 20.0
+var flash_interval = 0.5
+var time_since_last_flash = 0.0
+var already_triggered = false
+
 @onready var rock_timer = $Rocks/RockTimer
 @onready var score_label = $UI/Score
 @onready var depth_bar = $UI/ProgressBar
 @onready var anim_player = $UI/ProgressBar/AnimationPlayer
 @onready var jewel_spawner = $JewelSpawner
+@onready var treasure_label = $Treasure
 
 func _ready():
 	score = 0
@@ -29,6 +38,7 @@ func _ready():
 	depth_bar.max_value = 10000
 	rock_timer.wait_time = 2.0
 	rock_timer.start()
+	treasure_label.visible = false
 
 	randomize_zones()
 
@@ -79,7 +89,27 @@ func _process(delta):
 	if cycle_depth < 10000:
 		depth_bar.value = cycle_depth
 	else:
-		depth_bar.value = 10000  # Keep it full during Ice Zone
+		depth_bar.value = 10000
+
+	# Flashing label logic
+	if depth_bar.value >= depth_bar.max_value and not flashing and not already_triggered:
+		flashing = true
+		already_triggered = true
+		flash_elapsed = 0.0
+		time_since_last_flash = 0.0
+		treasure_label.visible = true
+
+	if flashing:
+		flash_elapsed += delta
+		time_since_last_flash += delta
+
+		if time_since_last_flash >= flash_interval:
+			treasure_label.visible = not treasure_label.visible
+			time_since_last_flash = 0.0
+
+		if flash_elapsed >= flash_duration:
+			flashing = false
+			treasure_label.visible = false
 
 	update_rock_spawn_speed(score)
 	update_jewel_spawn(score)
@@ -90,7 +120,7 @@ func update_rock_spawn_speed(depth: int):
 	var in_ice_zone = cycle_depth >= 10000
 
 	if in_ice_zone:
-		spawn_rate = 1000.0  # Effectively disables rock spawn
+		spawn_rate = 1000.0
 	else:
 		for i in range(zone_depths.size()):
 			if cycle_depth >= zone_depths[i] and cycle_depth < zone_depths[i] + zone_width:
@@ -105,7 +135,7 @@ func update_rock_spawn_speed(depth: int):
 func set_rock_spawn_rate(rate: float):
 	if rock_timer.wait_time != rate:
 		rock_timer.wait_time = rate
-		if rate < 1000:  # Only restart if not in ice zone
+		if rate < 1000:
 			rock_timer.start()
 
 func _on_rock_timer_timeout():
@@ -114,7 +144,7 @@ func _on_rock_timer_timeout():
 	var in_ice_zone = cycle_depth >= 10000
 
 	if in_ice_zone:
-		return  # Do not spawn rocks during Ice Zone
+		return
 
 	var rock = rock_scene.instantiate()
 	var sprite = rock.get_node("Sprite2D")
