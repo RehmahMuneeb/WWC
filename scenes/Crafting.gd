@@ -9,7 +9,7 @@ extends Control
 
 var current_zoomed_item: TextureRect = null
 var zoom_panel_overlays = []
-var overlay_map = {}
+var overlay_map = {}  # Maps clone overlays to their original counterparts
 var previously_unlocked_items = []
 
 func _ready():
@@ -117,8 +117,14 @@ func register_zoom_panel_overlays(clone_node: Node, original_node: Node = null):
 			clone_node.add_to_group("black_overlays")
 			zoom_panel_overlays.append(clone_node)
 			clone_node.mouse_filter = Control.MOUSE_FILTER_STOP
+			
 			if original_node:
 				overlay_map[clone_node] = original_node
+				# Load saved visibility state
+				var item_name = current_zoomed_item.name
+				var overlay_path = _get_node_path(original_node)
+				var is_visible = Global.load_overlay_visibility(item_name, overlay_path)
+				clone_node.visible = is_visible
 
 	var original_children = original_node.get_children() if original_node else []
 	var clone_children = clone_node.get_children()
@@ -130,6 +136,15 @@ func register_zoom_panel_overlays(clone_node: Node, original_node: Node = null):
 func _is_black_overlay(node: TextureRect) -> bool:
 	return "black" in node.name.to_lower() or \
 		   (node.texture and "black_overlay" in node.texture.resource_path.to_lower())
+
+func _get_node_path(node: Node) -> String:
+	var path = []
+	var current = node
+	while current != current_zoomed_item and current != null:
+		path.append(str(current.name))
+		current = current.get_parent()
+	path.reverse()
+	return "/".join(path)
 
 func _on_close_pressed():
 	item_zoom_panel.visible = false
@@ -143,7 +158,14 @@ func _for_each_item(node: Node, action: Callable):
 		elif child.get_child_count() > 0:
 			_for_each_item(child, action)
 
-# 🟡 Utility for gem placement logic
+func hide_overlay(overlay: TextureRect):
+	overlay.visible = false
+	if overlay in overlay_map:
+		var original = overlay_map[overlay]
+		var item_name = current_zoomed_item.name
+		var overlay_path = _get_node_path(original)
+		Global.save_overlay_visibility(item_name, overlay_path, false)
+
 func get_black_overlay_at_position(global_pos: Vector2) -> TextureRect:
 	for overlay in zoom_panel_overlays:
 		if overlay.get_global_rect().has_point(global_pos):

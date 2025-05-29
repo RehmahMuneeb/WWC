@@ -28,7 +28,7 @@ func display_rare_gems():
 			continue
 
 		var icon = TextureRect.new()
-		icon.texture = texture  # Assign loaded Texture2D here
+		icon.texture = texture
 		icon.expand = true
 		icon.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
 		icon.custom_minimum_size = Vector2(64, 64)
@@ -67,10 +67,9 @@ func handle_drop(drop_pos: Vector2):
 	var dragged_gem_name = dragging_icon.texture.resource_path.get_file().get_basename().to_lower()
 
 	if main.item_zoom_panel.visible:
-		# Get all controls under mouse position
-		var space_state = get_world_2d().direct_space_state
+		# Get mouse position
 		var mouse_pos = get_global_mouse_position()
-		var results = []
+		var overlay_found = false
 
 		# Check for black overlays in the zoom panel
 		for overlay in main.zoom_panel_overlays:
@@ -81,19 +80,30 @@ func handle_drop(drop_pos: Vector2):
 				if Global.gem_slot_map.has(overlay_name) and Global.gem_slot_map[overlay_name].to_lower() == dragged_gem_name:
 					# Hide black overlay on zoom item to reveal gem
 					overlay.visible = false
-
-					# Also hide corresponding black overlay on actual item (sync)
-					if main.overlay_map.has(overlay):
+					
+					# Save the overlay visibility state
+					if main.current_zoomed_item and main.overlay_map.has(overlay):
 						var original_overlay = main.overlay_map[overlay]
 						if is_instance_valid(original_overlay):
 							original_overlay.visible = false
+							# Get the path to this overlay
+							var item_name = main.current_zoomed_item.name
+							var overlay_path = main._get_node_path(original_overlay)
+							# Save the visibility state
+							Global.save_overlay_visibility(item_name, overlay_path, false)
+					
+					overlay_found = true
+					break
 
+		if overlay_found:
+			# Remove gem from inventory since it's now placed
+			original_parent.remove_child(dragging_icon)
+			dragging_icon.queue_free()
+			is_dragging = false
+			dragging_icon = null
+			return
 
-		# If no valid overlay found, return gem
-		reset_drag_state()
-		return
-
-	# If not dropped on zoom panel, return gem to inventory
+	# If no valid overlay found or not dropped on zoom panel, return gem to inventory
 	reset_drag_state()
 
 func reset_drag_state():

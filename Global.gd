@@ -18,6 +18,9 @@ var unlock_thresholds = {
 var bar_fill_count = 0
 var unlocked_items = []
 
+# Overlay visibility tracking
+var overlay_visibility = {}  # Format: {"item_name/overlay_path": visible}
+
 # Gem and Game Progress System
 var gem_slot_map: Dictionary = {}
 var score: int = 0
@@ -32,6 +35,15 @@ var collected_gems: Array = []  # Stores paths to collected gem textures
 func _ready():
 	load_game()
 	load_gem_slot_map()
+
+func save_overlay_visibility(item_name: String, overlay_path: String, visible: bool):
+	var key = "%s/%s" % [item_name, overlay_path]
+	overlay_visibility[key] = visible
+	save_game()
+
+func load_overlay_visibility(item_name: String, overlay_path: String) -> bool:
+	var key = "%s/%s" % [item_name, overlay_path]
+	return overlay_visibility.get(key, true)  # Default to visible if not found
 
 func unlock_next_item():
 	bar_fill_count += 1
@@ -71,9 +83,10 @@ func add_rare_gem(texture: Texture2D) -> void:
 
 func save_game():
 	var save_data = {
-		"version": 3,
+		"version": 4,  # Updated version number
 		"bar_fill_count": bar_fill_count,
 		"unlocked_items": unlocked_items,
+		"overlay_visibility": overlay_visibility,
 		"score": score,
 		"bucket_capacity": bucket_capacity,
 		"bucket_upgrade_cost": bucket_upgrade_cost,
@@ -109,9 +122,21 @@ func load_game():
 			
 			if save_data.has("version"):
 				match save_data.version:
+					4:  # Current version
+						bar_fill_count = save_data.get("bar_fill_count", 0)
+						unlocked_items = save_data.get("unlocked_items", [])
+						overlay_visibility = save_data.get("overlay_visibility", {})
+						score = save_data.get("score", 0)
+						bucket_capacity = save_data.get("bucket_capacity", 5000)
+						bucket_upgrade_cost = save_data.get("bucket_upgrade_cost", 150)
+						well_depth_limit = save_data.get("well_depth_limit", 500)
+						well_upgrade_cost = save_data.get("well_upgrade_cost", 300)
+						collected_gems = save_data.get("collected_gems", [])
+						rare_gems = save_data.get("rare_gems", [])
 					3:
 						bar_fill_count = save_data.get("bar_fill_count", 0)
 						unlocked_items = save_data.get("unlocked_items", [])
+						overlay_visibility = {}
 						score = save_data.get("score", 0)
 						bucket_capacity = save_data.get("bucket_capacity", 5000)
 						bucket_upgrade_cost = save_data.get("bucket_upgrade_cost", 150)
@@ -122,6 +147,7 @@ func load_game():
 					2:
 						bar_fill_count = save_data.get("bar_fill_count", 0)
 						unlocked_items = save_data.get("unlocked_items", [])
+						overlay_visibility = {}
 						score = save_data.get("score", 0)
 						bucket_capacity = save_data.get("bucket_capacity", 5000)
 						bucket_upgrade_cost = save_data.get("bucket_upgrade_cost", 150)
@@ -132,6 +158,7 @@ func load_game():
 					1:
 						bar_fill_count = save_data.get("bar_fill_count", 0)
 						unlocked_items = save_data.get("unlocked_items", [])
+						overlay_visibility = {}
 						score = 0
 						bucket_capacity = 5000
 						bucket_upgrade_cost = 150
@@ -142,6 +169,7 @@ func load_game():
 			else:
 				bar_fill_count = save_data.get("bar_fill_count", 0)
 				unlocked_items = save_data.get("unlocked_items", [])
+				overlay_visibility = {}
 				score = 0
 				bucket_capacity = 5000
 				bucket_upgrade_cost = 150
@@ -155,6 +183,7 @@ func load_game():
 func reset_game():
 	bar_fill_count = 0
 	unlocked_items = []
+	overlay_visibility = {}
 	score = 0
 	pending_score = 0
 	bucket_capacity = 5000
