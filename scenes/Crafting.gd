@@ -9,13 +9,15 @@ extends Control
 
 var current_zoomed_item: TextureRect = null
 var zoom_panel_overlays = []
-var overlay_map = {}  # Maps clone overlays to their original counterparts
+var overlay_map = {}  # Maps clone overlays to original overlays
 var previously_unlocked_items = []
+var gem_map = {}  # Tracks gems placed on items: {item_name: {overlay_path: gem_texture}}
 
 func _ready():
 	setup_ui()
 	initialize_items()
 	connect_signals()
+	load_gem_placements()
 
 func setup_ui():
 	item_zoom_panel.visible = false
@@ -28,6 +30,16 @@ func initialize_items():
 
 func connect_signals():
 	close_button.pressed.connect(_on_close_pressed)
+
+func load_gem_placements():
+	gem_map = Global.load_placed_gems()
+	for item_name in gem_map:
+		var item = find_item_by_name(item_holder, item_name)
+		if item:
+			for overlay_path in gem_map[item_name]:
+				var overlay = item.get_node_or_null(overlay_path)
+				if overlay and _is_black_overlay(overlay):
+					overlay.visible = false
 
 func _process(delta):
 	check_for_new_unlocks()
@@ -75,7 +87,6 @@ func find_item_by_name(node: Node, name: String) -> TextureRect:
 
 func _on_item_clicked(event: InputEvent, item: TextureRect):
 	if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT and event.pressed:
-		# Skip inventory gems
 		if item.get_parent().get_parent() == inventory_instance.rare_gems_list:
 			return
 
@@ -94,12 +105,12 @@ func _on_item_clicked(event: InputEvent, item: TextureRect):
 		clone.position = Vector2.ZERO
 		item_display_container.add_child(clone)
 
-		# Register black overlays in the clone and original
+		# Register black overlays in both clone and original
 		register_zoom_panel_overlays(clone, item)
 
-		await get_tree().process_frame  # Wait one frame for size update
+		await get_tree().process_frame
 
-		# Scale clone to fit container nicely
+		# Scale clone to fit container
 		var container_size = item_display_container.size
 		var original_size = clone.size
 
@@ -120,11 +131,12 @@ func register_zoom_panel_overlays(clone_node: Node, original_node: Node = null):
 			
 			if original_node:
 				overlay_map[clone_node] = original_node
-				# Load saved visibility state
+				# Load and sync visibility for both
 				var item_name = current_zoomed_item.name
 				var overlay_path = _get_node_path(original_node)
 				var is_visible = Global.load_overlay_visibility(item_name, overlay_path)
 				clone_node.visible = is_visible
+				original_node.visible = is_visible
 
 	var original_children = original_node.get_children() if original_node else []
 	var clone_children = clone_node.get_children()
@@ -146,6 +158,18 @@ func _get_node_path(node: Node) -> String:
 	path.reverse()
 	return "/".join(path)
 
+func hide_overlay(overlay: TextureRect, gem_texture_path: String = ""):
+	overlay.visible = false
+	if overlay in overlay_map:
+		var original = overlay_map[overlay]
+		original.visible = false
+		
+		var item_name = current_zoomed_item.name
+		var overlay_path = _get_node_path(original)
+		Global.save_overlay_visibility(item_name, overlay_path, false)
+		if gem_texture_path:
+			Global.save_placed_gem(item_name, overlay_path, gem_texture_path)
+
 func _on_close_pressed():
 	item_zoom_panel.visible = false
 	inventory_instance.visible = false
@@ -157,14 +181,6 @@ func _for_each_item(node: Node, action: Callable):
 			action.call(child)
 		elif child.get_child_count() > 0:
 			_for_each_item(child, action)
-
-func hide_overlay(overlay: TextureRect):
-	overlay.visible = false
-	if overlay in overlay_map:
-		var original = overlay_map[overlay]
-		var item_name = current_zoomed_item.name
-		var overlay_path = _get_node_path(original)
-		Global.save_overlay_visibility(item_name, overlay_path, false)
 
 func get_black_overlay_at_position(global_pos: Vector2) -> TextureRect:
 	for overlay in zoom_panel_overlays:

@@ -340,7 +340,15 @@ theme_override_fonts/font = ExtResource("3_nak5y")
 theme_override_font_sizes/font_size = 73
 text = "GEMMANIA"
 
+[node name="Button" type="Button" parent="."]
+layout_mode = 0
+offset_right = 4.0
+offset_bottom = 8.0
+text = "GAME RESET
+"
+
 [connection signal="pressed" from="Items" to="." method="_on_items_pressed"]
 [connection signal="pressed" from="Crafting" to="." method="_on_rare_items_pressed"]
 [connection signal="pressed" from="Inventory" to="." method="_on_inventory_pressed"]
 [connection signal="pressed" from="Play" to="." method="_on_play_pressed"]
+[connection signal="pressed" from="Button" to="." method="_on_button_pressed"]

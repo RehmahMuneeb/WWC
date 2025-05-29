@@ -63,47 +63,43 @@ func handle_drop(drop_pos: Vector2):
 		reset_drag_state()
 		return
 
-	# Extract the gem name
 	var dragged_gem_name = dragging_icon.texture.resource_path.get_file().get_basename().to_lower()
+	var gem_texture_path = dragging_icon.texture.resource_path
 
 	if main.item_zoom_panel.visible:
-		# Get mouse position
 		var mouse_pos = get_global_mouse_position()
 		var overlay_found = false
 
-		# Check for black overlays in the zoom panel
 		for overlay in main.zoom_panel_overlays:
 			if overlay.visible and overlay.get_global_rect().has_point(mouse_pos):
 				var overlay_name = overlay.name.to_lower()
 
-				# Check if gem fits this overlay slot
 				if Global.gem_slot_map.has(overlay_name) and Global.gem_slot_map[overlay_name].to_lower() == dragged_gem_name:
-					# Hide black overlay on zoom item to reveal gem
-					overlay.visible = false
+					# Hide both zoomed and original overlays
+					main.hide_overlay(overlay, gem_texture_path)
 					
-					# Save the overlay visibility state
 					if main.current_zoomed_item and main.overlay_map.has(overlay):
 						var original_overlay = main.overlay_map[overlay]
 						if is_instance_valid(original_overlay):
-							original_overlay.visible = false
-							# Get the path to this overlay
-							var item_name = main.current_zoomed_item.name
-							var overlay_path = main._get_node_path(original_overlay)
-							# Save the visibility state
-							Global.save_overlay_visibility(item_name, overlay_path, false)
-					
+							# Update the actual item in the main view
+							var actual_item = main.find_item_by_name(main.item_holder, main.current_zoomed_item.name)
+							if actual_item:
+								var overlay_path = main._get_node_path(original_overlay)
+								var actual_overlay = actual_item.get_node(overlay_path)
+								if actual_overlay:
+									actual_overlay.visible = false
+
 					overlay_found = true
 					break
 
 		if overlay_found:
-			# Remove gem from inventory since it's now placed
+			# Remove gem from inventory
 			original_parent.remove_child(dragging_icon)
 			dragging_icon.queue_free()
 			is_dragging = false
 			dragging_icon = null
 			return
 
-	# If no valid overlay found or not dropped on zoom panel, return gem to inventory
 	reset_drag_state()
 
 func reset_drag_state():

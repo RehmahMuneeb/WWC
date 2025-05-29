@@ -18,11 +18,12 @@ var unlock_thresholds = {
 var bar_fill_count = 0
 var unlocked_items = []
 
-# Overlay visibility tracking
+# Overlay and gem placement tracking
 var overlay_visibility = {}  # Format: {"item_name/overlay_path": visible}
-
-# Gem and Game Progress System
+var placed_gems = {}         # Format: {"item_name": {"overlay_path": "gem_texture_path"}}
 var gem_slot_map: Dictionary = {}
+
+# Game progress system
 var score: int = 0
 var pending_score := 0
 var bucket_capacity: int = 5000
@@ -36,6 +37,7 @@ func _ready():
 	load_game()
 	load_gem_slot_map()
 
+# Overlay visibility management
 func save_overlay_visibility(item_name: String, overlay_path: String, visible: bool):
 	var key = "%s/%s" % [item_name, overlay_path]
 	overlay_visibility[key] = visible
@@ -43,8 +45,34 @@ func save_overlay_visibility(item_name: String, overlay_path: String, visible: b
 
 func load_overlay_visibility(item_name: String, overlay_path: String) -> bool:
 	var key = "%s/%s" % [item_name, overlay_path]
+	# If there's a gem placed here, overlay should be hidden
+	if placed_gems.get(item_name, {}).has(overlay_path):
+		return false
 	return overlay_visibility.get(key, true)  # Default to visible if not found
 
+# Gem placement management
+func save_placed_gem(item_name: String, overlay_path: String, gem_texture_path: String):
+	if not placed_gems.has(item_name):
+		placed_gems[item_name] = {}
+	placed_gems[item_name][overlay_path] = gem_texture_path
+	# Automatically hide the overlay when placing a gem
+	save_overlay_visibility(item_name, overlay_path, false)
+	save_game()
+
+func remove_placed_gem(item_name: String, overlay_path: String):
+	if placed_gems.has(item_name) and placed_gems[item_name].has(overlay_path):
+		placed_gems[item_name].erase(overlay_path)
+		if placed_gems[item_name].is_empty():
+			placed_gems.erase(item_name)
+		save_game()
+
+func load_placed_gems() -> Dictionary:
+	return placed_gems.duplicate(true)
+
+func get_placed_gem(item_name: String, overlay_path: String) -> String:
+	return placed_gems.get(item_name, {}).get(overlay_path, "")
+
+# Game progression
 func unlock_next_item():
 	bar_fill_count += 1
 	save_game()
@@ -56,6 +84,7 @@ func unlock_next_item():
 			return item_name
 	return null
 
+# Gem slot mapping
 func load_gem_slot_map():
 	var file := FileAccess.open("res://gem_slot_map.json", FileAccess.READ)
 	if file:
@@ -71,6 +100,7 @@ func load_gem_slot_map():
 	else:
 		push_error("Could not open JSON file")
 
+# Gem collection
 func collect_gem(texture: Texture2D) -> void:
 	if texture and texture.resource_path:
 		collected_gems.append(texture.resource_path)
@@ -81,12 +111,14 @@ func add_rare_gem(texture: Texture2D) -> void:
 		rare_gems.append(texture.resource_path)
 		save_game()
 
+# Save/load system
 func save_game():
 	var save_data = {
-		"version": 4,  # Updated version number
+		"version": 5,  # Updated version number
 		"bar_fill_count": bar_fill_count,
 		"unlocked_items": unlocked_items,
 		"overlay_visibility": overlay_visibility,
+		"placed_gems": placed_gems,
 		"score": score,
 		"bucket_capacity": bucket_capacity,
 		"bucket_upgrade_cost": bucket_upgrade_cost,
@@ -122,10 +154,23 @@ func load_game():
 			
 			if save_data.has("version"):
 				match save_data.version:
-					4:  # Current version
+					5:  # Current version
 						bar_fill_count = save_data.get("bar_fill_count", 0)
 						unlocked_items = save_data.get("unlocked_items", [])
 						overlay_visibility = save_data.get("overlay_visibility", {})
+						placed_gems = save_data.get("placed_gems", {})
+						score = save_data.get("score", 0)
+						bucket_capacity = save_data.get("bucket_capacity", 5000)
+						bucket_upgrade_cost = save_data.get("bucket_upgrade_cost", 150)
+						well_depth_limit = save_data.get("well_depth_limit", 500)
+						well_upgrade_cost = save_data.get("well_upgrade_cost", 300)
+						collected_gems = save_data.get("collected_gems", [])
+						rare_gems = save_data.get("rare_gems", [])
+					4:
+						bar_fill_count = save_data.get("bar_fill_count", 0)
+						unlocked_items = save_data.get("unlocked_items", [])
+						overlay_visibility = save_data.get("overlay_visibility", {})
+						placed_gems = {}
 						score = save_data.get("score", 0)
 						bucket_capacity = save_data.get("bucket_capacity", 5000)
 						bucket_upgrade_cost = save_data.get("bucket_upgrade_cost", 150)
@@ -137,6 +182,7 @@ func load_game():
 						bar_fill_count = save_data.get("bar_fill_count", 0)
 						unlocked_items = save_data.get("unlocked_items", [])
 						overlay_visibility = {}
+						placed_gems = {}
 						score = save_data.get("score", 0)
 						bucket_capacity = save_data.get("bucket_capacity", 5000)
 						bucket_upgrade_cost = save_data.get("bucket_upgrade_cost", 150)
@@ -148,6 +194,7 @@ func load_game():
 						bar_fill_count = save_data.get("bar_fill_count", 0)
 						unlocked_items = save_data.get("unlocked_items", [])
 						overlay_visibility = {}
+						placed_gems = {}
 						score = save_data.get("score", 0)
 						bucket_capacity = save_data.get("bucket_capacity", 5000)
 						bucket_upgrade_cost = save_data.get("bucket_upgrade_cost", 150)
@@ -159,6 +206,7 @@ func load_game():
 						bar_fill_count = save_data.get("bar_fill_count", 0)
 						unlocked_items = save_data.get("unlocked_items", [])
 						overlay_visibility = {}
+						placed_gems = {}
 						score = 0
 						bucket_capacity = 5000
 						bucket_upgrade_cost = 150
@@ -170,6 +218,7 @@ func load_game():
 				bar_fill_count = save_data.get("bar_fill_count", 0)
 				unlocked_items = save_data.get("unlocked_items", [])
 				overlay_visibility = {}
+				placed_gems = {}
 				score = 0
 				bucket_capacity = 5000
 				bucket_upgrade_cost = 150
@@ -184,6 +233,7 @@ func reset_game():
 	bar_fill_count = 0
 	unlocked_items = []
 	overlay_visibility = {}
+	placed_gems = {}
 	score = 0
 	pending_score = 0
 	bucket_capacity = 5000
@@ -195,6 +245,7 @@ func reset_game():
 	save_game()
 	print("Game progress reset")
 
+# Utility functions
 func get_collected_gems_textures() -> Array:
 	var textures = []
 	for path in collected_gems:
