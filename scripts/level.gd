@@ -31,9 +31,15 @@ var already_triggered = false
 @onready var jewel_spawner = $JewelSpawner
 @onready var treasure_label = $Treasure
 
-
-
 func _ready():
+	reset_game_state()
+	randomize_zones()
+
+	var fill_stylebox = depth_bar.get("custom_styles/fill")
+	if fill_stylebox:
+		fill_stylebox.bg_color = Color(0.2, 0.6, 1.0)
+
+func reset_game_state():
 	score = 0
 	last_cycle = -1
 	depth_bar.min_value = 0
@@ -41,12 +47,8 @@ func _ready():
 	rock_timer.wait_time = 2.0
 	rock_timer.start()
 	treasure_label.visible = false
-
-	randomize_zones()
-
-	var fill_stylebox = depth_bar.get("custom_styles/fill")
-	if fill_stylebox:
-		fill_stylebox.bg_color = Color(0.2, 0.6, 1.0)
+	flashing = false
+	already_triggered = false
 
 func _process(delta):
 	score += 1
@@ -56,12 +58,15 @@ func _process(delta):
 	if current_cycle != last_cycle:
 		randomize_zones()
 		last_cycle = current_cycle
+		# Reset the trigger flag when starting a new cycle
+		already_triggered = false
 
 	var cycle_depth = score % 11000
 	depth_bar.value = min(cycle_depth, 10000)
 
 	# Check for bar completion and unlock items
-	if depth_bar.value >= depth_bar.max_value and not flashing and not already_triggered:
+	# Only trigger when we exactly reach max value (not every frame after)
+	if not already_triggered and depth_bar.value >= depth_bar.max_value:
 		handle_bar_completion()
 
 	update_flashing(delta)
@@ -69,16 +74,17 @@ func _process(delta):
 	update_jewel_spawn(score)
 
 func handle_bar_completion():
-	flashing = true
-	already_triggered = true
-	flash_elapsed = 0.0
-	time_since_last_flash = 0.0
-	treasure_label.visible = true
-	
-	# Unlock next item
-	var newly_unlocked = Global.unlock_next_item()
-
-
+	# Double-check we're exactly at max value
+	if depth_bar.value == depth_bar.max_value and not flashing:
+		flashing = true
+		already_triggered = true
+		flash_elapsed = 0.0
+		time_since_last_flash = 0.0
+		treasure_label.visible = true
+		
+		# Unlock exactly one item
+		Global.unlock_next_item()
+		print("Unlocked one item at score: ", score)
 
 func update_flashing(delta):
 	if flashing:
@@ -92,7 +98,6 @@ func update_flashing(delta):
 		if flash_elapsed >= flash_duration:
 			flashing = false
 			treasure_label.visible = false
-			already_triggered = false
 
 func randomize_zones():
 	zone_depths = []

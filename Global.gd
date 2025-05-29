@@ -2,16 +2,15 @@ extends Node
 
 # Item unlock thresholds
 var unlock_thresholds = {
-	"Item0": 1,
-	"Item1": 2,
-	"Item2": 3,
-	"Item3": 4,
-	"Item4": 5,
-	"Item5": 6,
-	"Item6": 7,
-	"Item7": 8,
-	"Item8": 9,
-	"Item9": 10
+	"Item1": 1,
+	"Item2": 2,
+	"Item3": 3,
+	"Item4": 4,
+	"Item5": 5,
+	"Item6": 6,
+	"Item7": 7,
+	"Item8": 8,
+	"Item9": 9
 }
 
 # Track progress and unlocks
