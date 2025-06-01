@@ -204,9 +204,9 @@ expand_mode = 1
 
 [node name="GemScoreLabel" type="Label" parent="Bucket Capacity2"]
 layout_mode = 0
-offset_left = 27.0
+offset_left = 18.0
 offset_top = 216.0
-offset_right = 237.0
+offset_right = 228.0
 offset_bottom = 292.0
 theme_override_font_sizes/font_size = 44
 text = "+"

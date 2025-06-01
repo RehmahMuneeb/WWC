@@ -1,4 +1,4 @@
-[gd_scene load_steps=20 format=3 uid="uid://btndkc1nmjdx0"]
+[gd_scene load_steps=23 format=3 uid="uid://btndkc1nmjdx0"]
 
 [ext_resource type="Script" path="res://scripts/level.gd" id="1_24m71"]
 [ext_resource type="PackedScene" uid="uid://be3ml7efg7568" path="res://scenes/wall_bg.tscn" id="1_frcah"]
@@ -7,6 +7,7 @@
 [ext_resource type="Script" path="res://scenes/jewel_spawner.gd" id="4_r0cwm"]
 [ext_resource type="Script" path="res://scenes/GemCount.gd" id="6_xouy4"]
 [ext_resource type="FontFile" uid="uid://b2clys7lbyd3t" path="res://scenes/Kid Games.ttf" id="7_rf70r"]
+[ext_resource type="Texture2D" uid="uid://1misolt5rykx" path="res://scenes/video-play-watch-player-black-icon-free-png-7017516949743594tmpczaclr.png" id="8_1v6ak"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_dsm1j"]
 radius = 49.0
@@ -145,6 +146,23 @@ particle_flag_disable_z = true
 gravity = Vector3(0, 98, 0)
 color = Color(1, 0.843137, 0, 1)
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_xk0aa"]
+bg_color = Color(1, 1, 0.305882, 1)
+corner_radius_top_left = 66
+corner_radius_top_right = 66
+corner_radius_bottom_right = 66
+corner_radius_bottom_left = 66
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_i1h2h"]
+bg_color = Color(0.121569, 0.729412, 0.901961, 1)
+border_width_right = 14
+border_width_bottom = 16
+border_color = Color(0.121569, 0.729412, 0.901961, 1)
+corner_radius_top_left = 22
+corner_radius_top_right = 22
+corner_radius_bottom_right = 33
+corner_radius_bottom_left = 22
+
 [node name="Level" type="Node2D"]
 script = ExtResource("1_24m71")
 
@@ -253,6 +271,37 @@ theme_override_font_sizes/font_size = 59
 text = "TREASURE
 UNLOCKED"
 horizontal_alignment = 1
+
+[node name="Panel" type="Panel" parent="."]
+offset_left = 52.0
+offset_top = 311.0
+offset_right = 415.0
+offset_bottom = 459.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_xk0aa")
+
+[node name="Button" type="Button" parent="Panel"]
+layout_mode = 0
+offset_left = 66.0
+offset_top = 88.0
+offset_right = 288.0
+offset_bottom = 140.0
+theme_override_fonts/font = ExtResource("7_rf70r")
+theme_override_font_sizes/font_size = 41
+text = "GIVE UP k"
+
+[node name="Button2" type="Button" parent="Panel"]
+layout_mode = 0
+offset_left = 29.0
+offset_top = -11.0
+offset_right = 349.0
+offset_bottom = 85.0
+theme_override_fonts/font = ExtResource("7_rf70r")
+theme_override_font_sizes/font_size = 41
+theme_override_styles/normal_mirrored = SubResource("StyleBoxFlat_i1h2h")
+text = "RISE
+ AGAIN !"
+icon = ExtResource("8_1v6ak")
+expand_icon = true
 
 [connection signal="timeout" from="Rocks/RockTimer" to="." method="_on_rock_timer_timeout"]
 [connection signal="timeout" from="JewelSpawner/SpawnTimer" to="JewelSpawner" method="_on_spawn_timer_timeout"]
