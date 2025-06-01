@@ -1,4 +1,8 @@
 extends Node
+# In your Global.gd or similar save file
+var current_chest_level := 1
+var current_chest_progress := 0
+var chest_targets := {}
 
 # Item unlock thresholds
 var unlock_thresholds = {
@@ -33,8 +37,14 @@ var well_upgrade_cost: int = 300
 var collected_gems: Array = []  # Stores paths to collected gem textures
 
 func _ready():
+	initialize_chest_targets()
 	load_game()
 	load_gem_slot_map()
+
+func initialize_chest_targets():
+	if chest_targets.is_empty():
+		for level in range(1, 31):  # For 30 chest levels
+			chest_targets[level] = 1000 * level
 
 # Overlay visibility management
 func save_overlay_visibility(item_name: String, overlay_path: String, visible: bool):
@@ -113,7 +123,7 @@ func add_rare_gem(texture: Texture2D) -> void:
 # Save/load system
 func save_game():
 	var save_data = {
-		"version": 5,  # Updated version number
+		"version": 6,  # Updated version number for chest progression
 		"bar_fill_count": bar_fill_count,
 		"unlocked_items": unlocked_items,
 		"overlay_visibility": overlay_visibility,
@@ -124,7 +134,10 @@ func save_game():
 		"well_depth_limit": well_depth_limit,
 		"well_upgrade_cost": well_upgrade_cost,
 		"collected_gems": collected_gems,
-		"rare_gems": rare_gems
+		"rare_gems": rare_gems,
+		"current_chest_level": current_chest_level,
+		"current_chest_progress": current_chest_progress,
+		"chest_targets": chest_targets
 	}
 	
 	var dir = DirAccess.open("user://")
@@ -153,7 +166,7 @@ func load_game():
 			
 			if save_data.has("version"):
 				match save_data.version:
-					5:  # Current version
+					6:  # Current version with chest progression
 						bar_fill_count = save_data.get("bar_fill_count", 0)
 						unlocked_items = save_data.get("unlocked_items", [])
 						overlay_visibility = save_data.get("overlay_visibility", {})
@@ -165,11 +178,16 @@ func load_game():
 						well_upgrade_cost = save_data.get("well_upgrade_cost", 300)
 						collected_gems = save_data.get("collected_gems", [])
 						rare_gems = save_data.get("rare_gems", [])
-					4:
+						current_chest_level = save_data.get("current_chest_level", 1)
+						current_chest_progress = save_data.get("current_chest_progress", 0)
+						chest_targets = save_data.get("chest_targets", {})
+						if chest_targets.is_empty():
+							initialize_chest_targets()
+					5:
 						bar_fill_count = save_data.get("bar_fill_count", 0)
 						unlocked_items = save_data.get("unlocked_items", [])
 						overlay_visibility = save_data.get("overlay_visibility", {})
-						placed_gems = {}
+						placed_gems = save_data.get("placed_gems", {})
 						score = save_data.get("score", 0)
 						bucket_capacity = save_data.get("bucket_capacity", 5000)
 						bucket_upgrade_cost = save_data.get("bucket_upgrade_cost", 150)
@@ -177,11 +195,15 @@ func load_game():
 						well_upgrade_cost = save_data.get("well_upgrade_cost", 300)
 						collected_gems = save_data.get("collected_gems", [])
 						rare_gems = save_data.get("rare_gems", [])
-					3:
+						current_chest_level = 1
+						current_chest_progress = 0
+						initialize_chest_targets()
+					_:
+						# Handle older versions
 						bar_fill_count = save_data.get("bar_fill_count", 0)
 						unlocked_items = save_data.get("unlocked_items", [])
-						overlay_visibility = {}
-						placed_gems = {}
+						overlay_visibility = save_data.get("overlay_visibility", {})
+						placed_gems = save_data.get("placed_gems", {})
 						score = save_data.get("score", 0)
 						bucket_capacity = save_data.get("bucket_capacity", 5000)
 						bucket_upgrade_cost = save_data.get("bucket_upgrade_cost", 150)
@@ -189,44 +211,28 @@ func load_game():
 						well_upgrade_cost = save_data.get("well_upgrade_cost", 300)
 						collected_gems = save_data.get("collected_gems", [])
 						rare_gems = save_data.get("rare_gems", [])
-					2:
-						bar_fill_count = save_data.get("bar_fill_count", 0)
-						unlocked_items = save_data.get("unlocked_items", [])
-						overlay_visibility = {}
-						placed_gems = {}
-						score = save_data.get("score", 0)
-						bucket_capacity = save_data.get("bucket_capacity", 5000)
-						bucket_upgrade_cost = save_data.get("bucket_upgrade_cost", 150)
-						well_depth_limit = save_data.get("well_depth_limit", 500)
-						well_upgrade_cost = save_data.get("well_upgrade_cost", 300)
-						collected_gems = []
-						rare_gems = []
-					1:
-						bar_fill_count = save_data.get("bar_fill_count", 0)
-						unlocked_items = save_data.get("unlocked_items", [])
-						overlay_visibility = {}
-						placed_gems = {}
-						score = 0
-						bucket_capacity = 5000
-						bucket_upgrade_cost = 150
-						well_depth_limit = 500
-						well_upgrade_cost = 300
-						collected_gems = []
-						rare_gems = []
+						current_chest_level = 1
+						current_chest_progress = 0
+						initialize_chest_targets()
 			else:
+				# No version found - very old save
 				bar_fill_count = save_data.get("bar_fill_count", 0)
 				unlocked_items = save_data.get("unlocked_items", [])
-				overlay_visibility = {}
-				placed_gems = {}
-				score = 0
-				bucket_capacity = 5000
-				bucket_upgrade_cost = 150
-				well_depth_limit = 500
-				well_upgrade_cost = 300
-				collected_gems = []
-				rare_gems = []
+				overlay_visibility = save_data.get("overlay_visibility", {})
+				placed_gems = save_data.get("placed_gems", {})
+				score = save_data.get("score", 0)
+				bucket_capacity = save_data.get("bucket_capacity", 5000)
+				bucket_upgrade_cost = save_data.get("bucket_upgrade_cost", 150)
+				well_depth_limit = save_data.get("well_depth_limit", 500)
+				well_upgrade_cost = save_data.get("well_upgrade_cost", 300)
+				collected_gems = save_data.get("collected_gems", [])
+				rare_gems = save_data.get("rare_gems", [])
+				current_chest_level = 1
+				current_chest_progress = 0
+				initialize_chest_targets()
 	else:
 		print("No save file found, starting new game")
+		initialize_chest_targets()
 
 func reset_game():
 	bar_fill_count = 0
@@ -241,6 +247,9 @@ func reset_game():
 	well_depth_limit = 500
 	well_upgrade_cost = 300
 	collected_gems = []
+	current_chest_level = 1
+	current_chest_progress = 0
+	initialize_chest_targets()
 	save_game()
 	print("Game progress reset")
 
@@ -268,6 +277,7 @@ func add_score(amount: int) -> void:
 
 func claim_score() -> void:
 	score += pending_score
+	current_chest_progress += pending_score  # Also add to chest progress
 	pending_score = 0
 	save_game()
 
@@ -285,6 +295,19 @@ func upgrade_well() -> bool:
 		score -= well_upgrade_cost
 		well_depth_limit += 100
 		well_upgrade_cost += 200
+		save_game()
+		return true
+	return false
+
+# Chest progression helpers
+func get_current_chest_target() -> int:
+	return chest_targets.get(current_chest_level, 1000 * current_chest_level)
+
+func check_chest_unlock() -> bool:
+	if current_chest_progress >= get_current_chest_target():
+		# Move to next chest
+		current_chest_level = min(current_chest_level + 1, 30)
+		current_chest_progress = 0
 		save_game()
 		return true
 	return false
