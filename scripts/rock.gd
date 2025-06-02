@@ -18,6 +18,16 @@ const MARGIN: int = 24
 
 func set_zone(value: int) -> void:
 	zone = value
+	match zone:
+		1:
+			fall_speed = fall_speed_zone1
+			horizontal_speed = horizontal_speed_zone1
+		2:
+			fall_speed = fall_speed_zone2
+			horizontal_speed = horizontal_speed_zone2
+		3:
+			fall_speed = fall_speed_zone3
+			horizontal_speed = horizontal_speed_zone3
 
 func _ready():
 	var rng := RandomNumberGenerator.new()
@@ -46,8 +56,13 @@ func _process(delta: float) -> void:
 
 func _on_body_entered(body: Node2D) -> void:
 	if body.is_in_group("bucket"):
-		print("Rock collided with bucket! Game over!")
-		call_deferred("_change_to_back_menu")
-
-func _change_to_back_menu():
-	get_tree().change_scene_to_file("res://back_menu.tscn")
+		print("Rock collided with bucket! Triggering game over...")
+		# Get reference to main game controller
+		var main = get_tree().root.get_node("Level")
+		if main:
+			main.show_game_over()
+		else:
+			printerr("Main game controller not found!")
+		
+		# Remove the rock from the scene
+		queue_free()

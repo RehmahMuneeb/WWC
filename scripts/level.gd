@@ -1,13 +1,17 @@
 extends Node2D
 
+# Game Objects
 var rock_scene: PackedScene = load("res://scenes/rock.tscn")
 var normal_texture = preload("res://assets/rock.png")
 var lava2_texture = preload("res://assets/Lavarock88.png")
 var lava3_texture = preload("res://assets/Lava-stone-33.png")
 
+# Game State
 var score = 0
 var last_cycle = -1
+var game_active = true
 
+# Zone Configuration
 var zone_depths = []
 var zone_types = []
 var current_zone_index = 0
@@ -16,7 +20,7 @@ var total_zones = 3
 var min_zone_gap = 2000
 var safe_start_area = 2000
 
-# Flash control
+# Visual Effects
 var flashing = false
 var flash_elapsed = 0.0
 var flash_duration = 12.0
@@ -24,33 +28,103 @@ var flash_interval = 0.5
 var time_since_last_flash = 0.0
 var already_triggered = false
 
+# Node References
 @onready var rock_timer = $Rocks/RockTimer
 @onready var score_label = $UI/Score
 @onready var depth_bar = $UI/ProgressBar
 @onready var anim_player = $UI/ProgressBar/AnimationPlayer
 @onready var jewel_spawner = $JewelSpawner
 @onready var treasure_label = $Treasure
+@onready var game_over_panel = $GameOverPanel
+@onready var rise_again_button: Button = $GameOverPanel/Panel/RiseAgainButton
+@onready var give_up_button: Button = $GameOverPanel/Panel/GiveUpButton
+@onready var player = $Bucket
 
 func _ready():
 	reset_game_state()
 	randomize_zones()
-
+	setup_game_over_panel()
+	
+	# Connect player collision signal
+	if player:
+		player.connect("player_hit", _on_player_hit)
+	
 	var fill_stylebox = depth_bar.get("custom_styles/fill")
 	if fill_stylebox:
 		fill_stylebox.bg_color = Color(0.2, 0.6, 1.0)
 
+func setup_game_over_panel():
+	game_over_panel.visible = false
+	
+	# Configure buttons to work while paused
+	rise_again_button.process_mode = Node.PROCESS_MODE_ALWAYS
+	give_up_button.process_mode = Node.PROCESS_MODE_ALWAYS
+	
+	# Connect signals with robust error checking
+	if rise_again_button:
+		if rise_again_button.pressed.connect(_on_rise_again_pressed) != OK:
+			push_error("Failed to connect Rise Again button")
+	else:
+		push_error("RiseAgainButton node not found")
+	
+	if give_up_button:
+		if give_up_button.pressed.connect(_on_give_up_pressed) != OK:
+			push_error("Failed to connect Give Up button")
+	else:
+		push_error("GiveUpButton node not found")
+
 func reset_game_state():
 	score = 0
 	last_cycle = -1
+	game_active = true
+	
 	depth_bar.min_value = 0
 	depth_bar.max_value = 10000
 	rock_timer.wait_time = 2.0
 	rock_timer.start()
+	
 	treasure_label.visible = false
 	flashing = false
 	already_triggered = false
+	
+	# Reset player
+	if player:
+		player.position = Vector2(get_viewport_rect().size.x / 2, get_viewport_rect().size.y - 100)
+		player.reset_bucket()
+	
+	get_tree().paused = false
+
+func show_game_over():
+	game_active = false
+	game_over_panel.visible = true
+	get_tree().paused = true
+	
+	# Ensure buttons are interactable
+	rise_again_button.disabled = false
+	give_up_button.disabled = false
+	rise_again_button.grab_focus()
+
+func _on_rise_again_pressed():
+	print("Rise Again pressed - resetting game")
+	get_tree().paused = false
+	reset_game_state()
+	game_over_panel.visible = false
+
+func _on_give_up_pressed():
+	print("Give Up pressed - returning to menu")
+	get_tree().paused = false
+	# Reset processing modes before scene change
+	rise_again_button.process_mode = Node.PROCESS_MODE_INHERIT
+	give_up_button.process_mode = Node.PROCESS_MODE_INHERIT
+	get_tree().change_scene_to_file("res://back_menu.tscn")
+
+func _on_player_hit():
+	show_game_over()
 
 func _process(delta):
+	if not game_active or get_tree().paused:
+		return
+		
 	score += 1
 	score_label.text = str(score) + "m"
 
@@ -58,14 +132,11 @@ func _process(delta):
 	if current_cycle != last_cycle:
 		randomize_zones()
 		last_cycle = current_cycle
-		# Reset the trigger flag when starting a new cycle
 		already_triggered = false
 
 	var cycle_depth = score % 11000
 	depth_bar.value = min(cycle_depth, 10000)
 
-	# Check for bar completion and unlock items
-	# Only trigger when we exactly reach max value (not every frame after)
 	if not already_triggered and depth_bar.value >= depth_bar.max_value:
 		handle_bar_completion()
 
@@ -74,15 +145,12 @@ func _process(delta):
 	update_jewel_spawn(score)
 
 func handle_bar_completion():
-	# Double-check we're exactly at max value
 	if depth_bar.value == depth_bar.max_value and not flashing:
 		flashing = true
 		already_triggered = true
 		flash_elapsed = 0.0
 		time_since_last_flash = 0.0
 		treasure_label.visible = true
-		
-		# Unlock exactly one item
 		Global.unlock_next_item()
 		print("Unlocked one item at score: ", score)
 
@@ -130,6 +198,9 @@ func randomize_zones():
 	print("New zones randomized at depths: ", zone_depths, " with types: ", zone_types)
 
 func update_rock_spawn_speed(depth: int):
+	if not game_active:
+		return
+		
 	var spawn_rate = 3.5
 	var cycle_depth = depth % 11000
 	var in_ice_zone = cycle_depth >= 10000
@@ -154,6 +225,9 @@ func set_rock_spawn_rate(rate: float):
 			rock_timer.start()
 
 func _on_rock_timer_timeout():
+	if not game_active or get_tree().paused:
+		return
+		
 	var depth = score
 	var cycle_depth = depth % 11000
 	var in_ice_zone = cycle_depth >= 10000

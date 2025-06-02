@@ -1,5 +1,5 @@
 extends CharacterBody2D
-
+signal player_hit
 const SPEED = 700.0
 var is_dragging = false
 var drag_start_position = Vector2.ZERO
@@ -10,6 +10,7 @@ const MAX_ROTATION = 30.0
 var collected_jewels = 0  # Count collected jewels
 
 @onready var jewel_container = $JewelContainer
+@onready var main = get_tree().root.get_node("Level")  # Reference to main game script
 
 # Load the shader material
 var jewel_shader_material = preload("res://scenes/jewel_shader_material.tres")
@@ -50,7 +51,6 @@ func _input(event: InputEvent) -> void:
 		else:
 			velocity.x = 0  
 
-# Function triggered when body enters the bucket's area
 func _on_body_entered(body: Node2D) -> void:
 	if body.is_in_group("jewel"):
 		if collected_jewels < Global.bucket_capacity:  # Check if bucket has space
@@ -59,7 +59,7 @@ func _on_body_entered(body: Node2D) -> void:
 			# Add jewel texture to Global collected gems
 			Global.collect_gem(jewel_texture)
 
-			# If there’s already a jewel, remove it before adding new one
+			# If there's already a jewel, remove it before adding new one
 			if jewel_container.get_child_count() > 0:
 				var existing_jewel = jewel_container.get_child(0)
 				jewel_container.remove_child(existing_jewel)
@@ -83,25 +83,18 @@ func _on_body_entered(body: Node2D) -> void:
 			Global.save_game()  # Save progress
 			print("Jewel collected! Score will be added gradually.")
 
-
-			# Check if bucket is full
-			#if collected_jewels >= Global.bucket_capacity:
-				#print("Bucket full! Returning to home screen...")
-				#return_to_home()
-		else:
-			print("Bucket is full! Can't collect more jewels.")
-
 	elif body.is_in_group("stone"):
 		print("Stone collided with bucket! Game over!")
-		get_tree().quit()
+		if main:
+			main.show_game_over()  # Call the game over function in main script
+		else:
+			get_tree().quit()  # Fallback if main script isn't found
 
-# Go back to home screen after the bucket is full
 func return_to_home():
 	await get_tree().create_timer(1.0).timeout  # Wait 1 second before switching
 	get_tree().change_scene_to_file("res://scenes/main.tscn")  # Go to home screen
 
-# Reset bucket and inventory for a new level
 func reset_bucket():
 	collected_jewels = 0  # Reset jewels when restarting level
-
-	get_node("res://Jewels/Inventory.tscn").update_inventory()  # Update immediately
+	if has_node("res://Jewels/Inventory.tscn"):
+		get_node("res://Jewels/Inventory.tscn").update_inventory()
