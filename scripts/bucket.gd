@@ -26,6 +26,7 @@ var jewel_shader_material = preload("res://scenes/jewel_shader_material.tres")
 func _ready() -> void:
 	area2d.body_entered.connect(_on_body_entered)
 	animation_player.play("drop")
+	randomize()
 
 func _physics_process(delta: float) -> void:
 	if not is_dragging:
@@ -33,7 +34,7 @@ func _physics_process(delta: float) -> void:
 		bucket_image.rotation_degrees = lerp(bucket_image.rotation_degrees, 0.0, 0.1)
 
 	move_and_slide()
-	jewel_container.rotation_degrees = bucket_image.rotation_degrees  # Sync rotation
+	jewel_container.rotation_degrees = bucket_image.rotation_degrees
 
 func _input(event: InputEvent) -> void:
 	if event is InputEventScreenTouch:
@@ -63,14 +64,19 @@ func _on_body_entered(body: Node2D) -> void:
 				var jewel_texture = sprite_node.texture
 				Global.collect_gem(jewel_texture)
 
-				# Remove existing jewel (only showing one at a time)
-				for child in jewel_container.get_children():
-					child.queue_free()
-
+				# Create new jewel sprite to add inside the bucket
 				var new_jewel_sprite = Sprite2D.new()
 				new_jewel_sprite.texture = jewel_texture
 				new_jewel_sprite.material = jewel_shader_material
-				new_jewel_sprite.position = Vector2(0, -jewel_texture.get_height() * 0.3 + 25)
+
+				# Random position within bounds
+				var scatter_area_width = 60
+				var scatter_area_height = 5
+				var offset_x = randf_range(-scatter_area_width / 2, scatter_area_width / 2)
+				var offset_y = randf_range(-scatter_area_height, 0)
+				new_jewel_sprite.position = Vector2(offset_x, offset_y)
+				new_jewel_sprite.scale = Vector2(0.5, 0.5)
+
 				jewel_container.add_child(new_jewel_sprite)
 
 				body.queue_free()
@@ -78,6 +84,14 @@ func _on_body_entered(body: Node2D) -> void:
 				Global.pending_score += 50
 				Global.save_game()
 				print("Jewel collected! +50 points pending.")
+
+				# Remove extra textures if more than 20
+				var visible_limit = 30
+				var children_to_remove = max(0, collected_jewels - visible_limit)
+				while children_to_remove > 0 and jewel_container.get_child_count() > 0:
+					var oldest = jewel_container.get_child(0)
+					oldest.queue_free()
+					children_to_remove -= 1
 
 	elif body.is_in_group("stone"):
 		print("Stone collided with bucket! Game over.")

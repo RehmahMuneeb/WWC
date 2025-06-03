@@ -24,8 +24,9 @@ texture = ExtResource("3_3rh06")
 texture_mode = 1
 
 [node name="JewelContainer" type="Node2D" parent="."]
-position = Vector2(246, 687)
+position = Vector2(246, 691)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+visible = false
 position = Vector2(247, 717)
 shape = SubResource("CapsuleShape2D_sf5e5")
