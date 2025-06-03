@@ -44,76 +44,62 @@ func _ready():
 	reset_game_state()
 	randomize_zones()
 	setup_game_over_panel()
-	
-	# Connect player collision signal
+
 	if player:
 		player.connect("player_hit", _on_player_hit)
-	
+
 	var fill_stylebox = depth_bar.get("custom_styles/fill")
 	if fill_stylebox:
 		fill_stylebox.bg_color = Color(0.2, 0.6, 1.0)
 
 func setup_game_over_panel():
 	game_over_panel.visible = false
-	
-	# Configure buttons to work while paused
 	rise_again_button.process_mode = Node.PROCESS_MODE_ALWAYS
 	give_up_button.process_mode = Node.PROCESS_MODE_ALWAYS
-	
-	# Connect signals with robust error checking
-	if rise_again_button:
-		if rise_again_button.pressed.connect(_on_rise_again_pressed) != OK:
-			push_error("Failed to connect Rise Again button")
-	else:
-		push_error("RiseAgainButton node not found")
-	
-	if give_up_button:
-		if give_up_button.pressed.connect(_on_give_up_pressed) != OK:
-			push_error("Failed to connect Give Up button")
-	else:
-		push_error("GiveUpButton node not found")
+	rise_again_button.pressed.connect(_on_rise_again_pressed)
+	give_up_button.pressed.connect(_on_give_up_pressed)
 
 func reset_game_state():
 	score = 0
 	last_cycle = -1
 	game_active = true
-	
+
 	depth_bar.min_value = 0
 	depth_bar.max_value = 10000
 	rock_timer.wait_time = 2.0
 	rock_timer.start()
-	
+
 	treasure_label.visible = false
 	flashing = false
 	already_triggered = false
-	
-	# Reset player
+
 	if player:
+		player.show()
+		player.set_process(true)
+		player.set_physics_process(true)
 		player.position = Vector2(get_viewport_rect().size.x / 2, get_viewport_rect().size.y - 100)
 		player.reset_bucket()
-	
+
 	get_tree().paused = false
 
 func show_game_over():
 	game_active = false
 	game_over_panel.visible = true
 	get_tree().paused = true
-	
-	# Ensure buttons are interactable
+
 	rise_again_button.disabled = false
 	give_up_button.disabled = false
 	rise_again_button.grab_focus()
 
 func _on_rise_again_pressed():
-	print("Rise Again pressed - resetting game")
-	get_tree().paused = false
-	reset_game_state()
+	print("Rise Again pressed - continuing game")
 	game_over_panel.visible = false
+	get_tree().paused = false
+	game_active = true
 
 func _on_give_up_pressed():
 	print("Give Up pressed - returning to menu")
 	get_tree().paused = false
-	# Reset processing modes before scene change
 	rise_again_button.process_mode = Node.PROCESS_MODE_INHERIT
 	give_up_button.process_mode = Node.PROCESS_MODE_INHERIT
 	get_tree().change_scene_to_file("res://back_menu.tscn")
@@ -124,7 +110,7 @@ func _on_player_hit():
 func _process(delta):
 	if not game_active or get_tree().paused:
 		return
-		
+
 	score += 1
 	score_label.text = str(score) + "m"
 
@@ -186,7 +172,7 @@ func randomize_zones():
 	for i in range(total_zones):
 		var start_pos = safe_start_area
 		if i > 0:
-			start_pos = positions[i-1] + zone_width + min_zone_gap + safe_start_area
+			start_pos = positions[i - 1] + zone_width + min_zone_gap + safe_start_area
 
 		var segment_start = last_pos
 		var segment_end = positions[i] + safe_start_area if i < positions.size() else 10000
@@ -200,7 +186,7 @@ func randomize_zones():
 func update_rock_spawn_speed(depth: int):
 	if not game_active:
 		return
-		
+
 	var spawn_rate = 3.5
 	var cycle_depth = depth % 11000
 	var in_ice_zone = cycle_depth >= 10000
@@ -227,7 +213,7 @@ func set_rock_spawn_rate(rate: float):
 func _on_rock_timer_timeout():
 	if not game_active or get_tree().paused:
 		return
-		
+
 	var depth = score
 	var cycle_depth = depth % 11000
 	var in_ice_zone = cycle_depth >= 10000

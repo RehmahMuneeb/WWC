@@ -256,6 +256,7 @@ UNLOCKED"
 horizontal_alignment = 1
 
 [node name="GameOverPanel" parent="." instance=ExtResource("8_ufjks")]
+visible = false
 
 [connection signal="timeout" from="Rocks/RockTimer" to="." method="_on_rock_timer_timeout"]
 [connection signal="timeout" from="JewelSpawner/SpawnTimer" to="JewelSpawner" method="_on_spawn_timer_timeout"]
