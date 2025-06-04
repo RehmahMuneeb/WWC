@@ -14,8 +14,8 @@ var last_warning_zone = -1
 
 # Shake effect
 var shake_timer = 0.0
-var shake_duration = 0.8
-var shake_strength = 22.0
+var shake_duration = 0.6
+var shake_strength = 11.0
 var last_zone = -1
 var original_position = Vector2.ZERO
 var original_rotation = 0.0

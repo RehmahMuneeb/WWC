@@ -3,7 +3,7 @@ extends Node2D
 # Game Objects
 var rock_scene: PackedScene = load("res://scenes/rock.tscn")
 var normal_texture = preload("res://assets/rock.png")
-var lava2_texture = preload("res://assets/Lavarock88.png")
+var lava2_texture = preload("res://STone.png")
 var lava3_texture = preload("res://assets/Lava-stone-33.png")
 
 # Game State
