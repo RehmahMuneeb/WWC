@@ -1,11 +1,9 @@
-[gd_scene load_steps=16 format=3 uid="uid://dl7qefe032h4l"]
+[gd_scene load_steps=31 format=3 uid="uid://dl7qefe032h4l"]
 
 [ext_resource type="Script" path="res://Jewels/jewel.gd" id="1_hu4h5"]
 [ext_resource type="Texture2D" uid="uid://xfqgf35w4smr" path="res://scenes/gem (1).png" id="2_qoier"]
-[ext_resource type="Texture2D" uid="uid://c2knblevfw4o7" path="res://scenes/gem (2).png" id="3_52lnq"]
 [ext_resource type="Texture2D" uid="uid://b4ogrlydp5mp" path="res://scenes/gem (3).png" id="4_adlde"]
 [ext_resource type="Texture2D" uid="uid://dsskcjne74c7y" path="res://scenes/gem (4).png" id="5_27ic6"]
-[ext_resource type="Texture2D" uid="uid://tmf3vkktdv0y" path="res://scenes/gem (5).png" id="6_8qg24"]
 [ext_resource type="Texture2D" uid="uid://dma1gu47rloyt" path="res://scenes/gem (7).png" id="7_nwhdr"]
 [ext_resource type="Texture2D" uid="uid://uolp4xfghw5o" path="res://scenes/gem (8).png" id="8_1rgg3"]
 [ext_resource type="Texture2D" uid="uid://cuc284q0iyy3" path="res://scenes/gem (9).png" id="9_wqxf1"]
@@ -13,6 +11,23 @@
 [ext_resource type="Texture2D" uid="uid://bxtedctwjxojb" path="res://scenes/gem (11).png" id="11_c38dh"]
 [ext_resource type="Texture2D" uid="uid://cbjv1p37myelk" path="res://scenes/gem (12).png" id="12_y8va4"]
 [ext_resource type="Texture2D" uid="uid://cfv2n3fifc5j1" path="res://scenes/gem (6).png" id="14_hixi6"]
+[ext_resource type="Texture2D" uid="uid://cwbctowuryts7" path="res://Gem14.png" id="15_jp3w4"]
+[ext_resource type="Texture2D" uid="uid://cu283s2ourddk" path="res://Gem15.png" id="16_xwrkw"]
+[ext_resource type="Texture2D" uid="uid://cxt2lh1en4ufs" path="res://Gem16.png" id="17_0adr3"]
+[ext_resource type="Texture2D" uid="uid://1kpgvdau7ilg" path="res://Gem17.png" id="18_c3bvr"]
+[ext_resource type="Texture2D" uid="uid://728srp52kq86" path="res://Gem18.png" id="19_fwj1d"]
+[ext_resource type="Texture2D" uid="uid://m1iic83kgkkb" path="res://Gem19.png" id="20_b1sol"]
+[ext_resource type="Texture2D" uid="uid://by6j6xi786i18" path="res://Gem20.png" id="21_cqkcu"]
+[ext_resource type="Texture2D" uid="uid://bg7ibxxydia10" path="res://Gem21.png" id="22_swqf0"]
+[ext_resource type="Texture2D" uid="uid://dyumjjwyeygu1" path="res://Gem22.png" id="23_ajlbh"]
+[ext_resource type="Texture2D" uid="uid://cil8ni840nix1" path="res://Gem23.png" id="24_ohtr8"]
+[ext_resource type="Texture2D" uid="uid://cjr7unrrq37mw" path="res://Gem24.png" id="25_k3y1r"]
+[ext_resource type="Texture2D" uid="uid://c432u720bjcac" path="res://Gem25.png" id="26_iacvb"]
+[ext_resource type="Texture2D" uid="uid://bghvxwrq72kmm" path="res://Gem26.png" id="27_7u5um"]
+[ext_resource type="Texture2D" uid="uid://drorpmdppb67q" path="res://Gem27.png" id="28_8dqly"]
+[ext_resource type="Texture2D" uid="uid://bmkpk0qjdplcq" path="res://Gem28.png" id="29_u8vuq"]
+[ext_resource type="Texture2D" uid="uid://humtxwpcab5b" path="res://Gem29.png" id="30_rjhp2"]
+[ext_resource type="Texture2D" uid="uid://dexiphygv8yxs" path="res://Gem30.png" id="31_ijapl"]
 
 [sub_resource type="CompressedTexture2D" id="CompressedTexture2D_8ughg"]
 
@@ -27,7 +42,7 @@ script = ExtResource("1_hu4h5")
 fall_speed = 622.0
 horizontal_speed = 144.0
 max_horizontal_speed = 333.0
-jewel_textures = Array[Texture2D]([ExtResource("2_qoier"), ExtResource("3_52lnq"), ExtResource("4_adlde"), ExtResource("5_27ic6"), ExtResource("6_8qg24"), ExtResource("7_nwhdr"), ExtResource("8_1rgg3"), ExtResource("9_wqxf1"), ExtResource("10_vd6w5"), ExtResource("11_c38dh"), ExtResource("12_y8va4"), ExtResource("14_hixi6")])
+jewel_textures = Array[Texture2D]([ExtResource("2_qoier"), ExtResource("4_adlde"), ExtResource("5_27ic6"), ExtResource("7_nwhdr"), ExtResource("8_1rgg3"), ExtResource("9_wqxf1"), ExtResource("10_vd6w5"), ExtResource("11_c38dh"), ExtResource("12_y8va4"), ExtResource("14_hixi6"), ExtResource("15_jp3w4"), ExtResource("16_xwrkw"), ExtResource("17_0adr3"), ExtResource("18_c3bvr"), ExtResource("19_fwj1d"), ExtResource("20_b1sol"), ExtResource("21_cqkcu"), ExtResource("22_swqf0"), ExtResource("23_ajlbh"), ExtResource("24_ohtr8"), ExtResource("25_k3y1r"), ExtResource("26_iacvb"), ExtResource("27_7u5um"), ExtResource("28_8dqly"), ExtResource("29_u8vuq"), ExtResource("30_rjhp2"), ExtResource("31_ijapl")])
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 texture = SubResource("CompressedTexture2D_8ughg")
