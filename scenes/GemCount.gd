@@ -1,4 +1,4 @@
-extends Label
+extends Button
 
 func _process(_delta: float) -> void:
-	text = "GEMS: " + str(Global.collected_gems.size())
+	text ="X " + str(Global.collected_gems.size())

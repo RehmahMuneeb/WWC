@@ -1,4 +1,4 @@
-[gd_scene load_steps=21 format=3 uid="uid://btndkc1nmjdx0"]
+[gd_scene load_steps=23 format=3 uid="uid://btndkc1nmjdx0"]
 
 [ext_resource type="Script" path="res://scripts/level.gd" id="1_24m71"]
 [ext_resource type="PackedScene" uid="uid://be3ml7efg7568" path="res://scenes/wall_bg.tscn" id="1_frcah"]
@@ -6,6 +6,7 @@
 [ext_resource type="PackedScene" uid="uid://dl7qefe032h4l" path="res://Jewels/Jewel.tscn" id="4_ehahp"]
 [ext_resource type="Script" path="res://scenes/jewel_spawner.gd" id="4_r0cwm"]
 [ext_resource type="Script" path="res://scenes/GemCount.gd" id="6_xouy4"]
+[ext_resource type="Texture2D" uid="uid://cbjv1p37myelk" path="res://scenes/gem (12).png" id="7_r4e1s"]
 [ext_resource type="FontFile" uid="uid://b2clys7lbyd3t" path="res://scenes/Kid Games.ttf" id="7_rf70r"]
 [ext_resource type="PackedScene" uid="uid://37evxehmwk7y" path="res://game_over_panel.tscn" id="8_ufjks"]
 
@@ -69,7 +70,7 @@ corner_radius_bottom_right = 12
 corner_radius_bottom_left = 12
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_efwhb"]
-bg_color = Color(1, 0.843137, 0, 1)
+bg_color = Color(0.133333, 0.913725, 0.207843, 1)
 border_width_left = 2
 border_width_top = 2
 border_width_bottom = 2
@@ -146,6 +147,16 @@ particle_flag_disable_z = true
 gravity = Vector3(0, 98, 0)
 color = Color(1, 0.843137, 0, 1)
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_66qtd"]
+bg_color = Color(0, 0, 0, 0.533333)
+border_width_left = 4
+border_width_top = 4
+border_width_right = 4
+border_width_bottom = 4
+border_color = Color(0, 0, 0, 1)
+border_blend = true
+corner_radius_bottom_right = 77
+
 [node name="Level" type="Node2D"]
 script = ExtResource("1_24m71")
 
@@ -197,11 +208,14 @@ autostart = true
 anchors_preset = 5
 anchor_left = 0.5
 anchor_right = 0.5
-offset_left = -20.5
-offset_right = 20.5
-offset_bottom = 55.0
+offset_left = -50.0
+offset_top = 42.0
+offset_right = 64.0
+offset_bottom = 111.0
 grow_horizontal = 2
-theme_override_font_sizes/font_size = 40
+theme_override_constants/outline_size = 6
+theme_override_font_sizes/font_size = 44
+text = "3333"
 
 [node name="ProgressBar" type="ProgressBar" parent="UI"]
 offset_left = 444.0
@@ -230,11 +244,21 @@ jewel_scene = ExtResource("4_ehahp")
 [node name="SpawnTimer" type="Timer" parent="JewelSpawner"]
 autostart = true
 
-[node name="GemCount" type="Label" parent="."]
-offset_left = 46.0
-offset_top = 45.0
-offset_right = 124.0
-offset_bottom = 88.0
+[node name="GemCount" type="Button" parent="."]
+offset_left = 1.0
+offset_top = 1.0
+offset_right = 174.0
+offset_bottom = 69.0
+theme_override_colors/font_color = Color(1, 0.866667, 0, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 4
+theme_override_fonts/font = ExtResource("7_rf70r")
+theme_override_font_sizes/font_size = 30
+theme_override_styles/normal = SubResource("StyleBoxFlat_66qtd")
+text = "GEM"
+icon = ExtResource("7_r4e1s")
+alignment = 0
+expand_icon = true
 script = ExtResource("6_xouy4")
 
 [node name="Treasure" type="Label" parent="."]
@@ -242,12 +266,12 @@ offset_left = 21.0
 offset_top = 138.0
 offset_right = 459.0
 offset_bottom = 291.0
-theme_override_colors/font_color = Color(1, 1, 0.305882, 1)
-theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_shadow_color = Color(1, 0.941176, 0.0980392, 1)
 theme_override_colors/font_outline_color = Color(0.992157, 0.184314, 0.188235, 1)
 theme_override_constants/line_spacing = 16
 theme_override_constants/shadow_offset_x = 4
-theme_override_constants/shadow_offset_y = 11
+theme_override_constants/shadow_offset_y = 8
 theme_override_constants/outline_size = 22
 theme_override_fonts/font = ExtResource("7_rf70r")
 theme_override_font_sizes/font_size = 59
@@ -256,7 +280,6 @@ UNLOCKED"
 horizontal_alignment = 1
 
 [node name="GameOverPanel" parent="." instance=ExtResource("8_ufjks")]
-visible = false
 
 [connection signal="timeout" from="Rocks/RockTimer" to="." method="_on_rock_timer_timeout"]
 [connection signal="timeout" from="JewelSpawner/SpawnTimer" to="JewelSpawner" method="_on_spawn_timer_timeout"]
