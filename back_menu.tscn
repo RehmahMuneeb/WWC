@@ -13,10 +13,10 @@ shader = ExtResource("5_1fbjo")
 shader_parameter/scroll_speed = 0.2
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_r8ppy"]
-bg_color = Color(0.121569, 0.729412, 0.901961, 1)
+bg_color = Color(0.188235, 0.317647, 0.494118, 1)
 border_width_right = 14
 border_width_bottom = 16
-border_color = Color(0.121569, 0.729412, 0.901961, 1)
+border_color = Color(0.188235, 0.317647, 0.494118, 1)
 corner_radius_top_left = 22
 corner_radius_top_right = 22
 corner_radius_bottom_right = 33
@@ -55,19 +55,19 @@ corner_radius_bottom_right = 20
 corner_radius_bottom_left = 20
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_pwnqs"]
-bg_color = Color(0.870588, 0.694118, 0, 1)
+bg_color = Color(0.92549, 0.8, 0.133333, 1)
 corner_radius_top_left = 6
 corner_radius_top_right = 6
 corner_radius_bottom_right = 6
 corner_radius_bottom_left = 6
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_cexus"]
-bg_color = Color(0.235869, 0.518458, 0.893768, 1)
+bg_color = Color(0.348236, 0.600998, 0.945306, 1)
 border_width_left = 10
 border_width_top = 10
 border_width_right = 10
 border_width_bottom = 10
-border_color = Color(1, 0.788235, 0, 1)
+border_color = Color(1, 0.826815, 0.349514, 1)
 corner_radius_top_left = 22
 corner_radius_top_right = 22
 corner_radius_bottom_right = 22
@@ -110,6 +110,8 @@ offset_top = 520.0
 offset_right = 413.0
 offset_bottom = 630.0
 theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 10
 theme_override_fonts/font = ExtResource("2_8a7sk")
 theme_override_font_sizes/font_size = 44
 theme_override_styles/hover = SubResource("StyleBoxFlat_r8ppy")
@@ -124,6 +126,8 @@ offset_top = 654.0
 offset_right = 413.0
 offset_bottom = 760.0
 theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 11
 theme_override_fonts/font = ExtResource("2_8a7sk")
 theme_override_font_sizes/font_size = 44
 theme_override_styles/hover = SubResource("StyleBoxFlat_r8ppy")
@@ -158,33 +162,37 @@ flip_h = true
 
 [node name="CapacityLabel" type="Label" parent="Bucket Capacity2"]
 layout_mode = 1
-offset_left = 83.0
-offset_top = 18.0
-offset_right = 423.0
-offset_bottom = 106.0
+offset_left = 71.0
+offset_top = 22.0
+offset_right = 425.0
+offset_bottom = 110.0
 theme_override_constants/shadow_offset_x = 6
-theme_override_constants/outline_size = 6
+theme_override_constants/outline_size = 9
 theme_override_constants/shadow_outline_size = 6
 theme_override_fonts/font = ExtResource("2_8a7sk")
-theme_override_font_sizes/font_size = 33
+theme_override_font_sizes/font_size = 36
 text = "GEM COLLECTED"
 
 [node name="ProgressBar" type="ProgressBar" parent="Bucket Capacity2"]
 layout_mode = 0
 offset_left = 292.0
-offset_top = 241.0
+offset_top = 234.0
 offset_right = 453.0
-offset_bottom = 261.0
+offset_bottom = 254.0
 theme_override_styles/fill = SubResource("StyleBoxFlat_pwnqs")
 show_percentage = false
 
 [node name="ProgressLabel" type="Label" parent="Bucket Capacity2/ProgressBar"]
 layout_mode = 0
-offset_left = 8.0
-offset_top = -5.0
-offset_right = 164.0
-offset_bottom = 26.0
-theme_override_font_sizes/font_size = 22
+offset_left = 5.0
+offset_top = 2.0
+offset_right = 161.0
+offset_bottom = 33.0
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 4
+theme_override_fonts/font = ExtResource("2_8a7sk")
+theme_override_font_sizes/font_size = 16
+text = "11"
 
 [node name="Bucket" type="TextureRect" parent="Bucket Capacity2"]
 layout_mode = 1
@@ -193,9 +201,9 @@ anchor_left = 0.5
 anchor_top = 1.0
 anchor_right = 0.5
 anchor_bottom = 1.0
-offset_left = -234.5
+offset_left = -231.5
 offset_top = -219.0
-offset_right = -101.5
+offset_right = -98.5
 offset_bottom = -97.0
 grow_horizontal = 2
 grow_vertical = 0
@@ -204,46 +212,51 @@ expand_mode = 1
 
 [node name="GemScoreLabel" type="Label" parent="Bucket Capacity2"]
 layout_mode = 0
-offset_left = 18.0
-offset_top = 216.0
-offset_right = 228.0
-offset_bottom = 292.0
-theme_override_font_sizes/font_size = 44
+offset_left = 19.0
+offset_top = 222.0
+offset_right = 229.0
+offset_bottom = 298.0
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 7
+theme_override_fonts/font = ExtResource("2_8a7sk")
+theme_override_font_sizes/font_size = 33
 text = "+"
 
 [node name="AD BAR2" type="Panel" parent="."]
 layout_mode = 0
-offset_top = 335.0
+offset_top = 351.0
 offset_right = 479.0
-offset_bottom = 480.0
+offset_bottom = 481.0
 theme_override_styles/panel = SubResource("StyleBoxFlat_mymcd")
 
 [node name="TextureRect" type="TextureRect" parent="AD BAR2"]
 layout_mode = 0
 offset_left = 7.0
 offset_top = 4.0
-offset_right = 142.0
-offset_bottom = 139.0
+offset_right = 130.0
+offset_bottom = 127.0
 texture = ExtResource("8_ddeit")
 expand_mode = 1
 
 [node name="Multiply" type="Label" parent="AD BAR2"]
 layout_mode = 0
-offset_left = 148.0
-offset_top = 23.0
-offset_right = 436.0
-offset_bottom = 130.0
-theme_override_font_sizes/font_size = 66
+offset_left = 135.0
+offset_top = 36.0
+offset_right = 547.0
+offset_bottom = 99.0
+theme_override_colors/font_shadow_color = Color(1, 0.870588, 0.133333, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 9
+theme_override_fonts/font = ExtResource("2_8a7sk")
+theme_override_font_sizes/font_size = 59
 text = "3000000"
 
 [node name="GemContainer" type="VBoxContainer" parent="."]
-visible = false
 layout_mode = 0
 offset_right = 467.0
 offset_bottom = 238.0
 
 [node name="RewardPanel" type="Panel" parent="."]
-visible = false
 layout_mode = 0
 offset_left = 46.0
 offset_top = 69.0
@@ -257,7 +270,7 @@ offset_left = 27.0
 offset_top = 27.0
 offset_right = 395.0
 offset_bottom = 135.0
-theme_override_colors/font_color = Color(1, 0.788235, 0, 1)
+theme_override_colors/font_color = Color(1, 0.854902, 0.34902, 1)
 theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
 theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
 theme_override_constants/shadow_offset_x = 2
@@ -266,7 +279,7 @@ theme_override_constants/outline_size = 3
 theme_override_constants/shadow_outline_size = 2
 theme_override_fonts/font = ExtResource("2_8a7sk")
 theme_override_font_sizes/font_size = 22
-text = "YOU RECIEVED A NEW GEM"
+text = "YOU RECIEVED A NEW GEM !"
 
 [node name="ClaimButton" type="Button" parent="RewardPanel"]
 layout_mode = 0
@@ -274,7 +287,10 @@ offset_left = 146.0
 offset_top = 157.0
 offset_right = 230.0
 offset_bottom = 187.0
+theme_override_colors/font_color = Color(1, 1, 1, 1)
 theme_override_fonts/font = ExtResource("2_8a7sk")
+theme_override_styles/hover = SubResource("StyleBoxFlat_htmp6")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_htmp6")
 theme_override_styles/normal = SubResource("StyleBoxFlat_htmp6")
 text = "CLAIM"
 

@@ -44,16 +44,12 @@ bg_color = Color(0.133333, 0.913725, 0.207843, 1)
 border_color = Color(0.121569, 0.729412, 0.901961, 1)
 corner_radius_top_left = 22
 corner_radius_top_right = 22
-corner_radius_bottom_right = 33
-corner_radius_bottom_left = 22
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_nv1y4"]
 bg_color = Color(0.133333, 0.913725, 0.207843, 1)
 border_color = Color(0.121569, 0.729412, 0.901961, 1)
 corner_radius_top_left = 22
 corner_radius_top_right = 22
-corner_radius_bottom_right = 33
-corner_radius_bottom_left = 22
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_kf5au"]
 bg_color = Color(0.133333, 0.913725, 0.207843, 1)

@@ -116,7 +116,7 @@ func animate_gems_with_float_motion() -> void:
 		Global.current_chest_progress = Global.score
 		total_multiplied_score += score_per_gem * 3
 		gem_score_label.text = "+%d" % current_session_score
-		multiply_label.text = "x3: %d" % total_multiplied_score
+		multiply_label.text = "X3: %d" % total_multiplied_score
 
 		update_chest_progress()
 
