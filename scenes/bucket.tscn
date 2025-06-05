@@ -1,8 +1,10 @@
-[gd_scene load_steps=5 format=3 uid="uid://bwgm6kbg6ol6q"]
+[gd_scene load_steps=7 format=3 uid="uid://bwgm6kbg6ol6q"]
 
 [ext_resource type="Script" path="res://scripts/bucket.gd" id="1_jnwf0"]
 [ext_resource type="Texture2D" uid="uid://bume63me30ecm" path="res://Jewels/Bucket1.png" id="2_2oo6i"]
 [ext_resource type="Texture2D" uid="uid://bt6bblqgui8l8" path="res://Rope text.webp" id="3_3rh06"]
+[ext_resource type="AudioStream" uid="uid://ckw5oocom1526" path="res://90s-game-ui-6-185099.mp3" id="4_uw2ce"]
+[ext_resource type="AudioStream" uid="uid://x73lnx1qu6t8" path="res://RockCollide.mp3" id="5_nr2sy"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_sf5e5"]
 radius = 46.0
@@ -30,3 +32,9 @@ position = Vector2(246, 693)
 visible = false
 position = Vector2(247, 717)
 shape = SubResource("CapsuleShape2D_sf5e5")
+
+[node name="JewelCollectSound" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("4_uw2ce")
+
+[node name="RochHitSound" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("5_nr2sy")

@@ -19,6 +19,8 @@ var collected_jewels = 0
 @onready var area2d: Area2D = $Area2D
 @onready var animation_player: AnimationPlayer = $AnimationPlayer
 @onready var main = get_tree().root.get_node_or_null("Level")
+@onready var jewel_collect_sound: AudioStreamPlayer2D = $JewelCollectSound
+@onready var rock_hit_sound: AudioStreamPlayer2D = $RockHitSound
 
 # Shader for jewels
 var jewel_shader_material = preload("res://scenes/jewel_shader_material.tres")
@@ -83,9 +85,13 @@ func _on_body_entered(body: Node2D) -> void:
 				collected_jewels += 1
 				Global.pending_score += 50
 				Global.save_game()
+
+				# Play jewel collect sound
+				jewel_collect_sound.play()
+
 				print("Jewel collected! +50 points pending.")
 
-				# Remove extra textures if more than 20
+				# Remove extra textures if more than 30
 				var visible_limit = 30
 				var children_to_remove = max(0, collected_jewels - visible_limit)
 				while children_to_remove > 0 and jewel_container.get_child_count() > 0:
@@ -95,6 +101,7 @@ func _on_body_entered(body: Node2D) -> void:
 
 	elif body.is_in_group("stone"):
 		print("Stone collided with bucket! Game over.")
+		rock_hit_sound.play()
 		if main and main.has_method("show_game_over"):
 			main.show_game_over()
 		else:
