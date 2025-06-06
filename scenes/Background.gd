@@ -1,6 +1,5 @@
 extends Node2D
 
-@onready var air_effect = $AirEffect
 @onready var normal_bg = $WallImg
 @onready var lava_bg = $WallImg2
 @onready var ice_bg = $WallImg5
@@ -24,8 +23,7 @@ var background_changed = false  # Flag to track if the background has changed
 
 func _ready():
 	main_script = get_parent()
-	air_effect.visible = false
-	air_effect.emitting = false
+
 	normal_bg.visible = true
 	lava_bg.visible = false
 	ice_bg.visible = false
@@ -42,15 +40,6 @@ func _process(delta):
 	_check_upcoming_danger_zones(depth)
 	_update_background_based_on_zone(depth)
 
-	if depth >= 2000 and depth < 3000:
-		if not air_effect.emitting:
-			air_effect.visible = true
-			air_effect.emitting = true
-	else:
-		if air_effect.emitting:
-			air_effect.visible = false
-			air_effect.emitting = false
-
 	# Apply shake only after the background has changed
 	if background_changed and shake_timer > 0:
 		shake_timer -= delta
@@ -61,9 +50,10 @@ func _process(delta):
 		shaking = true
 	else:
 		if shaking:
-			# Once shaking ends, change background
+			# Once shaking ends, reset position and apply the new background
 			_set_background_zone(last_zone)
 			shaking = false
+			background_changed = false
 		position = original_position
 		rotation = original_rotation
 
@@ -90,22 +80,28 @@ func _update_background_based_on_zone(depth: int):
 	var in_ice_zone = depth >= 10000 and depth < 11000
 
 	if in_ice_zone:
-		_trigger_background_change(2)
+		if last_zone != 2:  # Only trigger if changing to ice zone
+			_trigger_background_change(2, false)  # No shake for ice
 		jewel_spawner.set_lava_active(false)
 	elif in_danger_zone:
-		_trigger_background_change(1)
+		if last_zone != 1:  # Only trigger if changing to lava zone
+			_trigger_background_change(1, true)  # Shake for lava
 		jewel_spawner.set_lava_active(true)
 	else:
-		_trigger_background_change(0)
+		if last_zone != 0:  # Only trigger if changing to normal zone
+			_trigger_background_change(0, false)  # No shake for normal
 		jewel_spawner.set_lava_active(false)
 
-func _trigger_background_change(zone: int):
-	# Trigger shake and wait for it to finish before changing background
+func _trigger_background_change(zone: int, should_shake: bool):
+	# Trigger shake only if should_shake is true (for lava zone)
 	if zone != last_zone:
-		if last_zone != -1:  # Only trigger shake if it's not the initial background
+		if should_shake:
 			shake_timer = shake_duration
 		last_zone = zone
 		background_changed = true  # Mark that the background has changed
+		# Immediately change background if no shake needed
+		if not should_shake:
+			_set_background_zone(zone)
 
 func _set_background_zone(zone: int):
 	# Apply the new background

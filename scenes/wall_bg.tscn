@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=3 uid="uid://be3ml7efg7568"]
+[gd_scene load_steps=10 format=3 uid="uid://be3ml7efg7568"]
 
 [ext_resource type="Script" path="res://scenes/Background.gd" id="1_5afwl"]
 [ext_resource type="Shader" path="res://scenes/wall_bg.gdshader" id="1_lt5r1"]
@@ -12,46 +12,6 @@
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_c1xl2"]
 shader = ExtResource("1_lt5r1")
 shader_parameter/scroll_speed = 0.3
-
-[sub_resource type="Gradient" id="Gradient_viptk"]
-offsets = PackedFloat32Array(0, 0.00833333, 0.475, 0.95)
-colors = PackedColorArray(0, 0, 0, 0, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 0)
-
-[sub_resource type="GradientTexture1D" id="GradientTexture1D_gmcjm"]
-gradient = SubResource("Gradient_viptk")
-
-[sub_resource type="Curve" id="Curve_okfiw"]
-min_value = -200.0
-max_value = 200.0
-_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(0.0472973, 182.418), -993.895, -993.895, 0, 0, Vector2(0.1, 40), 0.0, 0.0, 0, 0, Vector2(0.236486, 182.418), -88.7113, -88.7113, 0, 0, Vector2(0.4, 40), 0.0, 0.0, 0, 0, Vector2(0.5, 15.3846), 8338.86, 8338.86, 0, 0, Vector2(0.6, -40), 0.0, 0.0, 0, 0, Vector2(0.79999, -80), 0.0, 0.0, 0, 0, Vector2(0.8, 40), 0.0, 0.0, 0, 0, Vector2(0.986486, -182.418), 0.0, 0.0, 0, 0]
-point_count = 10
-metadata/_snap_enabled = true
-
-[sub_resource type="CurveTexture" id="CurveTexture_qtav3"]
-curve = SubResource("Curve_okfiw")
-
-[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_3y65k"]
-particle_flag_disable_z = true
-emission_shape = 3
-emission_box_extents = Vector3(200, 50, 1)
-gravity = Vector3(-200, 33, 0)
-tangential_accel_min = -79.47
-tangential_accel_max = 11.96
-tangential_accel_curve = SubResource("CurveTexture_qtav3")
-damping_max = 33.152
-scale_min = 1.5
-scale_max = 2.0
-color_ramp = SubResource("GradientTexture1D_gmcjm")
-
-[sub_resource type="Gradient" id="Gradient_5hx3d"]
-offsets = PackedFloat32Array(0, 0.513158, 0.888158, 1)
-colors = PackedColorArray(1, 1, 1, 0, 1, 1, 1, 1, 0.717647, 0.956863, 0.996078, 0.211765, 0.345098, 0.901961, 0.992157, 0.109804)
-
-[sub_resource type="GradientTexture2D" id="GradientTexture2D_bgklu"]
-gradient = SubResource("Gradient_5hx3d")
-width = 3
-height = 33
-fill_to = Vector2(0, 1)
 
 [node name="Bacground" type="Node2D"]
 script = ExtResource("1_5afwl")
@@ -91,18 +51,6 @@ texture_repeat = 2
 material = SubResource("ShaderMaterial_c1xl2")
 position = Vector2(242, 427)
 texture = ExtResource("4_lmrhv")
-
-[node name="AirEffect" type="GPUParticles2D" parent="."]
-position = Vector2(352, 98)
-emitting = false
-amount = 33
-process_material = SubResource("ParticleProcessMaterial_3y65k")
-texture = SubResource("GradientTexture2D_bgklu")
-lifetime = 3.0
-preprocess = 2.0
-randomness = 1.0
-trail_enabled = true
-trail_lifetime = 0.6
 
 [node name="WarningLabel" type="Label" parent="."]
 anchors_preset = 5
