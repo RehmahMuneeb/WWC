@@ -13,11 +13,41 @@ var overlay_map = {}  # Maps clone overlays to original overlays
 var previously_unlocked_items = []
 var gem_map = {}  # Tracks gems placed on items: {item_name: {overlay_path: gem_texture}}
 
+# Swipe detection variables
+var swipe_start_position := Vector2.ZERO
+const SWIPE_THRESHOLD := 100  # Minimum swipe distance in pixels
+const SWIPE_BACK_SCENE := "res://scenes/main.tscn"  # Path to your main menu scene
+
 func _ready():
 	setup_ui()
 	initialize_items()
 	connect_signals()
 	load_gem_placements()
+
+func _input(event: InputEvent):
+	# Only process swipe if we're not in zoomed view
+	if not item_zoom_panel.visible:
+		if event is InputEventScreenTouch:
+			if event.pressed:
+				swipe_start_position = event.position
+			else:
+				_check_swipe(event.position)
+		elif event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT:
+			if event.pressed:
+				swipe_start_position = event.position
+			else:
+				_check_swipe(event.position)
+
+func _check_swipe(end_position: Vector2):
+	var swipe_vector = end_position - swipe_start_position
+	if abs(swipe_vector.x) > SWIPE_THRESHOLD and abs(swipe_vector.x) > abs(swipe_vector.y):
+		if swipe_vector.x < -0:  # Swiped left
+			_return_to_main_menu()
+
+func _return_to_main_menu():
+	# Add a smooth fade out transition
+
+	get_tree().change_scene_to_file(SWIPE_BACK_SCENE)
 
 func setup_ui():
 	item_zoom_panel.visible = false
