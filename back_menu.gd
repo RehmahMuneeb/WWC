@@ -11,6 +11,7 @@ extends Control
 @onready var reward_label: Label = reward_panel.get_node("RewardLabel")
 @onready var reward_button: Button = reward_panel.get_node("ClaimButton")
 @onready var reward_icon: TextureRect = reward_panel.get_node("GemIcon")
+@onready var gem_sound_player: AudioStreamPlayer2D = $GemSoundPlayer  # SOUND PLAYER
 
 # Constants and variables
 const BASE_COINS_TO_UNLOCK := 1000
@@ -29,31 +30,20 @@ func _ready():
 	current_session_score = 0
 	is_exiting = false
 
-	# Initialize from saved data
 	initialize_chest_progression()
-	
 	gem_score_label.text = "+0"
 	multiply_label.text = "x3: 0"
 	update_chest_ui()
-
 	reward_panel.hide()
 	reward_button.pressed.connect(_on_claim_reward_pressed)
-
 	animate_gems_with_float_motion()
 
 func initialize_chest_progression():
-	# Initialize chest targets if not set
 	if Global.chest_targets.is_empty():
-		for level in range(1, 31):  # For 30 chest levels
+		for level in range(1, 31):
 			Global.chest_targets[level] = BASE_COINS_TO_UNLOCK * level
-	
-	# Clamp current level to valid range
 	Global.current_chest_level = clamp(Global.current_chest_level, 1, 30)
-	
-	# Set current target based on saved level
 	current_target = Global.chest_targets[Global.current_chest_level]
-	
-	# Restore progress
 	Global.score = Global.current_chest_progress
 
 func update_chest_ui():
@@ -70,9 +60,8 @@ func _input(event):
 func animate_gems_with_float_motion() -> void:
 	animation_running = true
 	var score_per_gem := 1000
-
 	var gem_textures = Global.get_collected_gems_textures()
-	
+
 	for gem_texture in gem_textures:
 		if gem_texture == null:
 			continue
@@ -110,6 +99,9 @@ func animate_gems_with_float_motion() -> void:
 			elapsed += get_process_delta_time()
 
 		gem.queue_free()
+		# Play gem sound
+		if gem_sound_player:
+			gem_sound_player.play()
 
 		current_session_score += score_per_gem
 		Global.score += score_per_gem
@@ -117,7 +109,6 @@ func animate_gems_with_float_motion() -> void:
 		total_multiplied_score += score_per_gem * 3
 		gem_score_label.text = "+%d" % current_session_score
 		multiply_label.text = "X3: %d" % total_multiplied_score
-
 		update_chest_progress()
 
 		if not skip_animation:
@@ -129,10 +120,10 @@ func animate_gems_with_float_motion() -> void:
 	animation_running = false
 
 func update_chest_progress():
-	Global.score = min(Global.score, current_target)  # Don't exceed current target
+	Global.score = min(Global.score, current_target)
 	Global.current_chest_progress = Global.score
 	update_chest_ui()
-	
+
 	if not chest_unlocked and Global.score >= current_target:
 		chest_unlocked = true
 		unlock_chest()
@@ -140,18 +131,15 @@ func update_chest_progress():
 func unlock_chest():
 	print("Chest %d Unlocked!" % Global.current_chest_level)
 	show_reward_panel()
-	
-	# Reset progress and move to next level
 	Global.score = 0
 	Global.current_chest_progress = 0
-	
+
 	if Global.current_chest_level < 30:
 		Global.current_chest_level += 1
 		current_target = Global.chest_targets[Global.current_chest_level]
 	else:
 		print("All chests unlocked!")
-	
-	# Update UI immediately
+
 	update_chest_ui()
 	Global.save_game()
 	chest_unlocked = false
@@ -221,7 +209,6 @@ func get_random_rare_gem() -> Texture:
 func _on_play_again_pressed() -> void:
 	is_exiting = true
 	skip_animation = true
-
 	while animation_running:
 		await get_tree().process_frame
 
@@ -232,7 +219,6 @@ func _on_play_again_pressed() -> void:
 func _on_main_menu_pressed() -> void:
 	is_exiting = true
 	skip_animation = true
-
 	while animation_running:
 		await get_tree().process_frame
 

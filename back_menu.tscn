@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=3 uid="uid://usd6k245qee0"]
+[gd_scene load_steps=18 format=3 uid="uid://usd6k245qee0"]
 
 [ext_resource type="Script" path="res://back_menu.gd" id="1_mdwjp"]
 [ext_resource type="FontFile" uid="uid://b2clys7lbyd3t" path="res://scenes/Kid Games.ttf" id="2_8a7sk"]
@@ -7,6 +7,7 @@
 [ext_resource type="Shader" path="res://back_menu.gdshader" id="5_1fbjo"]
 [ext_resource type="Texture2D" uid="uid://b8n734aibk4ld" path="res://scenes/Treasure Chest-Photoroom.png" id="5_cirfo"]
 [ext_resource type="Texture2D" uid="uid://1misolt5rykx" path="res://scenes/video-play-watch-player-black-icon-free-png-7017516949743594tmpczaclr.png" id="8_ddeit"]
+[ext_resource type="AudioStream" uid="uid://ckw5oocom1526" path="res://90s-game-ui-6-185099.mp3" id="8_v7sre"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_j7ymm"]
 shader = ExtResource("5_1fbjo")
@@ -302,6 +303,9 @@ offset_right = 286.0
 offset_bottom = 154.0
 texture = SubResource("CompressedTexture2D_xke0a")
 stretch_mode = 5
+
+[node name="GemSoundPlayer" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("8_v7sre")
 
 [connection signal="pressed" from="PlayAgain" to="." method="_on_play_again_pressed"]
 [connection signal="pressed" from="MainMenu" to="." method="_on_main_menu_pressed"]
