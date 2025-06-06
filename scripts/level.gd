@@ -39,6 +39,8 @@ var already_triggered = false
 @onready var rise_again_button: Button = $GameOverPanel/Panel/RiseAgainButton
 @onready var give_up_button: Button = $GameOverPanel/Panel/GiveUpButton
 @onready var player = $Bucket
+@onready var unlock_label = $UnlockLabel
+var unlock_label_shown = false
 
 func _ready():
 	reset_game_state()
@@ -51,7 +53,42 @@ func _ready():
 	var fill_stylebox = depth_bar.get("custom_styles/fill")
 	if fill_stylebox:
 		fill_stylebox.bg_color = Color(0.2, 0.6, 1.0)
+	
+	# Initialize unlock label as hidden
+	if unlock_label:
+		unlock_label.visible = false
+		unlock_label.modulate.a = 0
+	
+	# Start timer to show label after a brief delay
+	get_tree().create_timer(0.5).timeout.connect(_show_unlock_label)
 
+func _show_unlock_label():
+	if unlock_label and not unlock_label_shown:
+		unlock_label_shown = true
+		unlock_label.visible = true
+		
+		# Fade in animation
+		var fade_in = create_tween()
+		fade_in.tween_property(unlock_label, "modulate:a", 1.0, 0.3)\
+			  .set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_SINE)
+		
+		# Start timer for fade out after visible duration
+		get_tree().create_timer(1.0).timeout.connect(_hide_unlock_label)
+
+func _hide_unlock_label():
+	if unlock_label and unlock_label_shown:
+		# Fade out animation
+		var fade_out = create_tween()
+		fade_out.tween_property(unlock_label, "modulate:a", 0.0, 0.3)\
+				.set_ease(Tween.EASE_IN).set_trans(Tween.TRANS_SINE)
+		fade_out.tween_callback(func(): 
+			unlock_label.visible = false
+			unlock_label_shown = false
+		)
+
+func _hide_treasure_label():
+	treasure_label.visible = false
+	
 func setup_game_over_panel():
 	game_over_panel.visible = false
 	rise_again_button.process_mode = Node.PROCESS_MODE_ALWAYS

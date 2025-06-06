@@ -287,6 +287,25 @@ process_mode = 3
 stream = ExtResource("10_pqxsv")
 volume_db = 4.0
 
+[node name="UnlockLabel" type="Label" parent="."]
+offset_left = 13.0
+offset_top = 488.0
+offset_right = 453.0
+offset_bottom = 711.0
+theme_override_colors/font_color = Color(0.980392, 0.901961, 0.113725, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_colors/font_outline_color = Color(0.0784314, 0.309804, 1, 1)
+theme_override_constants/shadow_offset_x = 4
+theme_override_constants/shadow_offset_y = 4
+theme_override_constants/outline_size = 6
+theme_override_fonts/font = ExtResource("7_rf70r")
+theme_override_font_sizes/font_size = 50
+text = "  FILL THE BAR
+ TO 
+UNLOCK 
+TREASURE"
+horizontal_alignment = 1
+
 [connection signal="timeout" from="Rocks/RockTimer" to="." method="_on_rock_timer_timeout"]
 [connection signal="timeout" from="JewelSpawner/SpawnTimer" to="JewelSpawner" method="_on_spawn_timer_timeout"]
 
