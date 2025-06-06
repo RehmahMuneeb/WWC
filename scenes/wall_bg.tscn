@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://be3ml7efg7568"]
+[gd_scene load_steps=11 format=3 uid="uid://be3ml7efg7568"]
 
 [ext_resource type="Script" path="res://scenes/Background.gd" id="1_5afwl"]
 [ext_resource type="Shader" path="res://scenes/wall_bg.gdshader" id="1_lt5r1"]
@@ -8,6 +8,7 @@
 [ext_resource type="Texture2D" uid="uid://nuj2a5n2fvn4" path="res://assets/Ice Wallpaper 2.png" id="5_av1f8"]
 [ext_resource type="FontFile" uid="uid://b2clys7lbyd3t" path="res://scenes/Kid Games.ttf" id="5_b7862"]
 [ext_resource type="Texture2D" uid="uid://pbk1y8agfh5" path="res://assets/796.jpg" id="8_h5esd"]
+[ext_resource type="AudioStream" uid="uid://b3ag5y7cfsilm" path="res://beep-warning-6387.mp3" id="9_ahbux"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_c1xl2"]
 shader = ExtResource("1_lt5r1")
@@ -103,3 +104,7 @@ position = Vector2(238.5, 553.5)
 scale = Vector2(7.0625, 16.8625)
 texture = ExtResource("8_h5esd")
 texture_scale = 0.01
+
+[node name="WarningSFX" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("9_ahbux")
+volume_db = 2.0

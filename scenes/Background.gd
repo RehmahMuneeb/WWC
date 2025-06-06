@@ -5,6 +5,7 @@ extends Node2D
 @onready var ice_bg = $WallImg5
 @onready var warning_label = $WarningLabel
 @onready var jewel_spawner = $"../JewelSpawner"
+@onready var warning_sound = $WarningSFX  # Add an AudioStreamPlayer node named "WarningSound" to your scene
 
 var main_script: Node
 var score = 0
@@ -110,6 +111,10 @@ func _set_background_zone(zone: int):
 	ice_bg.visible = (zone == 2)
 
 func show_warning(text: String):
+	# Play warning sound
+	warning_sound.play()
+	
+	# Show warning label with animation
 	warning_label.text = text
 	warning_label.visible = true
 	warning_label.modulate.a = 0.0
