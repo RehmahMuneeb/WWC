@@ -57,12 +57,17 @@ func _process(delta: float) -> void:
 func _on_body_entered(body: Node2D) -> void:
 	if body.is_in_group("bucket"):
 		print("Rock collided with bucket! Triggering game over...")
-		# Get reference to main game controller
+
 		var main = get_tree().root.get_node("Level")
 		if main:
+			var sound_player = main.get_node("CollisionSoundPlayer")
+			if sound_player:
+				sound_player.play()
+			else:
+				printerr("CollisionSoundPlayer node not found in main scene!")
+			
 			main.show_game_over()
 		else:
 			printerr("Main game controller not found!")
-		
-		# Remove the rock from the scene
+
 		queue_free()

@@ -1,4 +1,4 @@
-[gd_scene load_steps=23 format=3 uid="uid://btndkc1nmjdx0"]
+[gd_scene load_steps=24 format=3 uid="uid://btndkc1nmjdx0"]
 
 [ext_resource type="Script" path="res://scripts/level.gd" id="1_24m71"]
 [ext_resource type="PackedScene" uid="uid://be3ml7efg7568" path="res://scenes/wall_bg.tscn" id="1_frcah"]
@@ -9,6 +9,7 @@
 [ext_resource type="Texture2D" uid="uid://cbjv1p37myelk" path="res://scenes/gem (12).png" id="7_r4e1s"]
 [ext_resource type="FontFile" uid="uid://b2clys7lbyd3t" path="res://scenes/Kid Games.ttf" id="7_rf70r"]
 [ext_resource type="PackedScene" uid="uid://37evxehmwk7y" path="res://game_over_panel.tscn" id="8_ufjks"]
+[ext_resource type="AudioStream" uid="uid://3kn3hrhudhaf" path="res://metal-hit-12-193278.mp3" id="10_pqxsv"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_dsm1j"]
 radius = 49.0
@@ -280,6 +281,11 @@ UNLOCKED"
 horizontal_alignment = 1
 
 [node name="GameOverPanel" parent="." instance=ExtResource("8_ufjks")]
+
+[node name="CollisionSoundPlayer" type="AudioStreamPlayer2D" parent="."]
+process_mode = 3
+stream = ExtResource("10_pqxsv")
+volume_db = 4.0
 
 [connection signal="timeout" from="Rocks/RockTimer" to="." method="_on_rock_timer_timeout"]
 [connection signal="timeout" from="JewelSpawner/SpawnTimer" to="JewelSpawner" method="_on_spawn_timer_timeout"]
