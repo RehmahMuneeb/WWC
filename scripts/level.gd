@@ -43,6 +43,8 @@ var already_triggered = false
 var unlock_label_shown = false
 
 func _ready():
+	
+	
 	reset_game_state()
 	randomize_zones()
 	setup_game_over_panel()
@@ -310,3 +312,4 @@ func update_jewel_spawn(depth: int):
 	else:
 		jewel_spawner.min_spawn_interval = 0.5
 		jewel_spawner.max_spawn_interval = 2.0
+		

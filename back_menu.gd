@@ -59,7 +59,7 @@ func _input(event):
 
 func animate_gems_with_float_motion() -> void:
 	animation_running = true
-	var score_per_gem := 10
+	var score_per_gem := 1000
 	var gem_textures = Global.get_collected_gems_textures()
 
 	for gem_texture in gem_textures:

@@ -19,6 +19,7 @@ config/icon="res://jewwl1.svg"
 
 Global="*res://Global.gd"
 MusicManager="*res://music_manager.tscn"
+AdController="*res://scripts/AdController.gd"
 
 [display]
 
@@ -26,6 +27,10 @@ window/size/viewport_width=480
 window/size/viewport_height=854
 window/stretch/mode="canvas_items"
 window/handheld/orientation=1
+
+[editor_plugins]
+
+enabled=PackedStringArray("res://addons/admob/plugin.cfg")
 
 [global_group]
 
@@ -35,3 +40,4 @@ black_overlays=""
 
 textures/canvas_textures/default_texture_repeat=1
 renderer/rendering_method="mobile"
+textures/vram_compression/import_etc2_astc=true
