@@ -1,5 +1,7 @@
 extends Node2D
 
+
+
 # Game Objects
 var rock_scene: PackedScene = load("res://scenes/rock.tscn")
 var normal_texture = preload("res://assets/rock.png")
@@ -43,7 +45,6 @@ var already_triggered = false
 var unlock_label_shown = false
 
 func _ready():
-
 	AdController.initialize_banner()  # Will auto-show
 	
 	reset_game_state()
@@ -132,13 +133,48 @@ func show_game_over():
 	rise_again_button.grab_focus()
 
 func _on_rise_again_pressed():
-	print("Rise Again pressed - continuing game")
-	game_over_panel.visible = false
-	get_tree().paused = false
-	game_active = true
+	print("Rise Again pressed - attempting to show rewarded ad")
+	
+	# Disable buttons while ad is loading/showing
+	rise_again_button.disabled = true
+	give_up_button.disabled = true
+	
+	# Show rewarded ad with callbacks
+	AdController.show_rewarded_ad(
+		func(): 
+			# Reward callback - player gets to continue
+			print("Reward granted - continuing game")
+			game_over_panel.visible = false
+			get_tree().paused = false
+			game_active = true
+			player.reset_bucket()  # Reset player state
+			
+			# Re-enable buttons for next time
+			rise_again_button.disabled = false
+			give_up_button.disabled = false,
+			
+		func(): 
+			# Ad failed callback
+			print("Rewarded ad failed - enabling buttons")
+			# Re-enable buttons so player can try again or give up
+			rise_again_button.disabled = false
+			give_up_button.disabled = false
+	)
 
 func _on_give_up_pressed():
-	print("Give Up pressed - returning to menu")
+	print("Give Up pressed - showing interstitial before returning to menu")
+	
+	# Disable buttons to prevent multiple presses
+	rise_again_button.disabled = true
+	give_up_button.disabled = true
+	
+	# Show interstitial ad
+	AdController.show_interstitial_ad()
+	
+	# Add small delay before scene change to ensure ad is shown properly
+	await get_tree().create_timer(0.5).timeout
+	
+	# After showing ad (or if no ad available), proceed to menu
 	get_tree().paused = false
 	rise_again_button.process_mode = Node.PROCESS_MODE_INHERIT
 	give_up_button.process_mode = Node.PROCESS_MODE_INHERIT
@@ -313,4 +349,3 @@ func update_jewel_spawn(depth: int):
 	else:
 		jewel_spawner.min_spawn_interval = 0.5
 		jewel_spawner.max_spawn_interval = 2.0
-		
