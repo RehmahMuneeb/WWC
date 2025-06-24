@@ -43,7 +43,8 @@ var already_triggered = false
 var unlock_label_shown = false
 
 func _ready():
-	
+
+	AdController.initialize_banner()  # Will auto-show
 	
 	reset_game_state()
 	randomize_zones()
