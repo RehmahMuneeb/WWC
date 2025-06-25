@@ -1,126 +1,145 @@
 extends Node
-# Ad Controller Singleton - Handles all ad types
 
-# Banner Ad Variables
-var ad_view : AdView
-var ad_listener := AdListener.new()
-var ad_position := AdPosition.Values.BOTTOM  # Default position
+# Signals
+signal banner_loaded
+signal banner_failed(error: String)
+signal interstitial_loaded
+signal interstitial_failed(error: String)
+signal interstitial_closed
+signal rewarded_loaded
+signal rewarded_failed(error: String)
+signal reward_earned(amount: int, type: String)
+signal rewarded_closed
 
-# Interstitial Ad Variables
-var interstitial_ad : InterstitialAd
-var interstitial_ad_load_callback := InterstitialAdLoadCallback.new()
-var interstitial_full_screen_content_callback := FullScreenContentCallback.new()
+# Configuration - REPLACE WITH YOUR ACTUAL AD UNIT IDs
+const ANDROID_AD_UNITS = {
+	"banner": "ca-app-pub-3940256099942544/6300978111", # Test ID
+	"interstitial": "ca-app-pub-3940256099942544/1033173712", # Test ID
+	"rewarded": "ca-app-pub-3940256099942544/5224354917" # Test ID
+}
 
-# Rewarded Ad Variables
-var rewarded_ad : RewardedAd
-var rewarded_ad_load_callback := RewardedAdLoadCallback.new()
-var rewarded_full_screen_content_callback := FullScreenContentCallback.new()
+# Ad References
+var _banner_ad: AdView
+var _interstitial_ad: InterstitialAd
+var _rewarded_ad: RewardedAd
 
-# Test Ad Unit IDs (Replace with your real ones before publishing)
-const BANNER_AD_ID = "ca-app-pub-3940256099942544/2934735716"  # Test banner ID
-const INTERSTITIAL_AD_ID = "ca-app-pub-3940256099942544/1033173712"  # Test interstitial ID
-const REWARDED_AD_ID = "ca-app-pub-3940256099942544/5224354917"  # Test rewarded ID
+# Callbacks
+var _banner_listener := AdListener.new()
+var _interstitial_callback := InterstitialAdLoadCallback.new()
+var _rewarded_callback := RewardedAdLoadCallback.new()
+var _fullscreen_callback := FullScreenContentCallback.new()
+var _reward_listener := OnUserEarnedRewardListener.new()
 
-func _ready():
-	if not Engine.has_singleton("AdMob"):
-		push_error("AdMob plugin not loaded! Check Android/iOS export settings.")
-		return
+func _ready() -> void:
+	# Initialize MobileAds SDK
+	MobileAds.initialize()
 	
-	setup_ad_listener()
-	initialize_banner()
-	setup_interstitial_callbacks()
-	setup_rewarded_callbacks()
-	load_interstitial_ad()
-	load_rewarded_ad()
+	# Setup callbacks
+	_setup_banner_listener()
+	_setup_interstitial_callbacks()
+	_setup_rewarded_callbacks()
 
-# Banner Ad Functions
-func setup_ad_listener():
-	ad_listener.on_ad_loaded = func():
-		print("Banner ad loaded")
-		ad_view.show()  # Auto-show when loaded
-		
-	ad_listener.on_ad_failed_to_load = func(error : LoadAdError):
-		push_error("Banner ad failed: ", error.message)
-		# Retry after 30 seconds
-		await get_tree().create_timer(30.0).timeout
-		ad_view.load_ad(AdRequest.new())
+#region Initialization
+func _setup_banner_listener() -> void:
+	_banner_listener.on_ad_loaded = func() -> void:
+		banner_loaded.emit()
+	_banner_listener.on_ad_failed_to_load = func(error: LoadAdError) -> void:
+		banner_failed.emit(error.message)
 
-func initialize_banner():
-	var ad_size = AdSize.get_current_orientation_anchored_adaptive_banner_ad_size(AdSize.FULL_WIDTH)
-	ad_view = AdView.new(BANNER_AD_ID, ad_size, ad_position)
-	ad_view.ad_listener = ad_listener
+func _setup_interstitial_callbacks() -> void:
+	_interstitial_callback.on_ad_loaded = func(ad: InterstitialAd) -> void:
+		_interstitial_ad = ad
+		_interstitial_ad.full_screen_content_callback = _fullscreen_callback
+		interstitial_loaded.emit()
+	_interstitial_callback.on_ad_failed_to_load = func(error: LoadAdError) -> void:
+		interstitial_failed.emit(error.message)
+
+func _setup_rewarded_callbacks() -> void:
+	_rewarded_callback.on_ad_loaded = func(ad: RewardedAd) -> void:
+		_rewarded_ad = ad
+		_rewarded_ad.full_screen_content_callback = _fullscreen_callback
+		rewarded_loaded.emit()
+	_rewarded_callback.on_ad_failed_to_load = func(error: LoadAdError) -> void:
+		rewarded_failed.emit(error.message)
 	
-	var request := AdRequest.new()
-	ad_view.load_ad(request)
-
-# Interstitial Ad Functions
-func setup_interstitial_callbacks():
-	interstitial_ad_load_callback.on_ad_failed_to_load = func(adError : LoadAdError) -> void:
-		print("Interstitial failed to load: ", adError.message)
-		# Retry after 30 seconds
-		await get_tree().create_timer(30.0).timeout
-		load_interstitial_ad()
+	_fullscreen_callback.on_ad_dismissed_full_screen_content = func() -> void:
+		if _interstitial_ad:
+			interstitial_closed.emit()
+			load_interstitial()
+		elif _rewarded_ad:
+			rewarded_closed.emit()
+			load_rewarded()
 	
-	interstitial_ad_load_callback.on_ad_loaded = func(new_interstitial_ad : InterstitialAd) -> void:
-		print("Interstitial ad loaded")
-		interstitial_ad = new_interstitial_ad
-		interstitial_ad.full_screen_content_callback = interstitial_full_screen_content_callback
+	_reward_listener.on_user_earned_reward = func(reward: RewardedItem) -> void:
+		reward_earned.emit(reward.amount, reward.type)
+#endregion
+
+#region Banner Ads
+func load_banner(position: int = AdPosition.Values.BOTTOM) -> void:
+	if _banner_ad:
+		_banner_ad.destroy()
 	
-	interstitial_full_screen_content_callback.on_ad_dismissed_full_screen_content = func() -> void:
-		print("Interstitial ad dismissed")
-		load_interstitial_ad()  # Pre-load next interstitial
+	_banner_ad = AdView.new(ANDROID_AD_UNITS["banner"], AdSize.BANNER, position)
+	_banner_ad.ad_listener = _banner_listener
+	_banner_ad.load_ad(AdRequest.new())
 
-func load_interstitial_ad():
-	InterstitialAdLoader.new().load(INTERSTITIAL_AD_ID, AdRequest.new(), interstitial_ad_load_callback)
+func show_banner() -> void:
+	if _banner_ad:
+		_banner_ad.show()
 
-func show_interstitial_ad():
-	if interstitial_ad:
-		interstitial_ad.show()
+func hide_banner() -> void:
+	if _banner_ad:
+		_banner_ad.hide()
+
+func destroy_banner() -> void:
+	if _banner_ad:
+		_banner_ad.destroy()
+		_banner_ad = null
+#endregion
+
+#region Interstitial Ads
+func load_interstitial() -> void:
+	if _interstitial_ad:
+		_interstitial_ad.destroy()
+	
+	InterstitialAdLoader.new().load(
+		ANDROID_AD_UNITS["interstitial"],
+		AdRequest.new(),
+		_interstitial_callback
+	)
+
+func show_interstitial() -> void:
+	if _interstitial_ad:
+		_interstitial_ad.show()
 	else:
-		print("No interstitial ad loaded yet")
-		load_interstitial_ad()
+		interstitial_failed.emit("No ad loaded")
+		load_interstitial()
+#endregion
 
-# Rewarded Ad Functions
-func setup_rewarded_callbacks():
-	rewarded_ad_load_callback.on_ad_failed_to_load = func(adError : LoadAdError) -> void:
-		print("Rewarded failed to load: ", adError.message)
-		# Retry after 30 seconds
-		await get_tree().create_timer(30.0).timeout
-		load_rewarded_ad()
+#region Rewarded Ads
+func load_rewarded() -> void:
+	if _rewarded_ad:
+		_rewarded_ad.destroy()
 	
-	rewarded_ad_load_callback.on_ad_loaded = func(new_rewarded_ad : RewardedAd) -> void:
-		print("Rewarded ad loaded")
-		rewarded_ad = new_rewarded_ad
-		rewarded_ad.full_screen_content_callback = rewarded_full_screen_content_callback
-	
-	rewarded_full_screen_content_callback.on_ad_dismissed_full_screen_content = func() -> void:
-		print("Rewarded ad dismissed")
-		load_rewarded_ad()  # Pre-load next rewarded ad
+	RewardedAdLoader.new().load(
+		ANDROID_AD_UNITS["rewarded"],
+		AdRequest.new(),
+		_rewarded_callback
+	)
 
-func load_rewarded_ad():
-	RewardedAdLoader.new().load(REWARDED_AD_ID, AdRequest.new(), rewarded_ad_load_callback)
-
-func show_rewarded_ad(on_user_earned_reward_callback: Callable, on_ad_failed_callback: Callable = func(): pass):
-	if rewarded_ad:
-		# Set up the user earned reward callback
-		rewarded_ad_load_callback.on_user_earned_reward = func(rewarded_item : RewardedItem) -> void:
-			print("Reward earned: ", rewarded_item.type, " amount: ", rewarded_item.amount)
-			on_user_earned_reward_callback.call()
-		
-		# Set up ad failed to show callback
-		rewarded_full_screen_content_callback.on_ad_failed_to_show_full_screen_content = func(ad_error : AdError) -> void:
-			print("Rewarded ad failed to show: ", ad_error.message)
-			on_ad_failed_callback.call()
-		
-		rewarded_ad.show()
+func show_rewarded() -> void:
+	if _rewarded_ad:
+		_rewarded_ad.show(_reward_listener)
 	else:
-		print("No rewarded ad loaded yet")
-		on_ad_failed_callback.call()
-		load_rewarded_ad()
+		rewarded_failed.emit("No ad loaded")
+		load_rewarded()
+#endregion
 
-# Handle app pause/resume
-func _notification(what):
-	if what == NOTIFICATION_APPLICATION_PAUSED:
-		if ad_view: ad_view.pause()
-	elif what == NOTIFICATION_APPLICATION_RESUMED:
-		if ad_view: ad_view.resume()
+func _notification(what: int) -> void:
+	# Clean up when exiting
+	if what == NOTIFICATION_PREDELETE:
+		destroy_banner()
+		if _interstitial_ad:
+			_interstitial_ad.destroy()
+		if _rewarded_ad:
+			_rewarded_ad.destroy() 
