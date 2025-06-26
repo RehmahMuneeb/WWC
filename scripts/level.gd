@@ -45,6 +45,7 @@ var already_triggered = false
 var unlock_label_shown = false
 
 func _ready():
+	AdController.load_banner() 
 	AdController.show_banner()  # Will auto-show
 	AdController.load_interstitial()
 	AdController.load_rewarded()
@@ -141,8 +142,27 @@ func _on_rise_again_pressed():
 	give_up_button.disabled = true
 	
 	# Show rewarded ad with callbacks
+	AdController.show_rewarded(
+		func(): 
+			# Reward callback - player gets to continue
+			print("Reward granted - continuing game")
+			game_over_panel.visible = false
+			get_tree().paused = false
+			game_active = true
+			player.reset_bucket()  # Reset player state
+			
+			# Re-enable buttons for next time
+			rise_again_button.disabled = false
+			give_up_button.disabled = false,
+			
+		func(): 
+			# Ad failed callback
+			print("Rewarded ad failed - enabling buttons")
+			# Re-enable buttons so player can try again or give up
+			rise_again_button.disabled = false
+			give_up_button.disabled = false
+	)
 
-	
 func _on_give_up_pressed():
 	print("Give Up pressed - showing interstitial before returning to menu")
 	
