@@ -1,6 +1,6 @@
 extends Node2D
 
-
+var waiting_for_reward = false
 
 # Game Objects
 var rock_scene: PackedScene = load("res://scenes/rock.tscn")
@@ -49,6 +49,9 @@ func _ready():
 	AdController.show_banner()  # Will auto-show
 	AdController.load_interstitial()
 	AdController.load_rewarded()
+	AdController.reward_earned.connect(_on_reward_earned)
+	AdController.rewarded_failed.connect(_on_rewarded_failed)
+	AdController.rewarded_closed.connect(_on_rewarded_closed)
 	reset_game_state()
 	randomize_zones()
 	setup_game_over_panel()
@@ -137,31 +140,32 @@ func show_game_over():
 func _on_rise_again_pressed():
 	print("Rise Again pressed - attempting to show rewarded ad")
 	
-	# Disable buttons while ad is loading/showing
 	rise_again_button.disabled = true
 	give_up_button.disabled = true
+	waiting_for_reward = true
 	
-	# Show rewarded ad with callbacks
-	AdController.show_rewarded(
-		func(): 
-			# Reward callback - player gets to continue
-			print("Reward granted - continuing game")
-			game_over_panel.visible = false
-			get_tree().paused = false
-			game_active = true
-			player.reset_bucket()  # Reset player state
-			
-			# Re-enable buttons for next time
-			rise_again_button.disabled = false
-			give_up_button.disabled = false,
-			
-		func(): 
-			# Ad failed callback
-			print("Rewarded ad failed - enabling buttons")
-			# Re-enable buttons so player can try again or give up
-			rise_again_button.disabled = false
-			give_up_button.disabled = false
-	)
+	AdController.show_rewarded()
+
+func _on_reward_earned(amount: int, ad_type: String):
+	print("Reward earned: ", amount, ad_type)
+	if waiting_for_reward:
+		game_over_panel.visible = false
+		get_tree().paused = false
+		game_active = true
+		player.reset_bucket()
+
+func _on_rewarded_failed(error: String):
+	print("Rewarded ad failed: ", error)
+	rise_again_button.disabled = false
+	give_up_button.disabled = false
+	waiting_for_reward = false
+
+func _on_rewarded_closed():
+	print("Rewarded ad closed")
+	rise_again_button.disabled = false
+	give_up_button.disabled = false
+	waiting_for_reward = false
+
 
 func _on_give_up_pressed():
 	print("Give Up pressed - showing interstitial before returning to menu")
