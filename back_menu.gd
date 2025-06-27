@@ -11,7 +11,8 @@ extends Control
 @onready var reward_label: Label = reward_panel.get_node("RewardLabel")
 @onready var reward_button: Button = reward_panel.get_node("ClaimButton")
 @onready var reward_icon: TextureRect = reward_panel.get_node("GemIcon")
-@onready var gem_sound_player: AudioStreamPlayer2D = $GemSoundPlayer  # SOUND PLAYER
+@onready var gem_sound_player: AudioStreamPlayer2D = $GemSoundPlayer
+@onready var watch_ad_button: Button = $"AD BAR2/watchadbutton"
 
 # Constants and variables
 const BASE_COINS_TO_UNLOCK := 1000
@@ -36,6 +37,7 @@ func _ready():
 	update_chest_ui()
 	reward_panel.hide()
 	reward_button.pressed.connect(_on_claim_reward_pressed)
+	watch_ad_button.pressed.connect(_on_watchadbutton_pressed)
 	animate_gems_with_float_motion()
 
 func initialize_chest_progression():
@@ -50,6 +52,19 @@ func update_chest_ui():
 	chest_progress_bar.max_value = current_target
 	chest_progress_bar.value = Global.score
 	progress_label.text = "%d / %d" % [Global.score, current_target]
+
+func update_chest_progress():
+	var start_value = chest_progress_bar.value
+	var end_value = min(Global.score, current_target)
+	Global.current_chest_progress = end_value
+
+	var tween = create_tween()
+	tween.tween_property(chest_progress_bar, "value", end_value, 0.5)
+	tween.tween_callback(update_chest_ui)
+
+	if not chest_unlocked and Global.score >= current_target:
+		chest_unlocked = true
+		unlock_chest()
 
 func _input(event):
 	if not speed_increased and ((event is InputEventScreenTouch and event.pressed) or 
@@ -99,7 +114,6 @@ func animate_gems_with_float_motion() -> void:
 			elapsed += get_process_delta_time()
 
 		gem.queue_free()
-		# Play gem sound
 		if gem_sound_player:
 			gem_sound_player.play()
 
@@ -108,41 +122,20 @@ func animate_gems_with_float_motion() -> void:
 		Global.current_chest_progress = Global.score
 		total_multiplied_score += score_per_gem * 3
 		gem_score_label.text = "+%d" % current_session_score
-		multiply_label.text = "X3: %d" % total_multiplied_score
+		multiply_label.text = "x3: %d" % total_multiplied_score
 		update_chest_progress()
 
 		if not skip_animation:
 			show_score_popup("+%d" % score_per_gem, chest_icon.get_global_position())
 			await get_tree().create_timer(0.2 * animation_speed).timeout
 
+	if skip_animation:
+		total_multiplied_score = current_session_score * 3
+		multiply_label.text = "x3: %d" % total_multiplied_score
+
 	Global.collected_gems = []
 	Global.save_game()
 	animation_running = false
-
-func update_chest_progress():
-	Global.score = min(Global.score, current_target)
-	Global.current_chest_progress = Global.score
-	update_chest_ui()
-
-	if not chest_unlocked and Global.score >= current_target:
-		chest_unlocked = true
-		unlock_chest()
-
-func unlock_chest():
-	print("Chest %d Unlocked!" % Global.current_chest_level)
-	show_reward_panel()
-	Global.score = 0
-	Global.current_chest_progress = 0
-
-	if Global.current_chest_level < 30:
-		Global.current_chest_level += 1
-		current_target = Global.chest_targets[Global.current_chest_level]
-	else:
-		print("All chests unlocked!")
-
-	update_chest_ui()
-	Global.save_game()
-	chest_unlocked = false
 
 func show_score_popup(text: String, position: Vector2) -> void:
 	var label = Label.new()
@@ -181,6 +174,45 @@ func _on_claim_reward_pressed():
 	if is_exiting or reward_panel == null:
 		return
 	reward_panel.hide()
+
+func _on_watchadbutton_pressed() -> void:
+	if animation_running:
+		skip_animation = true
+		await get_tree().process_frame
+
+	AdController.show_rewarded()
+	await AdController.rewarded_closed
+
+	if AdController.last_reward_successful:
+		var extra_score = total_multiplied_score 
+		Global.score += extra_score
+		Global.current_chest_progress = Global.score
+		update_chest_progress()
+
+		multiply_label.text = "x3: 0"
+		gem_score_label.text = "+%d" % Global.current_chest_progress
+		show_score_popup("+%d" % extra_score, chest_icon.get_global_position())
+
+		total_multiplied_score = 0
+		print("Rewarded ad watched. 2x extra coins added.")
+	else:
+		print("Ad was not completed. No reward given.")
+
+func unlock_chest():
+	print("Chest %d Unlocked!" % Global.current_chest_level)
+	show_reward_panel()
+	Global.score = 0
+	Global.current_chest_progress = 0
+
+	if Global.current_chest_level < 30:
+		Global.current_chest_level += 1
+		current_target = Global.chest_targets[Global.current_chest_level]
+	else:
+		print("All chests unlocked!")
+
+	update_chest_ui()
+	Global.save_game()
+	chest_unlocked = false
 
 func get_random_rare_gem() -> Texture:
 	var dir = DirAccess.open("res://raregems")

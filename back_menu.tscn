@@ -228,6 +228,7 @@ layout_mode = 0
 offset_top = 351.0
 offset_right = 479.0
 offset_bottom = 481.0
+mouse_filter = 1
 theme_override_styles/panel = SubResource("StyleBoxFlat_mymcd")
 
 [node name="TextureRect" type="TextureRect" parent="AD BAR2"]
@@ -251,6 +252,12 @@ theme_override_constants/outline_size = 9
 theme_override_fonts/font = ExtResource("2_8a7sk")
 theme_override_font_sizes/font_size = 59
 text = "3000000"
+
+[node name="watchadbutton" type="Button" parent="AD BAR2"]
+show_behind_parent = true
+layout_mode = 0
+offset_right = 475.0
+offset_bottom = 124.0
 
 [node name="GemContainer" type="VBoxContainer" parent="."]
 layout_mode = 0
@@ -309,4 +316,5 @@ stream = ExtResource("8_v7sre")
 
 [connection signal="pressed" from="PlayAgain" to="." method="_on_play_again_pressed"]
 [connection signal="pressed" from="MainMenu" to="." method="_on_main_menu_pressed"]
+[connection signal="pressed" from="AD BAR2/watchadbutton" to="." method="_on_watchadbutton_pressed"]
 [connection signal="pressed" from="RewardPanel/ClaimButton" to="." method="_on_reward_button_pressed"]
