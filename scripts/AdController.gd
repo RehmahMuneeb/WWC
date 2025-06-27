@@ -22,6 +22,8 @@ const ANDROID_AD_UNITS = {
 var _banner_ad: AdView
 var _interstitial_ad: InterstitialAd
 var _rewarded_ad: RewardedAd
+var give_up_count: int = 0
+var game_over_count: int = 0
 
 # Callbacks
 var _banner_listener := AdListener.new()

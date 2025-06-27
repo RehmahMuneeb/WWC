@@ -1,7 +1,7 @@
 extends Node2D
 
 var waiting_for_reward = false
-var game_over_count: int = 0
+
 
 
 # Game Objects
@@ -131,14 +131,15 @@ func reset_game_state():
 	get_tree().paused = false
 
 func show_game_over():
-	game_over_count += 1
+	AdController.game_over_count += 1
 	game_active = false
 	game_over_panel.visible = true
 	
 	# Show interstitial ad automatically every 3rd game over
-	if game_over_count % 3 == 0:
+	if AdController.game_over_count % 3 == 0:
 		print("Showing interstitial ad on every 3rd game over")
 		AdController.show_interstitial()
+		await get_tree().create_timer(0.10).timeout
 		await AdController.interstitial_closed
 		
 	get_tree().paused = true
@@ -181,23 +182,16 @@ func _on_rewarded_closed():
 
 
 func _on_give_up_pressed():
-	print("Give Up pressed - showing interstitial before returning to menu")
-	
-	# Disable buttons to prevent multiple presses
-	rise_again_button.disabled = true
-	give_up_button.disabled = true
-	
-	# Show interstitial ad
-	AdController.show_interstitial()
-	
-	# Add small delay before scene change to ensure ad is shown properly
-	await get_tree().create_timer(0.5).timeout
-	
-	# After showing ad (or if no ad available), proceed to menu
+	AdController.give_up_count += 1
+
+	if AdController.give_up_count % 3 == 0:
+		print("3rd give up — showing interstitial")
+		AdController.show_interstitial()
+		await AdController.interstitial_closed
+
 	get_tree().paused = false
-	rise_again_button.process_mode = Node.PROCESS_MODE_INHERIT
-	give_up_button.process_mode = Node.PROCESS_MODE_INHERIT
 	get_tree().change_scene_to_file("res://back_menu.tscn")
+
 
 func _on_player_hit():
 	show_game_over()
