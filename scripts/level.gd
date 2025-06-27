@@ -153,6 +153,9 @@ func _on_reward_earned(amount: int, ad_type: String):
 		get_tree().paused = false
 		game_active = true
 		player.reset_bucket()
+		waiting_for_reward = false  # Also important!
+
+	AdController.load_rewarded()  # ✅ Load new ad for next use
 
 func _on_rewarded_failed(error: String):
 	print("Rewarded ad failed: ", error)
@@ -165,6 +168,7 @@ func _on_rewarded_closed():
 	rise_again_button.disabled = false
 	give_up_button.disabled = false
 	waiting_for_reward = false
+	AdController.load_rewarded()  
 
 
 func _on_give_up_pressed():
