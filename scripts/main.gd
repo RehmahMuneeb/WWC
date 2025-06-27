@@ -9,6 +9,8 @@ extends Control
 @onready var well_depth_label = $"infopanel/Well Depth/DepthLabel"
 
 func _ready() -> void:
+	AdController.load_banner() 
+	AdController.show_banner()  # Will auto-show
 	update_ui()
 	capacity_button.pressed.connect(upgrade_capacity)
 	well_button.pressed.connect(upgrade_well_depth)

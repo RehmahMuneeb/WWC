@@ -47,8 +47,7 @@ var already_triggered = false
 var unlock_label_shown = false
 
 func _ready():
-	AdController.load_banner() 
-	AdController.show_banner()  # Will auto-show
+
 	AdController.load_interstitial()
 	AdController.load_rewarded()
 	AdController.reward_earned.connect(_on_reward_earned)
