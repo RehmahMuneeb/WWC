@@ -80,10 +80,16 @@ func _setup_rewarded_callbacks() -> void:
 func load_banner(position: int = AdPosition.Values.BOTTOM) -> void:
 	if _banner_ad:
 		_banner_ad.destroy()
-	
-	_banner_ad = AdView.new(ANDROID_AD_UNITS["banner"], AdSize.BANNER, position)
+
+	# ✅ Use anchored adaptive banner
+	var ad_size = AdSize.get_current_orientation_anchored_adaptive_banner_ad_size(AdSize.FULL_WIDTH)
+
+	_banner_ad = AdView.new(ANDROID_AD_UNITS["banner"], ad_size, position)
 	_banner_ad.ad_listener = _banner_listener
 	_banner_ad.load_ad(AdRequest.new())
+
+
+
 
 func show_banner() -> void:
 	if _banner_ad:
