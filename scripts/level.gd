@@ -1,6 +1,8 @@
 extends Node2D
 
 var waiting_for_reward = false
+var game_over_count: int = 0
+
 
 # Game Objects
 var rock_scene: PackedScene = load("res://scenes/rock.tscn")
@@ -129,10 +131,17 @@ func reset_game_state():
 	get_tree().paused = false
 
 func show_game_over():
+	game_over_count += 1
 	game_active = false
 	game_over_panel.visible = true
+	
+	# Show interstitial ad automatically every 3rd game over
+	if game_over_count % 3 == 0:
+		print("Showing interstitial ad on every 3rd game over")
+		AdController.show_interstitial()
+		await AdController.interstitial_closed
+		
 	get_tree().paused = true
-
 	rise_again_button.disabled = false
 	give_up_button.disabled = false
 	rise_again_button.grab_focus()
