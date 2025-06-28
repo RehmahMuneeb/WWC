@@ -31,6 +31,8 @@ func _ready() -> void:
 	# Randomize the horizontal speed within the specified range
 	horizontal_speed = randf_range(min_horizontal_speed, max_horizontal_speed)
 
+	if Global.jewel_textures.is_empty():
+		Global.jewel_textures = jewel_textures.duplicate()
 	# Add the jewel to the "jewel" group
 	add_to_group("jewel")
 
