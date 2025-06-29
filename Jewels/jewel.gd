@@ -15,12 +15,19 @@ var horizontal_direction: int = 1
 
 # Array to hold jewel textures
 @export var jewel_textures: Array[Texture2D] = []
-
+@export var jewel_values: Array[int] = []
 # Gameplay screen boundaries (adjust these to match your gameplay area)
 @export var gameplay_left_boundary: float = 0
 @export var gameplay_right_boundary: float = 500  # Example: Set this to your gameplay screen width
 
 func _ready() -> void:
+	Global.jewel_textures = jewel_textures
+	Global.jewel_values = jewel_values
+
+
+	if Global.jewel_textures.is_empty():
+		Global.jewel_textures = jewel_textures.duplicate()
+
 	# Randomly assign a jewel texture
 	if jewel_textures.size() > 0:
 		$Sprite2D.texture = jewel_textures[randi() % jewel_textures.size()]
@@ -31,8 +38,7 @@ func _ready() -> void:
 	# Randomize the horizontal speed within the specified range
 	horizontal_speed = randf_range(min_horizontal_speed, max_horizontal_speed)
 
-	if Global.jewel_textures.is_empty():
-		Global.jewel_textures = jewel_textures.duplicate()
+
 	# Add the jewel to the "jewel" group
 	add_to_group("jewel")
 

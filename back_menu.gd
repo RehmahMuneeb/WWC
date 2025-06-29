@@ -13,6 +13,8 @@ extends Control
 @onready var reward_icon: TextureRect = reward_panel.get_node("GemIcon")
 @onready var gem_sound_player: AudioStreamPlayer2D = $GemSoundPlayer
 @onready var watch_ad_button: Button = $"AD BAR2/watchadbutton"
+var jewel_textures: Array[Texture2D] = []
+var jewel_values: Array[int] = []
 
 # Constants and variables
 const BASE_COINS_TO_UNLOCK := 1000
@@ -28,6 +30,9 @@ var total_multiplied_score := 0
 var is_exiting := false
 
 func _ready():
+	jewel_textures = Global.jewel_textures
+	jewel_values = Global.jewel_values
+
 	current_session_score = 0
 	is_exiting = false
 
@@ -54,7 +59,6 @@ func update_chest_ui():
 	progress_label.text = "%d / %d" % [Global.score, current_target]
 
 func update_chest_progress():
-	var start_value = chest_progress_bar.value
 	var end_value = min(Global.score, current_target)
 	Global.current_chest_progress = end_value
 
@@ -155,46 +159,6 @@ func animate_bonus_gems(count: int) -> void:
 		print("🟢 Spawning gem with texture:", gem_texture.resource_path)
 
 
-		var gem = TextureRect.new()
-		gem.texture = gem_texture
-		gem.expand = true
-		gem.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
-		gem.custom_minimum_size = Vector2(64, 64)
-		add_child(gem)
-
-		var start_pos = bucket_icon.get_global_position()
-		var end_pos = chest_icon.get_global_position()
-		gem.global_position = start_pos
-		print("Start:", start_pos, "→ End:", end_pos)
-
-		var duration := 1.0 * animation_speed
-		var elapsed := 0.0
-		var amplitude := 40
-		var frequency := 3.0
-
-		while elapsed < duration:
-			if skip_animation:
-				break
-			var t := elapsed / duration
-			var linear = start_pos.lerp(end_pos, t)
-			var offset = Vector2(0, sin(t * PI * frequency) * -amplitude)
-			gem.global_position = linear + offset
-			await get_tree().process_frame
-			elapsed += get_process_delta_time()
-
-		gem.queue_free()
-		if gem_sound_player:
-			gem_sound_player.play()
-
-		Global.score += score_per_gem
-		Global.current_chest_progress = Global.score
-		update_chest_progress()
-		show_score_popup("+%d" % score_per_gem, chest_icon.get_global_position())
-		await get_tree().create_timer(0.2 * animation_speed).timeout
-
-	Global.save_game()
-	animation_running = false
-
 func show_score_popup(text: String, position: Vector2) -> void:
 	var label = Label.new()
 	label.text = text
@@ -241,11 +205,56 @@ func _on_watchadbutton_pressed() -> void:
 
 	print("Simulating rewarded ad success...")
 	var fake_bonus_gems := 5
-	await animate_bonus_gems(fake_bonus_gems)
 
-	multiply_label.text = "x3: 0"
-	gem_score_label.text = "+%d" % Global.current_chest_progress
-	total_multiplied_score = 0
+	animation_running = true
+	var score_per_gem := 1000
+
+	for i in fake_bonus_gems:
+		var gem_texture: Texture2D = Global.jewel_textures.pick_random()
+		if gem_texture == null:
+			continue
+
+		var gem = TextureRect.new()
+		gem.texture = gem_texture
+		gem.expand = true
+		gem.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
+		gem.custom_minimum_size = Vector2(64, 64)
+		add_child(gem)
+
+		var start_pos = bucket_icon.get_global_position()
+		var end_pos = chest_icon.get_global_position()
+		gem.global_position = start_pos
+
+		var duration := 1.0 * animation_speed
+		var elapsed := 0.0
+		var amplitude := 40
+		var frequency := 3.0
+
+		while elapsed < duration:
+			var t := elapsed / duration
+			var linear = start_pos.lerp(end_pos, t)
+			var offset = Vector2(0, sin(t * PI * frequency) * -amplitude)
+			gem.global_position = linear + offset
+			await get_tree().process_frame
+			elapsed += get_process_delta_time()
+
+		gem.queue_free()
+		if gem_sound_player:
+			gem_sound_player.play()
+
+		current_session_score += score_per_gem
+		Global.score += score_per_gem
+		Global.current_chest_progress = Global.score
+		total_multiplied_score += score_per_gem * 3
+		gem_score_label.text = "+%d" % current_session_score
+		multiply_label.text = "x3: %d" % total_multiplied_score
+		update_chest_progress()
+
+		show_score_popup("+%d" % score_per_gem, chest_icon.get_global_position())
+		await get_tree().create_timer(0.2 * animation_speed).timeout
+
+	animation_running = false
+
 
 func unlock_chest():
 	print("Chest %d Unlocked!" % Global.current_chest_level)

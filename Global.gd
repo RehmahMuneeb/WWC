@@ -4,7 +4,7 @@ var current_chest_level := 1
 var current_chest_progress := 0
 var chest_targets := {}
 var jewel_textures: Array[Texture2D] = []
-# Item unlock thresholds
+var jewel_values: Array[int] = []# Item unlock thresholds
 var unlock_thresholds = {
 	"Item1": 1,
 	"Item2": 2,
