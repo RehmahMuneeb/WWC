@@ -30,6 +30,7 @@ var skip_animation := false
 var animation_running := false
 var total_multiplied_score := 0
 var is_exiting := false
+var ad_requested_during_animation := false  # Track if ad was requested during animation
 
 func _ready():
 	jewel_textures = Global.jewel_textures
@@ -82,6 +83,7 @@ func _input(event):
 
 func animate_gems_with_float_motion() -> void:
 	animation_running = true
+	watch_ad_button.disabled = true  # Disable button at start of animation
 	var score_per_gem := 1000
 	var gem_textures = Global.get_collected_gems_textures()
 	for gem_texture in gem_textures:
@@ -131,7 +133,14 @@ func animate_gems_with_float_motion() -> void:
 	if skip_animation:
 		total_multiplied_score = current_session_score * 3
 		multiply_label.text = "x3: %d" % total_multiplied_score
+	
 	animation_running = false
+	watch_ad_button.disabled = false  # Re-enable button when animation finishes
+	
+	# If ad was requested during animation, show it now
+	if ad_requested_during_animation:
+		ad_requested_during_animation = false
+		_on_watchadbutton_pressed()
 
 func show_score_popup(text: String, position: Vector2) -> void:
 	var label = Label.new()
@@ -148,6 +157,11 @@ func show_score_popup(text: String, position: Vector2) -> void:
 
 func _on_watchadbutton_pressed() -> void:
 	print("Watch Ad button pressed")
+	if animation_running:
+		# If animation is running, mark that we want to show ad after it finishes
+		ad_requested_during_animation = true
+		return
+	
 	watch_ad_button.disabled = true
 	AdController.show_rewarded()
 
@@ -171,6 +185,7 @@ func play_reward_animation() -> void:
 		return
 	print("Playing reward animation (3x bonus)")
 	animation_running = true
+	watch_ad_button.disabled = true  # Disable button during reward animation
 	var gem_textures := Global.get_collected_gems_textures()
 	var score_per_gem := 1000
 	base_gem_score_total = 0
@@ -216,6 +231,7 @@ func play_reward_animation() -> void:
 	Global.collected_gems = []
 	Global.save_game()
 	animation_running = false
+	watch_ad_button.disabled = false  # Re-enable button after reward animation
 
 func _on_claim_reward_pressed():
 	if is_exiting or reward_panel == null:
