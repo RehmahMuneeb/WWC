@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=3 uid="uid://usd6k245qee0"]
+[gd_scene load_steps=20 format=3 uid="uid://usd6k245qee0"]
 
 [ext_resource type="Script" path="res://back_menu.gd" id="1_mdwjp"]
 [ext_resource type="FontFile" uid="uid://b2clys7lbyd3t" path="res://scenes/Kid Games.ttf" id="2_8a7sk"]
@@ -13,15 +13,7 @@
 shader = ExtResource("5_1fbjo")
 shader_parameter/scroll_speed = 0.2
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_r8ppy"]
-bg_color = Color(0.188235, 0.317647, 0.494118, 1)
-border_width_right = 14
-border_width_bottom = 16
-border_color = Color(0.188235, 0.317647, 0.494118, 1)
-corner_radius_top_left = 22
-corner_radius_top_right = 22
-corner_radius_bottom_right = 33
-corner_radius_bottom_left = 22
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_u7ss3"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_34637"]
 bg_color = Color(0.121569, 0.729412, 0.901961, 1)
@@ -32,6 +24,18 @@ corner_radius_top_left = 22
 corner_radius_top_right = 22
 corner_radius_bottom_right = 33
 corner_radius_bottom_left = 22
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_r8ppy"]
+bg_color = Color(0.188235, 0.317647, 0.494118, 1)
+border_width_right = 14
+border_width_bottom = 16
+border_color = Color(0.188235, 0.317647, 0.494118, 1)
+corner_radius_top_left = 22
+corner_radius_top_right = 22
+corner_radius_bottom_right = 33
+corner_radius_bottom_left = 22
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_68py7"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_drgtl"]
 bg_color = Color(0.121569, 0.729412, 0.901961, 1)
@@ -115,7 +119,8 @@ theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
 theme_override_constants/outline_size = 10
 theme_override_fonts/font = ExtResource("2_8a7sk")
 theme_override_font_sizes/font_size = 44
-theme_override_styles/hover = SubResource("StyleBoxFlat_r8ppy")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_u7ss3")
+theme_override_styles/hover = SubResource("StyleBoxFlat_34637")
 theme_override_styles/pressed = SubResource("StyleBoxFlat_r8ppy")
 theme_override_styles/normal = SubResource("StyleBoxFlat_34637")
 text = "PLAY AGAIN"
@@ -131,6 +136,7 @@ theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
 theme_override_constants/outline_size = 11
 theme_override_fonts/font = ExtResource("2_8a7sk")
 theme_override_font_sizes/font_size = 44
+theme_override_styles/focus = SubResource("StyleBoxEmpty_68py7")
 theme_override_styles/hover = SubResource("StyleBoxFlat_r8ppy")
 theme_override_styles/pressed = SubResource("StyleBoxFlat_r8ppy")
 theme_override_styles/normal = SubResource("StyleBoxFlat_drgtl")
