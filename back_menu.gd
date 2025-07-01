@@ -297,6 +297,7 @@ func _on_play_again_pressed() -> void:
 		await get_tree().process_frame
 	Global.collected_gems = []
 	current_session_score = 0
+	AdController.game_over_count = 0
 	get_tree().change_scene_to_file("res://scenes/level.tscn")
 
 func _on_main_menu_pressed() -> void:
