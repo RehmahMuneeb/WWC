@@ -140,7 +140,7 @@ func show_game_over():
 		AdController.show_interstitial()
 		await get_tree().create_timer(0.10).timeout
 		await AdController.interstitial_closed
-		
+		get_tree().change_scene_to_file("res://back_menu.tscn")
 	get_tree().paused = true
 	rise_again_button.disabled = false
 	give_up_button.disabled = false
