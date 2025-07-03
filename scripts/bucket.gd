@@ -3,15 +3,16 @@ extends CharacterBody2D
 signal player_hit
 
 # Adjustable settings
-@export var SPEED: float = 700.0
-@export var DRAG_THRESHOLD: float = 6.0
-@export var MAX_ROTATION: float = 30.0
+@export var SPEED: float = 800.0
+@export var DRAG_THRESHOLD: float = 0.0
+@export var MAX_ROTATION: float = 35.0
 
 # State variables
 var is_dragging = false
 var drag_start_position = Vector2.ZERO
 var drag_previous_position = Vector2.ZERO
 var collected_jewels = 0
+var target_rotation := 0.0
 
 # Nodes
 @onready var jewel_container: Node2D = $JewelContainer
@@ -33,10 +34,13 @@ func _ready() -> void:
 func _physics_process(delta: float) -> void:
 	if not is_dragging:
 		velocity.x = move_toward(velocity.x, 0, SPEED * delta)
-		bucket_image.rotation_degrees = lerp(bucket_image.rotation_degrees, 0.0, 0.1)
+		target_rotation = 0.0  # Return to upright when not dragging
+
+	# Smoothly rotate the bucket toward target_rotation
+	bucket_image.rotation_degrees = lerp(bucket_image.rotation_degrees, target_rotation, 0.1)
+	jewel_container.rotation_degrees = bucket_image.rotation_degrees
 
 	move_and_slide()
-	jewel_container.rotation_degrees = bucket_image.rotation_degrees
 
 func _input(event: InputEvent) -> void:
 	if event is InputEventScreenTouch:
@@ -49,14 +53,18 @@ func _input(event: InputEvent) -> void:
 			velocity.x = 0
 
 	elif event is InputEventScreenDrag and is_dragging:
-		var drag_distance = event.position.x - drag_start_position.x
+		var delta_position = event.position - drag_previous_position
+		var delta_time = get_physics_process_delta_time()
+		if delta_time > 0:
+			velocity.x = delta_position.x / delta_time
 
-		if abs(drag_distance) > DRAG_THRESHOLD:
-			velocity.x = sign(drag_distance) * SPEED
-			drag_start_position = event.position
-			bucket_image.rotation_degrees = sign(drag_distance) * MAX_ROTATION
-		else:
-			velocity.x = 0
+			var max_speed = 1500.0
+			velocity.x = clamp(velocity.x, -max_speed, max_speed)
+
+			# Set target rotation instead of direct rotation
+			target_rotation = clamp(velocity.x / 10.0, -MAX_ROTATION, MAX_ROTATION)
+
+			drag_previous_position = event.position
 
 func _on_body_entered(body: Node2D) -> void:
 	if body.is_in_group("jewel"):
@@ -66,12 +74,10 @@ func _on_body_entered(body: Node2D) -> void:
 				var jewel_texture = sprite_node.texture
 				Global.collect_gem(jewel_texture)
 
-				# Create new jewel sprite to add inside the bucket
 				var new_jewel_sprite = Sprite2D.new()
 				new_jewel_sprite.texture = jewel_texture
 				new_jewel_sprite.material = jewel_shader_material
 
-				# Random position within bounds
 				var scatter_area_width = 60
 				var scatter_area_height = 5
 				var offset_x = randf_range(-scatter_area_width / 2, scatter_area_width / 2)
@@ -86,12 +92,9 @@ func _on_body_entered(body: Node2D) -> void:
 				Global.pending_score += 50
 				Global.save_game()
 
-				# Play jewel collect sound
 				jewel_collect_sound.play()
-
 				print("Jewel collected! +50 points pending.")
 
-				# Remove extra textures if more than 30
 				var visible_limit = 30
 				var children_to_remove = max(0, collected_jewels - visible_limit)
 				while children_to_remove > 0 and jewel_container.get_child_count() > 0:
@@ -115,7 +118,6 @@ func reset_bucket() -> void:
 	collected_jewels = 0
 	for child in jewel_container.get_children():
 		child.queue_free()
-	# Optional: update UI inventory if it exists
 	var inv_scene_path = "res://Jewels/Inventory.tscn"
 	if ResourceLoader.exists(inv_scene_path):
 		var inventory_scene = load(inv_scene_path)
