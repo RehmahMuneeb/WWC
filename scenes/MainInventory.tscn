@@ -54,8 +54,10 @@ metadata/_tab_index = 0
 
 [node name="Inventory" parent="Tabs/GEMS" instance=ExtResource("2_34e6m")]
 layout_mode = 1
-offset_right = -6.0
-offset_bottom = 7.0
+offset_left = -3.0
+offset_top = 510.0
+offset_right = -9.0
+offset_bottom = -99.0
 
 [node name="Label" type="Label" parent="Tabs/GEMS"]
 layout_mode = 1

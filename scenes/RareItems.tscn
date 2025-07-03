@@ -616,11 +616,10 @@ offset_bottom = 605.0
 grow_horizontal = 2
 
 [node name="Inventory" parent="." instance=ExtResource("3_bh17i")]
-visible = false
 layout_mode = 1
 anchors_preset = -1
 anchor_right = 0.0
 anchor_bottom = 0.0
-offset_top = 677.0
-offset_bottom = 677.0
+offset_top = 791.0
+offset_bottom = 791.0
 grow_vertical = 0

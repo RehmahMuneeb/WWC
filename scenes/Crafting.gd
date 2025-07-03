@@ -51,7 +51,7 @@ func _return_to_main_menu():
 
 func setup_ui():
 	item_zoom_panel.visible = false
-	inventory_instance.visible = false
+	inventory_instance.visible = true
 
 func initialize_items():
 	lock_all_items()
@@ -202,7 +202,7 @@ func hide_overlay(overlay: TextureRect, gem_texture_path: String = ""):
 
 func _on_close_pressed():
 	item_zoom_panel.visible = false
-	inventory_instance.visible = false
+
 	current_zoomed_item = null
 
 func _for_each_item(node: Node, action: Callable):
