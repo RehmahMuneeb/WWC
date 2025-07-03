@@ -269,26 +269,16 @@ func show_reward_panel():
 		reward_icon.texture = null
 		reward_icon.visible = false
 
-func get_random_rare_gem() -> Texture:
-	var dir = DirAccess.open("res://raregems")
-	if dir == null:
-		print("Error: Cannot open raregems directory")
-		return null
-	var available_paths := []
-	dir.list_dir_begin()
-	var file_name = dir.get_next()
-	while file_name != "":
-		if not dir.current_is_dir() and file_name.ends_with(".png"):
-			var full_path = "res://raregems/" + file_name
-			if not Global.rare_gems.has(full_path):
-				available_paths.append(full_path)
-		file_name = dir.get_next()
-	dir.list_dir_end()
-	if available_paths.size() == 0:
+func get_random_rare_gem() -> Texture2D:
+	var available := []
+	for tex in Global.rare_gem_textures:
+		if tex.resource_path != "" and not Global.rare_gems.has(tex.resource_path):
+			available.append(tex)
+	if available.is_empty():
 		print("Player has all rare gems!")
 		return null
-	var random_path = available_paths[randi() % available_paths.size()]
-	return load(random_path) as Texture
+	return available[randi() % available.size()]
+
 
 func _on_play_again_pressed() -> void:
 	is_exiting = true

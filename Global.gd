@@ -35,6 +35,20 @@ var rare_gems: Array = []  # Stores paths to rare gem textures
 var well_depth_limit: int = 500
 var well_upgrade_cost: int = 300
 var collected_gems: Array = []  # Stores paths to collected gem textures
+var rare_gem_textures: Array[Texture2D] = [
+	preload("res://raregems/owlredgem.png"),
+	preload("res://raregems/owlgem.png"),
+	preload("res://raregems/owlgem2.png"),
+	preload("res://raregems/crabgem.png"),
+	preload("res://raregems/crocodilegem.png"),
+	preload("res://raregems/cupgem.png"),
+	preload("res://raregems/dragon gem.png"),  # renamed to remove space
+	preload("res://raregems/mermaidgem.png"),
+	preload("res://raregems/skullgem.png"),
+	preload("res://raregems/skullgem2.png"),
+	preload("res://raregems/snakegem.png"),
+	preload("res://raregems/tigergem.png")
+]
 
 func _ready():
 	initialize_chest_targets()
