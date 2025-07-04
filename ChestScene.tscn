@@ -1,0 +1,70 @@
+[gd_scene load_steps=6 format=3 uid="uid://wtkk8mk1ydq7"]
+
+[ext_resource type="Script" path="res://chest_scene.gd" id="1_s0q7v"]
+[ext_resource type="Shader" path="res://ChestScene.gdshader" id="2_w778w"]
+[ext_resource type="Texture2D" uid="uid://bl63hgecq31dl" path="res://raregems/crabgem.png" id="3_40osy"]
+[ext_resource type="Texture2D" uid="uid://bxy8m0yi0hjjd" path="res://raregems/crocodilegem.png" id="4_y1c41"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_wkbfl"]
+shader = ExtResource("2_w778w")
+shader_parameter/progress = 0.0
+
+[node name="Control" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_s0q7v")
+
+[node name="ScrollContainer" type="ScrollContainer" parent="."]
+layout_mode = 0
+offset_right = 475.0
+offset_bottom = 851.0
+
+[node name="GridContainer" type="GridContainer" parent="ScrollContainer"]
+layout_mode = 2
+columns = 3
+
+[node name="CrabJewel" type="Control" parent="ScrollContainer/GridContainer"]
+layout_mode = 2
+
+[node name="JewelImage" type="TextureRect" parent="ScrollContainer/GridContainer/CrabJewel"]
+material = SubResource("ShaderMaterial_wkbfl")
+layout_mode = 0
+offset_left = 12.0
+offset_top = 116.0
+offset_right = 290.0
+offset_bottom = 327.0
+texture = ExtResource("3_40osy")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Label" type="Label" parent="ScrollContainer/GridContainer/CrabJewel"]
+layout_mode = 0
+offset_left = 126.0
+offset_top = 141.0
+offset_right = 166.0
+offset_bottom = 164.0
+
+[node name="Button" type="Button" parent="ScrollContainer/GridContainer/CrabJewel"]
+layout_mode = 0
+offset_left = 109.0
+offset_top = 285.0
+offset_right = 169.0
+offset_bottom = 306.0
+
+[node name="Control2" type="Control" parent="ScrollContainer/GridContainer"]
+visible = false
+layout_mode = 2
+
+[node name="TextureRect" type="TextureRect" parent="ScrollContainer/GridContainer/Control2"]
+layout_mode = 0
+offset_left = 163.0
+offset_top = 153.0
+offset_right = 203.0
+offset_bottom = 193.0
+texture = ExtResource("4_y1c41")
+expand_mode = 1
+stretch_mode = 5

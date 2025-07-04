@@ -68,3 +68,7 @@ func _on_inventory_pressed() -> void:
 
 func _on_button_pressed() -> void:
 	Global.reset_game()
+
+
+func _on_cest_button_pressed() -> void:
+	get_tree().change_scene_to_file("res://ChestScene.tscn")

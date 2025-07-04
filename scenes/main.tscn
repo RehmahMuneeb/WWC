@@ -145,12 +145,11 @@ grow_horizontal = 2
 grow_vertical = 2
 
 [node name="Coins" type="Panel" parent="."]
-visible = false
 layout_mode = 0
-offset_left = 94.0
-offset_top = 500.0
-offset_right = 382.0
-offset_bottom = 556.0
+offset_left = 91.0
+offset_top = 232.0
+offset_right = 379.0
+offset_bottom = 288.0
 theme_override_styles/panel = SubResource("StyleBoxFlat_3rs0h")
 
 [node name="Coinslabel" type="Label" parent="Coins"]
@@ -167,6 +166,7 @@ theme_override_font_sizes/font_size = 22
 text = "COINS"
 
 [node name="TextureRect" type="TextureRect" parent="."]
+visible = false
 layout_mode = 0
 offset_left = -27.0
 offset_top = 422.0
@@ -444,8 +444,16 @@ texture = ExtResource("12_1c8kd")
 expand_mode = 1
 stretch_mode = 5
 
+[node name="CestButton" type="Button" parent="TextureRect3"]
+layout_mode = 0
+offset_left = 116.664
+offset_top = 100.093
+offset_right = 156.664
+offset_bottom = 140.093
+
 [connection signal="pressed" from="Items" to="." method="_on_items_pressed"]
 [connection signal="pressed" from="Crafting" to="." method="_on_rare_items_pressed"]
 [connection signal="pressed" from="Inventory" to="." method="_on_inventory_pressed"]
 [connection signal="pressed" from="Play" to="." method="_on_play_pressed"]
 [connection signal="pressed" from="Button" to="." method="_on_button_pressed"]
+[connection signal="pressed" from="TextureRect3/CestButton" to="." method="_on_cest_button_pressed"]
