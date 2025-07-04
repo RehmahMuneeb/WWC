@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" path="res://scenes/Background.gd" id="1_5afwl"]
 [ext_resource type="Shader" path="res://scenes/wall_bg.gdshader" id="1_lt5r1"]
-[ext_resource type="Texture2D" uid="uid://y75dd18x8oyj" path="res://scenes/stone-seamless-pattern-stone-wall-texture-solid-background-rock-pattern-gray-rough-surface_1150412-2275.jpg" id="2_7mnps"]
+[ext_resource type="Texture2D" uid="uid://68htqpfo70lu" path="res://scenes/ROCKS WALLPAPER.jpeg" id="3_uhfxr"]
 [ext_resource type="Texture2D" uid="uid://c63him66v8lho" path="res://Lava B.jpg" id="4_lmrhv"]
 [ext_resource type="Script" path="res://scenes/wall_img.gd" id="4_qb60b"]
 [ext_resource type="Texture2D" uid="uid://nuj2a5n2fvn4" path="res://assets/Ice Wallpaper 2.png" id="5_av1f8"]
@@ -20,9 +20,9 @@ script = ExtResource("1_5afwl")
 [node name="WallImg" type="Sprite2D" parent="."]
 texture_repeat = 2
 material = SubResource("ShaderMaterial_c1xl2")
-position = Vector2(236.5, 426.5)
-scale = Vector2(0.572639, 1.01574)
-texture = ExtResource("2_7mnps")
+position = Vector2(228, 449)
+scale = Vector2(0.862772, 1.07423)
+texture = ExtResource("3_uhfxr")
 script = ExtResource("4_qb60b")
 
 [node name="WallImg2" type="Sprite2D" parent="."]
@@ -33,6 +33,7 @@ scale = Vector2(1, 1.08009)
 texture = ExtResource("4_lmrhv")
 
 [node name="WallImg5" type="Sprite2D" parent="."]
+visible = false
 texture_repeat = 2
 material = SubResource("ShaderMaterial_c1xl2")
 position = Vector2(242, 422.5)
