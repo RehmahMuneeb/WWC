@@ -4,6 +4,7 @@
 [ext_resource type="Texture2D" uid="uid://1misolt5rykx" path="res://scenes/video-play-watch-player-black-icon-free-png-7017516949743594tmpczaclr.png" id="3_wi27y"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_t8tyv"]
+draw_center = false
 border_width_left = 11
 border_width_top = 11
 border_width_right = 11
@@ -29,7 +30,7 @@ corner_radius_bottom_left = 21
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_im4xa"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_kf5au"]
-bg_color = Color(0.913725, 0.870588, 0, 1)
+bg_color = Color(1, 0.811765, 0, 1)
 corner_radius_top_left = 22
 corner_radius_top_right = 22
 corner_radius_bottom_left = 22
@@ -62,6 +63,7 @@ theme_override_constants/outline_size = 6
 theme_override_fonts/font = ExtResource("2_iih1v")
 theme_override_font_sizes/font_size = 46
 theme_override_styles/focus = SubResource("StyleBoxEmpty_yak4s")
+theme_override_styles/hover = SubResource("StyleBoxFlat_n6yph")
 theme_override_styles/pressed = SubResource("StyleBoxFlat_n6yph")
 theme_override_styles/normal = SubResource("StyleBoxFlat_q37w6")
 text = "GIVE UP"
@@ -78,17 +80,10 @@ theme_override_constants/outline_size = 6
 theme_override_fonts/font = ExtResource("2_iih1v")
 theme_override_font_sizes/font_size = 46
 theme_override_styles/focus = SubResource("StyleBoxEmpty_im4xa")
+theme_override_styles/hover = SubResource("StyleBoxFlat_kf5au")
 theme_override_styles/pressed = SubResource("StyleBoxFlat_kf5au")
 theme_override_styles/normal = SubResource("StyleBoxFlat_kf5au")
-text = "         RISE
-          AGAIN !"
+text = "RISE
+ AGAIN !"
+icon = ExtResource("3_wi27y")
 expand_icon = true
-
-[node name="TextureRect" type="TextureRect" parent="Panel"]
-layout_mode = 0
-offset_top = -1.0
-offset_right = 122.0
-offset_bottom = 124.0
-texture = ExtResource("3_wi27y")
-expand_mode = 1
-stretch_mode = 5
