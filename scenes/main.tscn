@@ -145,6 +145,7 @@ grow_horizontal = 2
 grow_vertical = 2
 
 [node name="Coins" type="Panel" parent="."]
+visible = false
 layout_mode = 0
 offset_left = 91.0
 offset_top = 232.0
@@ -166,7 +167,6 @@ theme_override_font_sizes/font_size = 22
 text = "COINS"
 
 [node name="TextureRect" type="TextureRect" parent="."]
-visible = false
 layout_mode = 0
 offset_left = -27.0
 offset_top = 422.0
@@ -297,7 +297,6 @@ theme_override_font_sizes/font_size = 66
 text = "GEM"
 
 [node name="Button" type="Button" parent="."]
-visible = false
 layout_mode = 0
 offset_right = 4.0
 offset_bottom = 8.0
