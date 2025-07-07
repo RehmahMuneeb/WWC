@@ -84,7 +84,7 @@ func _input(event):
 func animate_gems_with_float_motion() -> void:
 	animation_running = true
 	watch_ad_button.disabled = true  # Disable button at start of animation
-	var score_per_gem := 1000
+	var score_per_gem := 10
 	var gem_textures = Global.get_collected_gems_textures()
 	for gem_texture in gem_textures:
 		if gem_texture == null:
@@ -125,14 +125,14 @@ func animate_gems_with_float_motion() -> void:
 		base_gem_score_total += score_per_gem
 		total_multiplied_score += score_per_gem * 3
 		gem_score_label.text = "+%d" % current_session_score
-		multiply_label.text = "x3: %d" % total_multiplied_score
+		multiply_label.text =" X3: %d" % total_multiplied_score
 		update_chest_progress()
 		if not skip_animation:
 			show_score_popup("+%d" % score_per_gem, chest_icon.get_global_position())
 			await get_tree().create_timer(0.2 * animation_speed).timeout
 	if skip_animation:
 		total_multiplied_score = current_session_score * 3
-		multiply_label.text = "x3: %d" % total_multiplied_score
+		multiply_label.text = " x3: %d" % total_multiplied_score
 	
 	animation_running = false
 	watch_ad_button.disabled = false  # Re-enable button when animation finishes
@@ -226,7 +226,7 @@ func play_reward_animation() -> void:
 	current_session_score = base_gem_score_total
 	total_multiplied_score = base_gem_score_total
 	gem_score_label.text = "+%d" % current_session_score
-	multiply_label.text = "x3: %d" % total_multiplied_score
+	multiply_label.text = " x3: %d" % total_multiplied_score
 	update_chest_progress()
 	Global.collected_gems = []
 	Global.save_game()

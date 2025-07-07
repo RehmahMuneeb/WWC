@@ -1,4 +1,4 @@
-[gd_scene load_steps=25 format=3 uid="uid://b1bt4udrrmx0d"]
+[gd_scene load_steps=24 format=3 uid="uid://b1bt4udrrmx0d"]
 
 [ext_resource type="Script" path="res://scripts/main.gd" id="1_fsboc"]
 [ext_resource type="Texture2D" uid="uid://bhrf3ksx88g41" path="res://Full-bucket1.png" id="2_dfu7b"]
@@ -7,9 +7,8 @@
 [ext_resource type="Texture2D" uid="uid://xnldq0y3pqm" path="res://scenes/54928f0e-0306-470f-a9a6-f10a946bd0a0.jpeg" id="3_qlu2l"]
 [ext_resource type="Texture2D" uid="uid://cuyv54tmnimb8" path="res://withoutrope3.png" id="6_1nad6"]
 [ext_resource type="Shader" path="res://scenes/bucket.gdshader" id="6_ruh5g"]
-[ext_resource type="Texture2D" uid="uid://760xrt0tfn6w" path="res://scenes/Fantasy Riders - Faction Card Back, Thomas Karlsson.jpeg" id="9_ewyal"]
+[ext_resource type="Texture2D" uid="uid://b7sbdq5ejjbq5" path="res://gears_-_steampunk_button-removebg-preview.png" id="7_2mrmo"]
 [ext_resource type="Texture2D" uid="uid://b15n4xaej1ujm" path="res://scenes/download__14_-removebg-preview.png" id="10_30dbb"]
-[ext_resource type="Texture2D" uid="uid://c1c5t0cedwch7" path="res://scenes/gears_-_steampunk_button-removebg-preview.png" id="11_35isx"]
 [ext_resource type="Script" path="res://scenes/label_2.gd" id="11_n181m"]
 [ext_resource type="Texture2D" uid="uid://bjv3sqttppgxv" path="res://scenes/Pirates___Smugglers_Paradise____Behance-removebg-preview.png" id="12_1c8kd"]
 
@@ -201,17 +200,16 @@ text = "ITEMS
 "
 
 [node name="Crafting" type="Button" parent="."]
-visible = false
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -64.0
-offset_top = -203.0
-offset_right = 78.0
-offset_bottom = -28.0
+offset_left = 58.0
+offset_top = -70.0
+offset_right = 264.0
+offset_bottom = 184.0
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
@@ -220,7 +218,7 @@ theme_override_font_sizes/font_size = 33
 theme_override_styles/focus = SubResource("StyleBoxEmpty_r6ek4")
 theme_override_styles/pressed = SubResource("StyleBoxFlat_ribck")
 theme_override_styles/normal = SubResource("StyleBoxFlat_ribck")
-icon = ExtResource("9_ewyal")
+icon = ExtResource("7_2mrmo")
 flat = true
 icon_alignment = 1
 vertical_icon_alignment = 0
@@ -251,9 +249,9 @@ anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
 offset_left = -142.0
-offset_top = -92.0
+offset_top = -11.0
 offset_right = 150.0
-offset_bottom = -37.0
+offset_bottom = 44.0
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_font_sizes/font_size = 44
@@ -309,9 +307,9 @@ anchors_preset = 5
 anchor_left = 0.5
 anchor_right = 0.5
 offset_left = -158.0
-offset_top = 151.0
+offset_top = 237.0
 offset_right = 158.0
-offset_bottom = 234.0
+offset_bottom = 320.0
 grow_horizontal = 2
 theme_override_colors/font_color = Color(1, 1, 1, 1)
 theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
@@ -422,22 +420,12 @@ offset_top = 212.0
 offset_right = 455.0
 offset_bottom = 277.0
 
-[node name="TextureRect2" type="TextureRect" parent="."]
-layout_mode = 0
-offset_left = 285.0
-offset_top = 263.0
-offset_right = 500.0
-offset_bottom = 457.0
-texture = ExtResource("11_35isx")
-expand_mode = 1
-stretch_mode = 5
-
 [node name="TextureRect3" type="TextureRect" parent="."]
 layout_mode = 0
 offset_left = -21.0
-offset_top = 232.0
+offset_top = 304.0
 offset_right = 232.0
-offset_bottom = 446.0
+offset_bottom = 518.0
 rotation = 0.136136
 texture = ExtResource("12_1c8kd")
 expand_mode = 1
