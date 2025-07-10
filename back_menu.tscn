@@ -9,7 +9,7 @@
 [ext_resource type="Texture2D" uid="uid://1misolt5rykx" path="res://scenes/video-play-watch-player-black-icon-free-png-7017516949743594tmpczaclr.png" id="8_ddeit"]
 [ext_resource type="AudioStream" uid="uid://ckw5oocom1526" path="res://90s-game-ui-6-185099.mp3" id="8_v7sre"]
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_j7ymm"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_5btrb"]
 shader = ExtResource("5_1fbjo")
 shader_parameter/scroll_speed = 0.2
 
@@ -105,7 +105,7 @@ script = ExtResource("1_mdwjp")
 
 [node name="backWall" type="Sprite2D" parent="."]
 texture_repeat = 2
-material = SubResource("ShaderMaterial_j7ymm")
+material = SubResource("ShaderMaterial_5btrb")
 position = Vector2(239.5, 429)
 scale = Vector2(0.850267, 0.856)
 texture = ExtResource("3_yd43k")
