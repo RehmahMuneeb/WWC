@@ -418,10 +418,10 @@ stretch_mode = 5
 
 [node name="CestButton" type="Button" parent="TextureRect3"]
 layout_mode = 0
-offset_left = 115.664
-offset_top = 100.093
-offset_right = 155.664
-offset_bottom = 140.093
+offset_left = 193.0
+offset_top = 102.0
+offset_right = 233.0
+offset_bottom = 142.0
 
 [node name="Crafting" type="Button" parent="."]
 layout_mode = 1
