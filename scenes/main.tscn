@@ -5,12 +5,12 @@
 [ext_resource type="Texture2D" uid="uid://rd7r0kf4b2bj" path="res://scenes/well.png" id="3_g2cem"]
 [ext_resource type="FontFile" uid="uid://b2clys7lbyd3t" path="res://scenes/Kid Games.ttf" id="3_nak5y"]
 [ext_resource type="Texture2D" uid="uid://xnldq0y3pqm" path="res://scenes/54928f0e-0306-470f-a9a6-f10a946bd0a0.jpeg" id="3_qlu2l"]
+[ext_resource type="Texture2D" uid="uid://c0wrku8bdwr2a" path="res://scenes/PirateWell.png" id="4_hxdqg"]
 [ext_resource type="Texture2D" uid="uid://cuyv54tmnimb8" path="res://withoutrope3.png" id="6_1nad6"]
 [ext_resource type="Shader" path="res://scenes/bucket.gdshader" id="6_ruh5g"]
-[ext_resource type="Texture2D" uid="uid://b7sbdq5ejjbq5" path="res://gears_-_steampunk_button-removebg-preview.png" id="7_2mrmo"]
-[ext_resource type="Texture2D" uid="uid://b15n4xaej1ujm" path="res://scenes/download__14_-removebg-preview.png" id="10_30dbb"]
+[ext_resource type="Texture2D" uid="uid://lqfh8spffrg0" path="res://scenes/download__4_-removebg-preview.png" id="7_yfs5u"]
+[ext_resource type="Texture2D" uid="uid://hw8f70sk4mk" path="res://scenes/20250718_1445_Colorful_Gem_Treasure_remix_01k0eens8gft89h5cf840njnfk-removebg-preview.png" id="10_hbcix"]
 [ext_resource type="Script" path="res://scenes/label_2.gd" id="11_n181m"]
-[ext_resource type="Texture2D" uid="uid://bjv3sqttppgxv" path="res://scenes/Pirates___Smugglers_Paradise____Behance-removebg-preview.png" id="12_1c8kd"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_3170s"]
 
@@ -45,6 +45,66 @@ shadow_size = 11
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_if5ee"]
 shader = ExtResource("6_ruh5g")
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_1gj7p"]
+bg_color = Color(1, 0.803922, 0.192157, 1)
+border_width_left = 11
+border_width_top = 11
+border_width_right = 11
+border_width_bottom = 11
+border_color = Color(1, 1, 1, 1)
+border_blend = true
+corner_radius_top_left = 22
+corner_radius_top_right = 22
+corner_radius_bottom_right = 22
+corner_radius_bottom_left = 22
+shadow_color = Color(0, 0, 0, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_lw57c"]
+bg_color = Color(0.423184, 0.789312, 0.953478, 1)
+border_width_left = 33
+border_width_top = 33
+border_width_right = 33
+border_width_bottom = 33
+border_color = Color(0.380363, 0.661078, 1, 1)
+border_blend = true
+corner_radius_top_left = 33
+corner_radius_top_right = 33
+corner_radius_bottom_right = 33
+corner_radius_bottom_left = 33
+shadow_color = Color(0, 0, 0, 1)
+shadow_size = 12
+shadow_offset = Vector2(0, 4)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_lmr5y"]
+bg_color = Color(1, 0.839216, 0.352941, 1)
+border_width_left = 12
+border_width_top = 12
+border_width_right = 12
+border_width_bottom = 22
+border_color = Color(1, 1, 1, 1)
+border_blend = true
+corner_radius_top_left = 20
+corner_radius_top_right = 20
+corner_radius_bottom_right = 20
+corner_radius_bottom_left = 20
+shadow_color = Color(0, 0, 0, 1)
+shadow_size = 6
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_58b8x"]
+bg_color = Color(1, 0.840198, 0.351863, 1)
+border_width_left = 12
+border_width_top = 12
+border_width_right = 12
+border_width_bottom = 22
+border_color = Color(1, 1, 1, 1)
+border_blend = true
+corner_radius_top_left = 20
+corner_radius_top_right = 20
+corner_radius_bottom_right = 20
+corner_radius_bottom_left = 20
+shadow_color = Color(0, 0, 0, 1)
+shadow_size = 6
+
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_r6ek4"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ribck"]
@@ -55,59 +115,6 @@ corner_radius_top_left = 22
 corner_radius_top_right = 22
 corner_radius_bottom_right = 22
 corner_radius_bottom_left = 22
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_1gj7p"]
-bg_color = Color(1, 0.854902, 0.301961, 1)
-border_width_left = 11
-border_width_top = 11
-border_width_right = 11
-border_width_bottom = 11
-border_color = Color(0.92549, 0.231373, 0.0431373, 1)
-corner_radius_top_left = 22
-corner_radius_top_right = 22
-corner_radius_bottom_right = 22
-corner_radius_bottom_left = 22
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_lw57c"]
-bg_color = Color(0.0823529, 0.686275, 0.196078, 1)
-border_width_left = 11
-border_width_top = 11
-border_width_right = 11
-border_width_bottom = 11
-border_color = Color(1, 1, 1, 1)
-border_blend = true
-corner_radius_top_left = 33
-corner_radius_top_right = 33
-corner_radius_bottom_right = 33
-corner_radius_bottom_left = 33
-shadow_color = Color(0.0315089, 0.365683, 0.0904361, 1)
-shadow_size = 12
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_lmr5y"]
-bg_color = Color(0.0980392, 0.917647, 0.266667, 1)
-border_width_left = 22
-border_width_top = 22
-border_width_right = 22
-border_width_bottom = 22
-border_color = Color(1, 1, 1, 1)
-border_blend = true
-corner_radius_top_left = 20
-corner_radius_top_right = 20
-corner_radius_bottom_right = 20
-corner_radius_bottom_left = 20
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_58b8x"]
-bg_color = Color(0.0990723, 0.916945, 0.265997, 1)
-border_width_left = 10
-border_width_top = 10
-border_width_right = 10
-border_width_bottom = 10
-border_color = Color(1, 1, 1, 1)
-border_blend = true
-corner_radius_top_left = 20
-corner_radius_top_right = 20
-corner_radius_bottom_right = 20
-corner_radius_bottom_left = 20
 
 [node name="HomeScreen" type="Control"]
 layout_mode = 3
@@ -121,10 +128,10 @@ script = ExtResource("1_fsboc")
 
 [node name="Background" type="TextureRect" parent="."]
 layout_mode = 0
-offset_left = -130.0
-offset_top = -159.0
-offset_right = 561.0
-offset_bottom = 1003.0
+offset_left = -83.0
+offset_top = -179.0
+offset_right = 479.0
+offset_bottom = 1036.0
 texture = ExtResource("3_qlu2l")
 expand_mode = 1
 stretch_mode = 5
@@ -146,10 +153,10 @@ grow_vertical = 2
 [node name="Coins" type="Panel" parent="."]
 visible = false
 layout_mode = 0
-offset_left = 91.0
-offset_top = 232.0
-offset_right = 379.0
-offset_bottom = 288.0
+offset_left = 99.0
+offset_top = 582.0
+offset_right = 387.0
+offset_bottom = 638.0
 theme_override_styles/panel = SubResource("StyleBoxFlat_3rs0h")
 
 [node name="Coinslabel" type="Label" parent="Coins"]
@@ -167,18 +174,19 @@ text = "COINS"
 
 [node name="TextureRect" type="TextureRect" parent="."]
 layout_mode = 0
-offset_left = -27.0
-offset_top = 422.0
-offset_right = 527.0
-offset_bottom = 922.0
-texture = ExtResource("10_30dbb")
+offset_left = -17.0
+offset_top = 138.0
+offset_right = 504.0
+offset_bottom = 822.0
+texture = ExtResource("4_hxdqg")
+expand_mode = 1
 stretch_mode = 5
 
 [node name="Withoutrope3" type="Sprite2D" parent="."]
 y_sort_enabled = true
 material = SubResource("ShaderMaterial_if5ee")
-position = Vector2(250.502, 664)
-scale = Vector2(0.154289, 0.132945)
+position = Vector2(247, 507)
+scale = Vector2(0.101715, 0.102922)
 texture = ExtResource("6_1nad6")
 
 [node name="Items" type="Button" parent="."]
@@ -198,31 +206,6 @@ grow_vertical = 2
 theme_override_font_sizes/font_size = 44
 text = "ITEMS
 "
-
-[node name="Crafting" type="Button" parent="."]
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = 58.0
-offset_top = -70.0
-offset_right = 264.0
-offset_bottom = 184.0
-grow_horizontal = 2
-grow_vertical = 2
-theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
-theme_override_constants/outline_size = 8
-theme_override_font_sizes/font_size = 33
-theme_override_styles/focus = SubResource("StyleBoxEmpty_r6ek4")
-theme_override_styles/pressed = SubResource("StyleBoxFlat_ribck")
-theme_override_styles/normal = SubResource("StyleBoxFlat_ribck")
-icon = ExtResource("7_2mrmo")
-flat = true
-icon_alignment = 1
-vertical_icon_alignment = 0
-expand_icon = true
 
 [node name="Inventory" type="Button" parent="."]
 visible = false
@@ -248,10 +231,10 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -142.0
-offset_top = -11.0
-offset_right = 150.0
-offset_bottom = 44.0
+offset_left = -136.0
+offset_top = -267.0
+offset_right = 156.0
+offset_bottom = -212.0
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_font_sizes/font_size = 44
@@ -307,11 +290,11 @@ anchors_preset = 5
 anchor_left = 0.5
 anchor_right = 0.5
 offset_left = -158.0
-offset_top = 237.0
+offset_top = 168.0
 offset_right = 158.0
-offset_bottom = 320.0
+offset_bottom = 251.0
 grow_horizontal = 2
-theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_color = Color(0.980392, 0.839216, 0.294118, 1)
 theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
 theme_override_constants/shadow_offset_x = 2
 theme_override_constants/shadow_offset_y = 2
@@ -324,23 +307,23 @@ text = "TAP ANYWHERE
 script = ExtResource("11_n181m")
 
 [node name="infopanel" type="Panel" parent="."]
-visible = false
 layout_mode = 2
-offset_left = 1.0
-offset_top = 624.0
-offset_right = 477.0
-offset_bottom = 843.0
+offset_left = 2.0
+offset_top = 634.0
+offset_right = 478.0
+offset_bottom = 853.0
 theme_override_styles/panel = SubResource("StyleBoxFlat_lw57c")
 
 [node name="Bucket Capacity" type="Panel" parent="infopanel"]
 layout_mode = 0
 offset_left = 20.0
-offset_top = 21.0
-offset_right = 231.0
+offset_top = 16.0
+offset_right = 226.0
 offset_bottom = 202.0
 theme_override_styles/panel = SubResource("StyleBoxFlat_lmr5y")
 
 [node name="TextureRect" type="TextureRect" parent="infopanel/Bucket Capacity"]
+visible = false
 layout_mode = 1
 anchors_preset = 7
 anchor_left = 0.5
@@ -364,6 +347,7 @@ offset_right = 203.0
 offset_bottom = 256.0
 
 [node name="CapacityLabel" type="Label" parent="infopanel/Bucket Capacity"]
+visible = false
 layout_mode = 1
 offset_left = 20.0
 offset_top = 18.0
@@ -374,17 +358,18 @@ theme_override_constants/outline_size = 6
 theme_override_constants/shadow_outline_size = 6
 theme_override_fonts/font = ExtResource("3_nak5y")
 theme_override_font_sizes/font_size = 22
-text = "CAPACITY"
+text = "RARE GEMS"
 
 [node name="Well Depth" type="Panel" parent="infopanel"]
 layout_mode = 0
-offset_left = 242.0
-offset_top = 22.0
+offset_left = 254.0
+offset_top = 17.0
 offset_right = 457.0
-offset_bottom = 202.0
+offset_bottom = 204.0
 theme_override_styles/panel = SubResource("StyleBoxFlat_58b8x")
 
 [node name="DepthLabel" type="Label" parent="infopanel/Well Depth"]
+visible = false
 layout_mode = 1
 offset_left = 18.0
 offset_top = 16.0
@@ -395,9 +380,10 @@ theme_override_constants/outline_size = 6
 theme_override_constants/shadow_outline_size = 6
 theme_override_fonts/font = ExtResource("3_nak5y")
 theme_override_font_sizes/font_size = 22
-text = "DEPTH: 5000"
+text = "ANTIQUES"
 
 [node name="TextureRect" type="TextureRect" parent="infopanel/Well Depth"]
+visible = false
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -422,25 +408,81 @@ offset_bottom = 277.0
 
 [node name="TextureRect3" type="TextureRect" parent="."]
 layout_mode = 0
-offset_left = -21.0
-offset_top = 304.0
-offset_right = 232.0
-offset_bottom = 518.0
-rotation = 0.136136
-texture = ExtResource("12_1c8kd")
+offset_left = -97.0
+offset_top = 633.0
+offset_right = 346.0
+offset_bottom = 876.0
+texture = ExtResource("10_hbcix")
 expand_mode = 1
 stretch_mode = 5
 
 [node name="CestButton" type="Button" parent="TextureRect3"]
 layout_mode = 0
-offset_left = 116.664
+offset_left = 115.664
 offset_top = 100.093
-offset_right = 156.664
+offset_right = 155.664
 offset_bottom = 140.093
 
+[node name="Crafting" type="Button" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = 38.0
+offset_top = 241.0
+offset_right = 204.0
+offset_bottom = 432.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 8
+theme_override_font_sizes/font_size = 33
+theme_override_styles/focus = SubResource("StyleBoxEmpty_r6ek4")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_ribck")
+theme_override_styles/normal = SubResource("StyleBoxFlat_ribck")
+icon = ExtResource("7_yfs5u")
+flat = true
+icon_alignment = 1
+vertical_icon_alignment = 0
+expand_icon = true
+
+[node name="RareGemLabel" type="Label" parent="Crafting"]
+layout_mode = 1
+offset_left = -229.0
+offset_top = -5.00006
+offset_right = -16.0
+offset_bottom = 31.9999
+theme_override_colors/font_color = Color(0.607843, 0.454902, 0.27451, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_colors/font_outline_color = Color(1, 1, 1, 1)
+theme_override_constants/shadow_offset_x = 3
+theme_override_constants/outline_size = 12
+theme_override_constants/shadow_outline_size = 3
+theme_override_fonts/font = ExtResource("3_nak5y")
+theme_override_font_sizes/font_size = 22
+text = "RARE  GEMS"
+
+[node name="AntiqueLabel" type="Label" parent="Crafting"]
+layout_mode = 1
+offset_left = 16.0
+offset_top = -7.0
+offset_right = 229.0
+offset_bottom = 30.0
+theme_override_colors/font_color = Color(0.607843, 0.454902, 0.27451, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_colors/font_outline_color = Color(1, 1, 1, 1)
+theme_override_constants/shadow_offset_x = 3
+theme_override_constants/outline_size = 12
+theme_override_constants/shadow_outline_size = 3
+theme_override_fonts/font = ExtResource("3_nak5y")
+theme_override_font_sizes/font_size = 22
+text = "ANTIQUES"
+
 [connection signal="pressed" from="Items" to="." method="_on_items_pressed"]
-[connection signal="pressed" from="Crafting" to="." method="_on_rare_items_pressed"]
 [connection signal="pressed" from="Inventory" to="." method="_on_inventory_pressed"]
 [connection signal="pressed" from="Play" to="." method="_on_play_pressed"]
 [connection signal="pressed" from="Button" to="." method="_on_button_pressed"]
 [connection signal="pressed" from="TextureRect3/CestButton" to="." method="_on_cest_button_pressed"]
+[connection signal="pressed" from="Crafting" to="." method="_on_rare_items_pressed"]
