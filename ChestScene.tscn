@@ -1,12 +1,23 @@
-[gd_scene load_steps=14 format=3 uid="uid://wtkk8mk1ydq7"]
+[gd_scene load_steps=25 format=3 uid="uid://wtkk8mk1ydq7"]
 
 [ext_resource type="Script" path="res://chest_scene.gd" id="1_s0q7v"]
 [ext_resource type="Texture2D" uid="uid://drbl3r01q1k7h" path="res://download (5).jpg" id="2_v6bkl"]
 [ext_resource type="Shader" path="res://ChestScene.gdshader" id="2_w778w"]
 [ext_resource type="Texture2D" uid="uid://m727u1pqwjuf" path="res://gwiazdy_-_ramka_do_druku_z_miejscem_na_wstawienie_-removebg-preview.png" id="3_0wres"]
 [ext_resource type="Texture2D" uid="uid://bl63hgecq31dl" path="res://raregems/crabgem.png" id="3_40osy"]
+[ext_resource type="Texture2D" uid="uid://bxy8m0yi0hjjd" path="res://raregems/crocodilegem.png" id="7_4tk40"]
 [ext_resource type="FontFile" uid="uid://b2clys7lbyd3t" path="res://scenes/Kid Games.ttf" id="7_h4pob"]
+[ext_resource type="Texture2D" uid="uid://ciq65ix4upsf5" path="res://raregems/cupgem.png" id="8_8wc1c"]
 [ext_resource type="Texture2D" uid="uid://c015poey4wnxi" path="res://eab62181-3ecf-4e4f-96ee-4b352596a9ea-removebg-preview.png" id="8_lhve0"]
+[ext_resource type="Texture2D" uid="uid://bboif8orondxk" path="res://raregems/dragon gem.png" id="9_g18o6"]
+[ext_resource type="Texture2D" uid="uid://c3db72x2ggo18" path="res://raregems/mermaidgem.png" id="10_jyb33"]
+[ext_resource type="Texture2D" uid="uid://2tu7ksu7srpm" path="res://raregems/owlgem2.png" id="11_lkvd4"]
+[ext_resource type="Texture2D" uid="uid://h50wquumhdyb" path="res://raregems/owlgem.png" id="12_ptgrl"]
+[ext_resource type="Texture2D" uid="uid://b8e25d2wus3ok" path="res://raregems/owlredgem.png" id="13_gf5yb"]
+[ext_resource type="Texture2D" uid="uid://dokid1iutmatb" path="res://raregems/skullgem2.png" id="14_evo0j"]
+[ext_resource type="Texture2D" uid="uid://bodujvxjeptrj" path="res://raregems/skullgem.png" id="15_eb1hd"]
+[ext_resource type="Texture2D" uid="uid://t514myfj7bn3" path="res://raregems/snakegem.png" id="16_2ke6g"]
+[ext_resource type="Texture2D" uid="uid://s7hwqn3a8uui" path="res://raregems/tigergem.png" id="17_c1lsb"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_wkbfl"]
 shader = ExtResource("2_w778w")
@@ -124,10 +135,21 @@ theme_override_font_sizes/font_size = 22
 theme_override_styles/normal = SubResource("StyleBoxFlat_xa2a0")
 text = "323242"
 
-[node name="CrabJewel2" type="Control" parent="ScrollContainer/GridContainer"]
+[node name="CrocodileJewel" type="Control" parent="ScrollContainer/GridContainer"]
 layout_mode = 2
 
-[node name="Button" type="Button" parent="ScrollContainer/GridContainer/CrabJewel2"]
+[node name="JewelImage" type="TextureRect" parent="ScrollContainer/GridContainer/CrocodileJewel"]
+material = SubResource("ShaderMaterial_wkbfl")
+layout_mode = 0
+offset_left = 30.0
+offset_top = -36.0
+offset_right = 255.0
+offset_bottom = 117.0
+texture = ExtResource("7_4tk40")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Button" type="Button" parent="ScrollContainer/GridContainer/CrocodileJewel"]
 layout_mode = 0
 offset_left = 75.0
 offset_top = 97.0
@@ -137,18 +159,7 @@ theme_override_styles/focus = SubResource("StyleBoxEmpty_mcoks")
 theme_override_styles/pressed = SubResource("StyleBoxEmpty_lex7d")
 theme_override_styles/normal = SubResource("StyleBoxEmpty_bimkj")
 
-[node name="JewelImage" type="TextureRect" parent="ScrollContainer/GridContainer/CrabJewel2"]
-material = SubResource("ShaderMaterial_wkbfl")
-layout_mode = 0
-offset_left = 30.0
-offset_top = -36.0
-offset_right = 255.0
-offset_bottom = 117.0
-texture = ExtResource("3_40osy")
-expand_mode = 1
-stretch_mode = 5
-
-[node name="Label" type="Label" parent="ScrollContainer/GridContainer/CrabJewel2"]
+[node name="Label" type="Label" parent="ScrollContainer/GridContainer/CrocodileJewel"]
 layout_mode = 0
 offset_left = 83.0
 offset_top = 102.0
@@ -162,10 +173,21 @@ theme_override_font_sizes/font_size = 22
 theme_override_styles/normal = SubResource("StyleBoxFlat_xa2a0")
 text = "323242"
 
-[node name="CrabJewel3" type="Control" parent="ScrollContainer/GridContainer"]
+[node name="CupGem" type="Control" parent="ScrollContainer/GridContainer"]
 layout_mode = 2
 
-[node name="Button" type="Button" parent="ScrollContainer/GridContainer/CrabJewel3"]
+[node name="JewelImage" type="TextureRect" parent="ScrollContainer/GridContainer/CupGem"]
+material = SubResource("ShaderMaterial_wkbfl")
+layout_mode = 0
+offset_left = 30.0
+offset_top = -36.0
+offset_right = 255.0
+offset_bottom = 117.0
+texture = ExtResource("8_8wc1c")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Button" type="Button" parent="ScrollContainer/GridContainer/CupGem"]
 layout_mode = 0
 offset_left = 75.0
 offset_top = 97.0
@@ -175,18 +197,7 @@ theme_override_styles/focus = SubResource("StyleBoxEmpty_mcoks")
 theme_override_styles/pressed = SubResource("StyleBoxEmpty_lex7d")
 theme_override_styles/normal = SubResource("StyleBoxEmpty_bimkj")
 
-[node name="JewelImage" type="TextureRect" parent="ScrollContainer/GridContainer/CrabJewel3"]
-material = SubResource("ShaderMaterial_wkbfl")
-layout_mode = 0
-offset_left = 30.0
-offset_top = -36.0
-offset_right = 255.0
-offset_bottom = 117.0
-texture = ExtResource("3_40osy")
-expand_mode = 1
-stretch_mode = 5
-
-[node name="Label" type="Label" parent="ScrollContainer/GridContainer/CrabJewel3"]
+[node name="Label" type="Label" parent="ScrollContainer/GridContainer/CupGem"]
 layout_mode = 0
 offset_left = 83.0
 offset_top = 102.0
@@ -200,10 +211,21 @@ theme_override_font_sizes/font_size = 22
 theme_override_styles/normal = SubResource("StyleBoxFlat_xa2a0")
 text = "323242"
 
-[node name="CrabJewel4" type="Control" parent="ScrollContainer/GridContainer"]
+[node name="DragonGem" type="Control" parent="ScrollContainer/GridContainer"]
 layout_mode = 2
 
-[node name="Button" type="Button" parent="ScrollContainer/GridContainer/CrabJewel4"]
+[node name="JewelImage" type="TextureRect" parent="ScrollContainer/GridContainer/DragonGem"]
+material = SubResource("ShaderMaterial_wkbfl")
+layout_mode = 0
+offset_left = 30.0
+offset_top = -36.0
+offset_right = 255.0
+offset_bottom = 117.0
+texture = ExtResource("9_g18o6")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Button" type="Button" parent="ScrollContainer/GridContainer/DragonGem"]
 layout_mode = 0
 offset_left = 75.0
 offset_top = 97.0
@@ -213,18 +235,7 @@ theme_override_styles/focus = SubResource("StyleBoxEmpty_mcoks")
 theme_override_styles/pressed = SubResource("StyleBoxEmpty_lex7d")
 theme_override_styles/normal = SubResource("StyleBoxEmpty_bimkj")
 
-[node name="JewelImage" type="TextureRect" parent="ScrollContainer/GridContainer/CrabJewel4"]
-material = SubResource("ShaderMaterial_wkbfl")
-layout_mode = 0
-offset_left = 30.0
-offset_top = -36.0
-offset_right = 255.0
-offset_bottom = 117.0
-texture = ExtResource("3_40osy")
-expand_mode = 1
-stretch_mode = 5
-
-[node name="Label" type="Label" parent="ScrollContainer/GridContainer/CrabJewel4"]
+[node name="Label" type="Label" parent="ScrollContainer/GridContainer/DragonGem"]
 layout_mode = 0
 offset_left = 83.0
 offset_top = 102.0
@@ -238,10 +249,21 @@ theme_override_font_sizes/font_size = 22
 theme_override_styles/normal = SubResource("StyleBoxFlat_xa2a0")
 text = "323242"
 
-[node name="CrabJewel5" type="Control" parent="ScrollContainer/GridContainer"]
+[node name="MermaidGem" type="Control" parent="ScrollContainer/GridContainer"]
 layout_mode = 2
 
-[node name="Button" type="Button" parent="ScrollContainer/GridContainer/CrabJewel5"]
+[node name="JewelImage" type="TextureRect" parent="ScrollContainer/GridContainer/MermaidGem"]
+material = SubResource("ShaderMaterial_wkbfl")
+layout_mode = 0
+offset_left = 30.0
+offset_top = -36.0
+offset_right = 255.0
+offset_bottom = 117.0
+texture = ExtResource("10_jyb33")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Button" type="Button" parent="ScrollContainer/GridContainer/MermaidGem"]
 layout_mode = 0
 offset_left = 75.0
 offset_top = 97.0
@@ -251,18 +273,7 @@ theme_override_styles/focus = SubResource("StyleBoxEmpty_mcoks")
 theme_override_styles/pressed = SubResource("StyleBoxEmpty_lex7d")
 theme_override_styles/normal = SubResource("StyleBoxEmpty_bimkj")
 
-[node name="JewelImage" type="TextureRect" parent="ScrollContainer/GridContainer/CrabJewel5"]
-material = SubResource("ShaderMaterial_wkbfl")
-layout_mode = 0
-offset_left = 30.0
-offset_top = -36.0
-offset_right = 255.0
-offset_bottom = 117.0
-texture = ExtResource("3_40osy")
-expand_mode = 1
-stretch_mode = 5
-
-[node name="Label" type="Label" parent="ScrollContainer/GridContainer/CrabJewel5"]
+[node name="Label" type="Label" parent="ScrollContainer/GridContainer/MermaidGem"]
 layout_mode = 0
 offset_left = 83.0
 offset_top = 102.0
@@ -276,10 +287,21 @@ theme_override_font_sizes/font_size = 22
 theme_override_styles/normal = SubResource("StyleBoxFlat_xa2a0")
 text = "323242"
 
-[node name="CrabJewel6" type="Control" parent="ScrollContainer/GridContainer"]
+[node name="OwlGem2" type="Control" parent="ScrollContainer/GridContainer"]
 layout_mode = 2
 
-[node name="Button" type="Button" parent="ScrollContainer/GridContainer/CrabJewel6"]
+[node name="JewelImage" type="TextureRect" parent="ScrollContainer/GridContainer/OwlGem2"]
+material = SubResource("ShaderMaterial_wkbfl")
+layout_mode = 0
+offset_left = 30.0
+offset_top = -36.0
+offset_right = 255.0
+offset_bottom = 117.0
+texture = ExtResource("11_lkvd4")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Button" type="Button" parent="ScrollContainer/GridContainer/OwlGem2"]
 layout_mode = 0
 offset_left = 75.0
 offset_top = 97.0
@@ -289,18 +311,7 @@ theme_override_styles/focus = SubResource("StyleBoxEmpty_mcoks")
 theme_override_styles/pressed = SubResource("StyleBoxEmpty_lex7d")
 theme_override_styles/normal = SubResource("StyleBoxEmpty_bimkj")
 
-[node name="JewelImage" type="TextureRect" parent="ScrollContainer/GridContainer/CrabJewel6"]
-material = SubResource("ShaderMaterial_wkbfl")
-layout_mode = 0
-offset_left = 30.0
-offset_top = -36.0
-offset_right = 255.0
-offset_bottom = 117.0
-texture = ExtResource("3_40osy")
-expand_mode = 1
-stretch_mode = 5
-
-[node name="Label" type="Label" parent="ScrollContainer/GridContainer/CrabJewel6"]
+[node name="Label" type="Label" parent="ScrollContainer/GridContainer/OwlGem2"]
 layout_mode = 0
 offset_left = 83.0
 offset_top = 102.0
@@ -314,10 +325,21 @@ theme_override_font_sizes/font_size = 22
 theme_override_styles/normal = SubResource("StyleBoxFlat_xa2a0")
 text = "323242"
 
-[node name="CrabJewel7" type="Control" parent="ScrollContainer/GridContainer"]
+[node name="OwlGem" type="Control" parent="ScrollContainer/GridContainer"]
 layout_mode = 2
 
-[node name="Button" type="Button" parent="ScrollContainer/GridContainer/CrabJewel7"]
+[node name="JewelImage" type="TextureRect" parent="ScrollContainer/GridContainer/OwlGem"]
+material = SubResource("ShaderMaterial_wkbfl")
+layout_mode = 0
+offset_left = 30.0
+offset_top = -36.0
+offset_right = 255.0
+offset_bottom = 117.0
+texture = ExtResource("12_ptgrl")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Button" type="Button" parent="ScrollContainer/GridContainer/OwlGem"]
 layout_mode = 0
 offset_left = 75.0
 offset_top = 97.0
@@ -327,18 +349,7 @@ theme_override_styles/focus = SubResource("StyleBoxEmpty_mcoks")
 theme_override_styles/pressed = SubResource("StyleBoxEmpty_lex7d")
 theme_override_styles/normal = SubResource("StyleBoxEmpty_bimkj")
 
-[node name="JewelImage" type="TextureRect" parent="ScrollContainer/GridContainer/CrabJewel7"]
-material = SubResource("ShaderMaterial_wkbfl")
-layout_mode = 0
-offset_left = 30.0
-offset_top = -36.0
-offset_right = 255.0
-offset_bottom = 117.0
-texture = ExtResource("3_40osy")
-expand_mode = 1
-stretch_mode = 5
-
-[node name="Label" type="Label" parent="ScrollContainer/GridContainer/CrabJewel7"]
+[node name="Label" type="Label" parent="ScrollContainer/GridContainer/OwlGem"]
 layout_mode = 0
 offset_left = 83.0
 offset_top = 102.0
@@ -352,10 +363,21 @@ theme_override_font_sizes/font_size = 22
 theme_override_styles/normal = SubResource("StyleBoxFlat_xa2a0")
 text = "323242"
 
-[node name="CrabJewel8" type="Control" parent="ScrollContainer/GridContainer"]
+[node name="OwlRedGem" type="Control" parent="ScrollContainer/GridContainer"]
 layout_mode = 2
 
-[node name="Button" type="Button" parent="ScrollContainer/GridContainer/CrabJewel8"]
+[node name="JewelImage" type="TextureRect" parent="ScrollContainer/GridContainer/OwlRedGem"]
+material = SubResource("ShaderMaterial_wkbfl")
+layout_mode = 0
+offset_left = 30.0
+offset_top = -36.0
+offset_right = 255.0
+offset_bottom = 117.0
+texture = ExtResource("13_gf5yb")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Button" type="Button" parent="ScrollContainer/GridContainer/OwlRedGem"]
 layout_mode = 0
 offset_left = 75.0
 offset_top = 97.0
@@ -365,18 +387,7 @@ theme_override_styles/focus = SubResource("StyleBoxEmpty_mcoks")
 theme_override_styles/pressed = SubResource("StyleBoxEmpty_lex7d")
 theme_override_styles/normal = SubResource("StyleBoxEmpty_bimkj")
 
-[node name="JewelImage" type="TextureRect" parent="ScrollContainer/GridContainer/CrabJewel8"]
-material = SubResource("ShaderMaterial_wkbfl")
-layout_mode = 0
-offset_left = 30.0
-offset_top = -36.0
-offset_right = 255.0
-offset_bottom = 117.0
-texture = ExtResource("3_40osy")
-expand_mode = 1
-stretch_mode = 5
-
-[node name="Label" type="Label" parent="ScrollContainer/GridContainer/CrabJewel8"]
+[node name="Label" type="Label" parent="ScrollContainer/GridContainer/OwlRedGem"]
 layout_mode = 0
 offset_left = 83.0
 offset_top = 102.0
@@ -390,10 +401,21 @@ theme_override_font_sizes/font_size = 22
 theme_override_styles/normal = SubResource("StyleBoxFlat_xa2a0")
 text = "323242"
 
-[node name="CrabJewel9" type="Control" parent="ScrollContainer/GridContainer"]
+[node name="SkullGem2" type="Control" parent="ScrollContainer/GridContainer"]
 layout_mode = 2
 
-[node name="Button" type="Button" parent="ScrollContainer/GridContainer/CrabJewel9"]
+[node name="JewelImage" type="TextureRect" parent="ScrollContainer/GridContainer/SkullGem2"]
+material = SubResource("ShaderMaterial_wkbfl")
+layout_mode = 0
+offset_left = 30.0
+offset_top = -36.0
+offset_right = 255.0
+offset_bottom = 117.0
+texture = ExtResource("14_evo0j")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Button" type="Button" parent="ScrollContainer/GridContainer/SkullGem2"]
 layout_mode = 0
 offset_left = 75.0
 offset_top = 97.0
@@ -403,18 +425,7 @@ theme_override_styles/focus = SubResource("StyleBoxEmpty_mcoks")
 theme_override_styles/pressed = SubResource("StyleBoxEmpty_lex7d")
 theme_override_styles/normal = SubResource("StyleBoxEmpty_bimkj")
 
-[node name="JewelImage" type="TextureRect" parent="ScrollContainer/GridContainer/CrabJewel9"]
-material = SubResource("ShaderMaterial_wkbfl")
-layout_mode = 0
-offset_left = 30.0
-offset_top = -36.0
-offset_right = 255.0
-offset_bottom = 117.0
-texture = ExtResource("3_40osy")
-expand_mode = 1
-stretch_mode = 5
-
-[node name="Label" type="Label" parent="ScrollContainer/GridContainer/CrabJewel9"]
+[node name="Label" type="Label" parent="ScrollContainer/GridContainer/SkullGem2"]
 layout_mode = 0
 offset_left = 83.0
 offset_top = 102.0
@@ -428,10 +439,21 @@ theme_override_font_sizes/font_size = 22
 theme_override_styles/normal = SubResource("StyleBoxFlat_xa2a0")
 text = "323242"
 
-[node name="CrabJewel10" type="Control" parent="ScrollContainer/GridContainer"]
+[node name="SkullGem" type="Control" parent="ScrollContainer/GridContainer"]
 layout_mode = 2
 
-[node name="Button" type="Button" parent="ScrollContainer/GridContainer/CrabJewel10"]
+[node name="JewelImage" type="TextureRect" parent="ScrollContainer/GridContainer/SkullGem"]
+material = SubResource("ShaderMaterial_wkbfl")
+layout_mode = 0
+offset_left = 30.0
+offset_top = -36.0
+offset_right = 255.0
+offset_bottom = 117.0
+texture = ExtResource("15_eb1hd")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Button" type="Button" parent="ScrollContainer/GridContainer/SkullGem"]
 layout_mode = 0
 offset_left = 75.0
 offset_top = 97.0
@@ -441,18 +463,7 @@ theme_override_styles/focus = SubResource("StyleBoxEmpty_mcoks")
 theme_override_styles/pressed = SubResource("StyleBoxEmpty_lex7d")
 theme_override_styles/normal = SubResource("StyleBoxEmpty_bimkj")
 
-[node name="JewelImage" type="TextureRect" parent="ScrollContainer/GridContainer/CrabJewel10"]
-material = SubResource("ShaderMaterial_wkbfl")
-layout_mode = 0
-offset_left = 30.0
-offset_top = -36.0
-offset_right = 255.0
-offset_bottom = 117.0
-texture = ExtResource("3_40osy")
-expand_mode = 1
-stretch_mode = 5
-
-[node name="Label" type="Label" parent="ScrollContainer/GridContainer/CrabJewel10"]
+[node name="Label" type="Label" parent="ScrollContainer/GridContainer/SkullGem"]
 layout_mode = 0
 offset_left = 83.0
 offset_top = 102.0
@@ -466,10 +477,21 @@ theme_override_font_sizes/font_size = 22
 theme_override_styles/normal = SubResource("StyleBoxFlat_xa2a0")
 text = "323242"
 
-[node name="CrabJewel11" type="Control" parent="ScrollContainer/GridContainer"]
+[node name="SnakeGem" type="Control" parent="ScrollContainer/GridContainer"]
 layout_mode = 2
 
-[node name="Button" type="Button" parent="ScrollContainer/GridContainer/CrabJewel11"]
+[node name="JewelImage" type="TextureRect" parent="ScrollContainer/GridContainer/SnakeGem"]
+material = SubResource("ShaderMaterial_wkbfl")
+layout_mode = 0
+offset_left = 30.0
+offset_top = -36.0
+offset_right = 255.0
+offset_bottom = 117.0
+texture = ExtResource("16_2ke6g")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Button" type="Button" parent="ScrollContainer/GridContainer/SnakeGem"]
 layout_mode = 0
 offset_left = 75.0
 offset_top = 97.0
@@ -479,18 +501,7 @@ theme_override_styles/focus = SubResource("StyleBoxEmpty_mcoks")
 theme_override_styles/pressed = SubResource("StyleBoxEmpty_lex7d")
 theme_override_styles/normal = SubResource("StyleBoxEmpty_bimkj")
 
-[node name="JewelImage" type="TextureRect" parent="ScrollContainer/GridContainer/CrabJewel11"]
-material = SubResource("ShaderMaterial_wkbfl")
-layout_mode = 0
-offset_left = 30.0
-offset_top = -36.0
-offset_right = 255.0
-offset_bottom = 117.0
-texture = ExtResource("3_40osy")
-expand_mode = 1
-stretch_mode = 5
-
-[node name="Label" type="Label" parent="ScrollContainer/GridContainer/CrabJewel11"]
+[node name="Label" type="Label" parent="ScrollContainer/GridContainer/SnakeGem"]
 layout_mode = 0
 offset_left = 83.0
 offset_top = 102.0
@@ -504,10 +515,21 @@ theme_override_font_sizes/font_size = 22
 theme_override_styles/normal = SubResource("StyleBoxFlat_xa2a0")
 text = "323242"
 
-[node name="CrabJewel12" type="Control" parent="ScrollContainer/GridContainer"]
+[node name="TigerGem" type="Control" parent="ScrollContainer/GridContainer"]
 layout_mode = 2
 
-[node name="Button" type="Button" parent="ScrollContainer/GridContainer/CrabJewel12"]
+[node name="JewelImage" type="TextureRect" parent="ScrollContainer/GridContainer/TigerGem"]
+material = SubResource("ShaderMaterial_wkbfl")
+layout_mode = 0
+offset_left = 30.0
+offset_top = -36.0
+offset_right = 255.0
+offset_bottom = 117.0
+texture = ExtResource("17_c1lsb")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Button" type="Button" parent="ScrollContainer/GridContainer/TigerGem"]
 layout_mode = 0
 offset_left = 75.0
 offset_top = 97.0
@@ -517,94 +539,7 @@ theme_override_styles/focus = SubResource("StyleBoxEmpty_mcoks")
 theme_override_styles/pressed = SubResource("StyleBoxEmpty_lex7d")
 theme_override_styles/normal = SubResource("StyleBoxEmpty_bimkj")
 
-[node name="JewelImage" type="TextureRect" parent="ScrollContainer/GridContainer/CrabJewel12"]
-material = SubResource("ShaderMaterial_wkbfl")
-layout_mode = 0
-offset_left = 30.0
-offset_top = -36.0
-offset_right = 255.0
-offset_bottom = 117.0
-texture = ExtResource("3_40osy")
-expand_mode = 1
-stretch_mode = 5
-
-[node name="Label" type="Label" parent="ScrollContainer/GridContainer/CrabJewel12"]
-layout_mode = 0
-offset_left = 83.0
-offset_top = 102.0
-offset_right = 202.0
-offset_bottom = 132.0
-theme_override_colors/font_color = Color(0.878431, 0.470588, 0.466667, 1)
-theme_override_colors/font_outline_color = Color(1, 1, 1, 1)
-theme_override_constants/outline_size = 8
-theme_override_fonts/font = ExtResource("7_h4pob")
-theme_override_font_sizes/font_size = 22
-theme_override_styles/normal = SubResource("StyleBoxFlat_xa2a0")
-text = "323242"
-
-[node name="CrabJewel13" type="Control" parent="ScrollContainer/GridContainer"]
-layout_mode = 2
-
-[node name="Button" type="Button" parent="ScrollContainer/GridContainer/CrabJewel13"]
-layout_mode = 0
-offset_left = 75.0
-offset_top = 97.0
-offset_right = 202.0
-offset_bottom = 132.0
-theme_override_styles/focus = SubResource("StyleBoxEmpty_mcoks")
-theme_override_styles/pressed = SubResource("StyleBoxEmpty_lex7d")
-theme_override_styles/normal = SubResource("StyleBoxEmpty_bimkj")
-
-[node name="JewelImage" type="TextureRect" parent="ScrollContainer/GridContainer/CrabJewel13"]
-material = SubResource("ShaderMaterial_wkbfl")
-layout_mode = 0
-offset_left = 30.0
-offset_top = -36.0
-offset_right = 255.0
-offset_bottom = 117.0
-texture = ExtResource("3_40osy")
-expand_mode = 1
-stretch_mode = 5
-
-[node name="Label" type="Label" parent="ScrollContainer/GridContainer/CrabJewel13"]
-layout_mode = 0
-offset_left = 83.0
-offset_top = 102.0
-offset_right = 202.0
-offset_bottom = 132.0
-theme_override_colors/font_color = Color(0.878431, 0.470588, 0.466667, 1)
-theme_override_colors/font_outline_color = Color(1, 1, 1, 1)
-theme_override_constants/outline_size = 8
-theme_override_fonts/font = ExtResource("7_h4pob")
-theme_override_font_sizes/font_size = 22
-theme_override_styles/normal = SubResource("StyleBoxFlat_xa2a0")
-text = "323242"
-
-[node name="CrabJewel14" type="Control" parent="ScrollContainer/GridContainer"]
-layout_mode = 2
-
-[node name="Button" type="Button" parent="ScrollContainer/GridContainer/CrabJewel14"]
-layout_mode = 0
-offset_left = 75.0
-offset_top = 97.0
-offset_right = 202.0
-offset_bottom = 132.0
-theme_override_styles/focus = SubResource("StyleBoxEmpty_mcoks")
-theme_override_styles/pressed = SubResource("StyleBoxEmpty_lex7d")
-theme_override_styles/normal = SubResource("StyleBoxEmpty_bimkj")
-
-[node name="JewelImage" type="TextureRect" parent="ScrollContainer/GridContainer/CrabJewel14"]
-material = SubResource("ShaderMaterial_wkbfl")
-layout_mode = 0
-offset_left = 30.0
-offset_top = -36.0
-offset_right = 255.0
-offset_bottom = 117.0
-texture = ExtResource("3_40osy")
-expand_mode = 1
-stretch_mode = 5
-
-[node name="Label" type="Label" parent="ScrollContainer/GridContainer/CrabJewel14"]
+[node name="Label" type="Label" parent="ScrollContainer/GridContainer/TigerGem"]
 layout_mode = 0
 offset_left = 83.0
 offset_top = 102.0
@@ -622,6 +557,7 @@ text = "323242"
 layout_mode = 2
 
 [node name="Coins" type="Panel" parent="."]
+layout_mode = 0
 offset_left = 121.0
 offset_top = 90.0
 offset_right = 361.0
@@ -667,16 +603,14 @@ theme_override_font_sizes/font_size = 22
 text = "COINS"
 
 [connection signal="pressed" from="ScrollContainer/GridContainer/CrabJewel/Button" to="." method="_on_button_pressed"]
-[connection signal="pressed" from="ScrollContainer/GridContainer/CrabJewel2/Button" to="." method="_on_button_pressed"]
-[connection signal="pressed" from="ScrollContainer/GridContainer/CrabJewel3/Button" to="." method="_on_button_pressed"]
-[connection signal="pressed" from="ScrollContainer/GridContainer/CrabJewel4/Button" to="." method="_on_button_pressed"]
-[connection signal="pressed" from="ScrollContainer/GridContainer/CrabJewel5/Button" to="." method="_on_button_pressed"]
-[connection signal="pressed" from="ScrollContainer/GridContainer/CrabJewel6/Button" to="." method="_on_button_pressed"]
-[connection signal="pressed" from="ScrollContainer/GridContainer/CrabJewel7/Button" to="." method="_on_button_pressed"]
-[connection signal="pressed" from="ScrollContainer/GridContainer/CrabJewel8/Button" to="." method="_on_button_pressed"]
-[connection signal="pressed" from="ScrollContainer/GridContainer/CrabJewel9/Button" to="." method="_on_button_pressed"]
-[connection signal="pressed" from="ScrollContainer/GridContainer/CrabJewel10/Button" to="." method="_on_button_pressed"]
-[connection signal="pressed" from="ScrollContainer/GridContainer/CrabJewel11/Button" to="." method="_on_button_pressed"]
-[connection signal="pressed" from="ScrollContainer/GridContainer/CrabJewel12/Button" to="." method="_on_button_pressed"]
-[connection signal="pressed" from="ScrollContainer/GridContainer/CrabJewel13/Button" to="." method="_on_button_pressed"]
-[connection signal="pressed" from="ScrollContainer/GridContainer/CrabJewel14/Button" to="." method="_on_button_pressed"]
+[connection signal="pressed" from="ScrollContainer/GridContainer/CrocodileJewel/Button" to="." method="_on_button_pressed"]
+[connection signal="pressed" from="ScrollContainer/GridContainer/CupGem/Button" to="." method="_on_button_pressed"]
+[connection signal="pressed" from="ScrollContainer/GridContainer/DragonGem/Button" to="." method="_on_button_pressed"]
+[connection signal="pressed" from="ScrollContainer/GridContainer/MermaidGem/Button" to="." method="_on_button_pressed"]
+[connection signal="pressed" from="ScrollContainer/GridContainer/OwlGem2/Button" to="." method="_on_button_pressed"]
+[connection signal="pressed" from="ScrollContainer/GridContainer/OwlGem/Button" to="." method="_on_button_pressed"]
+[connection signal="pressed" from="ScrollContainer/GridContainer/OwlRedGem/Button" to="." method="_on_button_pressed"]
+[connection signal="pressed" from="ScrollContainer/GridContainer/SkullGem2/Button" to="." method="_on_button_pressed"]
+[connection signal="pressed" from="ScrollContainer/GridContainer/SkullGem/Button" to="." method="_on_button_pressed"]
+[connection signal="pressed" from="ScrollContainer/GridContainer/SnakeGem/Button" to="." method="_on_button_pressed"]
+[connection signal="pressed" from="ScrollContainer/GridContainer/TigerGem/Button" to="." method="_on_button_pressed"]
