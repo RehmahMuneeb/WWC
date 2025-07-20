@@ -171,6 +171,46 @@ func _on_jewel_button_pressed(jewel_id: String):
 
 func _on_jewel_unlocked(jewel_id: String):
 	print(jewel_id + " unlocked!")
+	
+	# Map each jewel_id to its corresponding texture in Global.rare_gem_textures
+	var gem_texture: Texture2D = null
+	
+	match jewel_id:
+		"CrabJewel":
+			gem_texture = preload("res://raregems/crabgem.png")
+		"CrocodileJewel":
+			gem_texture = preload("res://raregems/crocodilegem.png")
+		"CupGem":
+			gem_texture = preload("res://raregems/cupgem.png")
+		"DragonGem":
+			gem_texture = preload("res://raregems/dragon gem.png")
+		"MermaidGem":
+			gem_texture = preload("res://raregems/mermaidgem.png")
+		"OwlGem2":
+			gem_texture = preload("res://raregems/owlgem2.png")
+		"OwlGem":
+			gem_texture = preload("res://raregems/owlgem.png")
+		"OwlRedGem":
+			gem_texture = preload("res://raregems/owlredgem.png")
+		"SkullGem2":
+			gem_texture = preload("res://raregems/skullgem2.png")
+		"SkullGem":
+			gem_texture = preload("res://raregems/skullgem.png")
+		"SnakeGem":
+			gem_texture = preload("res://raregems/snakegem.png")
+		"TigerGem":
+			gem_texture = preload("res://raregems/tigergem.png")
+	
+	if gem_texture:
+		# Add to Global.rare_gems if not already unlocked
+		if not Global.rare_gems.has(gem_texture.resource_path):
+			Global.rare_gems.append(gem_texture.resource_path)
+			Global.save_game()  # Persist the unlocked gem
+			print("Added to inventory: ", gem_texture.resource_path)
+			
+
+	else:
+		push_error("No matching gem texture found for: " + jewel_id)
 
 
 func _on_texture_button_pressed() -> void:
