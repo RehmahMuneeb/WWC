@@ -1,4 +1,6 @@
 extends Node
+var jewel_progress_data: Dictionary = {}  # Stores progress for each jewel
+var jewel_unlock_data: Dictionary = {}    # Stores unlock status for each jewel
 # In your Global.gd or similar save file
 var current_chest_level := 1
 var current_chest_progress := 0
@@ -137,6 +139,8 @@ func add_rare_gem(texture: Texture2D) -> void:
 # Save/load system
 func save_game():
 	var save_data = {
+		"jewel_progress": jewel_progress_data,
+		"jewel_unlocks": jewel_unlock_data,
 		"version": 6,  # Updated version number for chest progression
 		"bar_fill_count": bar_fill_count,
 		"unlocked_items": unlocked_items,
@@ -180,7 +184,10 @@ func load_game():
 			
 			if save_data.has("version"):
 				match save_data.version:
-					6:  # Current version with chest progression
+					6: 
+						jewel_progress_data = save_data.get("jewel_progress", {})
+						jewel_unlock_data = save_data.get("jewel_unlocks", {})
+						 # Current version with chest progression
 						bar_fill_count = save_data.get("bar_fill_count", 0)
 						unlocked_items = save_data.get("unlocked_items", [])
 						overlay_visibility = save_data.get("overlay_visibility", {})
