@@ -1,4 +1,4 @@
-[gd_scene load_steps=30 format=3 uid="uid://cebv8sqummfnp"]
+[gd_scene load_steps=31 format=3 uid="uid://cebv8sqummfnp"]
 
 [ext_resource type="Script" path="res://scenes/Crafting.gd" id="1_wxeuu"]
 [ext_resource type="Texture2D" uid="uid://b0wdau6yqqwn3" path="res://scenes/download (2).jpeg" id="2_jkfcr"]
@@ -27,6 +27,7 @@
 [ext_resource type="Texture2D" uid="uid://bodujvxjeptrj" path="res://raregems/skullgem.png" id="19_ux38g"]
 [ext_resource type="Texture2D" uid="uid://t514myfj7bn3" path="res://raregems/snakegem.png" id="21_22b4c"]
 [ext_resource type="Texture2D" uid="uid://s7hwqn3a8uui" path="res://raregems/tigergem.png" id="23_0gn17"]
+[ext_resource type="Texture2D" uid="uid://cnug6sdoyu4ra" path="res://raregems/BackArrowButton.png" id="28_cqg32"]
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_vqipp"]
 texture = ExtResource("2_jkfcr")
@@ -623,3 +624,13 @@ anchor_bottom = 0.0
 offset_top = 791.0
 offset_bottom = 791.0
 grow_vertical = 0
+
+[node name="TextureButton" type="TextureButton" parent="."]
+layout_mode = 0
+offset_left = -20.0
+offset_top = 79.0
+offset_right = 87.0
+offset_bottom = 159.0
+texture_normal = ExtResource("28_cqg32")
+
+[connection signal="pressed" from="TextureButton" to="." method="_on_texture_button_pressed"]

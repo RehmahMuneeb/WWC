@@ -217,3 +217,7 @@ func get_black_overlay_at_position(global_pos: Vector2) -> TextureRect:
 		if overlay.get_global_rect().has_point(global_pos):
 			return overlay
 	return null
+
+
+func _on_texture_button_pressed() -> void:
+	get_tree().change_scene_to_file("res://scenes/main.tscn")

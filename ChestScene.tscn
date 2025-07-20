@@ -1,4 +1,4 @@
-[gd_scene load_steps=25 format=3 uid="uid://wtkk8mk1ydq7"]
+[gd_scene load_steps=26 format=3 uid="uid://wtkk8mk1ydq7"]
 
 [ext_resource type="Script" path="res://chest_scene.gd" id="1_s0q7v"]
 [ext_resource type="Texture2D" uid="uid://drbl3r01q1k7h" path="res://download (5).jpg" id="2_v6bkl"]
@@ -18,6 +18,7 @@
 [ext_resource type="Texture2D" uid="uid://bodujvxjeptrj" path="res://raregems/skullgem.png" id="15_eb1hd"]
 [ext_resource type="Texture2D" uid="uid://t514myfj7bn3" path="res://raregems/snakegem.png" id="16_2ke6g"]
 [ext_resource type="Texture2D" uid="uid://s7hwqn3a8uui" path="res://raregems/tigergem.png" id="17_c1lsb"]
+[ext_resource type="Texture2D" uid="uid://cnug6sdoyu4ra" path="res://raregems/BackArrowButton.png" id="19_dyti6"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_wkbfl"]
 shader = ExtResource("2_w778w")
@@ -42,15 +43,16 @@ expand_margin_left = 8.0
 expand_margin_top = 4.0
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_gll5b"]
-bg_color = Color(0.945098, 0.941176, 0.415686, 1)
+bg_color = Color(0.995138, 0.795299, 0.549123, 1)
 border_width_left = 11
 border_width_top = 11
 border_width_right = 11
 border_width_bottom = 11
-border_color = Color(1, 0.8, 0.254902, 1)
+border_color = Color(0.964706, 0.705882, 0.298039, 1)
 border_blend = true
-corner_radius_top_left = 10
-corner_radius_top_right = 10
+corner_radius_top_left = 12
+corner_radius_top_right = 12
+corner_radius_bottom_left = 12
 shadow_color = Color(0, 0, 0, 1)
 
 [node name="Control" type="Control"]
@@ -602,6 +604,14 @@ theme_override_fonts/font = ExtResource("7_h4pob")
 theme_override_font_sizes/font_size = 22
 text = "COINS"
 
+[node name="TextureButton" type="TextureButton" parent="."]
+layout_mode = 0
+offset_left = 10.0
+offset_top = 21.0
+offset_right = 117.0
+offset_bottom = 101.0
+texture_normal = ExtResource("19_dyti6")
+
 [connection signal="pressed" from="ScrollContainer/GridContainer/CrabJewel/Button" to="." method="_on_button_pressed"]
 [connection signal="pressed" from="ScrollContainer/GridContainer/CrocodileJewel/Button" to="." method="_on_button_pressed"]
 [connection signal="pressed" from="ScrollContainer/GridContainer/CupGem/Button" to="." method="_on_button_pressed"]
@@ -614,3 +624,4 @@ text = "COINS"
 [connection signal="pressed" from="ScrollContainer/GridContainer/SkullGem/Button" to="." method="_on_button_pressed"]
 [connection signal="pressed" from="ScrollContainer/GridContainer/SnakeGem/Button" to="." method="_on_button_pressed"]
 [connection signal="pressed" from="ScrollContainer/GridContainer/TigerGem/Button" to="." method="_on_button_pressed"]
+[connection signal="pressed" from="TextureButton" to="." method="_on_texture_button_pressed"]

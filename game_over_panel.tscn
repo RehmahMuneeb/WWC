@@ -20,6 +20,8 @@ corner_radius_bottom_left = 33
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_n6yph"]
 bg_color = Color(1, 0.356863, 0.243137, 1)
 border_color = Color(0.121569, 0.729412, 0.901961, 1)
+corner_radius_bottom_right = 21
+corner_radius_bottom_left = 21
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_q37w6"]
 bg_color = Color(1, 0.356863, 0.243137, 1)
