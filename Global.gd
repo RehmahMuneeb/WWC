@@ -1,4 +1,5 @@
 extends Node
+var key_score: int = 0
 var jewel_progress_data: Dictionary = {}  # Stores progress for each jewel
 var jewel_unlock_data: Dictionary = {}    # Stores unlock status for each jewel
 # In your Global.gd or similar save file

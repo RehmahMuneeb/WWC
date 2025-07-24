@@ -115,7 +115,11 @@ func _on_body_entered(body: Node2D) -> void:
 					var oldest = jewel_container.get_child(0)
 					oldest.queue_free()
 					children_to_remove -= 1
-
+	elif body.is_in_group("key"):
+		print("Key collected! +100 KeyScore.")
+		Global.key_score += 1  # New key score
+		body.queue_free()
+		
 	elif body.is_in_group("stone"):
 		print("Stone collided with bucket! Game over.")
 		rock_hit_sound.play()
