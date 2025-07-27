@@ -1,7 +1,9 @@
-[gd_scene load_steps=9 format=3 uid="uid://37evxehmwk7y"]
+[gd_scene load_steps=11 format=3 uid="uid://37evxehmwk7y"]
 
+[ext_resource type="Script" path="res://game_over_panel.gd" id="1_74m2c"]
 [ext_resource type="FontFile" uid="uid://b2clys7lbyd3t" path="res://scenes/Kid Games.ttf" id="2_iih1v"]
 [ext_resource type="Texture2D" uid="uid://1misolt5rykx" path="res://scenes/video-play-watch-player-black-icon-free-png-7017516949743594tmpczaclr.png" id="3_wi27y"]
+[ext_resource type="Texture2D" uid="uid://c7my3t23ibnpi" path="res://c77814c6-0286-43bb-bc6f-5ca21e5a596a.png" id="4_7d24h"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_t8tyv"]
 draw_center = false
@@ -44,6 +46,40 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+script = ExtResource("1_74m2c")
+
+[node name="PlayerIcon" type="Sprite2D" parent="."]
+position = Vector2(218, 42)
+texture = ExtResource("4_7d24h")
+
+[node name="HighScoreIcon" type="Sprite2D" parent="."]
+position = Vector2(156, 0)
+
+[node name="DepthLabel" type="Label" parent="."]
+offset_left = 156.0
+offset_right = 196.0
+offset_bottom = 23.0
+
+[node name="ScrollContainer" type="ScrollContainer" parent="."]
+layout_mode = 0
+offset_left = 150.0
+offset_right = 476.0
+offset_bottom = 460.0
+
+[node name="DepthMap" type="Control" parent="ScrollContainer"]
+layout_mode = 2
+
+[node name="DepthLine" type="Line2D" parent="ScrollContainer/DepthMap"]
+position = Vector2(156, 0)
+
+[node name="MinorTicks" type="Node2D" parent="ScrollContainer/DepthMap"]
+position = Vector2(156, 0)
+
+[node name="MajorTicks" type="Node2D" parent="ScrollContainer/DepthMap"]
+position = Vector2(156, 0)
+
+[node name="CoveredLine" type="Line2D" parent="."]
+position = Vector2(156, 0)
 
 [node name="Panel" type="Panel" parent="."]
 layout_mode = 0

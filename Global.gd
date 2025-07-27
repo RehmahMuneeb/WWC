@@ -23,6 +23,7 @@ var unlock_thresholds = {
 # Track progress and unlocks
 var bar_fill_count = 0
 var unlocked_items = []
+var highscore: int = 0
 
 # Overlay and gem placement tracking
 var overlay_visibility = {}  # Format: {"item_name/overlay_path": visible}

@@ -133,7 +133,9 @@ func show_game_over():
 	AdController.game_over_count += 1
 	game_active = false
 	game_over_panel.visible = true
-	
+	# Pass current score to game over panel
+	if game_over_panel.has_method("set_current_score"):
+		game_over_panel.set_current_score(score)
 	# Show interstitial ad automatically every 3rd game over
 	if AdController.game_over_count % 3 == 0:
 		print("Showing interstitial ad on every 3rd game over")
