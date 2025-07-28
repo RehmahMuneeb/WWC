@@ -66,6 +66,10 @@ offset_bottom = 386.0
 [node name="DepthMap" type="Control" parent="ScrollContainer"]
 layout_mode = 2
 
+[node name="CoveredLine" type="Line2D" parent="ScrollContainer/DepthMap"]
+z_index = 1
+position = Vector2(156, 0)
+
 [node name="DepthLine" type="Line2D" parent="ScrollContainer/DepthMap"]
 position = Vector2(156, 0)
 
@@ -73,9 +77,6 @@ position = Vector2(156, 0)
 position = Vector2(156, 0)
 
 [node name="MajorTicks" type="Node2D" parent="ScrollContainer/DepthMap"]
-position = Vector2(156, 0)
-
-[node name="CoveredLine" type="Line2D" parent="."]
 position = Vector2(156, 0)
 
 [node name="Panel" type="Panel" parent="."]
