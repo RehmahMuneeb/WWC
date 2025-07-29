@@ -1,9 +1,18 @@
-[gd_scene load_steps=11 format=3 uid="uid://37evxehmwk7y"]
+[gd_scene load_steps=14 format=3 uid="uid://37evxehmwk7y"]
 
 [ext_resource type="Script" path="res://game_over_panel.gd" id="1_74m2c"]
+[ext_resource type="Texture2D" uid="uid://bmeef67ybshg5" path="res://scenes/ChatGPT Image Jul 29, 2025, 06_18_40 AM.png" id="2_hgmpp"]
 [ext_resource type="FontFile" uid="uid://b2clys7lbyd3t" path="res://scenes/Kid Games.ttf" id="2_iih1v"]
 [ext_resource type="Texture2D" uid="uid://1misolt5rykx" path="res://scenes/video-play-watch-player-black-icon-free-png-7017516949743594tmpczaclr.png" id="3_wi27y"]
 [ext_resource type="Texture2D" uid="uid://c7my3t23ibnpi" path="res://c77814c6-0286-43bb-bc6f-5ca21e5a596a.png" id="4_7d24h"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_phwy2"]
+bg_color = Color(0.849017, 0.763463, 0.679601, 1)
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_xqme3"]
+texture = ExtResource("2_hgmpp")
+texture_margin_left = 33.0
+texture_margin_right = 33.0
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_t8tyv"]
 draw_center = false
@@ -44,8 +53,24 @@ layout_mode = 3
 anchors_preset = 0
 script = ExtResource("1_74m2c")
 
+[node name="Panel3" type="Panel" parent="."]
+layout_mode = 2
+offset_left = 157.0
+offset_right = 325.0
+offset_bottom = 468.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_phwy2")
+
+[node name="Panel2" type="Panel" parent="."]
+layout_mode = 2
+offset_left = 172.0
+offset_right = 314.0
+offset_bottom = 468.0
+theme_override_styles/panel = SubResource("StyleBoxTexture_xqme3")
+
 [node name="PlayerIcon" type="Sprite2D" parent="."]
+z_index = 2
 position = Vector2(218, 42)
+scale = Vector2(0.4, 0.4)
 texture = ExtResource("4_7d24h")
 
 [node name="HighScoreIcon" type="Sprite2D" parent="."]
@@ -60,15 +85,15 @@ offset_bottom = 23.0
 [node name="ScrollContainer" type="ScrollContainer" parent="."]
 layout_mode = 0
 offset_left = 87.0
-offset_right = 387.0
-offset_bottom = 386.0
+offset_right = 439.0
+offset_bottom = 460.0
 
 [node name="DepthMap" type="Control" parent="ScrollContainer"]
 layout_mode = 2
 
 [node name="CoveredLine" type="Line2D" parent="ScrollContainer/DepthMap"]
 z_index = 1
-position = Vector2(156, 0)
+position = Vector2(156, 100)
 
 [node name="DepthLine" type="Line2D" parent="ScrollContainer/DepthMap"]
 position = Vector2(156, 0)

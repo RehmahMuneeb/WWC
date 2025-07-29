@@ -4,7 +4,7 @@ extends Control
 const MAX_DEPTH := 40000
 const TICK_SPACING := 1000
 const MINOR_TICK_SPACING := 100
-const VIEWPORT_HEIGHT := 600
+const VIEWPORT_HEIGHT := 800
 const DEPTH_SCALE := 0.1
 const SCROLL_SPEED := 500.0  # meters per second
 
@@ -82,7 +82,7 @@ func update_display() -> void:
 
 	# Player icon and labels
 	var player_y := (MAX_DEPTH - current_score) * DEPTH_SCALE
-	player_icon.position = Vector2(200, player_y - scroll_offset)
+	player_icon.position = Vector2(244, player_y - scroll_offset)
 	depth_label.text = "%d m" % int(current_score)
 	depth_label.position = Vector2(40, center_y - 10)
 
@@ -97,7 +97,7 @@ func update_display() -> void:
 func _generate_depth_line() -> void:
 	depth_line.clear_points()
 	depth_line.default_color = UNCOVERED_LINE_COLOR
-	depth_line.width = 2
+	depth_line.width = 8
 	depth_line.add_point(Vector2(0, 0))
 	depth_line.add_point(Vector2(0, MAX_DEPTH * DEPTH_SCALE))
 
@@ -121,14 +121,14 @@ func _generate_ticks() -> void:
 		var y_pos = (MAX_DEPTH - depth) * DEPTH_SCALE
 
 		var tick := Line2D.new()
-		tick.width = 3
+		tick.width = 6
 		tick.default_color = MAJOR_TICK_DEFAULT_COLOR
 		tick.add_point(Vector2(-20, y_pos))
 		tick.add_point(Vector2(20, y_pos))
 		major_ticks.add_child(tick)
 
 		var label := Label.new()
-		label.text = "%d m" % depth
+		label.text = "                    %d m" % depth
 		label.position = Vector2(30, y_pos - 10)
 		major_ticks.add_child(label)
 
