@@ -13,6 +13,8 @@ const COVERED_LINE_COLOR := Color.GOLD
 const UNCOVERED_LINE_COLOR := Color.WHITE
 const MAJOR_TICK_COVERED_COLOR := Color.GOLD
 const MAJOR_TICK_DEFAULT_COLOR := Color.ROYAL_BLUE
+const LABEL_COVERED_COLOR := Color.GOLD
+const LABEL_DEFAULT_COLOR := Color.WHITE
 
 # Nodes
 @onready var depth_line := $ScrollContainer/DepthMap/DepthLine
@@ -70,11 +72,18 @@ func update_display() -> void:
 	covered_line.add_point(Vector2(0, start_y))
 	covered_line.add_point(Vector2(0, MAX_DEPTH * DEPTH_SCALE))
 
-	# Update tick colors
-	for tick in major_ticks.get_children():
-		if tick is Line2D:
-			var tick_depth = MAX_DEPTH - (tick.get_point_position(0).y / DEPTH_SCALE)
-			tick.default_color = MAJOR_TICK_COVERED_COLOR if tick_depth <= current_score else MAJOR_TICK_DEFAULT_COLOR
+	# Update tick and label colors
+	for child in major_ticks.get_children():
+		if child is Line2D:
+			var tick_depth = MAX_DEPTH - (child.get_point_position(0).y / DEPTH_SCALE)
+			child.default_color = MAJOR_TICK_COVERED_COLOR if tick_depth <= current_score else MAJOR_TICK_DEFAULT_COLOR
+		elif child is Label:
+			var label_depth = MAX_DEPTH - (child.position.y + 22) / DEPTH_SCALE  # Adjust for label position
+			# Create new LabelSettings to modify color
+			var new_settings = LabelSettings.new()
+			new_settings.font_size = 28
+			new_settings.font_color = LABEL_COVERED_COLOR if label_depth <= current_score else LABEL_DEFAULT_COLOR
+			child.label_settings = new_settings
 
 	# Update player position and label
 	var player_y := (MAX_DEPTH - current_score) * DEPTH_SCALE
@@ -111,10 +120,6 @@ func _generate_ticks() -> void:
 	for child in minor_ticks.get_children():
 		child.queue_free()
 
-	# Create shared LabelSettings for all tick labels
-	var tick_label_settings := LabelSettings.new()
-	tick_label_settings.font_size = 28  # Set your desired font size here
-
 	# Major ticks and labels
 	for depth in range(0, MAX_DEPTH + 1, TICK_SPACING):
 		var y_pos = (MAX_DEPTH - depth) * DEPTH_SCALE
@@ -127,11 +132,16 @@ func _generate_ticks() -> void:
 		tick.add_point(Vector2(20, y_pos))
 		major_ticks.add_child(tick)
 
-		# Create label with consistent settings
+		# Create label with unique LabelSettings
 		var label := Label.new()
 		label.text = "       → %d m" % depth
 		label.position = Vector2(30, y_pos - 22)
-		label.label_settings = tick_label_settings  # Apply font size
+		
+		var label_settings := LabelSettings.new()
+		label_settings.font_size = 28
+		label_settings.font_color = LABEL_DEFAULT_COLOR
+		label.label_settings = label_settings
+		
 		major_ticks.add_child(label)
 
 	# Minor ticks

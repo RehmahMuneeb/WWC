@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=3 uid="uid://37evxehmwk7y"]
+[gd_scene load_steps=15 format=3 uid="uid://37evxehmwk7y"]
 
 [ext_resource type="Script" path="res://game_over_panel.gd" id="1_74m2c"]
 [ext_resource type="Texture2D" uid="uid://bmeef67ybshg5" path="res://scenes/ChatGPT Image Jul 29, 2025, 06_18_40 AM.png" id="2_hgmpp"]
@@ -13,6 +13,16 @@ bg_color = Color(0, 0, 0, 1)
 texture = ExtResource("2_hgmpp")
 texture_margin_left = 33.0
 texture_margin_right = 33.0
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_pxset"]
+bg_color = Color(0, 0, 0, 1)
+border_width_left = 3
+border_width_top = 3
+border_width_right = 3
+border_width_bottom = 3
+border_color = Color(1, 0.811765, 0, 1)
+corner_radius_top_left = 13
+corner_radius_top_right = 13
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_t8tyv"]
 draw_center = false
@@ -55,8 +65,8 @@ script = ExtResource("1_74m2c")
 
 [node name="Panel3" type="Panel" parent="."]
 layout_mode = 2
-offset_left = 161.0
-offset_right = 277.0
+offset_left = 168.0
+offset_right = 317.0
 offset_bottom = 468.0
 theme_override_styles/panel = SubResource("StyleBoxFlat_phwy2")
 
@@ -78,9 +88,14 @@ position = Vector2(156, 0)
 
 [node name="DepthLabel" type="Label" parent="."]
 layout_mode = 0
-offset_left = 156.0
-offset_right = 196.0
-offset_bottom = 23.0
+offset_left = 57.0
+offset_top = 41.0
+offset_right = 141.0
+offset_bottom = 75.0
+theme_override_font_sizes/font_size = 24
+theme_override_styles/normal = SubResource("StyleBoxFlat_pxset")
+text = "300"
+horizontal_alignment = 1
 
 [node name="ScrollContainer" type="ScrollContainer" parent="."]
 layout_mode = 0
