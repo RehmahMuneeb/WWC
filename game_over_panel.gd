@@ -12,7 +12,7 @@ const SCROLL_SPEED := 500.0  # meters per second
 const COVERED_LINE_COLOR := Color.GOLD
 const UNCOVERED_LINE_COLOR := Color.WHITE
 const MAJOR_TICK_COVERED_COLOR := Color.GOLD
-const MAJOR_TICK_DEFAULT_COLOR := Color.CYAN
+const MAJOR_TICK_DEFAULT_COLOR := Color.ROYAL_BLUE
 
 # Nodes
 @onready var depth_line := $ScrollContainer/DepthMap/DepthLine
@@ -45,11 +45,9 @@ func _process(delta: float) -> void:
 			var direction = sign(target_score - current_score)
 			current_score += direction * SCROLL_SPEED * delta
 			current_score = clamp(current_score, 0, MAX_DEPTH)
-
 		update_display()
 
 func set_current_score(score: int) -> void:
-	print("Scrolling to score:", score)
 	current_score = 0  # Start from top
 	target_score = clamp(score, 0, MAX_DEPTH)
 	scrolling = true
@@ -58,18 +56,16 @@ func update_display() -> void:
 	var center_y: float = VIEWPORT_HEIGHT / 2
 	var scroll_offset: float = (MAX_DEPTH * DEPTH_SCALE) - (current_score * DEPTH_SCALE) - center_y
 
-	# Scroll all elements together
+	# Scroll all elements
 	depth_line.position.y = -scroll_offset
-	covered_line.position.y = -scroll_offset  # Same offset as depth_line
+	covered_line.position.y = -scroll_offset
 	major_ticks.position.y = -scroll_offset
 	minor_ticks.position.y = -scroll_offset
 
-	# Update covered line (progress visualization)
+	# Update covered line
 	covered_line.clear_points()
 	covered_line.default_color = COVERED_LINE_COLOR
-	covered_line.width = depth_line.width  # Match original line width
-	
-	# Calculate the visible portion (from current score down to max depth)
+	covered_line.width = depth_line.width
 	var start_y = (MAX_DEPTH - current_score) * DEPTH_SCALE
 	covered_line.add_point(Vector2(0, start_y))
 	covered_line.add_point(Vector2(0, MAX_DEPTH * DEPTH_SCALE))
@@ -80,13 +76,13 @@ func update_display() -> void:
 			var tick_depth = MAX_DEPTH - (tick.get_point_position(0).y / DEPTH_SCALE)
 			tick.default_color = MAJOR_TICK_COVERED_COLOR if tick_depth <= current_score else MAJOR_TICK_DEFAULT_COLOR
 
-	# Player icon and labels
+	# Update player position and label
 	var player_y := (MAX_DEPTH - current_score) * DEPTH_SCALE
 	player_icon.position = Vector2(244, player_y - scroll_offset)
 	depth_label.text = "%d m" % int(current_score)
 	depth_label.position = Vector2(40, center_y - 10)
 
-	# Highscore
+	# Update highscore
 	if Global.highscore > 0:
 		var highscore_y = (MAX_DEPTH - Global.highscore) * DEPTH_SCALE
 		highscore_icon.position.y = highscore_y - scroll_offset
@@ -104,8 +100,7 @@ func _generate_depth_line() -> void:
 func _generate_covered_line() -> void:
 	covered_line.clear_points()
 	covered_line.default_color = COVERED_LINE_COLOR
-	covered_line.width = depth_line.width  # Match original line width
-	# Start with empty line (will be updated in update_display)
+	covered_line.width = depth_line.width
 	covered_line.add_point(Vector2(0, MAX_DEPTH * DEPTH_SCALE))
 	covered_line.add_point(Vector2(0, MAX_DEPTH * DEPTH_SCALE))
 
@@ -116,10 +111,15 @@ func _generate_ticks() -> void:
 	for child in minor_ticks.get_children():
 		child.queue_free()
 
+	# Create shared LabelSettings for all tick labels
+	var tick_label_settings := LabelSettings.new()
+	tick_label_settings.font_size = 28  # Set your desired font size here
+
 	# Major ticks and labels
 	for depth in range(0, MAX_DEPTH + 1, TICK_SPACING):
 		var y_pos = (MAX_DEPTH - depth) * DEPTH_SCALE
 
+		# Create tick mark
 		var tick := Line2D.new()
 		tick.width = 6
 		tick.default_color = MAJOR_TICK_DEFAULT_COLOR
@@ -127,9 +127,11 @@ func _generate_ticks() -> void:
 		tick.add_point(Vector2(20, y_pos))
 		major_ticks.add_child(tick)
 
+		# Create label with consistent settings
 		var label := Label.new()
-		label.text = "                    %d m" % depth
-		label.position = Vector2(30, y_pos - 10)
+		label.text = "       → %d m" % depth
+		label.position = Vector2(30, y_pos - 22)
+		label.label_settings = tick_label_settings  # Apply font size
 		major_ticks.add_child(label)
 
 	# Minor ticks

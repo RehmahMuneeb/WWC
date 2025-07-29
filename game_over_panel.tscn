@@ -7,7 +7,7 @@
 [ext_resource type="Texture2D" uid="uid://c7my3t23ibnpi" path="res://c77814c6-0286-43bb-bc6f-5ca21e5a596a.png" id="4_7d24h"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_phwy2"]
-bg_color = Color(0.849017, 0.763463, 0.679601, 1)
+bg_color = Color(0, 0, 0, 1)
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_xqme3"]
 texture = ExtResource("2_hgmpp")
@@ -55,8 +55,8 @@ script = ExtResource("1_74m2c")
 
 [node name="Panel3" type="Panel" parent="."]
 layout_mode = 2
-offset_left = 157.0
-offset_right = 325.0
+offset_left = 161.0
+offset_right = 277.0
 offset_bottom = 468.0
 theme_override_styles/panel = SubResource("StyleBoxFlat_phwy2")
 
@@ -85,7 +85,7 @@ offset_bottom = 23.0
 [node name="ScrollContainer" type="ScrollContainer" parent="."]
 layout_mode = 0
 offset_left = 87.0
-offset_right = 439.0
+offset_right = 465.0
 offset_bottom = 460.0
 
 [node name="DepthMap" type="Control" parent="ScrollContainer"]
