@@ -10,11 +10,11 @@ const SCROLL_SPEED := 500.0  # meters per second
 
 # Colors
 const COVERED_LINE_COLOR := Color.GOLD
-const UNCOVERED_LINE_COLOR := Color.WHITE
+const UNCOVERED_LINE_COLOR := Color.TURQUOISE
 const MAJOR_TICK_COVERED_COLOR := Color.GOLD
-const MAJOR_TICK_DEFAULT_COLOR := Color.ROYAL_BLUE
+const MAJOR_TICK_DEFAULT_COLOR := Color.TEAL
 const LABEL_COVERED_COLOR := Color.GOLD
-const LABEL_DEFAULT_COLOR := Color.WHITE
+const LABEL_DEFAULT_COLOR := Color.TURQUOISE
 
 # Nodes
 @onready var depth_line := $ScrollContainer/DepthMap/DepthLine
@@ -87,9 +87,10 @@ func update_display() -> void:
 
 	# Update player position and label
 	var player_y := (MAX_DEPTH - current_score) * DEPTH_SCALE
-	player_icon.position = Vector2(244, player_y - scroll_offset)
-	depth_label.text = "%d m" % int(current_score)
-	depth_label.position = Vector2(40, center_y - 10)
+	player_icon.position = Vector2(242, player_y - scroll_offset)
+	depth_label.text = "YOU SCORE\n%d M" % int(current_score)
+
+	depth_label.position = Vector2(63, center_y - 31)
 
 	# Update highscore
 	if Global.highscore > 0:
@@ -128,14 +129,14 @@ func _generate_ticks() -> void:
 		var tick := Line2D.new()
 		tick.width = 6
 		tick.default_color = MAJOR_TICK_DEFAULT_COLOR
-		tick.add_point(Vector2(-20, y_pos))
-		tick.add_point(Vector2(20, y_pos))
+		tick.add_point(Vector2(-30, y_pos))
+		tick.add_point(Vector2(30, y_pos))
 		major_ticks.add_child(tick)
 
 		# Create label with unique LabelSettings
 		var label := Label.new()
-		label.text = "       → %d m" % depth
-		label.position = Vector2(30, y_pos - 22)
+		label.text = "→ %d m" % depth
+		label.position = Vector2(30, y_pos - 23)
 		
 		var label_settings := LabelSettings.new()
 		label_settings.font_size = 28
@@ -150,7 +151,7 @@ func _generate_ticks() -> void:
 			continue
 		var y_pos = (MAX_DEPTH - depth) * DEPTH_SCALE
 		var tick := Line2D.new()
-		tick.width = 1
+		tick.width = 2
 		tick.default_color = Color.GRAY
 		tick.add_point(Vector2(-10, y_pos))
 		tick.add_point(Vector2(10, y_pos))
