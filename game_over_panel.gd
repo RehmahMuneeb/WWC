@@ -23,12 +23,15 @@ const LABEL_DEFAULT_COLOR := Color.TURQUOISE
 @onready var minor_ticks := $ScrollContainer/DepthMap/MinorTicks
 @onready var player_icon := $PlayerIcon
 @onready var depth_label := $DepthLabel
-@onready var highscore_icon := $HighScoreIcon
+@onready var highscore_icon := $ScrollContainer/DepthMap/HighScoreIcon
+@onready var highscore_label := $ScrollContainer/DepthMap/HighScoreLabel
 
 # Score tracking
 var current_score: float = 0.0
 var target_score: float = 0.0
 var scrolling: bool = false
+var highscore_broken := false
+var blink_tween: Tween = null
 
 func _ready():
 	process_mode = Node.PROCESS_MODE_ALWAYS
@@ -44,6 +47,7 @@ func _process(delta: float) -> void:
 		if abs(current_score - target_score) < 1:
 			current_score = target_score
 			scrolling = false
+			_stop_blinking()
 		else:
 			var direction = sign(target_score - current_score)
 			current_score += direction * SCROLL_SPEED * delta
@@ -51,9 +55,10 @@ func _process(delta: float) -> void:
 		update_display()
 
 func set_current_score(score: int) -> void:
-	current_score = 0  # Start from top
+	current_score = 0
 	target_score = clamp(score, 0, MAX_DEPTH)
 	scrolling = true
+	highscore_broken = false
 
 func update_display() -> void:
 	var center_y: float = VIEWPORT_HEIGHT / 2
@@ -91,18 +96,56 @@ func update_display() -> void:
 	depth_label.text = "YOU SCORE\n%d M" % int(current_score)
 	depth_label.position = Vector2(63, center_y - 31)
 
-	# Update highscore
+	# High score logic
+# High score logic
 	if current_score > Global.highscore:
-		Global.highscore = int(current_score)
-		_save_highscore()
+		if not highscore_broken:
+			highscore_broken = true
+			Global.highscore = int(current_score)
+			_save_highscore()
 
+# Start blinking only if score is scrolling
+	if Global.highscore > 0 and scrolling:
+		if not _is_blinking():
+			_start_blinking()
+	elif _is_blinking():
+		_stop_blinking()
+
+
+
+	# Position highscore icon and label
 	if Global.highscore > 0:
 		var highscore_y = (MAX_DEPTH - Global.highscore) * DEPTH_SCALE
-		highscore_icon.position.y = highscore_y - scroll_offset
+		highscore_icon.position = Vector2(156, highscore_y - scroll_offset)
 		highscore_icon.visible = true
+
+		highscore_label.text = "HIGHSCORE\n%d M" % Global.highscore
+		highscore_label.position = Vector2(0, highscore_y - scroll_offset - 31)
+		highscore_label.visible = true
 	else:
 		highscore_icon.visible = false
+		highscore_label.visible = false
 
+# Tween logic for blinking
+func _start_blinking():
+	_stop_blinking()
+	highscore_icon.modulate.a = 1.0
+	blink_tween = create_tween()
+	blink_tween.set_loops()
+	blink_tween.set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)
+	blink_tween.tween_property(highscore_icon, "modulate:a", 0.2, 0.4)
+	blink_tween.tween_property(highscore_icon, "modulate:a", 1.0, 0.4)
+
+func _stop_blinking():
+	if blink_tween:
+		blink_tween.kill()
+		blink_tween = null
+		highscore_icon.modulate.a = 1.0
+
+func _is_blinking() -> bool:
+	return blink_tween != null
+
+# Depth line generation
 func _generate_depth_line() -> void:
 	depth_line.clear_points()
 	depth_line.default_color = UNCOVERED_LINE_COLOR
@@ -125,7 +168,6 @@ func _generate_ticks() -> void:
 
 	for depth in range(0, MAX_DEPTH + 1, TICK_SPACING):
 		var y_pos = (MAX_DEPTH - depth) * DEPTH_SCALE
-
 		var tick := Line2D.new()
 		tick.width = 6
 		tick.default_color = MAJOR_TICK_DEFAULT_COLOR
@@ -153,7 +195,7 @@ func _generate_ticks() -> void:
 		tick.add_point(Vector2(10, y_pos))
 		minor_ticks.add_child(tick)
 
-# -- Highscore persistence --
+# Highscore persistence
 func _save_highscore():
 	var file = FileAccess.open("user://highscore.save", FileAccess.WRITE)
 	if file:
