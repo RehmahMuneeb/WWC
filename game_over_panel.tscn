@@ -1,9 +1,10 @@
-[gd_scene load_steps=15 format=3 uid="uid://37evxehmwk7y"]
+[gd_scene load_steps=16 format=3 uid="uid://37evxehmwk7y"]
 
 [ext_resource type="Script" path="res://game_over_panel.gd" id="1_74m2c"]
 [ext_resource type="Texture2D" uid="uid://bmeef67ybshg5" path="res://scenes/ChatGPT Image Jul 29, 2025, 06_18_40 AM.png" id="2_hgmpp"]
 [ext_resource type="FontFile" uid="uid://b2clys7lbyd3t" path="res://scenes/Kid Games.ttf" id="2_iih1v"]
 [ext_resource type="Texture2D" uid="uid://1misolt5rykx" path="res://scenes/video-play-watch-player-black-icon-free-png-7017516949743594tmpczaclr.png" id="3_wi27y"]
+[ext_resource type="Texture2D" uid="uid://4pmkbnxocbxf" path="res://TROPHY.png" id="4_2rk2p"]
 [ext_resource type="Texture2D" uid="uid://bhrf3ksx88g41" path="res://Full-bucket1.png" id="4_pts8l"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_phwy2"]
@@ -101,9 +102,8 @@ position = Vector2(136, 396)
 texture = ExtResource("4_pts8l")
 
 [node name="HighScoreIcon" type="Sprite2D" parent="."]
-visible = false
 position = Vector2(93, 276)
-texture = ExtResource("4_pts8l")
+texture = ExtResource("4_2rk2p")
 
 [node name="DepthLabel" type="Label" parent="."]
 layout_mode = 0

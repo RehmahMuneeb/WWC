@@ -6,7 +6,7 @@ const TICK_SPACING := 1000
 const MINOR_TICK_SPACING := 100
 const VIEWPORT_HEIGHT := 800
 const DEPTH_SCALE := 0.1
-const SCROLL_SPEED := 500.0  # meters per second
+const SCROLL_SPEED := 500.0
 
 # Colors
 const COVERED_LINE_COLOR := Color.GOLD
@@ -33,6 +33,7 @@ var scrolling: bool = false
 func _ready():
 	process_mode = Node.PROCESS_MODE_ALWAYS
 	set_process(true)
+	_load_highscore()
 	_generate_depth_line()
 	_generate_covered_line()
 	_generate_ticks()
@@ -78,8 +79,7 @@ func update_display() -> void:
 			var tick_depth = MAX_DEPTH - (child.get_point_position(0).y / DEPTH_SCALE)
 			child.default_color = MAJOR_TICK_COVERED_COLOR if tick_depth <= current_score else MAJOR_TICK_DEFAULT_COLOR
 		elif child is Label:
-			var label_depth = MAX_DEPTH - (child.position.y + 22) / DEPTH_SCALE  # Adjust for label position
-			# Create new LabelSettings to modify color
+			var label_depth = MAX_DEPTH - (child.position.y + 22) / DEPTH_SCALE
 			var new_settings = LabelSettings.new()
 			new_settings.font_size = 28
 			new_settings.font_color = LABEL_COVERED_COLOR if label_depth <= current_score else LABEL_DEFAULT_COLOR
@@ -89,10 +89,13 @@ func update_display() -> void:
 	var player_y := (MAX_DEPTH - current_score) * DEPTH_SCALE
 	player_icon.position = Vector2(242, player_y - scroll_offset)
 	depth_label.text = "YOU SCORE\n%d M" % int(current_score)
-
 	depth_label.position = Vector2(63, center_y - 31)
 
 	# Update highscore
+	if current_score > Global.highscore:
+		Global.highscore = int(current_score)
+		_save_highscore()
+
 	if Global.highscore > 0:
 		var highscore_y = (MAX_DEPTH - Global.highscore) * DEPTH_SCALE
 		highscore_icon.position.y = highscore_y - scroll_offset
@@ -115,17 +118,14 @@ func _generate_covered_line() -> void:
 	covered_line.add_point(Vector2(0, MAX_DEPTH * DEPTH_SCALE))
 
 func _generate_ticks() -> void:
-	# Clear previous ticks
 	for child in major_ticks.get_children():
 		child.queue_free()
 	for child in minor_ticks.get_children():
 		child.queue_free()
 
-	# Major ticks and labels
 	for depth in range(0, MAX_DEPTH + 1, TICK_SPACING):
 		var y_pos = (MAX_DEPTH - depth) * DEPTH_SCALE
 
-		# Create tick mark
 		var tick := Line2D.new()
 		tick.width = 6
 		tick.default_color = MAJOR_TICK_DEFAULT_COLOR
@@ -133,19 +133,15 @@ func _generate_ticks() -> void:
 		tick.add_point(Vector2(30, y_pos))
 		major_ticks.add_child(tick)
 
-		# Create label with unique LabelSettings
 		var label := Label.new()
 		label.text = "→ %d m" % depth
 		label.position = Vector2(30, y_pos - 23)
-		
 		var label_settings := LabelSettings.new()
 		label_settings.font_size = 28
 		label_settings.font_color = LABEL_DEFAULT_COLOR
 		label.label_settings = label_settings
-		
 		major_ticks.add_child(label)
 
-	# Minor ticks
 	for depth in range(0, MAX_DEPTH + 1, MINOR_TICK_SPACING):
 		if depth % TICK_SPACING == 0:
 			continue
@@ -156,3 +152,17 @@ func _generate_ticks() -> void:
 		tick.add_point(Vector2(-10, y_pos))
 		tick.add_point(Vector2(10, y_pos))
 		minor_ticks.add_child(tick)
+
+# -- Highscore persistence --
+func _save_highscore():
+	var file = FileAccess.open("user://highscore.save", FileAccess.WRITE)
+	if file:
+		file.store_32(Global.highscore)
+
+func _load_highscore():
+	if FileAccess.file_exists("user://highscore.save"):
+		var file = FileAccess.open("user://highscore.save", FileAccess.READ)
+		if file:
+			Global.highscore = file.get_32()
+	else:
+		Global.highscore = 0
