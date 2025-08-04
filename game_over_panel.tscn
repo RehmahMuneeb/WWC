@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=3 uid="uid://37evxehmwk7y"]
+[gd_scene load_steps=18 format=3 uid="uid://37evxehmwk7y"]
 
 [ext_resource type="Script" path="res://game_over_panel.gd" id="1_74m2c"]
 [ext_resource type="Texture2D" uid="uid://bmeef67ybshg5" path="res://scenes/ChatGPT Image Jul 29, 2025, 06_18_40 AM.png" id="2_hgmpp"]
@@ -6,35 +6,43 @@
 [ext_resource type="Texture2D" uid="uid://1misolt5rykx" path="res://scenes/video-play-watch-player-black-icon-free-png-7017516949743594tmpczaclr.png" id="3_wi27y"]
 [ext_resource type="Texture2D" uid="uid://4pmkbnxocbxf" path="res://TROPHY.png" id="4_2rk2p"]
 [ext_resource type="Texture2D" uid="uid://bhrf3ksx88g41" path="res://Full-bucket1.png" id="4_pts8l"]
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_phwy2"]
-bg_color = Color(0, 0, 0, 1)
-border_width_left = 11
-border_width_right = 11
-border_width_bottom = 11
-border_color = Color(1, 1, 1, 1)
-border_blend = true
-corner_radius_top_left = 33
-corner_radius_top_right = 33
-corner_radius_bottom_right = 33
-corner_radius_bottom_left = 33
+[ext_resource type="Texture2D" uid="uid://b6gbs6ko3lwhe" path="res://scenes/Dreamy aura wallpaper with swirling pastel colors….jpeg" id="7_alp8u"]
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_xqme3"]
 texture = ExtResource("2_hgmpp")
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_phwy2"]
+bg_color = Color(0.988235, 0.776471, 0, 1)
+border_width_left = 4
+border_width_top = 4
+border_width_right = 4
+border_width_bottom = 15
+border_color = Color(1, 1, 1, 1)
+border_blend = true
+corner_radius_bottom_right = 33
+corner_radius_bottom_left = 33
+
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_votdl"]
-bg_color = Color(0.807843, 0.239216, 0.290196, 1)
-border_width_left = 3
-border_width_top = 2
-border_width_right = 2
-border_width_bottom = 2
-border_color = Color(1, 0.827451, 0, 1)
-corner_radius_top_left = 11
-corner_radius_top_right = 11
-corner_radius_bottom_right = 11
-corner_radius_bottom_left = 11
+bg_color = Color(0.291466, 0.606419, 1, 1)
+border_width_left = 4
+border_width_top = 4
+border_width_right = 4
+border_width_bottom = 4
+border_color = Color(1, 1, 1, 1)
+corner_radius_top_left = 12
+corner_radius_bottom_left = 12
 shadow_color = Color(1, 0.866667, 0, 1)
-shadow_size = 3
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_7mnse"]
+bg_color = Color(1, 0.363015, 0.159059, 1)
+border_width_left = 4
+border_width_top = 4
+border_width_right = 4
+border_width_bottom = 4
+border_color = Color(1, 1, 1, 1)
+corner_radius_top_left = 12
+corner_radius_bottom_left = 12
+shadow_color = Color(1, 0.866667, 0, 1)
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_t8tyv"]
 draw_center = false
@@ -75,13 +83,6 @@ layout_mode = 3
 anchors_preset = 0
 script = ExtResource("1_74m2c")
 
-[node name="Panel3" type="Panel" parent="."]
-visible = false
-layout_mode = 2
-offset_right = 479.0
-offset_bottom = 468.0
-theme_override_styles/panel = SubResource("StyleBoxFlat_phwy2")
-
 [node name="Panel2" type="Panel" parent="."]
 layout_mode = 2
 offset_left = -28.0
@@ -89,33 +90,51 @@ offset_right = 512.0
 offset_bottom = 858.0
 theme_override_styles/panel = SubResource("StyleBoxTexture_xqme3")
 
+[node name="DepthMetrerPanel" type="Panel" parent="."]
+z_index = 3
+layout_mode = 2
+offset_left = 58.0
+offset_right = 427.0
+offset_bottom = 67.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_phwy2")
+
+[node name="Label" type="Label" parent="DepthMetrerPanel"]
+layout_mode = 0
+offset_left = 16.0
+offset_top = 9.0
+offset_right = 359.0
+offset_bottom = 55.0
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/shadow_offset_y = 6
+theme_override_constants/outline_size = 4
+theme_override_fonts/font = ExtResource("2_iih1v")
+theme_override_font_sizes/font_size = 39
+text = "DEPTH   METER"
+
 [node name="PlayerIcon" type="Sprite2D" parent="."]
-z_index = 2
+z_index = 3
 position = Vector2(208, 42)
 scale = Vector2(0.4, 0.44)
 texture = ExtResource("4_pts8l")
 
-[node name="PlayerIcon2" type="Sprite2D" parent="."]
-visible = false
-z_index = 2
-position = Vector2(136, 396)
-texture = ExtResource("4_pts8l")
-
 [node name="DepthLabel" type="Label" parent="."]
 layout_mode = 0
-offset_left = 71.0
-offset_top = 374.0
-offset_right = 210.0
-offset_bottom = 431.0
-theme_override_colors/font_color = Color(1, 0.784314, 0, 1)
+offset_left = 117.0
+offset_top = 365.0
+offset_right = 245.0
+offset_bottom = 412.0
+theme_override_colors/font_color = Color(1, 1, 1, 1)
 theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
 theme_override_colors/font_outline_color = Color(0, 0, 0.8, 1)
+theme_override_constants/line_spacing = -1
 theme_override_constants/shadow_offset_y = 3
 theme_override_constants/outline_size = 3
 theme_override_fonts/font = ExtResource("2_iih1v")
-theme_override_font_sizes/font_size = 18
+theme_override_font_sizes/font_size = 16
 theme_override_styles/normal = SubResource("StyleBoxFlat_votdl")
-text = "YOU SCORE
+text = "YOUR DEPTH
 21221 M
 "
 horizontal_alignment = 1
@@ -123,9 +142,9 @@ vertical_alignment = 1
 
 [node name="ScrollContainer" type="ScrollContainer" parent="."]
 layout_mode = 0
-offset_left = 87.0
-offset_right = 465.0
-offset_bottom = 460.0
+offset_left = 86.0
+offset_right = 464.0
+offset_bottom = 505.0
 
 [node name="DepthMap" type="Control" parent="ScrollContainer"]
 layout_mode = 2
@@ -133,24 +152,25 @@ layout_mode = 2
 [node name="HighScoreIcon" type="Sprite2D" parent="ScrollContainer/DepthMap"]
 z_index = 2
 position = Vector2(157, 276)
-scale = Vector2(0.7, 0.7)
+scale = Vector2(0.6, 0.6)
 texture = ExtResource("4_2rk2p")
 
 [node name="HighScoreLabel" type="Label" parent="ScrollContainer/DepthMap"]
 z_index = 1
 layout_mode = 0
-offset_left = -16.0
-offset_top = 374.0
-offset_right = 123.0
-offset_bottom = 431.0
-theme_override_colors/font_color = Color(1, 0.784314, 0, 1)
+offset_left = 26.0
+offset_top = 199.0
+offset_right = 151.0
+offset_bottom = 246.0
+theme_override_colors/font_color = Color(1, 1, 1, 1)
 theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
 theme_override_colors/font_outline_color = Color(0, 0, 0.8, 1)
+theme_override_constants/line_spacing = -1
 theme_override_constants/shadow_offset_y = 3
 theme_override_constants/outline_size = 3
 theme_override_fonts/font = ExtResource("2_iih1v")
-theme_override_font_sizes/font_size = 18
-theme_override_styles/normal = SubResource("StyleBoxFlat_votdl")
+theme_override_font_sizes/font_size = 16
+theme_override_styles/normal = SubResource("StyleBoxFlat_7mnse")
 text = "YOU SCORE
 21221 M
 "
@@ -165,6 +185,7 @@ position = Vector2(156, 100)
 position = Vector2(156, 0)
 
 [node name="MinorTicks" type="Node2D" parent="ScrollContainer/DepthMap"]
+z_index = 2
 position = Vector2(156, 0)
 
 [node name="MajorTicks" type="Node2D" parent="ScrollContainer/DepthMap"]
@@ -173,9 +194,9 @@ position = Vector2(156, 0)
 [node name="Panel" type="Panel" parent="."]
 layout_mode = 0
 offset_left = 60.0
-offset_top = 476.0
+offset_top = 510.0
 offset_right = 423.0
-offset_bottom = 686.0
+offset_bottom = 720.0
 theme_override_styles/panel = SubResource("StyleBoxFlat_t8tyv")
 
 [node name="GiveUpButton" type="Button" parent="Panel"]
@@ -214,3 +235,13 @@ text = "RISE
  AGAIN !"
 icon = ExtResource("3_wi27y")
 expand_icon = true
+
+[node name="TextureRect" type="TextureRect" parent="."]
+visible = false
+z_index = -1
+layout_mode = 0
+offset_right = 437.0
+offset_bottom = 889.0
+texture = ExtResource("7_alp8u")
+expand_mode = 1
+stretch_mode = 5

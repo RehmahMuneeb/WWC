@@ -4,17 +4,17 @@ extends Control
 const MAX_DEPTH := 40000
 const TICK_SPACING := 1000
 const MINOR_TICK_SPACING := 100
-const VIEWPORT_HEIGHT := 800
+const VIEWPORT_HEIGHT := 850
 const DEPTH_SCALE := 0.1
 const SCROLL_SPEED := 500.0
 
 # Colors
 const COVERED_LINE_COLOR := Color.GOLD
-const UNCOVERED_LINE_COLOR := Color.TURQUOISE
-const MAJOR_TICK_COVERED_COLOR := Color.GOLD
-const MAJOR_TICK_DEFAULT_COLOR := Color.TEAL
+const UNCOVERED_LINE_COLOR := Color.FLORAL_WHITE
+const MAJOR_TICK_COVERED_COLOR := Color.TOMATO
+const MAJOR_TICK_DEFAULT_COLOR := Color.TOMATO
 const LABEL_COVERED_COLOR := Color.GOLD
-const LABEL_DEFAULT_COLOR := Color.TURQUOISE
+const LABEL_DEFAULT_COLOR := Color.AQUAMARINE
 
 # Nodes
 @onready var depth_line := $ScrollContainer/DepthMap/DepthLine
@@ -94,7 +94,7 @@ func update_display() -> void:
 	var player_y := (MAX_DEPTH - current_score) * DEPTH_SCALE
 	player_icon.position = Vector2(242, player_y - scroll_offset)
 	depth_label.text = "YOU SCORE\n%d M" % int(current_score)
-	depth_label.position = Vector2(63, center_y - 31)
+	depth_label.position = Vector2(95, center_y - 25)
 
 	# High score logic
 # High score logic
@@ -120,7 +120,7 @@ func update_display() -> void:
 		highscore_icon.visible = true
 
 		highscore_label.text = "HIGHSCORE\n%d M" % Global.highscore
-		highscore_label.position = Vector2(0, highscore_y - scroll_offset - 31)
+		highscore_label.position = Vector2(12, highscore_y - scroll_offset - 22)
 		highscore_label.visible = true
 	else:
 		highscore_icon.visible = false
@@ -149,7 +149,7 @@ func _is_blinking() -> bool:
 func _generate_depth_line() -> void:
 	depth_line.clear_points()
 	depth_line.default_color = UNCOVERED_LINE_COLOR
-	depth_line.width = 8
+	depth_line.width = 44
 	depth_line.add_point(Vector2(0, 0))
 	depth_line.add_point(Vector2(0, MAX_DEPTH * DEPTH_SCALE))
 
@@ -171,8 +171,8 @@ func _generate_ticks() -> void:
 		var tick := Line2D.new()
 		tick.width = 6
 		tick.default_color = MAJOR_TICK_DEFAULT_COLOR
-		tick.add_point(Vector2(-30, y_pos))
-		tick.add_point(Vector2(30, y_pos))
+		tick.add_point(Vector2(-18, y_pos))
+		tick.add_point(Vector2(18, y_pos))
 		major_ticks.add_child(tick)
 
 		var label := Label.new()
