@@ -1,18 +1,18 @@
 [gd_scene load_steps=18 format=3 uid="uid://37evxehmwk7y"]
 
 [ext_resource type="Script" path="res://game_over_panel.gd" id="1_74m2c"]
-[ext_resource type="Texture2D" uid="uid://bmeef67ybshg5" path="res://scenes/ChatGPT Image Jul 29, 2025, 06_18_40 AM.png" id="2_hgmpp"]
+[ext_resource type="Texture2D" uid="uid://dbv6g5mqsaetb" path="res://scenes/Walls.png" id="2_hq5cg"]
 [ext_resource type="FontFile" uid="uid://b2clys7lbyd3t" path="res://scenes/Kid Games.ttf" id="2_iih1v"]
+[ext_resource type="Texture2D" uid="uid://cklnteux30g4b" path="res://scenes/8819ac75-06af-4622-bae7-85e309916505.jpeg" id="2_lxcrl"]
 [ext_resource type="Texture2D" uid="uid://1misolt5rykx" path="res://scenes/video-play-watch-player-black-icon-free-png-7017516949743594tmpczaclr.png" id="3_wi27y"]
 [ext_resource type="Texture2D" uid="uid://4pmkbnxocbxf" path="res://TROPHY.png" id="4_2rk2p"]
 [ext_resource type="Texture2D" uid="uid://bhrf3ksx88g41" path="res://Full-bucket1.png" id="4_pts8l"]
-[ext_resource type="Texture2D" uid="uid://b6gbs6ko3lwhe" path="res://scenes/Dreamy aura wallpaper with swirling pastel colors….jpeg" id="7_alp8u"]
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_xqme3"]
-texture = ExtResource("2_hgmpp")
+texture = ExtResource("2_hq5cg")
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_phwy2"]
-bg_color = Color(0.988235, 0.776471, 0, 1)
+bg_color = Color(0.893889, 0.701276, 0, 1)
 border_width_left = 4
 border_width_top = 4
 border_width_right = 4
@@ -83,7 +83,17 @@ layout_mode = 3
 anchors_preset = 0
 script = ExtResource("1_74m2c")
 
+[node name="TextureRect" type="TextureRect" parent="."]
+layout_mode = 0
+offset_left = -922.0
+offset_top = -87.0
+offset_right = 1414.0
+offset_bottom = 863.0
+texture = ExtResource("2_lxcrl")
+expand_mode = 1
+
 [node name="Panel2" type="Panel" parent="."]
+z_index = 1
 layout_mode = 2
 offset_left = -28.0
 offset_right = 512.0
@@ -235,13 +245,3 @@ text = "RISE
  AGAIN !"
 icon = ExtResource("3_wi27y")
 expand_icon = true
-
-[node name="TextureRect" type="TextureRect" parent="."]
-visible = false
-z_index = -1
-layout_mode = 0
-offset_right = 437.0
-offset_bottom = 889.0
-texture = ExtResource("7_alp8u")
-expand_mode = 1
-stretch_mode = 5
