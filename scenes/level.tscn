@@ -316,6 +316,10 @@ UNLOCKED"
 horizontal_alignment = 1
 
 [node name="GameOverPanel" parent="." instance=ExtResource("8_ufjks")]
+milestone_scroll_speed = 8
+
+[node name="HighScoreLabel" parent="GameOverPanel/ScrollContainer/DepthMap" index="1"]
+layout_mode = 0
 
 [node name="CollisionSoundPlayer" type="AudioStreamPlayer2D" parent="."]
 process_mode = 3

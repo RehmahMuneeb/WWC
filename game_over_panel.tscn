@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=3 uid="uid://37evxehmwk7y"]
+[gd_scene load_steps=19 format=3 uid="uid://37evxehmwk7y"]
 
 [ext_resource type="Script" path="res://game_over_panel.gd" id="1_74m2c"]
 [ext_resource type="Texture2D" uid="uid://dbv6g5mqsaetb" path="res://scenes/Walls.png" id="2_hq5cg"]
@@ -7,6 +7,7 @@
 [ext_resource type="Texture2D" uid="uid://1misolt5rykx" path="res://scenes/video-play-watch-player-black-icon-free-png-7017516949743594tmpczaclr.png" id="3_wi27y"]
 [ext_resource type="Texture2D" uid="uid://4pmkbnxocbxf" path="res://TROPHY.png" id="4_2rk2p"]
 [ext_resource type="Texture2D" uid="uid://bhrf3ksx88g41" path="res://Full-bucket1.png" id="4_pts8l"]
+[ext_resource type="Texture2D" uid="uid://lqfh8spffrg0" path="res://scenes/download__4_-removebg-preview.png" id="7_vbp8l"]
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_xqme3"]
 texture = ExtResource("2_hq5cg")
@@ -79,6 +80,7 @@ corner_radius_top_right = 22
 corner_radius_bottom_left = 22
 
 [node name="GameOverPanel" type="Control"]
+process_mode = 3
 layout_mode = 3
 anchors_preset = 0
 script = ExtResource("1_74m2c")
@@ -167,7 +169,6 @@ texture = ExtResource("4_2rk2p")
 
 [node name="HighScoreLabel" type="Label" parent="ScrollContainer/DepthMap"]
 z_index = 1
-layout_mode = 0
 offset_left = 26.0
 offset_top = 199.0
 offset_right = 151.0
@@ -200,6 +201,10 @@ position = Vector2(156, 0)
 
 [node name="MajorTicks" type="Node2D" parent="ScrollContainer/DepthMap"]
 position = Vector2(156, 0)
+
+[node name="MileStone" type="Sprite2D" parent="ScrollContainer/DepthMap"]
+scale = Vector2(0.3, 0.3)
+texture = ExtResource("7_vbp8l")
 
 [node name="Panel" type="Panel" parent="."]
 layout_mode = 0

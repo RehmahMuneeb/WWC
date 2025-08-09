@@ -1,22 +1,31 @@
 extends Control
 
-# Configuration
+### CONFIGURATION ###
 const MAX_DEPTH := 40000
 const TICK_SPACING := 1000
-const MINOR_TICK_SPACING := 100
+const MINOR_TICK_SPACING := 250 # changed from 100 to 250
 const VIEWPORT_HEIGHT := 850
-const DEPTH_SCALE := 0.1
-const SCROLL_SPEED := 500.0
+const DEPTH_SCALE := 0.08
+const MILESTONE_SPACING := 11000
+const MILESTONE_PEEK_DURATION := 1.2
+const HIGHSCORE_PEEK_DURATION := 1.0
+const MILESTONE_ICON_SPACING := 16
+const MARGIN_THRESHOLD := 10.0
 
-# Colors
+@export var scroll_speed := 1.8
+@export var milestone_scroll_speed := 8
+
+### COLORS ###
 const COVERED_LINE_COLOR := Color.GOLD
 const UNCOVERED_LINE_COLOR := Color.FLORAL_WHITE
 const MAJOR_TICK_COVERED_COLOR := Color.TOMATO
 const MAJOR_TICK_DEFAULT_COLOR := Color.TOMATO
 const LABEL_COVERED_COLOR := Color.GOLD
 const LABEL_DEFAULT_COLOR := Color.AQUAMARINE
+const MILESTONE_COLOR := Color.GOLDENROD
+const HIGHSCORE_COLOR := Color.GOLDENROD
 
-# Nodes
+### NODES ###
 @onready var depth_line := $ScrollContainer/DepthMap/DepthLine
 @onready var covered_line := $ScrollContainer/DepthMap/CoveredLine
 @onready var major_ticks := $ScrollContainer/DepthMap/MajorTicks
@@ -25,127 +34,220 @@ const LABEL_DEFAULT_COLOR := Color.AQUAMARINE
 @onready var depth_label := $DepthLabel
 @onready var highscore_icon := $ScrollContainer/DepthMap/HighScoreIcon
 @onready var highscore_label := $ScrollContainer/DepthMap/HighScoreLabel
+@onready var milestone_icon := $ScrollContainer/DepthMap/MileStone
 
-# Score tracking
+### STATE VARIABLES ###
+var milestone_icons: Array = []
+var current_milestone_number: int = 0
 var current_score: float = 0.0
 var target_score: float = 0.0
 var scrolling: bool = false
-var highscore_broken := false
-var blink_tween: Tween = null
+var highscore_broken: bool = false
+var next_milestone: int = 0
+var is_showing_milestone: bool = false
+var is_showing_highscore: bool = false
+var original_score: float = 0.0
 
-func _ready():
-	process_mode = Node.PROCESS_MODE_ALWAYS
-	set_process(true)
+var _label_settings_default: LabelSettings
+var _label_settings_covered: LabelSettings
+
+# Tween references
+var scroll_tween: Tween
+var milestone_tween: Tween
+var ui_tween: Tween
+var highscore_tween: Tween
+
+# Tick generation limit
+var _tick_limit: int = 20000
+
+func _ready() -> void:
+	if OS.has_feature("mobile"):
+		get_viewport().msaa_2d = Viewport.MSAA_2X
+		get_viewport().canvas_item_default_texture_filter = Viewport.DEFAULT_CANVAS_ITEM_TEXTURE_FILTER_LINEAR
+
+	_label_settings_default = LabelSettings.new()
+	_label_settings_default.font_size = 24
+	_label_settings_default.font_color = LABEL_DEFAULT_COLOR
+
+	_label_settings_covered = LabelSettings.new()
+	_label_settings_covered.font_size = 24
+	_label_settings_covered.font_color = LABEL_COVERED_COLOR
+
 	_load_highscore()
 	_generate_depth_line()
 	_generate_covered_line()
-	_generate_ticks()
-	update_display()
+	_regenerate_ticks(_tick_limit)
 
-func _process(delta: float) -> void:
-	if scrolling:
-		if abs(current_score - target_score) < 1:
-			current_score = target_score
-			scrolling = false
-			_stop_blinking()
-		else:
-			var direction = sign(target_score - current_score)
-			current_score += direction * SCROLL_SPEED * delta
-			current_score = clamp(current_score, 0, MAX_DEPTH)
-		update_display()
+	for i in range(2):
+		var new_icon = milestone_icon.duplicate()
+		$ScrollContainer/DepthMap.add_child(new_icon)
+		new_icon.name = "MileStone%d" % (i + 2)
+		milestone_icons.append(new_icon)
+	milestone_icons = [milestone_icon] + milestone_icons
+
+	update_display()
+	next_milestone = _get_next_milestone(0)
 
 func set_current_score(score: int) -> void:
-	current_score = 0
+	if is_showing_milestone or is_showing_highscore:
+		return
 	target_score = clamp(score, 0, MAX_DEPTH)
+	_start_scroll_to_target()
+
+func _start_scroll_to_target() -> void:
+	if scroll_tween:
+		scroll_tween.kill()
 	scrolling = true
-	highscore_broken = false
+	scroll_tween = create_tween().set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)
+	scroll_tween.tween_method(_update_scroll_position, current_score, target_score, scroll_speed)
+	scroll_tween.tween_callback(_on_target_reached)
+
+func _update_scroll_position(value: float) -> void:
+	current_score = value
+	_ensure_tick_limit_for_score(current_score)
+	if not highscore_broken and current_score > Global.highscore:
+		_handle_highscore_pass()
+		return
+	update_display()
+
+func _on_target_reached() -> void:
+	scrolling = false
+	if not is_showing_milestone and not is_showing_highscore:
+		_start_milestone_sequence()
+
+func _start_milestone_sequence() -> void:
+	if is_showing_milestone or is_showing_highscore:
+		return
+	is_showing_milestone = true
+	original_score = current_score
+	next_milestone = _get_next_milestone(current_score)
+	if current_score >= next_milestone:
+		next_milestone = _get_next_milestone(next_milestone + 1)
+	if next_milestone > MAX_DEPTH:
+		is_showing_milestone = false
+		return
+
+	ui_tween = create_tween()
+	ui_tween.tween_property(player_icon, "modulate:a", 0.0, 0.3)
+	ui_tween.parallel().tween_property(depth_label, "modulate:a", 0.0, 0.3)
+	await ui_tween.finished
+	player_icon.visible = false
+	depth_label.visible = false
+
+	scroll_tween = create_tween().set_trans(Tween.TRANS_QUINT).set_ease(Tween.EASE_OUT)
+	scroll_tween.tween_method(_update_scroll_position, current_score, next_milestone, milestone_scroll_speed)
+	await scroll_tween.finished
+
+	milestone_tween = create_tween()
+	for icon in milestone_icons:
+		if icon.visible:
+			milestone_tween.tween_property(icon, "scale", Vector2(1.3, 1.3), 0.2)
+			milestone_tween.tween_property(icon, "scale", Vector2(1.0, 1.0), 0.2)
+	await milestone_tween.finished
+
+	await get_tree().create_timer(MILESTONE_PEEK_DURATION).timeout
+
+	scroll_tween = create_tween().set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_IN_OUT)
+	scroll_tween.tween_method(_update_scroll_position, current_score, original_score, milestone_scroll_speed)
+	await scroll_tween.finished
+
+	player_icon.visible = true
+	depth_label.visible = true
+	ui_tween = create_tween()
+	ui_tween.tween_property(player_icon, "modulate:a", 1.0, 0.3)
+	ui_tween.parallel().tween_property(depth_label, "modulate:a", 1.0, 0.3)
+	await ui_tween.finished
+
+	next_milestone = _get_next_milestone(current_score)
+	is_showing_milestone = false
+
+func _handle_highscore_pass() -> void:
+	highscore_broken = true
+	is_showing_highscore = true
+	original_score = current_score
+	if scroll_tween:
+		scroll_tween.pause()
+	highscore_tween = create_tween()
+	highscore_tween.tween_property(highscore_icon, "modulate", HIGHSCORE_COLOR, 0.3)
+	highscore_tween.parallel().tween_property(highscore_label, "modulate", HIGHSCORE_COLOR, 0.3)
+	highscore_tween.tween_property(highscore_icon, "scale", Vector2(1.5, 1.5), 0.3)
+	await highscore_tween.finished
+
+	await get_tree().create_timer(HIGHSCORE_PEEK_DURATION).timeout
+
+	highscore_tween = create_tween()
+	highscore_tween.tween_property(highscore_icon, "modulate", Color.WHITE, 0.3)
+	highscore_tween.parallel().tween_property(highscore_label, "modulate", Color.WHITE, 0.3)
+	highscore_tween.tween_property(highscore_icon, "scale", Vector2(1.0, 1.0), 0.3)
+	await highscore_tween.finished
+
+	Global.highscore = int(current_score)
+	_save_highscore()
+	is_showing_highscore = false
+	_start_scroll_to_target()
+
+func _get_next_milestone(score: float) -> int:
+	return ceil((score + 1) / MILESTONE_SPACING) * MILESTONE_SPACING
 
 func update_display() -> void:
 	var center_y: float = VIEWPORT_HEIGHT / 2
 	var scroll_offset: float = (MAX_DEPTH * DEPTH_SCALE) - (current_score * DEPTH_SCALE) - center_y
 
-	# Scroll all elements
 	depth_line.position.y = -scroll_offset
-	covered_line.position.y = -scroll_offset
 	major_ticks.position.y = -scroll_offset
 	minor_ticks.position.y = -scroll_offset
 
-	# Update covered line
-	covered_line.clear_points()
-	covered_line.default_color = COVERED_LINE_COLOR
-	covered_line.width = depth_line.width
-	var start_y = (MAX_DEPTH - current_score) * DEPTH_SCALE
-	covered_line.add_point(Vector2(0, start_y))
-	covered_line.add_point(Vector2(0, MAX_DEPTH * DEPTH_SCALE))
+	if not is_showing_milestone:
+		var start_y_abs: float = (MAX_DEPTH - current_score) * DEPTH_SCALE
+		var covered_height: float = current_score * DEPTH_SCALE
+		covered_line.default_color = COVERED_LINE_COLOR
+		covered_line.width = depth_line.width
+		covered_line.position.y = -scroll_offset + start_y_abs
+		covered_line.set_point_position(0, Vector2(0, 0))
+		covered_line.set_point_position(1, Vector2(0, covered_height))
+		for child in major_ticks.get_children():
+			if child is Line2D:
+				var tick_depth: float = MAX_DEPTH - (child.get_point_position(0).y / DEPTH_SCALE)
+				var should_be_covered: bool = tick_depth <= current_score
+				child.default_color = MAJOR_TICK_COVERED_COLOR if should_be_covered else MAJOR_TICK_DEFAULT_COLOR
+			elif child is Label:
+				var label_depth: float = MAX_DEPTH - (child.position.y + 22) / DEPTH_SCALE
+				var should_be_covered_label: bool = label_depth <= current_score
+				child.label_settings = _label_settings_covered if should_be_covered_label else _label_settings_default
+	else:
+		covered_line.clear_points()
 
-	# Update tick and label colors
-	for child in major_ticks.get_children():
-		if child is Line2D:
-			var tick_depth = MAX_DEPTH - (child.get_point_position(0).y / DEPTH_SCALE)
-			child.default_color = MAJOR_TICK_COVERED_COLOR if tick_depth <= current_score else MAJOR_TICK_DEFAULT_COLOR
-		elif child is Label:
-			var label_depth = MAX_DEPTH - (child.position.y + 22) / DEPTH_SCALE
-			var new_settings = LabelSettings.new()
-			new_settings.font_size = 28
-			new_settings.font_color = LABEL_COVERED_COLOR if label_depth <= current_score else LABEL_DEFAULT_COLOR
-			child.label_settings = new_settings
+	if not is_showing_milestone and not is_showing_highscore:
+		var player_y := (MAX_DEPTH - current_score) * DEPTH_SCALE
+		player_icon.position = Vector2(242, player_y - scroll_offset)
+		depth_label.text = "YOU\n%d M" % int(current_score)
+		depth_label.position = Vector2(95, center_y - 25)
 
-	# Update player position and label
-	var player_y := (MAX_DEPTH - current_score) * DEPTH_SCALE
-	player_icon.position = Vector2(242, player_y - scroll_offset)
-	depth_label.text = "YOU SCORE\n%d M" % int(current_score)
-	depth_label.position = Vector2(95, center_y - 25)
-
-	# High score logic
-# High score logic
-	if current_score > Global.highscore:
-		if not highscore_broken:
-			highscore_broken = true
-			Global.highscore = int(current_score)
-			_save_highscore()
-
-# Start blinking only if score is scrolling
-	if Global.highscore > 0 and scrolling:
-		if not _is_blinking():
-			_start_blinking()
-	elif _is_blinking():
-		_stop_blinking()
-
-
-
-	# Position highscore icon and label
 	if Global.highscore > 0:
-		var highscore_y = (MAX_DEPTH - Global.highscore) * DEPTH_SCALE
+		var highscore_y: float = (MAX_DEPTH - Global.highscore) * DEPTH_SCALE
 		highscore_icon.position = Vector2(156, highscore_y - scroll_offset)
-		highscore_icon.visible = true
-
-		highscore_label.text = "HIGHSCORE\n%d M" % Global.highscore
+		highscore_label.text = "TOP\n%d M" % Global.highscore
 		highscore_label.position = Vector2(12, highscore_y - scroll_offset - 22)
 		highscore_label.visible = true
+		highscore_icon.visible = true
 	else:
-		highscore_icon.visible = false
 		highscore_label.visible = false
+		highscore_icon.visible = false
 
-# Tween logic for blinking
-func _start_blinking():
-	_stop_blinking()
-	highscore_icon.modulate.a = 1.0
-	blink_tween = create_tween()
-	blink_tween.set_loops()
-	blink_tween.set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)
-	blink_tween.tween_property(highscore_icon, "modulate:a", 0.2, 0.4)
-	blink_tween.tween_property(highscore_icon, "modulate:a", 1.0, 0.4)
+	if MILESTONE_SPACING > 0:
+		var next_milestone_depth: int = _get_next_milestone(current_score)
+		current_milestone_number = next_milestone_depth / MILESTONE_SPACING if next_milestone_depth > 0 else 0
+		for icon in milestone_icons:
+			icon.visible = false
+		if next_milestone_depth <= MAX_DEPTH:
+			var milestone_y: float = (MAX_DEPTH - next_milestone_depth) * DEPTH_SCALE - scroll_offset
+			var icon_count: int = min(current_milestone_number, 3)
+			for i in range(icon_count):
+				if i < milestone_icons.size():
+					var x_offset: float = (i - (icon_count - 1) / 2.0) * MILESTONE_ICON_SPACING
+					milestone_icons[i].position = Vector2(156 + x_offset, milestone_y)
+					milestone_icons[i].visible = true
 
-func _stop_blinking():
-	if blink_tween:
-		blink_tween.kill()
-		blink_tween = null
-		highscore_icon.modulate.a = 1.0
-
-func _is_blinking() -> bool:
-	return blink_tween != null
-
-# Depth line generation
 func _generate_depth_line() -> void:
 	depth_line.clear_points()
 	depth_line.default_color = UNCOVERED_LINE_COLOR
@@ -157,45 +259,53 @@ func _generate_covered_line() -> void:
 	covered_line.clear_points()
 	covered_line.default_color = COVERED_LINE_COLOR
 	covered_line.width = depth_line.width
-	covered_line.add_point(Vector2(0, MAX_DEPTH * DEPTH_SCALE))
-	covered_line.add_point(Vector2(0, MAX_DEPTH * DEPTH_SCALE))
+	covered_line.add_point(Vector2(0, 0))
+	covered_line.add_point(Vector2(0, 0))
 
-func _generate_ticks() -> void:
+func _regenerate_ticks(upto_depth: int) -> void:
+	var cap_depth: int = min(upto_depth, MAX_DEPTH)
 	for child in major_ticks.get_children():
 		child.queue_free()
 	for child in minor_ticks.get_children():
 		child.queue_free()
-
-	for depth in range(0, MAX_DEPTH + 1, TICK_SPACING):
-		var y_pos = (MAX_DEPTH - depth) * DEPTH_SCALE
+	for depth in range(0, cap_depth + 1, TICK_SPACING):
+		var y_pos: float = (MAX_DEPTH - depth) * DEPTH_SCALE
 		var tick := Line2D.new()
 		tick.width = 6
 		tick.default_color = MAJOR_TICK_DEFAULT_COLOR
-		tick.add_point(Vector2(-18, y_pos))
-		tick.add_point(Vector2(18, y_pos))
+		tick.add_point(Vector2(-18, 0))
+		tick.add_point(Vector2(18, 0))
+		tick.position = Vector2(0, y_pos)
 		major_ticks.add_child(tick)
-
 		var label := Label.new()
 		label.text = "→ %d m" % depth
 		label.position = Vector2(30, y_pos - 23)
-		var label_settings := LabelSettings.new()
-		label_settings.font_size = 28
-		label_settings.font_color = LABEL_DEFAULT_COLOR
-		label.label_settings = label_settings
+		label.label_settings = _label_settings_default
 		major_ticks.add_child(label)
-
-	for depth in range(0, MAX_DEPTH + 1, MINOR_TICK_SPACING):
+	for depth in range(0, cap_depth + 1, MINOR_TICK_SPACING):
 		if depth % TICK_SPACING == 0:
 			continue
-		var y_pos = (MAX_DEPTH - depth) * DEPTH_SCALE
+		var y_pos: float = (MAX_DEPTH - depth) * DEPTH_SCALE
 		var tick := Line2D.new()
 		tick.width = 2
 		tick.default_color = Color.GRAY
-		tick.add_point(Vector2(-10, y_pos))
-		tick.add_point(Vector2(10, y_pos))
+		tick.add_point(Vector2(-10, 0))
+		tick.add_point(Vector2(10, 0))
+		tick.position = Vector2(0, y_pos)
 		minor_ticks.add_child(tick)
 
-# Highscore persistence
+func _ensure_tick_limit_for_score(score_val: float) -> void:
+	var old_limit: int = _tick_limit
+	if score_val > 20000:
+		_tick_limit = 40000
+	elif score_val > 10000:
+		_tick_limit = 30000
+	else:
+		_tick_limit = 20000
+	if _tick_limit != old_limit:
+		_regenerate_ticks(_tick_limit)
+
+# === FIXED HIGHSCORE PERSISTENCE ===
 func _save_highscore():
 	var file = FileAccess.open("user://highscore.save", FileAccess.WRITE)
 	if file:
@@ -208,3 +318,13 @@ func _load_highscore():
 			Global.highscore = file.get_32()
 	else:
 		Global.highscore = 0
+
+func _exit_tree() -> void:
+	if scroll_tween:
+		scroll_tween.kill()
+	if milestone_tween:
+		milestone_tween.kill()
+	if ui_tween:
+		ui_tween.kill()
+	if highscore_tween:
+		highscore_tween.kill()
