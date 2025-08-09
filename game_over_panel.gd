@@ -3,7 +3,7 @@ extends Control
 ### CONFIGURATION ###
 const MAX_DEPTH := 40000
 const TICK_SPACING := 1000
-const MINOR_TICK_SPACING := 250 # changed from 100 to 250
+const MINOR_TICK_SPACING := 250
 const VIEWPORT_HEIGHT := 850
 const DEPTH_SCALE := 0.08
 const MILESTONE_SPACING := 11000
@@ -43,21 +43,19 @@ var current_score: float = 0.0
 var target_score: float = 0.0
 var scrolling: bool = false
 var highscore_broken: bool = false
-var next_milestone: int = 0
 var is_showing_milestone: bool = false
 var is_showing_highscore: bool = false
 var original_score: float = 0.0
+var next_milestone: int = 0
 
 var _label_settings_default: LabelSettings
 var _label_settings_covered: LabelSettings
 
-# Tween references
 var scroll_tween: Tween
 var milestone_tween: Tween
 var ui_tween: Tween
 var highscore_tween: Tween
 
-# Tick generation limit
 var _tick_limit: int = 20000
 
 func _ready() -> void:
@@ -105,7 +103,8 @@ func _start_scroll_to_target() -> void:
 func _update_scroll_position(value: float) -> void:
 	current_score = value
 	_ensure_tick_limit_for_score(current_score)
-	if not highscore_broken and current_score > Global.highscore:
+	# Check highscore only if not already broken and not showing milestone/highscore animation
+	if not highscore_broken and not is_showing_milestone and not is_showing_highscore and current_score > Global.highscore:
 		_handle_highscore_pass()
 		return
 	update_display()
