@@ -47,6 +47,7 @@ var is_showing_milestone: bool = false
 var is_showing_highscore: bool = false
 var original_score: float = 0.0
 var next_milestone: int = 0
+var covered_line_drawn: bool = false  # NEW FLAG
 
 var _label_settings_default: LabelSettings
 var _label_settings_covered: LabelSettings
@@ -103,14 +104,28 @@ func _start_scroll_to_target() -> void:
 func _update_scroll_position(value: float) -> void:
 	current_score = value
 	_ensure_tick_limit_for_score(current_score)
-	# Check highscore only if not already broken and not showing milestone/highscore animation
+
+	# Only update covered line length on first scroll
+	if not covered_line_drawn:
+		_update_covered_line(current_score)
+
 	if not highscore_broken and not is_showing_milestone and not is_showing_highscore and current_score > Global.highscore:
 		_handle_highscore_pass()
 		return
+
 	update_display()
+
+func _update_covered_line(score_val: float) -> void:
+	covered_line.default_color = COVERED_LINE_COLOR
+	covered_line.width = depth_line.width
+	covered_line.clear_points()
+	var start_y = (MAX_DEPTH - score_val) * DEPTH_SCALE
+	covered_line.add_point(Vector2(0, start_y))
+	covered_line.add_point(Vector2(0, MAX_DEPTH * DEPTH_SCALE))
 
 func _on_target_reached() -> void:
 	scrolling = false
+	covered_line_drawn = true  # Lock covered line after first scroll
 	if not is_showing_milestone and not is_showing_highscore:
 		_start_milestone_sequence()
 
@@ -192,36 +207,31 @@ func update_display() -> void:
 	var center_y: float = VIEWPORT_HEIGHT / 2
 	var scroll_offset: float = (MAX_DEPTH * DEPTH_SCALE) - (current_score * DEPTH_SCALE) - center_y
 
+	# Keep everything scrolling
 	depth_line.position.y = -scroll_offset
+	covered_line.position.y = -scroll_offset
 	major_ticks.position.y = -scroll_offset
 	minor_ticks.position.y = -scroll_offset
 
-	if not is_showing_milestone:
-		var start_y_abs: float = (MAX_DEPTH - current_score) * DEPTH_SCALE
-		var covered_height: float = current_score * DEPTH_SCALE
-		covered_line.default_color = COVERED_LINE_COLOR
-		covered_line.width = depth_line.width
-		covered_line.position.y = -scroll_offset + start_y_abs
-		covered_line.set_point_position(0, Vector2(0, 0))
-		covered_line.set_point_position(1, Vector2(0, covered_height))
-		for child in major_ticks.get_children():
-			if child is Line2D:
-				var tick_depth: float = MAX_DEPTH - (child.get_point_position(0).y / DEPTH_SCALE)
-				var should_be_covered: bool = tick_depth <= current_score
-				child.default_color = MAJOR_TICK_COVERED_COLOR if should_be_covered else MAJOR_TICK_DEFAULT_COLOR
-			elif child is Label:
-				var label_depth: float = MAX_DEPTH - (child.position.y + 22) / DEPTH_SCALE
-				var should_be_covered_label: bool = label_depth <= current_score
-				child.label_settings = _label_settings_covered if should_be_covered_label else _label_settings_default
-	else:
-		covered_line.clear_points()
+	# Tick colors
+	for child in major_ticks.get_children():
+		if child is Line2D:
+			var tick_depth: float = MAX_DEPTH - (child.get_point_position(0).y / DEPTH_SCALE)
+			var should_be_covered: bool = tick_depth <= current_score
+			child.default_color = MAJOR_TICK_COVERED_COLOR if should_be_covered else MAJOR_TICK_DEFAULT_COLOR
+		elif child is Label:
+			var label_depth: float = MAX_DEPTH - (child.position.y + 22) / DEPTH_SCALE
+			var should_be_covered_label: bool = label_depth <= current_score
+			child.label_settings = _label_settings_covered if should_be_covered_label else _label_settings_default
 
+	# Player icon
 	if not is_showing_milestone and not is_showing_highscore:
 		var player_y := (MAX_DEPTH - current_score) * DEPTH_SCALE
 		player_icon.position = Vector2(242, player_y - scroll_offset)
 		depth_label.text = "YOU\n%d M" % int(current_score)
 		depth_label.position = Vector2(95, center_y - 25)
 
+	# Highscore icon
 	if Global.highscore > 0:
 		var highscore_y: float = (MAX_DEPTH - Global.highscore) * DEPTH_SCALE
 		highscore_icon.position = Vector2(156, highscore_y - scroll_offset)
@@ -233,6 +243,7 @@ func update_display() -> void:
 		highscore_label.visible = false
 		highscore_icon.visible = false
 
+	# Milestones
 	if MILESTONE_SPACING > 0:
 		var next_milestone_depth: int = _get_next_milestone(current_score)
 		current_milestone_number = next_milestone_depth / MILESTONE_SPACING if next_milestone_depth > 0 else 0
@@ -304,7 +315,6 @@ func _ensure_tick_limit_for_score(score_val: float) -> void:
 	if _tick_limit != old_limit:
 		_regenerate_ticks(_tick_limit)
 
-# === FIXED HIGHSCORE PERSISTENCE ===
 func _save_highscore():
 	var file = FileAccess.open("user://highscore.save", FileAccess.WRITE)
 	if file:
