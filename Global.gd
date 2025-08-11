@@ -140,7 +140,9 @@ func add_rare_gem(texture: Texture2D) -> void:
 
 # Save/load system
 func save_game():
+	
 	var save_data = {
+		"highscore": Global.highscore,
 		"jewel_progress": jewel_progress_data,
 		"jewel_unlocks": jewel_unlock_data,
 		"version": 6,  # Updated version number for chest progression
@@ -187,6 +189,7 @@ func load_game():
 			if save_data.has("version"):
 				match save_data.version:
 					6: 
+						Global.highscore = save_data.get("highscore", 0)
 						jewel_progress_data = save_data.get("jewel_progress", {})
 						jewel_unlock_data = save_data.get("jewel_unlocks", {})
 						 # Current version with chest progression
@@ -258,6 +261,7 @@ func load_game():
 		initialize_chest_targets()
 
 func reset_game():
+	highscore = 0
 	bar_fill_count = 0
 	unlocked_items = []
 	overlay_visibility = {}
