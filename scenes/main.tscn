@@ -8,8 +8,8 @@
 [ext_resource type="Texture2D" uid="uid://c0wrku8bdwr2a" path="res://scenes/PirateWell.png" id="4_hxdqg"]
 [ext_resource type="Texture2D" uid="uid://cuyv54tmnimb8" path="res://withoutrope3.png" id="6_1nad6"]
 [ext_resource type="Shader" path="res://scenes/bucket.gdshader" id="6_ruh5g"]
-[ext_resource type="Texture2D" uid="uid://lqfh8spffrg0" path="res://scenes/download__4_-removebg-preview.png" id="7_yfs5u"]
 [ext_resource type="Texture2D" uid="uid://hw8f70sk4mk" path="res://scenes/20250718_1445_Colorful_Gem_Treasure_remix_01k0eens8gft89h5cf840njnfk-removebg-preview.png" id="10_hbcix"]
+[ext_resource type="Texture2D" uid="uid://bowefh18pd15" path="res://Book.png" id="11_dt0en"]
 [ext_resource type="Script" path="res://scenes/label_2.gd" id="11_n181m"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_3170s"]
@@ -417,6 +417,38 @@ texture = ExtResource("10_hbcix")
 expand_mode = 1
 stretch_mode = 5
 
+[node name="AntiqueLabel" type="Label" parent="TextureRect3"]
+layout_mode = 1
+offset_left = 391.0
+offset_top = 28.0
+offset_right = 604.0
+offset_bottom = 65.0
+theme_override_colors/font_color = Color(0.607843, 0.454902, 0.27451, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_colors/font_outline_color = Color(1, 1, 1, 1)
+theme_override_constants/shadow_offset_x = 3
+theme_override_constants/outline_size = 12
+theme_override_constants/shadow_outline_size = 3
+theme_override_fonts/font = ExtResource("3_nak5y")
+theme_override_font_sizes/font_size = 22
+text = "ANTIQUES"
+
+[node name="RareGemLabel" type="Label" parent="TextureRect3"]
+layout_mode = 1
+offset_left = 146.0
+offset_top = 29.9999
+offset_right = 359.0
+offset_bottom = 66.9999
+theme_override_colors/font_color = Color(0.607843, 0.454902, 0.27451, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_colors/font_outline_color = Color(1, 1, 1, 1)
+theme_override_constants/shadow_offset_x = 3
+theme_override_constants/outline_size = 12
+theme_override_constants/shadow_outline_size = 3
+theme_override_fonts/font = ExtResource("3_nak5y")
+theme_override_font_sizes/font_size = 22
+text = "RARE  GEMS"
+
 [node name="CestButton" type="Button" parent="TextureRect3"]
 layout_mode = 0
 offset_left = 193.0
@@ -431,55 +463,24 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = 38.0
-offset_top = 241.0
-offset_right = 204.0
-offset_bottom = 432.0
+offset_left = -2.00005
+offset_top = 311.0
+offset_right = 184.0
+offset_bottom = 480.0
 grow_horizontal = 2
 grow_vertical = 2
+rotation = -0.567232
 theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
 theme_override_constants/outline_size = 8
 theme_override_font_sizes/font_size = 33
 theme_override_styles/focus = SubResource("StyleBoxEmpty_r6ek4")
 theme_override_styles/pressed = SubResource("StyleBoxFlat_ribck")
 theme_override_styles/normal = SubResource("StyleBoxFlat_ribck")
-icon = ExtResource("7_yfs5u")
+icon = ExtResource("11_dt0en")
 flat = true
 icon_alignment = 1
 vertical_icon_alignment = 0
 expand_icon = true
-
-[node name="RareGemLabel" type="Label" parent="Crafting"]
-layout_mode = 1
-offset_left = -229.0
-offset_top = -5.00006
-offset_right = -16.0
-offset_bottom = 31.9999
-theme_override_colors/font_color = Color(0.607843, 0.454902, 0.27451, 1)
-theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
-theme_override_colors/font_outline_color = Color(1, 1, 1, 1)
-theme_override_constants/shadow_offset_x = 3
-theme_override_constants/outline_size = 12
-theme_override_constants/shadow_outline_size = 3
-theme_override_fonts/font = ExtResource("3_nak5y")
-theme_override_font_sizes/font_size = 22
-text = "RARE  GEMS"
-
-[node name="AntiqueLabel" type="Label" parent="Crafting"]
-layout_mode = 1
-offset_left = 16.0
-offset_top = -7.0
-offset_right = 229.0
-offset_bottom = 30.0
-theme_override_colors/font_color = Color(0.607843, 0.454902, 0.27451, 1)
-theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
-theme_override_colors/font_outline_color = Color(1, 1, 1, 1)
-theme_override_constants/shadow_offset_x = 3
-theme_override_constants/outline_size = 12
-theme_override_constants/shadow_outline_size = 3
-theme_override_fonts/font = ExtResource("3_nak5y")
-theme_override_font_sizes/font_size = 22
-text = "ANTIQUES"
 
 [connection signal="pressed" from="Items" to="." method="_on_items_pressed"]
 [connection signal="pressed" from="Inventory" to="." method="_on_inventory_pressed"]

@@ -8,12 +8,13 @@ const VIEWPORT_HEIGHT := 850
 const DEPTH_SCALE := 0.08
 const MILESTONE_SPACING := 11000
 const MILESTONE_PEEK_DURATION := 1.2
-const HIGHSCORE_PEEK_DURATION := 1.0
+const HIGHSCORE_PEEK_DURATION := 2.0
 const MILESTONE_ICON_SPACING := 16
 const MARGIN_THRESHOLD := 10.0
+const MILESTONE_DELAY := 2.0  # Added constant for the 2-second delay
 
 @export var scroll_speed := 1.8
-@export var milestone_scroll_speed := 8
+@export var milestone_scroll_speed := 6
 
 ### COLORS ###
 const COVERED_LINE_COLOR := Color.GOLD
@@ -130,6 +131,8 @@ func _on_target_reached() -> void:
 		Global.highscore = pending_highscore
 		pending_highscore = -1
 	
+	# Add 2-second delay before starting milestone sequence
+	await get_tree().create_timer(MILESTONE_DELAY).timeout
 	_start_milestone_sequence()
 
 func _start_milestone_sequence() -> void:
@@ -160,7 +163,7 @@ func _start_milestone_sequence() -> void:
 			milestone_tween.tween_property(icon, "scale", Vector2(1.0, 1.0), 0.2)
 	await milestone_tween.finished
 
-	await get_tree().create_timer(MILESTONE_PEEK_DURATION).timeout
+
 
 	scroll_tween = create_tween().set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_IN_OUT)
 	scroll_tween.tween_method(_update_scroll_position, current_score, original_score, milestone_scroll_speed)
@@ -200,13 +203,20 @@ func update_display() -> void:
 	major_ticks.position.y = -scroll_offset
 	minor_ticks.position.y = -scroll_offset
 
-	for child in major_ticks.get_children():
-		if child is Line2D:
-			var tick_depth: float = MAX_DEPTH - (child.get_point_position(0).y / DEPTH_SCALE)
-			child.default_color = MAJOR_TICK_COVERED_COLOR if tick_depth <= current_score else MAJOR_TICK_DEFAULT_COLOR
-		elif child is Label:
-			var label_depth: float = MAX_DEPTH - (child.position.y + 22) / DEPTH_SCALE
-			child.label_settings = _label_settings_covered if label_depth <= current_score else _label_settings_default
+	# Only update label colors when not in milestone sequence
+	if not is_milestone_sequence:
+		for child in major_ticks.get_children():
+			if child is Line2D:
+				var tick_depth: float = MAX_DEPTH - (child.get_point_position(0).y / DEPTH_SCALE)
+				child.default_color = MAJOR_TICK_COVERED_COLOR if tick_depth <= current_score else MAJOR_TICK_DEFAULT_COLOR
+			elif child is Label:
+				var label_depth: float = MAX_DEPTH - (child.position.y + 22) / DEPTH_SCALE
+				child.label_settings = _label_settings_covered if label_depth <= current_score else _label_settings_default
+	else:
+		# During milestone sequence, keep all labels in default color
+		for child in major_ticks.get_children():
+			if child is Label:
+				child.label_settings = _label_settings_default
 
 	var player_y := (MAX_DEPTH - current_score) * DEPTH_SCALE
 	player_icon.position = Vector2(242, player_y - scroll_offset)
@@ -216,7 +226,12 @@ func update_display() -> void:
 	if Global.highscore > 0:
 		var highscore_y: float = (MAX_DEPTH - Global.highscore) * DEPTH_SCALE
 		highscore_icon.position = Vector2(156, highscore_y - scroll_offset)
-		highscore_label.text = "TOP\n%d M" % Global.highscore
+		
+		if pending_highscore > 0 or current_score >= Global.highscore:
+			highscore_label.text = "NEW\nHIGH SCORE\n%d M" % Global.highscore
+		else:
+			highscore_label.text = "HIGH SCORE\n%d M" % Global.highscore
+			
 		highscore_label.position = Vector2(12, highscore_y - scroll_offset - 22)
 		highscore_label.visible = true
 		highscore_icon.visible = true

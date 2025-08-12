@@ -7,7 +7,7 @@
 [ext_resource type="Texture2D" uid="uid://1misolt5rykx" path="res://scenes/video-play-watch-player-black-icon-free-png-7017516949743594tmpczaclr.png" id="3_wi27y"]
 [ext_resource type="Texture2D" uid="uid://4pmkbnxocbxf" path="res://TROPHY.png" id="4_2rk2p"]
 [ext_resource type="Texture2D" uid="uid://bhrf3ksx88g41" path="res://Full-bucket1.png" id="4_pts8l"]
-[ext_resource type="Texture2D" uid="uid://lqfh8spffrg0" path="res://scenes/download__4_-removebg-preview.png" id="7_vbp8l"]
+[ext_resource type="Texture2D" uid="uid://bowefh18pd15" path="res://Book.png" id="7_nlr3p"]
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_xqme3"]
 texture = ExtResource("2_hq5cg")
@@ -204,7 +204,7 @@ position = Vector2(156, 0)
 
 [node name="MileStone" type="Sprite2D" parent="ScrollContainer/DepthMap"]
 scale = Vector2(0.3, 0.3)
-texture = ExtResource("7_vbp8l")
+texture = ExtResource("7_nlr3p")
 
 [node name="Panel" type="Panel" parent="."]
 layout_mode = 0
