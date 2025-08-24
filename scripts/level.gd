@@ -34,7 +34,7 @@ var already_triggered = false
 
 # Node References
 @onready var rock_timer = $Rocks/RockTimer
-@onready var score_label = $UI/Score
+@onready var score_label = $Panel/Score
 @onready var depth_bar = $UI/ProgressBar
 @onready var anim_player = $UI/ProgressBar/AnimationPlayer
 @onready var jewel_spawner = $JewelSpawner

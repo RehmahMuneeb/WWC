@@ -1,4 +1,4 @@
-[gd_scene load_steps=28 format=3 uid="uid://btndkc1nmjdx0"]
+[gd_scene load_steps=29 format=3 uid="uid://btndkc1nmjdx0"]
 
 [ext_resource type="Script" path="res://scripts/level.gd" id="1_24m71"]
 [ext_resource type="PackedScene" uid="uid://be3ml7efg7568" path="res://scenes/wall_bg.tscn" id="1_frcah"]
@@ -46,7 +46,7 @@ tracks/0/keys = {
 "times": PackedFloat32Array(0.0333333, 1.36667),
 "transitions": PackedFloat32Array(1, 1),
 "update": 0,
-"values": [Vector2(4, -794), Vector2(8, -54)]
+"values": [Vector2(-7, -794), Vector2(-7, -50)]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_05bwb"]
@@ -151,6 +151,24 @@ particle_flag_disable_z = true
 gravity = Vector3(0, 98, 0)
 color = Color(1, 0.843137, 0, 1)
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_fkipk"]
+bg_color = Color(0, 0.552941, 0.858824, 1)
+border_width_top = 4
+border_width_bottom = 6
+border_color = Color(0, 0, 0, 1)
+corner_radius_bottom_right = 22
+corner_radius_bottom_left = 25
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_bgeva"]
+bg_color = Color(0.501961, 1, 0, 0.552941)
+border_width_left = 3
+border_width_top = 3
+border_width_right = 3
+border_width_bottom = 3
+border_color = Color(0, 0, 0, 1)
+corner_radius_bottom_right = 22
+corner_radius_bottom_left = 77
+
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_66qtd"]
 bg_color = Color(0, 0, 0, 0.533333)
 border_width_left = 4
@@ -160,15 +178,7 @@ border_width_bottom = 4
 border_color = Color(0, 0, 0, 1)
 border_blend = true
 corner_radius_bottom_right = 77
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_bgeva"]
-bg_color = Color(0, 0, 0, 0.529412)
-border_width_left = 3
-border_width_top = 3
-border_width_right = 3
-border_width_bottom = 3
-border_color = Color(0, 0, 0, 1)
-corner_radius_bottom_left = 77
+corner_radius_bottom_left = 22
 
 [node name="Level" type="Node2D"]
 script = ExtResource("1_24m71")
@@ -198,7 +208,11 @@ libraries = {
 collision_mask = 2
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Borders/StaticBody2D"]
-position = Vector2(235, 752)
+position = Vector2(235, 801)
+shape = SubResource("RectangleShape2D_d4r43")
+
+[node name="CollisionShape2D4" type="CollisionShape2D" parent="Borders/StaticBody2D"]
+position = Vector2(250, -15)
 shape = SubResource("RectangleShape2D_d4r43")
 
 [node name="CollisionShape2D2" type="CollisionShape2D" parent="Borders/StaticBody2D"]
@@ -206,7 +220,7 @@ position = Vector2(-8, 393.25)
 shape = SubResource("RectangleShape2D_e51a2")
 
 [node name="CollisionShape2D3" type="CollisionShape2D" parent="Borders/StaticBody2D"]
-position = Vector2(479, 644)
+position = Vector2(482, 421)
 shape = SubResource("RectangleShape2D_e51a2")
 
 [node name="Rocks" type="Node2D" parent="."]
@@ -216,19 +230,6 @@ wait_time = 4.0
 autostart = true
 
 [node name="UI" type="CanvasLayer" parent="."]
-
-[node name="Score" type="Label" parent="UI"]
-anchors_preset = 5
-anchor_left = 0.5
-anchor_right = 0.5
-offset_left = -50.0
-offset_top = 42.0
-offset_right = 64.0
-offset_bottom = 111.0
-grow_horizontal = 2
-theme_override_constants/outline_size = 6
-theme_override_font_sizes/font_size = 44
-text = "3333"
 
 [node name="ProgressBar" type="ProgressBar" parent="UI"]
 offset_left = 444.0
@@ -262,42 +263,8 @@ autostart = true
 [node name="KeySpawnTimer" type="Timer" parent="JewelSpawner"]
 autostart = true
 
-[node name="GemCount" type="Button" parent="."]
-offset_left = 1.0
-offset_top = 1.0
-offset_right = 174.0
-offset_bottom = 69.0
-theme_override_colors/font_color = Color(1, 0.866667, 0, 1)
-theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
-theme_override_constants/outline_size = 4
-theme_override_fonts/font = ExtResource("7_rf70r")
-theme_override_font_sizes/font_size = 30
-theme_override_styles/normal = SubResource("StyleBoxFlat_66qtd")
-text = "GEM"
-icon = ExtResource("7_r4e1s")
-alignment = 0
-expand_icon = true
-script = ExtResource("6_xouy4")
-
-[node name="KeyCount" type="Button" parent="."]
-offset_left = 304.0
-offset_top = 2.0
-offset_right = 477.0
-offset_bottom = 70.0
-theme_override_colors/font_color = Color(1, 0.866667, 0, 1)
-theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
-theme_override_constants/outline_size = 4
-theme_override_fonts/font = ExtResource("7_rf70r")
-theme_override_font_sizes/font_size = 30
-theme_override_styles/normal = SubResource("StyleBoxFlat_bgeva")
-text = "GEM"
-icon = ExtResource("10_w6hv4")
-alignment = 2
-icon_alignment = 2
-expand_icon = true
-script = ExtResource("10_16cpj")
-
 [node name="Treasure" type="Label" parent="."]
+visible = false
 offset_left = 21.0
 offset_top = 138.0
 offset_right = 459.0
@@ -316,9 +283,9 @@ UNLOCKED"
 horizontal_alignment = 1
 
 [node name="GameOverPanel" parent="." instance=ExtResource("8_ufjks")]
+visible = false
 
 [node name="HighScoreLabel" parent="GameOverPanel/ScrollContainer/DepthMap" index="1"]
-layout_mode = 0
 offset_left = 0.0
 offset_top = 0.0
 offset_right = 125.0
@@ -347,6 +314,60 @@ text = "  FILL THE BAR
 UNLOCK 
 TREASURE"
 horizontal_alignment = 1
+
+[node name="Panel" type="Panel" parent="."]
+offset_right = 479.0
+offset_bottom = 69.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_fkipk")
+
+[node name="Score" type="Label" parent="Panel"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -54.0
+offset_top = 3.0
+offset_right = 60.0
+offset_bottom = 72.0
+grow_horizontal = 2
+theme_override_constants/outline_size = 6
+theme_override_font_sizes/font_size = 44
+text = "3333"
+
+[node name="KeyCount" type="Button" parent="Panel"]
+layout_mode = 0
+offset_left = 309.0
+offset_right = 480.0
+offset_bottom = 66.0
+theme_override_colors/font_color = Color(1, 0.866667, 0, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 4
+theme_override_fonts/font = ExtResource("7_rf70r")
+theme_override_font_sizes/font_size = 30
+theme_override_styles/normal = SubResource("StyleBoxFlat_bgeva")
+text = "GEM"
+icon = ExtResource("10_w6hv4")
+alignment = 2
+icon_alignment = 2
+expand_icon = true
+script = ExtResource("10_16cpj")
+
+[node name="GemCount" type="Button" parent="Panel"]
+layout_mode = 0
+offset_top = 1.0
+offset_right = 174.0
+offset_bottom = 69.0
+theme_override_colors/font_color = Color(1, 0.866667, 0, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 4
+theme_override_fonts/font = ExtResource("7_rf70r")
+theme_override_font_sizes/font_size = 30
+theme_override_styles/normal = SubResource("StyleBoxFlat_66qtd")
+text = "GEM"
+icon = ExtResource("7_r4e1s")
+alignment = 0
+expand_icon = true
+script = ExtResource("6_xouy4")
 
 [connection signal="timeout" from="Rocks/RockTimer" to="." method="_on_rock_timer_timeout"]
 [connection signal="timeout" from="JewelSpawner/SpawnTimer" to="JewelSpawner" method="_on_spawn_timer_timeout"]
