@@ -160,12 +160,13 @@ corner_radius_bottom_right = 22
 corner_radius_bottom_left = 25
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_bgeva"]
-bg_color = Color(0.501961, 1, 0, 0.552941)
-border_width_left = 3
-border_width_top = 3
-border_width_right = 3
-border_width_bottom = 3
+bg_color = Color(0.278431, 0.8, 0.384314, 1)
+border_width_left = 4
+border_width_top = 4
+border_width_right = 4
+border_width_bottom = 4
 border_color = Color(0, 0, 0, 1)
+border_blend = true
 corner_radius_bottom_right = 22
 corner_radius_bottom_left = 77
 
@@ -336,9 +337,9 @@ text = "3333"
 
 [node name="KeyCount" type="Button" parent="Panel"]
 layout_mode = 0
-offset_left = 309.0
+offset_left = 306.0
 offset_right = 480.0
-offset_bottom = 66.0
+offset_bottom = 69.0
 theme_override_colors/font_color = Color(1, 0.866667, 0, 1)
 theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
 theme_override_constants/outline_size = 4

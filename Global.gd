@@ -121,7 +121,7 @@ func load_gem_slot_map():
 
 		if result == OK:
 			gem_slot_map = json.data
-			print("Gem-slot map loaded:", gem_slot_map)
+
 		else:
 			push_error("Failed to parse JSON")
 	else:
@@ -172,9 +172,9 @@ func save_game():
 	if file:
 		file.store_var(save_data)
 		file.close()
-		print("Game saved successfully")
-	else:
-		printerr("Failed to save game: ", FileAccess.get_open_error())
+
+
+
 
 func load_game():
 	var save_path = "user://saves/game_save.dat"
@@ -257,7 +257,7 @@ func load_game():
 				current_chest_progress = 0
 				initialize_chest_targets()
 	else:
-		print("No save file found, starting new game")
+
 		initialize_chest_targets()
 
 func reset_game():
@@ -278,7 +278,7 @@ func reset_game():
 	current_chest_progress = 0
 	initialize_chest_targets()
 	save_game()
-	print("Game progress reset")
+
 
 # Utility functions
 func get_collected_gems_textures() -> Array:

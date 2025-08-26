@@ -107,7 +107,7 @@ func _on_body_entered(body: Node2D) -> void:
 				Global.save_game()
 
 				jewel_collect_sound.play()
-				print("Jewel collected! +50 points pending.")
+
 
 				var visible_limit = 30
 				var children_to_remove = max(0, collected_jewels - visible_limit)
@@ -116,12 +116,12 @@ func _on_body_entered(body: Node2D) -> void:
 					oldest.queue_free()
 					children_to_remove -= 1
 	elif body.is_in_group("key"):
-		print("Key collected! +100 KeyScore.")
+
 		Global.key_score += 1  # New key score
 		body.queue_free()
 		
 	elif body.is_in_group("stone"):
-		print("Stone collided with bucket! Game over.")
+
 		rock_hit_sound.play()
 		if main and main.has_method("show_game_over"):
 			main.show_game_over()

@@ -138,7 +138,7 @@ func show_game_over():
 		game_over_panel.set_current_score(score)
 	# Show interstitial ad automatically every 3rd game over
 	if AdController.game_over_count % 3 == 0:
-		print("Showing interstitial ad on every 3rd game over")
+
 		AdController.show_interstitial()
 		await get_tree().create_timer(0.10).timeout
 		await AdController.interstitial_closed
@@ -149,7 +149,7 @@ func show_game_over():
 	rise_again_button.grab_focus()
 
 func _on_rise_again_pressed():
-	print("Rise Again pressed - attempting to show rewarded ad")
+
 	
 	rise_again_button.disabled = true
 	give_up_button.disabled = true
@@ -158,7 +158,7 @@ func _on_rise_again_pressed():
 	AdController.show_rewarded()
 
 func _on_reward_earned(amount: int, ad_type: String):
-	print("Reward earned: ", amount, ad_type)
+
 	if waiting_for_reward:
 		game_over_panel.visible = false
 		get_tree().paused = false
@@ -169,13 +169,13 @@ func _on_reward_earned(amount: int, ad_type: String):
 	AdController.load_rewarded()  # ✅ Load new ad for next use
 
 func _on_rewarded_failed(error: String):
-	print("Rewarded ad failed: ", error)
+
 	rise_again_button.disabled = false
 	give_up_button.disabled = false
 	waiting_for_reward = false
 
 func _on_rewarded_closed():
-	print("Rewarded ad closed")
+
 	rise_again_button.disabled = false
 	give_up_button.disabled = false
 	waiting_for_reward = false
@@ -186,7 +186,7 @@ func _on_give_up_pressed():
 	AdController.give_up_count += 1
 
 	if AdController.give_up_count % 3 == 0:
-		print("3rd give up — showing interstitial")
+
 		AdController.show_interstitial()
 		await AdController.interstitial_closed
 
@@ -228,7 +228,7 @@ func handle_bar_completion():
 		time_since_last_flash = 0.0
 		treasure_label.visible = true
 		Global.unlock_next_item()
-		print("Unlocked one item at score: ", score)
+
 
 func update_flashing(delta):
 	if flashing:
@@ -271,7 +271,7 @@ func randomize_zones():
 		zone_depths.append(segment_start + random_offset)
 		last_pos = zone_depths[i] + zone_width + min_zone_gap
 
-	print("New zones randomized at depths: ", zone_depths, " with types: ", zone_types)
+
 
 func update_rock_spawn_speed(depth: int):
 	if not game_active:

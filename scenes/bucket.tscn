@@ -7,8 +7,8 @@
 [ext_resource type="AudioStream" uid="uid://x73lnx1qu6t8" path="res://RockCollide.mp3" id="5_nr2sy"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_sf5e5"]
-radius = 46.0
-height = 118.0
+radius = 45.0
+height = 90.0
 
 [node name="Bucket" type="CharacterBody2D"]
 script = ExtResource("1_jnwf0")
@@ -29,8 +29,7 @@ texture_mode = 1
 position = Vector2(246, 693)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-visible = false
-position = Vector2(247, 717)
+position = Vector2(248, 724)
 shape = SubResource("CapsuleShape2D_sf5e5")
 
 [node name="JewelCollectSound" type="AudioStreamPlayer2D" parent="."]

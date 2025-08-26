@@ -56,7 +56,7 @@ func _process(delta: float) -> void:
 
 func _on_body_entered(body: Node2D) -> void:
 	if body.is_in_group("bucket"):
-		print("Rock collided with bucket! Triggering game over...")
+
 
 		var main = get_tree().root.get_node("Level")
 		if main:
