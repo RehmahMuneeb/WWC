@@ -45,8 +45,8 @@ radius = 32.249
 [node name="Rock" type="Area2D"]
 collision_mask = 2
 script = ExtResource("1_y6rui")
-fall_speed_zone1 = 700.0
-horizontal_speed_zone1 = 444.0
+fall_speed_zone1 = 666.0
+horizontal_speed_zone1 = 333.0
 fall_speed_zone2 = 844.0
 horizontal_speed_zone2 = 100.0
 fall_speed_zone3 = 444.0

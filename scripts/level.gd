@@ -277,7 +277,7 @@ func update_rock_spawn_speed(depth: int):
 	if not game_active:
 		return
 
-	var spawn_rate = 3.5
+	var spawn_rate = 6.6
 	var cycle_depth = depth % 11000
 	var in_ice_zone = cycle_depth >= 10000
 
