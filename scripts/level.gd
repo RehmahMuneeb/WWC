@@ -54,7 +54,7 @@ func _ready():
 	reset_game_state()
 	randomize_zones()
 	setup_game_over_panel()
-
+	Global.collected_gems.clear()
 	if player:
 		player.connect("player_hit", _on_player_hit)
 
