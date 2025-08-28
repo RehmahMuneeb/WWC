@@ -2,8 +2,6 @@ extends Node2D
 
 var waiting_for_reward = false
 
-
-
 # Game Objects
 var rock_scene: PackedScene = load("res://scenes/rock.tscn")
 var normal_texture = preload("res://assets/rock.png")
@@ -47,7 +45,6 @@ var already_triggered = false
 var unlock_label_shown = false
 
 func _ready():
-
 	AdController.load_interstitial()
 	AdController.load_rewarded()
 	AdController.reward_earned.connect(_on_reward_earned)
@@ -132,14 +129,12 @@ func reset_game_state():
 func show_game_over():
 	AdController.game_over_count += 1
 	game_active = false
-	
 	game_over_panel.visible = true
 	# Pass current score to game over panel
 	if game_over_panel.has_method("set_current_score"):
 		game_over_panel.set_current_score(score)
-	# Show interstitial ad automatically every 3rd game over
-	if AdController.game_over_count % 3 == 0:
-
+	# Only show interstitial and change scene if not waiting for a rewarded ad
+	if AdController.game_over_count % 3 == 0 and not waiting_for_reward:
 		AdController.show_interstitial()
 		await get_tree().create_timer(0.10).timeout
 		await AdController.interstitial_closed
@@ -150,8 +145,6 @@ func show_game_over():
 	rise_again_button.grab_focus()
 
 func _on_rise_again_pressed():
-
-	
 	rise_again_button.disabled = true
 	give_up_button.disabled = true
 	waiting_for_reward = true
@@ -159,63 +152,63 @@ func _on_rise_again_pressed():
 	AdController.show_rewarded()
 
 func _on_reward_earned(amount: int, ad_type: String):
-
 	if waiting_for_reward:
 		game_over_panel.visible = false
 		get_tree().paused = false
 		game_active = true
 		player.reset_bucket()
-		waiting_for_reward = false  # Also important!
-
-	AdController.load_rewarded()  # ✅ Load new ad for next use
+		waiting_for_reward = false
+		# Reset to prevent immediate interstitial trigger
+		AdController.game_over_count = 0
+	AdController.load_rewarded()  # Load new ad for next use
 
 func _on_rewarded_failed(error: String):
-
 	rise_again_button.disabled = false
 	give_up_button.disabled = false
 	waiting_for_reward = false
 
 func _on_rewarded_closed():
-
-	rise_again_button.disabled = false
-	give_up_button.disabled = false
+	if waiting_for_reward:
+		# If reward was not earned, re-enable buttons
+		rise_again_button.disabled = false
+		give_up_button.disabled = false
 	waiting_for_reward = false
-	AdController.load_rewarded()  
-
+	AdController.load_rewarded()
 
 func _on_give_up_pressed():
 	AdController.give_up_count += 1
-
 	if AdController.give_up_count % 3 == 0:
-
 		AdController.show_interstitial()
 		await AdController.interstitial_closed
-
 	get_tree().paused = false
 	get_tree().change_scene_to_file("res://back_menu.tscn")
 
-
-func _on_player_hit():
+func _on_player_hit(rock: Node = null):
 	get_tree().paused = true
 	player.process_mode = Node.PROCESS_MODE_ALWAYS
 	game_over_panel.process_mode = Node.PROCESS_MODE_ALWAYS
 
 	var tween = create_tween().set_pause_mode(Tween.TWEEN_PAUSE_PROCESS)
 
-	# pause impact (0.2 sec wait)
-	tween.tween_interval(0.1)
+	# Step 1: small pause for "impact"
+	tween.tween_interval(0.2)
 
-	# fall down with ease
-	tween.tween_property(player, "position", player.position + Vector2(0, 500), 0.8).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_IN)
-	# fade out while falling
-	#tween.parallel().tween_property(player, "modulate:a", 0.0, 1.0)
+	# Step 2: animate bucket + rock falling down together
+	var fall_vector = Vector2(0, 500)
+	tween.tween_property(player, "position", player.position + fall_vector, 0.8) \
+		.set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_IN)
 
-	await tween.finished
-	show_game_over()
+	if rock and is_instance_valid(rock):
+		tween.parallel().tween_property(rock, "position", rock.position + fall_vector, 0.8) \
+			.set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_IN)
 
+	# Step 3: after animation → cleanup
+	tween.tween_callback(func ():
+		if rock and is_instance_valid(rock):
+			rock.queue_free()
 
-
-
+		show_game_over()
+	)
 
 
 
@@ -250,7 +243,6 @@ func handle_bar_completion():
 		time_since_last_flash = 0.0
 		treasure_label.visible = true
 		Global.unlock_next_item()
-
 
 func update_flashing(delta):
 	if flashing:
@@ -292,8 +284,6 @@ func randomize_zones():
 
 		zone_depths.append(segment_start + random_offset)
 		last_pos = zone_depths[i] + zone_width + min_zone_gap
-
-
 
 func update_rock_spawn_speed(depth: int):
 	if not game_active:

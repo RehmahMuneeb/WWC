@@ -2,10 +2,8 @@ extends Area2D
 
 @export var fall_speed_zone1: float = 200.0
 @export var horizontal_speed_zone1: float = 100.0
-
 @export var fall_speed_zone2: float = 150.0
 @export var horizontal_speed_zone2: float = 60.0
-
 @export var fall_speed_zone3: float = 120.0
 @export var horizontal_speed_zone3: float = 50.0
 
@@ -55,34 +53,24 @@ func _process(delta: float) -> void:
 		queue_free()
 
 func _on_body_entered(body: Node2D) -> void:
+	# Requires the bucket (player) to be in group "bucket"
 	if body.is_in_group("bucket"):
+		# If the bucket has invincibility, ignore this collision
+		if body.has_method("is_immune") and body.is_immune():
+			return
 
 		var main = get_tree().root.get_node("Level")
 		if main:
-			var sound_player = main.get_node("CollisionSoundPlayer")
+			var sound_player = null
+			if main.has_node("CollisionSoundPlayer"):
+				sound_player = main.get_node("CollisionSoundPlayer")
 			if sound_player:
 				sound_player.play()
-			else:
-				printerr("CollisionSoundPlayer node not found in main scene!")
 
-			# Step 1: Stick the rock to the bucket at the collision point
-			var world_pos = global_position  # store current position
-			get_parent().remove_child(self)
-			body.add_child(self)
-			global_position = world_pos  # keep exact collision position
-
-			# Step 2: Stop movement
+			# Freeze this rock now, main will tween it down with the bucket
 			set_process(false)
 
-			# Step 3: Trigger Game Over
-			main._on_player_hit()
-
-			# Step 4: Remove rock when GameOverPanel appears
-			main.game_over_panel.connect("visible_changed", Callable(self, "_on_game_over_panel_visible"))
-
+			# Notify Level and pass this rock instance
+			main._on_player_hit(self)
 		else:
-			printerr("Main game controller not found!")
-
-func _on_game_over_panel_visible():
-	if get_parent().has_node("GameOverPanel") and get_parent().get_node("GameOverPanel").visible:
-		queue_free()
+			printerr("Main game controller (Level) not found!")

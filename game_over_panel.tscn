@@ -46,6 +46,7 @@ corner_radius_bottom_left = 12
 shadow_color = Color(1, 0.866667, 0, 1)
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_t8tyv"]
+bg_color = Color(1, 1, 1, 0)
 draw_center = false
 border_width_left = 11
 border_width_top = 11
