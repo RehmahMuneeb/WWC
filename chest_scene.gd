@@ -229,4 +229,13 @@ func _on_jewel_unlocked(jewel_id: String):
 		push_error("No matching gem texture found for: " + jewel_id)
 
 func _on_texture_button_pressed() -> void:
+	Global.button_press_count += 1
+	
+	# Show ad only on every 3rd press
+	if Global.button_press_count % 3 == 0:
+		AdController.show_interstitial()
+		await get_tree().create_timer(0.1).timeout
+		await AdController.interstitial_closed
+	
+	# Change scene
 	get_tree().change_scene_to_file("res://scenes/main.tscn")

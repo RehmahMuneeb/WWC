@@ -1,4 +1,5 @@
 extends Node
+var button_press_count = 0
 var key_score: int = 0
 var jewel_progress_data: Dictionary = {}  # Stores progress for each jewel
 var jewel_unlock_data: Dictionary = {}    # Stores unlock status for each jewel
@@ -142,6 +143,7 @@ func add_rare_gem(texture: Texture2D) -> void:
 func save_game():
 	
 	var save_data = {
+		"button_press_count": button_press_count,
 		"highscore": Global.highscore,
 		"jewel_progress": jewel_progress_data,
 		"jewel_unlocks": jewel_unlock_data,
@@ -189,6 +191,7 @@ func load_game():
 			if save_data.has("version"):
 				match save_data.version:
 					6: 
+						button_press_count = save_data.get("button_press_count", 0)
 						Global.highscore = save_data.get("highscore", 0)
 						jewel_progress_data = save_data.get("jewel_progress", {})
 						jewel_unlock_data = save_data.get("jewel_unlocks", {})

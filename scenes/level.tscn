@@ -154,7 +154,7 @@ color = Color(1, 0.843137, 0, 1)
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_fkipk"]
 bg_color = Color(0, 0.552941, 0.858824, 1)
 border_width_top = 4
-border_width_bottom = 6
+border_width_bottom = 3
 border_color = Color(0, 0, 0, 1)
 corner_radius_bottom_right = 22
 corner_radius_bottom_left = 25
