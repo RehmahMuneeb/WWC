@@ -53,10 +53,9 @@ func _process(delta: float) -> void:
 		queue_free()
 
 func _on_body_entered(body: Node2D) -> void:
-	# Requires the bucket (player) to be in group "bucket"
 	if body.is_in_group("bucket"):
-		# If the bucket has invincibility, ignore this collision
-		if body.has_method("is_immune") and body.is_immune():
+		# ✅ Check property, not method
+		if "is_immune" in body and body.is_immune:
 			return
 
 		var main = get_tree().root.get_node("Level")

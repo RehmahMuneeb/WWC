@@ -12,6 +12,7 @@ var lava3_texture = preload("res://assets/Lava-stone-33.png")
 var score = 0
 var last_cycle = -1
 var game_active = true
+var last_safe_position: Vector2 = Vector2.ZERO   # <---- NEW
 
 # Zone Configuration
 var zone_depths = []
@@ -61,30 +62,23 @@ func _ready():
 	if fill_stylebox:
 		fill_stylebox.bg_color = Color(0.2, 0.6, 1.0)
 	
-	# Initialize unlock label as hidden
 	if unlock_label:
 		unlock_label.visible = false
 		unlock_label.modulate.a = 0
 	
-	# Start timer to show label after a brief delay
 	get_tree().create_timer(0.5).timeout.connect(_show_unlock_label)
 
 func _show_unlock_label():
 	if unlock_label and not unlock_label_shown:
 		unlock_label_shown = true
 		unlock_label.visible = true
-		
-		# Fade in animation
 		var fade_in = create_tween()
 		fade_in.tween_property(unlock_label, "modulate:a", 1.0, 0.3)\
 			  .set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_SINE)
-		
-		# Start timer for fade out after visible duration
 		get_tree().create_timer(1.0).timeout.connect(_hide_unlock_label)
 
 func _hide_unlock_label():
 	if unlock_label and unlock_label_shown:
-		# Fade out animation
 		var fade_out = create_tween()
 		fade_out.tween_property(unlock_label, "modulate:a", 0.0, 0.3)\
 				.set_ease(Tween.EASE_IN).set_trans(Tween.TRANS_SINE)
@@ -122,6 +116,7 @@ func reset_game_state():
 		player.set_process(true)
 		player.set_physics_process(true)
 		player.position = Vector2(get_viewport_rect().size.x / 2, get_viewport_rect().size.y - 100)
+		last_safe_position = player.position   # <---- save start pos
 		player.reset_bucket()
 
 	get_tree().paused = false
@@ -130,10 +125,8 @@ func show_game_over():
 	AdController.game_over_count += 1
 	game_active = false
 	game_over_panel.visible = true
-	# Pass current score to game over panel
 	if game_over_panel.has_method("set_current_score"):
 		game_over_panel.set_current_score(score)
-	# Only show interstitial and change scene if not waiting for a rewarded ad
 	if AdController.game_over_count % 3 == 0 and not waiting_for_reward:
 		AdController.show_interstitial()
 		await get_tree().create_timer(0.10).timeout
@@ -148,7 +141,6 @@ func _on_rise_again_pressed():
 	rise_again_button.disabled = true
 	give_up_button.disabled = true
 	waiting_for_reward = true
-	
 	AdController.show_rewarded()
 
 func _on_reward_earned(amount: int, ad_type: String):
@@ -156,11 +148,19 @@ func _on_reward_earned(amount: int, ad_type: String):
 		game_over_panel.visible = false
 		get_tree().paused = false
 		game_active = true
-		player.reset_bucket()
+
+		# Restore last safe position instead of reset
+		if player:
+			player.show()
+			player.set_process(true)
+			player.set_physics_process(true)
+			player.position = last_safe_position  
+			player.revive()   # ✅ Use bucket's revive
+
 		waiting_for_reward = false
-		# Reset to prevent immediate interstitial trigger
 		AdController.game_over_count = 0
-	AdController.load_rewarded()  # Load new ad for next use
+	AdController.load_rewarded()
+
 
 func _on_rewarded_failed(error: String):
 	rise_again_button.disabled = false
@@ -169,7 +169,6 @@ func _on_rewarded_failed(error: String):
 
 func _on_rewarded_closed():
 	if waiting_for_reward:
-		# If reward was not earned, re-enable buttons
 		rise_again_button.disabled = false
 		give_up_button.disabled = false
 	waiting_for_reward = false
@@ -189,28 +188,21 @@ func _on_player_hit(rock: Node = null):
 	game_over_panel.process_mode = Node.PROCESS_MODE_ALWAYS
 
 	var tween = create_tween().set_pause_mode(Tween.TWEEN_PAUSE_PROCESS)
-
-	# Step 1: small pause for "impact"
 	tween.tween_interval(0.2)
 
-	# Step 2: animate bucket + rock falling down together
 	var fall_vector = Vector2(0, 500)
-	tween.tween_property(player, "position", player.position + fall_vector, 0.8) \
+	tween.tween_property(player, "position", player.position + fall_vector, 0.8)\
 		.set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_IN)
 
 	if rock and is_instance_valid(rock):
-		tween.parallel().tween_property(rock, "position", rock.position + fall_vector, 0.8) \
+		tween.parallel().tween_property(rock, "position", rock.position + fall_vector, 0.8)\
 			.set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_IN)
 
-	# Step 3: after animation → cleanup
 	tween.tween_callback(func ():
 		if rock and is_instance_valid(rock):
 			rock.queue_free()
-
 		show_game_over()
 	)
-
-
 
 func _process(delta):
 	if not game_active or get_tree().paused:
@@ -218,6 +210,9 @@ func _process(delta):
 
 	score += 1
 	score_label.text = str(score) + "m"
+
+	if player and player.is_inside_tree():
+		last_safe_position = player.position   # <---- save every frame
 
 	var current_cycle = score / 11000
 	if current_cycle != last_cycle:
@@ -260,39 +255,31 @@ func update_flashing(delta):
 func randomize_zones():
 	zone_depths = []
 	zone_types = []
-
 	var types = [0, 1, 2]
 	types.shuffle()
 	zone_types = types.duplicate()
-
 	var available_space = 10000 - safe_start_area - (total_zones * zone_width) - ((total_zones - 1) * min_zone_gap)
-
 	var positions = []
 	for i in range(total_zones - 1):
 		positions.append(randi_range(0, available_space))
 	positions.sort()
-
 	var last_pos = safe_start_area
 	for i in range(total_zones):
 		var start_pos = safe_start_area
 		if i > 0:
 			start_pos = positions[i - 1] + zone_width + min_zone_gap + safe_start_area
-
 		var segment_start = last_pos
 		var segment_end = positions[i] + safe_start_area if i < positions.size() else 10000
 		var random_offset = randi_range(0, max(0, segment_end - segment_start - zone_width))
-
 		zone_depths.append(segment_start + random_offset)
 		last_pos = zone_depths[i] + zone_width + min_zone_gap
 
 func update_rock_spawn_speed(depth: int):
 	if not game_active:
 		return
-
 	var spawn_rate = 6.6
 	var cycle_depth = depth % 11000
 	var in_ice_zone = cycle_depth >= 10000
-
 	if in_ice_zone:
 		spawn_rate = 1000.0
 	else:
@@ -303,7 +290,6 @@ func update_rock_spawn_speed(depth: int):
 					1: spawn_rate = 0.6
 					2: spawn_rate = 0.5
 				break
-
 	set_rock_spawn_rate(spawn_rate)
 
 func set_rock_spawn_rate(rate: float):
@@ -315,28 +301,21 @@ func set_rock_spawn_rate(rate: float):
 func _on_rock_timer_timeout():
 	if not game_active or get_tree().paused:
 		return
-
 	var depth = score
 	var cycle_depth = depth % 11000
 	var in_ice_zone = cycle_depth >= 10000
-
 	if in_ice_zone:
 		return
-
 	var rock = rock_scene.instantiate()
 	var sprite = rock.get_node("Sprite2D")
 	var particles = sprite.get_node("GPUParticles2D")
-
 	var current_zone_type = -1
 	for i in range(zone_depths.size()):
 		if cycle_depth >= zone_depths[i] and cycle_depth < zone_depths[i] + zone_width:
 			current_zone_type = zone_types[i]
 			break
-
 	rock.set_zone(current_zone_type + 1)
-
 	var particle_material = particles.process_material
-
 	match current_zone_type:
 		0:
 			sprite.texture = normal_texture
@@ -362,13 +341,11 @@ func _on_rock_timer_timeout():
 			particle_material.color = Color(1, 1, 1)
 			rock.fall_speed = rock.fall_speed_zone1
 			rock.horizontal_speed = rock.horizontal_speed_zone1
-
 	$Rocks.add_child(rock)
 
 func update_jewel_spawn(depth: int):
 	var cycle_depth = depth % 11000
 	var in_ice_zone = cycle_depth >= 10000
-
 	if in_ice_zone:
 		jewel_spawner.min_spawn_interval = 0.1
 		jewel_spawner.max_spawn_interval = 0.3

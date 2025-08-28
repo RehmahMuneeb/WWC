@@ -13,6 +13,8 @@ var touch_id = -1
 var drag_previous_position = Vector2.ZERO
 var collected_jewels = 0
 var target_rotation := 0.0
+var is_immune: bool = false   # Immunity flag
+var revive_tween: Tween
 
 # Nodes
 @onready var jewel_container: Node2D = $JewelContainer
@@ -23,7 +25,7 @@ var target_rotation := 0.0
 @onready var jewel_collect_sound: AudioStreamPlayer2D = $JewelCollectSound
 @onready var rock_hit_sound: AudioStreamPlayer2D = $RockHitSound
 
-# Shader for jewels (kept unchanged as requested)
+# Shader for jewels
 var jewel_shader_material = preload("res://scenes/jewel_shader_material.tres")
 
 func _ready() -> void:
@@ -58,9 +60,9 @@ func _input(event: InputEvent) -> void:
 		var delta_position = event.position - drag_previous_position
 		# Fixed scaling for consistent movement across frame rates
 		velocity = delta_position * 60.0
-		velocity.x = clamp(velocity.x, -1800.0, 1800.0)  # Increased max speed
-		velocity.y = clamp(velocity.y, -1400.0, 1400.0)  # Increased max speed
-		target_rotation = clamp(velocity.x / 12.0, -MAX_ROTATION, MAX_ROTATION)  # Adjusted for smoother rotation
+		velocity.x = clamp(velocity.x, -1800.0, 1800.0)
+		velocity.y = clamp(velocity.y, -1400.0, 1400.0)
+		target_rotation = clamp(velocity.x / 12.0, -MAX_ROTATION, MAX_ROTATION)
 		drag_previous_position = event.position
 
 func _on_body_entered(body: Node2D) -> void:
@@ -87,8 +89,8 @@ func _on_body_entered(body: Node2D) -> void:
 				Global.pending_score += 50
 				jewel_collect_sound.play()
 				
-				# Limit visible jewels (reduced for performance)
-				var visible_limit = 15  # Reduced from 30
+				# Limit visible jewels
+				var visible_limit = 15
 				var children_to_remove = max(0, collected_jewels - visible_limit)
 				while children_to_remove > 0 and jewel_container.get_child_count() > 0:
 					var oldest = jewel_container.get_child(0)
@@ -98,6 +100,8 @@ func _on_body_entered(body: Node2D) -> void:
 		Global.key_score += 1
 		body.queue_free()
 	elif body.is_in_group("stone"):
+		if is_immune: # Ignore rocks while immune
+			return
 		rock_hit_sound.play()
 		if main and main.has_method("show_game_over"):
 			main.show_game_over()
@@ -119,3 +123,48 @@ func reset_bucket() -> void:
 			var inventory_instance = inventory_scene.instantiate()
 			if inventory_instance.has_method("update_inventory"):
 				inventory_instance.update_inventory()
+
+# -------------------------------
+# Revive logic with immunity
+# -------------------------------
+func revive() -> void:
+	is_immune = true
+	
+	# Disable collisions during immunity
+	set_collision_layer_value(1, false)
+	set_collision_mask_value(1, false)
+# ✅ Remove any rocks currently overlapping the bucket
+	for body in area2d.get_overlapping_bodies():
+		if body.is_in_group("stone"):
+			body.queue_free()
+	# Kill old tween if active
+	if revive_tween and revive_tween.is_valid():
+		revive_tween.kill()
+
+	# Glow / pulse tween
+	revive_tween = create_tween()
+	revive_tween.set_loops() # keep pulsing until manually stopped
+	revive_tween.set_trans(Tween.TRANS_SINE)
+	revive_tween.set_ease(Tween.EASE_IN_OUT)
+
+	# Pulse brightness (self_modulate makes it glow instead of blink)
+	revive_tween.parallel().tween_property(bucket_image, "self_modulate", Color(1.5, 1.5, 1.5), 0.4)
+	revive_tween.parallel().tween_property(jewel_container, "self_modulate", Color(1.5, 1.5, 1.5), 0.4)
+
+	# Back to normal
+	revive_tween.tween_property(bucket_image, "self_modulate", Color(1, 1, 1), 0.4)
+	revive_tween.parallel().tween_property(jewel_container, "self_modulate", Color(1, 1, 1), 0.4)
+
+	# End immunity after 5s
+	await get_tree().create_timer(5.0).timeout
+	is_immune = false
+
+	# Reset visuals and re-enable collisions
+	if revive_tween and revive_tween.is_valid():
+		revive_tween.kill()
+	bucket_image.self_modulate = Color(1, 1, 1)
+	jewel_container.self_modulate = Color(1, 1, 1)
+	
+	# Re-enable collisions
+	set_collision_layer_value(1, true)
+	set_collision_mask_value(1, true)
