@@ -76,8 +76,8 @@ shadow_color = Color(0, 0, 0, 1)
 shadow_size = 12
 shadow_offset = Vector2(0, 4)
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_lmr5y"]
-bg_color = Color(1, 0.839216, 0.352941, 1)
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_58b8x"]
+bg_color = Color(1, 0.840198, 0.351863, 1)
 border_width_left = 12
 border_width_top = 12
 border_width_right = 12
@@ -91,8 +91,8 @@ corner_radius_bottom_left = 20
 shadow_color = Color(0, 0, 0, 1)
 shadow_size = 6
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_58b8x"]
-bg_color = Color(1, 0.840198, 0.351863, 1)
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_lmr5y"]
+bg_color = Color(1, 0.839216, 0.352941, 1)
 border_width_left = 12
 border_width_top = 12
 border_width_right = 12
@@ -165,6 +165,7 @@ offset_bottom = 638.0
 theme_override_styles/panel = SubResource("StyleBoxFlat_3rs0h")
 
 [node name="Coinslabel" type="Label" parent="Coins"]
+visible = false
 layout_mode = 0
 offset_left = 22.0
 offset_top = 14.0
@@ -230,6 +231,7 @@ theme_override_font_sizes/font_size = 44
 text = "BUY/ SELL"
 
 [node name="Play" type="Button" parent="."]
+visible = false
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -282,7 +284,8 @@ theme_override_fonts/font = ExtResource("3_nak5y")
 theme_override_font_sizes/font_size = 66
 text = "GEM"
 
-[node name="Button" type="Button" parent="."]
+[node name="ResetButton" type="Button" parent="."]
+visible = false
 layout_mode = 0
 offset_right = 4.0
 offset_bottom = 8.0
@@ -290,14 +293,13 @@ text = "GAME RESET
 "
 
 [node name="Label2" type="Label" parent="."]
-visible = false
 layout_mode = 1
 anchors_preset = 5
 anchor_left = 0.5
 anchor_right = 0.5
-offset_left = -158.0
+offset_left = -154.0
 offset_top = 168.0
-offset_right = 158.0
+offset_right = 162.0
 offset_bottom = 251.0
 grow_horizontal = 2
 theme_override_colors/font_color = Color(0.980392, 0.839216, 0.294118, 1)
@@ -319,6 +321,45 @@ offset_top = 634.0
 offset_right = 478.0
 offset_bottom = 853.0
 theme_override_styles/panel = SubResource("StyleBoxFlat_lw57c")
+
+[node name="Well Depth" type="Panel" parent="infopanel"]
+layout_mode = 0
+offset_left = 254.0
+offset_top = 17.0
+offset_right = 457.0
+offset_bottom = 204.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_58b8x")
+
+[node name="DepthLabel" type="Label" parent="infopanel/Well Depth"]
+visible = false
+layout_mode = 1
+offset_left = 18.0
+offset_top = 16.0
+offset_right = 231.0
+offset_bottom = 53.0
+theme_override_constants/shadow_offset_x = 6
+theme_override_constants/outline_size = 6
+theme_override_constants/shadow_outline_size = 6
+theme_override_fonts/font = ExtResource("3_nak5y")
+theme_override_font_sizes/font_size = 22
+text = "ANTIQUES"
+
+[node name="TextureRect" type="TextureRect" parent="infopanel/Well Depth"]
+visible = false
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -76.5
+offset_top = -83.0
+offset_right = 74.5
+offset_bottom = 112.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("3_g2cem")
+expand_mode = 1
 
 [node name="Bucket Capacity" type="Panel" parent="infopanel"]
 layout_mode = 0
@@ -366,64 +407,18 @@ theme_override_fonts/font = ExtResource("3_nak5y")
 theme_override_font_sizes/font_size = 22
 text = "RARE GEMS"
 
-[node name="Well Depth" type="Panel" parent="infopanel"]
+[node name="Cest" type="TextureRect" parent="infopanel"]
 layout_mode = 0
-offset_left = 254.0
-offset_top = 17.0
-offset_right = 457.0
-offset_bottom = 204.0
-theme_override_styles/panel = SubResource("StyleBoxFlat_58b8x")
-
-[node name="DepthLabel" type="Label" parent="infopanel/Well Depth"]
-visible = false
-layout_mode = 1
-offset_left = 18.0
-offset_top = 16.0
-offset_right = 231.0
-offset_bottom = 53.0
-theme_override_constants/shadow_offset_x = 6
-theme_override_constants/outline_size = 6
-theme_override_constants/shadow_outline_size = 6
-theme_override_fonts/font = ExtResource("3_nak5y")
-theme_override_font_sizes/font_size = 22
-text = "ANTIQUES"
-
-[node name="TextureRect" type="TextureRect" parent="infopanel/Well Depth"]
-visible = false
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -76.5
-offset_top = -83.0
-offset_right = 74.5
-offset_bottom = 112.0
-grow_horizontal = 2
-grow_vertical = 2
-texture = ExtResource("3_g2cem")
-expand_mode = 1
-
-[node name="Button" type="Button" parent="infopanel"]
-layout_mode = 0
-offset_left = 250.0
-offset_top = 212.0
-offset_right = 455.0
-offset_bottom = 277.0
-
-[node name="TextureRect3" type="TextureRect" parent="."]
-layout_mode = 0
-offset_left = -95.0
-offset_top = 632.0
-offset_right = 348.0
-offset_bottom = 875.0
+offset_left = -97.0
+offset_top = -2.0
+offset_right = 346.0
+offset_bottom = 241.0
 texture = ExtResource("10_hbcix")
 expand_mode = 1
 stretch_mode = 5
 script = ExtResource("11_nrto1")
 
-[node name="CestButton" type="Button" parent="TextureRect3"]
+[node name="CestButton" type="Button" parent="infopanel/Cest"]
 layout_mode = 0
 offset_left = 124.0
 offset_top = 21.0
@@ -432,7 +427,39 @@ offset_bottom = 205.0
 theme_override_styles/focus = SubResource("StyleBoxEmpty_xtcim")
 theme_override_styles/hover = SubResource("StyleBoxEmpty_ce3bn")
 
-[node name="Crafting" type="Button" parent="."]
+[node name="RareGemLabel" type="Label" parent="infopanel"]
+layout_mode = 1
+offset_left = 47.0
+offset_top = 29.0
+offset_right = 260.0
+offset_bottom = 66.0
+theme_override_colors/font_color = Color(0.607843, 0.454902, 0.27451, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_colors/font_outline_color = Color(1, 1, 1, 1)
+theme_override_constants/shadow_offset_x = 3
+theme_override_constants/outline_size = 12
+theme_override_constants/shadow_outline_size = 3
+theme_override_fonts/font = ExtResource("3_nak5y")
+theme_override_font_sizes/font_size = 22
+text = "RARE  GEMS"
+
+[node name="AntiqueLabel" type="Label" parent="infopanel"]
+layout_mode = 1
+offset_left = 292.0
+offset_top = 27.0
+offset_right = 505.0
+offset_bottom = 64.0
+theme_override_colors/font_color = Color(0.607843, 0.454902, 0.27451, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_colors/font_outline_color = Color(1, 1, 1, 1)
+theme_override_constants/shadow_offset_x = 3
+theme_override_constants/outline_size = 12
+theme_override_constants/shadow_outline_size = 3
+theme_override_fonts/font = ExtResource("3_nak5y")
+theme_override_font_sizes/font_size = 22
+text = "ANTIQUES"
+
+[node name="Crafting" type="Button" parent="infopanel"]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -440,9 +467,9 @@ anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
 offset_left = -2.00005
-offset_top = 311.0
+offset_top = -5.5
 offset_right = 184.0
-offset_bottom = 480.0
+offset_bottom = 163.5
 grow_horizontal = 2
 grow_vertical = 2
 rotation = -0.567232
@@ -458,41 +485,16 @@ icon_alignment = 1
 vertical_icon_alignment = 0
 expand_icon = true
 
-[node name="AntiqueLabel" type="Label" parent="."]
-layout_mode = 1
-offset_left = 294.0
-offset_top = 661.0
-offset_right = 507.0
-offset_bottom = 698.0
-theme_override_colors/font_color = Color(0.607843, 0.454902, 0.27451, 1)
-theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
-theme_override_colors/font_outline_color = Color(1, 1, 1, 1)
-theme_override_constants/shadow_offset_x = 3
-theme_override_constants/outline_size = 12
-theme_override_constants/shadow_outline_size = 3
-theme_override_fonts/font = ExtResource("3_nak5y")
-theme_override_font_sizes/font_size = 22
-text = "ANTIQUES"
-
-[node name="RareGemLabel" type="Label" parent="."]
-layout_mode = 1
-offset_left = 49.0
-offset_top = 663.0
-offset_right = 262.0
-offset_bottom = 700.0
-theme_override_colors/font_color = Color(0.607843, 0.454902, 0.27451, 1)
-theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
-theme_override_colors/font_outline_color = Color(1, 1, 1, 1)
-theme_override_constants/shadow_offset_x = 3
-theme_override_constants/outline_size = 12
-theme_override_constants/shadow_outline_size = 3
-theme_override_fonts/font = ExtResource("3_nak5y")
-theme_override_font_sizes/font_size = 22
-text = "RARE  GEMS"
+[node name="Button" type="Button" parent="infopanel"]
+layout_mode = 0
+offset_left = 250.0
+offset_top = 212.0
+offset_right = 455.0
+offset_bottom = 277.0
 
 [connection signal="pressed" from="Items" to="." method="_on_items_pressed"]
 [connection signal="pressed" from="Inventory" to="." method="_on_inventory_pressed"]
 [connection signal="pressed" from="Play" to="." method="_on_play_pressed"]
-[connection signal="pressed" from="Button" to="." method="_on_button_pressed"]
-[connection signal="pressed" from="TextureRect3/CestButton" to="." method="_on_cest_button_pressed"]
-[connection signal="pressed" from="Crafting" to="." method="_on_rare_items_pressed"]
+[connection signal="pressed" from="ResetButton" to="." method="_on_button_pressed"]
+[connection signal="pressed" from="infopanel/Cest/CestButton" to="." method="_on_cest_button_pressed"]
+[connection signal="pressed" from="infopanel/Crafting" to="." method="_on_rare_items_pressed"]

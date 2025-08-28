@@ -1,5 +1,6 @@
 extends Control
-
+@onready var background = $Background  # Replace with your actual node path
+var game_started = false  # To prevent multiple triggers
 @onready var coin_label = $Coins/Coinslabel
 @onready var capacity_button = $"infopanel/Bucket Capacity/Button"
 @onready var well_button = $infopanel/Button  # Well depth upgrade button
@@ -12,7 +13,8 @@ func _ready() -> void:
 	AdController.load_banner() 
 	AdController.show_banner()  # Will auto-show
 	update_ui()
-
+	# Enable input on the background
+	background.mouse_filter = Control.MOUSE_FILTER_STOP
 
 func _process(_delta):
 	update_ui()  # Refresh UI
@@ -47,3 +49,37 @@ func _on_button_pressed() -> void:
 
 func _on_cest_button_pressed() -> void:
 	get_tree().change_scene_to_file("res://ChestScene.tscn")
+	
+@onready var info_panel = $infopanel  # Replace with your actual panel path
+
+
+
+
+func _input(event):
+	if game_started:
+		return
+
+	if event is InputEventMouseButton and event.pressed:
+		if not is_click_inside_panel(event.position):
+			start_game()
+	elif event is InputEventScreenTouch and event.pressed:
+		if not is_click_inside_panel(event.position):
+			start_game()
+
+# Check if the click/touch is inside the panel or its children
+func is_click_inside_panel(pos: Vector2) -> bool:
+	return is_click_inside_control(info_panel, pos)
+
+# Recursive function to check panel and its children
+func is_click_inside_control(control: Control, pos: Vector2) -> bool:
+	if control.get_global_rect().has_point(pos):
+		return true
+	for child in control.get_children():
+		if child is Control:
+			if is_click_inside_control(child, pos):
+				return true
+	return false
+
+func start_game():
+	game_started = true
+	get_tree().change_scene_to_file("res://scenes/level.tscn")
