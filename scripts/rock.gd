@@ -57,7 +57,6 @@ func _process(delta: float) -> void:
 func _on_body_entered(body: Node2D) -> void:
 	if body.is_in_group("bucket"):
 
-
 		var main = get_tree().root.get_node("Level")
 		if main:
 			var sound_player = main.get_node("CollisionSoundPlayer")
@@ -65,9 +64,25 @@ func _on_body_entered(body: Node2D) -> void:
 				sound_player.play()
 			else:
 				printerr("CollisionSoundPlayer node not found in main scene!")
-			
-			main.show_game_over()
+
+			# Step 1: Stick the rock to the bucket at the collision point
+			var world_pos = global_position  # store current position
+			get_parent().remove_child(self)
+			body.add_child(self)
+			global_position = world_pos  # keep exact collision position
+
+			# Step 2: Stop movement
+			set_process(false)
+
+			# Step 3: Trigger Game Over
+			main._on_player_hit()
+
+			# Step 4: Remove rock when GameOverPanel appears
+			main.game_over_panel.connect("visible_changed", Callable(self, "_on_game_over_panel_visible"))
+
 		else:
 			printerr("Main game controller not found!")
 
+func _on_game_over_panel_visible():
+	if get_parent().has_node("GameOverPanel") and get_parent().get_node("GameOverPanel").visible:
 		queue_free()

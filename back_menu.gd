@@ -84,7 +84,7 @@ func _input(event):
 func animate_gems_with_float_motion() -> void:
 	animation_running = true
 	watch_ad_button.disabled = true  # Disable button at start of animation
-	var score_per_gem := 10
+	var score_per_gem := 3
 	var gem_textures = Global.get_collected_gems_textures()
 	for gem_texture in gem_textures:
 		if gem_texture == null:
@@ -187,7 +187,7 @@ func play_reward_animation() -> void:
 	animation_running = true
 	watch_ad_button.disabled = true  # Disable button during reward animation
 	var gem_textures := Global.get_collected_gems_textures()
-	var score_per_gem := 10
+	var score_per_gem := 3
 	base_gem_score_total = 0
 	total_multiplied_score = 0
 	current_session_score = 0

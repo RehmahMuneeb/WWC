@@ -132,6 +132,7 @@ func reset_game_state():
 func show_game_over():
 	AdController.game_over_count += 1
 	game_active = false
+	
 	game_over_panel.visible = true
 	# Pass current score to game over panel
 	if game_over_panel.has_method("set_current_score"):
@@ -195,7 +196,28 @@ func _on_give_up_pressed():
 
 
 func _on_player_hit():
+	get_tree().paused = true
+	player.process_mode = Node.PROCESS_MODE_ALWAYS
+	game_over_panel.process_mode = Node.PROCESS_MODE_ALWAYS
+
+	var tween = create_tween().set_pause_mode(Tween.TWEEN_PAUSE_PROCESS)
+
+	# pause impact (0.2 sec wait)
+	tween.tween_interval(0.1)
+
+	# fall down with ease
+	tween.tween_property(player, "position", player.position + Vector2(0, 500), 0.8).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_IN)
+	# fade out while falling
+	#tween.parallel().tween_property(player, "modulate:a", 0.0, 1.0)
+
+	await tween.finished
 	show_game_over()
+
+
+
+
+
+
 
 func _process(delta):
 	if not game_active or get_tree().paused:
