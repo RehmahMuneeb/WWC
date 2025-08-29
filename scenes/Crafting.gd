@@ -2,7 +2,7 @@ extends Control
 
 @onready var item_holder = $Panel/ItemHolder
 @onready var item_zoom_panel = $ZoomedItemPanel
-@onready var item_name_label = $ZoomedItemPanel/Label
+@onready var item_name_label = $ZoomedItemPanel/Label2
 @onready var item_display_container = $ZoomedItemPanel/ItemDisplayContainer
 @onready var close_button = $ZoomedItemPanel/CloseButton
 @onready var inventory_instance = $Inventory
@@ -56,9 +56,10 @@ func setup_ui():
 
 func initialize_items():
 	lock_all_items()
-	if not "Item1" in Global.unlocked_items:
+	if not "Item9" in Global.unlocked_items:
 		Global.unlocked_items.append("Item9")
 	previously_unlocked_items = Global.unlocked_items.duplicate()
+	Global.save_game() 
 	update_unlocked_items()
 
 func connect_signals():
@@ -124,8 +125,7 @@ func _on_item_clicked(event: InputEvent, item: TextureRect):
 			return
 
 		current_zoomed_item = item
-		item_name_label.text = item.name if item.name != "" else "Unnamed Item"
-
+		item_name_label.text = item.texture.resource_path.get_file().get_basename() if item.texture else "Unnamed Item"
 		# Clear previous zoom display
 		for c in item_display_container.get_children():
 			c.queue_free()

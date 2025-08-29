@@ -1,4 +1,4 @@
-[gd_scene load_steps=30 format=3 uid="uid://dl7qefe032h4l"]
+[gd_scene load_steps=28 format=3 uid="uid://dl7qefe032h4l"]
 
 [ext_resource type="Script" path="res://Jewels/jewel.gd" id="1_hu4h5"]
 [ext_resource type="Texture2D" uid="uid://xfqgf35w4smr" path="res://scenes/gem (1).png" id="2_qoier"]
@@ -22,11 +22,9 @@
 [ext_resource type="Texture2D" uid="uid://cil8ni840nix1" path="res://Gem23.png" id="24_ohtr8"]
 [ext_resource type="Texture2D" uid="uid://cjr7unrrq37mw" path="res://Gem24.png" id="25_k3y1r"]
 [ext_resource type="Texture2D" uid="uid://c432u720bjcac" path="res://Gem25.png" id="26_iacvb"]
-[ext_resource type="Texture2D" uid="uid://bghvxwrq72kmm" path="res://Gem26.png" id="27_7u5um"]
 [ext_resource type="Texture2D" uid="uid://drorpmdppb67q" path="res://Gem27.png" id="28_8dqly"]
 [ext_resource type="Texture2D" uid="uid://bmkpk0qjdplcq" path="res://Gem28.png" id="29_u8vuq"]
 [ext_resource type="Texture2D" uid="uid://humtxwpcab5b" path="res://Gem29.png" id="30_rjhp2"]
-[ext_resource type="Texture2D" uid="uid://dexiphygv8yxs" path="res://Gem30.png" id="31_ijapl"]
 
 [sub_resource type="CompressedTexture2D" id="CompressedTexture2D_8ughg"]
 
@@ -41,7 +39,7 @@ script = ExtResource("1_hu4h5")
 fall_speed = 622.0
 horizontal_speed = 144.0
 max_horizontal_speed = 333.0
-jewel_textures = Array[Texture2D]([ExtResource("2_qoier"), ExtResource("4_adlde"), ExtResource("5_27ic6"), ExtResource("7_nwhdr"), ExtResource("8_1rgg3"), ExtResource("9_wqxf1"), ExtResource("10_vd6w5"), ExtResource("11_c38dh"), ExtResource("12_y8va4"), ExtResource("14_hixi6"), ExtResource("15_jp3w4"), ExtResource("16_xwrkw"), ExtResource("17_0adr3"), ExtResource("18_c3bvr"), ExtResource("19_fwj1d"), ExtResource("20_b1sol"), ExtResource("22_swqf0"), ExtResource("23_ajlbh"), ExtResource("24_ohtr8"), ExtResource("25_k3y1r"), ExtResource("26_iacvb"), ExtResource("27_7u5um"), ExtResource("28_8dqly"), ExtResource("29_u8vuq"), ExtResource("30_rjhp2"), ExtResource("31_ijapl")])
+jewel_textures = Array[Texture2D]([ExtResource("2_qoier"), ExtResource("4_adlde"), ExtResource("5_27ic6"), ExtResource("7_nwhdr"), ExtResource("8_1rgg3"), ExtResource("9_wqxf1"), ExtResource("10_vd6w5"), ExtResource("11_c38dh"), ExtResource("12_y8va4"), ExtResource("14_hixi6"), ExtResource("15_jp3w4"), ExtResource("16_xwrkw"), ExtResource("17_0adr3"), ExtResource("18_c3bvr"), ExtResource("19_fwj1d"), ExtResource("20_b1sol"), ExtResource("22_swqf0"), ExtResource("23_ajlbh"), ExtResource("24_ohtr8"), ExtResource("25_k3y1r"), ExtResource("26_iacvb"), ExtResource("28_8dqly"), ExtResource("29_u8vuq"), ExtResource("30_rjhp2")])
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 texture = SubResource("CompressedTexture2D_8ughg")

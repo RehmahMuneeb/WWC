@@ -3,25 +3,25 @@
 [ext_resource type="Script" path="res://scenes/Crafting.gd" id="1_wxeuu"]
 [ext_resource type="Texture2D" uid="uid://b0wdau6yqqwn3" path="res://scenes/download (2).jpeg" id="2_jkfcr"]
 [ext_resource type="PackedScene" uid="uid://bdig3whyspi8a" path="res://Jewels/Inventory.tscn" id="3_bh17i"]
-[ext_resource type="Texture2D" uid="uid://blvuuh07nlfet" path="res://Antiques/Owl.png" id="3_di7ww"]
+[ext_resource type="Texture2D" uid="uid://blvuuh07nlfet" path="res://Antiques/ANCIENT OWL.png" id="3_di7ww"]
 [ext_resource type="Texture2D" uid="uid://nf3wv3w3kmn8" path="res://scenes/Banner.png" id="3_ga7kw"]
 [ext_resource type="Texture2D" uid="uid://b8e25d2wus3ok" path="res://raregems/owlredgem.png" id="4_olrf7"]
 [ext_resource type="Texture2D" uid="uid://h50wquumhdyb" path="res://raregems/owlgem.png" id="4_vdn3a"]
-[ext_resource type="Texture2D" uid="uid://wowjyntckr15" path="res://Antiques/Crab.png" id="6_ov6aq"]
+[ext_resource type="Texture2D" uid="uid://wowjyntckr15" path="res://Antiques/CANCER’S CREST.png" id="6_ov6aq"]
 [ext_resource type="FontFile" uid="uid://b2clys7lbyd3t" path="res://scenes/Kid Games.ttf" id="6_rk72g"]
 [ext_resource type="Texture2D" uid="uid://bk1iayolf8s03" path="res://scenes/Label.png" id="7_7d50y"]
-[ext_resource type="Texture2D" uid="uid://lq6hecu40omw" path="res://Antiques/Crocodile.png" id="7_sxvxf"]
-[ext_resource type="Texture2D" uid="uid://coxlwaw0kt62g" path="res://Antiques/cup.png" id="8_dmigt"]
+[ext_resource type="Texture2D" uid="uid://lq6hecu40omw" path="res://Antiques/CROC X.png" id="7_sxvxf"]
+[ext_resource type="Texture2D" uid="uid://coxlwaw0kt62g" path="res://Antiques/JEMSHED .png" id="8_dmigt"]
 [ext_resource type="Texture2D" uid="uid://ji1p78q65t0e" path="res://Jewels/Lock.png" id="8_kjw3m"]
 [ext_resource type="Texture2D" uid="uid://y0umew614lea" path="res://scenes/cROSS.png" id="8_o2yai"]
 [ext_resource type="Texture2D" uid="uid://bl63hgecq31dl" path="res://raregems/crabgem.png" id="9_ytwjw"]
-[ext_resource type="Texture2D" uid="uid://ck5gnpqq2dsbe" path="res://Antiques/Dragon.png" id="10_al14a"]
-[ext_resource type="Texture2D" uid="uid://dx3rlu83lxxv8" path="res://Antiques/Mermaid.png" id="11_8ph77"]
+[ext_resource type="Texture2D" uid="uid://ck5gnpqq2dsbe" path="res://Antiques/DARACRYS.png" id="10_al14a"]
+[ext_resource type="Texture2D" uid="uid://dx3rlu83lxxv8" path="res://Antiques/MYSTIC MERMAID.png" id="11_8ph77"]
 [ext_resource type="Texture2D" uid="uid://bxy8m0yi0hjjd" path="res://raregems/crocodilegem.png" id="11_aesfo"]
-[ext_resource type="Texture2D" uid="uid://c6yhma1xvtfbq" path="res://Antiques/Skull.png" id="12_d4qxi"]
-[ext_resource type="Texture2D" uid="uid://b5a8xdh7kiydr" path="res://Antiques/Snake.png" id="13_4k78o"]
+[ext_resource type="Texture2D" uid="uid://c6yhma1xvtfbq" path="res://Antiques/TERMINATOR.png" id="12_d4qxi"]
+[ext_resource type="Texture2D" uid="uid://b5a8xdh7kiydr" path="res://Antiques/THE SERPENT.png" id="13_4k78o"]
 [ext_resource type="Texture2D" uid="uid://ciq65ix4upsf5" path="res://raregems/cupgem.png" id="13_vv81l"]
-[ext_resource type="Texture2D" uid="uid://cva2ky0envfyr" path="res://Antiques/Tiger.png" id="14_nc2mo"]
+[ext_resource type="Texture2D" uid="uid://cva2ky0envfyr" path="res://Antiques/TIGRIS ROAR.png" id="14_nc2mo"]
 [ext_resource type="Texture2D" uid="uid://bboif8orondxk" path="res://raregems/dragon gem.png" id="15_wwp0r"]
 [ext_resource type="Texture2D" uid="uid://c3db72x2ggo18" path="res://raregems/mermaidgem.png" id="17_w858j"]
 [ext_resource type="Texture2D" uid="uid://bodujvxjeptrj" path="res://raregems/skullgem.png" id="19_ux38g"]
@@ -550,7 +550,6 @@ expand_mode = 1
 stretch_mode = 5
 
 [node name="ZoomedItemPanel" type="Panel" parent="."]
-visible = false
 layout_mode = 0
 offset_top = 1.0
 offset_right = 483.0
