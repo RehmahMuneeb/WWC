@@ -277,6 +277,7 @@ func reset_game():
 	well_depth_limit = 500
 	well_upgrade_cost = 300
 	collected_gems = []
+	jewel_progress_data = {} 
 	current_chest_level = 1
 	current_chest_progress = 0
 	initialize_chest_targets()
