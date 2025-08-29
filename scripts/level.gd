@@ -62,30 +62,9 @@ func _ready():
 	if fill_stylebox:
 		fill_stylebox.bg_color = Color(0.2, 0.6, 1.0)
 	
-	if unlock_label:
-		unlock_label.visible = false
-		unlock_label.modulate.a = 0
-	
-	get_tree().create_timer(0.5).timeout.connect(_show_unlock_label)
 
-func _show_unlock_label():
-	if unlock_label and not unlock_label_shown:
-		unlock_label_shown = true
-		unlock_label.visible = true
-		var fade_in = create_tween()
-		fade_in.tween_property(unlock_label, "modulate:a", 1.0, 0.3)\
-			  .set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_SINE)
-		get_tree().create_timer(1.0).timeout.connect(_hide_unlock_label)
 
-func _hide_unlock_label():
-	if unlock_label and unlock_label_shown:
-		var fade_out = create_tween()
-		fade_out.tween_property(unlock_label, "modulate:a", 0.0, 0.3)\
-				.set_ease(Tween.EASE_IN).set_trans(Tween.TRANS_SINE)
-		fade_out.tween_callback(func(): 
-			unlock_label.visible = false
-			unlock_label_shown = false
-		)
+
 
 func _hide_treasure_label():
 	treasure_label.visible = false
