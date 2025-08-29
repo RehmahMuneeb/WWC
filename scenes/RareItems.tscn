@@ -60,20 +60,19 @@ scale = Vector2(0.84, 0.84)
 texture = ExtResource("3_ga7kw")
 
 [node name="Label" type="Label" parent="Panel/Sprite2D"]
-offset_left = -152.381
-offset_top = -65.4762
-offset_right = 224.619
-offset_bottom = 15.5238
-theme_override_colors/font_color = Color(0.980392, 0.870588, 0, 1)
-theme_override_colors/font_shadow_color = Color(0.866667, 0, 0.258824, 1)
-theme_override_colors/font_outline_color = Color(0.866667, 0.109804, 0.180392, 1)
-theme_override_constants/shadow_offset_x = 4
-theme_override_constants/shadow_offset_y = 12
-theme_override_constants/outline_size = 22
-theme_override_constants/shadow_outline_size = 7
+offset_left = -195.238
+offset_top = -51.1905
+offset_right = 313.762
+offset_bottom = 18.8095
+theme_override_colors/font_color = Color(0.814717, 0.43569, 9.62615e-07, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_colors/font_outline_color = Color(1, 1, 1, 1)
+theme_override_constants/shadow_offset_x = 5
+theme_override_constants/shadow_offset_y = 9
+theme_override_constants/outline_size = 13
 theme_override_fonts/font = ExtResource("6_rk72g")
-theme_override_font_sizes/font_size = 66
-text = "JUNGLE"
+theme_override_font_sizes/font_size = 46
+text = "ELDER WOODS"
 
 [node name="ItemHolder" type="Control" parent="Panel"]
 anchors_preset = 0
@@ -550,6 +549,7 @@ expand_mode = 1
 stretch_mode = 5
 
 [node name="ZoomedItemPanel" type="Panel" parent="."]
+visible = false
 layout_mode = 0
 offset_top = 1.0
 offset_right = 483.0
