@@ -19,6 +19,7 @@ const SWIPE_THRESHOLD := 100  # Minimum swipe distance in pixels
 const SWIPE_BACK_SCENE := "res://scenes/main.tscn"  # Path to your main menu scene
 
 func _ready():
+	
 	setup_ui()
 	initialize_items()
 	connect_signals()
@@ -55,6 +56,8 @@ func setup_ui():
 
 func initialize_items():
 	lock_all_items()
+	if not "Item1" in Global.unlocked_items:
+		Global.unlocked_items.append("Item9")
 	previously_unlocked_items = Global.unlocked_items.duplicate()
 	update_unlocked_items()
 

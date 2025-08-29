@@ -285,7 +285,6 @@ theme_override_font_sizes/font_size = 66
 text = "GEM"
 
 [node name="ResetButton" type="Button" parent="."]
-visible = false
 layout_mode = 0
 offset_right = 4.0
 offset_bottom = 8.0

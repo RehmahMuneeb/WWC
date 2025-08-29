@@ -1,4 +1,5 @@
 extends Control
+@onready var reset_button = $ResetButton  # Add your actual reset button path
 @onready var background = $Background  # Replace with your actual node path
 var game_started = false  # To prevent multiple triggers
 @onready var coin_label = $Coins/Coinslabel
@@ -60,15 +61,19 @@ func _input(event):
 		return
 
 	if event is InputEventMouseButton and event.pressed:
-		if not is_click_inside_panel(event.position):
+		if not is_click_inside_excluded_controls(event.position):
 			start_game()
 	elif event is InputEventScreenTouch and event.pressed:
-		if not is_click_inside_panel(event.position):
+		if not is_click_inside_excluded_controls(event.position):
 			start_game()
 
 # Check if the click/touch is inside the panel or its children
-func is_click_inside_panel(pos: Vector2) -> bool:
-	return is_click_inside_control(info_panel, pos)
+func is_click_inside_excluded_controls(pos: Vector2) -> bool:
+	var excluded_controls = [info_panel, reset_button]
+	for control in excluded_controls:
+		if is_click_inside_control(control, pos):
+			return true
+	return false
 
 # Recursive function to check panel and its children
 func is_click_inside_control(control: Control, pos: Vector2) -> bool:
