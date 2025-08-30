@@ -1,9 +1,9 @@
-[gd_scene load_steps=19 format=3 uid="uid://37evxehmwk7y"]
+[gd_scene load_steps=20 format=3 uid="uid://37evxehmwk7y"]
 
 [ext_resource type="Script" path="res://game_over_panel.gd" id="1_74m2c"]
+[ext_resource type="Texture2D" uid="uid://esv2tlxbrie4" path="res://scenes/yellow.jpeg" id="2_chquc"]
 [ext_resource type="Texture2D" uid="uid://dbv6g5mqsaetb" path="res://scenes/Walls.png" id="2_hq5cg"]
 [ext_resource type="FontFile" uid="uid://b2clys7lbyd3t" path="res://scenes/Kid Games.ttf" id="2_iih1v"]
-[ext_resource type="Texture2D" uid="uid://cklnteux30g4b" path="res://scenes/8819ac75-06af-4622-bae7-85e309916505.jpeg" id="2_lxcrl"]
 [ext_resource type="Texture2D" uid="uid://1misolt5rykx" path="res://scenes/video-play-watch-player-black-icon-free-png-7017516949743594tmpczaclr.png" id="3_wi27y"]
 [ext_resource type="Texture2D" uid="uid://4pmkbnxocbxf" path="res://TROPHY.png" id="4_2rk2p"]
 [ext_resource type="Texture2D" uid="uid://bhrf3ksx88g41" path="res://Full-bucket1.png" id="4_pts8l"]
@@ -13,11 +13,11 @@
 texture = ExtResource("2_hq5cg")
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_phwy2"]
-bg_color = Color(0.893889, 0.701276, 0, 1)
+bg_color = Color(0.980392, 0.890196, 0.584314, 1)
 border_width_left = 4
 border_width_top = 4
 border_width_right = 4
-border_width_bottom = 15
+border_width_bottom = 8
 border_color = Color(1, 1, 1, 1)
 border_blend = true
 corner_radius_bottom_right = 33
@@ -35,7 +35,7 @@ corner_radius_bottom_left = 12
 shadow_color = Color(1, 0.866667, 0, 1)
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_7mnse"]
-bg_color = Color(1, 0.363015, 0.159059, 1)
+bg_color = Color(1, 0.470588, 0.160784, 1)
 border_width_left = 4
 border_width_top = 4
 border_width_right = 4
@@ -74,6 +74,8 @@ corner_radius_bottom_left = 21
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_im4xa"]
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_kqsst"]
+
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_kf5au"]
 bg_color = Color(1, 0.811765, 0, 1)
 corner_radius_top_left = 22
@@ -88,11 +90,11 @@ script = ExtResource("1_74m2c")
 
 [node name="TextureRect" type="TextureRect" parent="."]
 layout_mode = 0
-offset_left = -922.0
-offset_top = -87.0
-offset_right = 1414.0
+offset_left = -58.0
+offset_top = -10.0
+offset_right = 570.0
 offset_bottom = 863.0
-texture = ExtResource("2_lxcrl")
+texture = ExtResource("2_chquc")
 expand_mode = 1
 
 [node name="Panel2" type="Panel" parent="."]
@@ -106,24 +108,24 @@ theme_override_styles/panel = SubResource("StyleBoxTexture_xqme3")
 [node name="DepthMetrerPanel" type="Panel" parent="."]
 z_index = 3
 layout_mode = 2
-offset_left = 58.0
-offset_right = 427.0
+offset_left = 3.0
+offset_right = 479.0
 offset_bottom = 67.0
 theme_override_styles/panel = SubResource("StyleBoxFlat_phwy2")
 
 [node name="Label" type="Label" parent="DepthMetrerPanel"]
 layout_mode = 0
-offset_left = 16.0
+offset_left = 48.0
 offset_top = 9.0
-offset_right = 359.0
+offset_right = 426.0
 offset_bottom = 55.0
-theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_color = Color(0.964706, 0.572549, 0.266667, 1)
 theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
 theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
 theme_override_constants/shadow_offset_y = 6
 theme_override_constants/outline_size = 4
 theme_override_fonts/font = ExtResource("2_iih1v")
-theme_override_font_sizes/font_size = 39
+theme_override_font_sizes/font_size = 44
 text = "DEPTH   METER"
 
 [node name="PlayerIcon" type="Sprite2D" parent="."]
@@ -230,6 +232,7 @@ theme_override_constants/outline_size = 6
 theme_override_fonts/font = ExtResource("2_iih1v")
 theme_override_font_sizes/font_size = 46
 theme_override_styles/focus = SubResource("StyleBoxEmpty_yak4s")
+theme_override_styles/disabled = SubResource("StyleBoxFlat_n6yph")
 theme_override_styles/hover = SubResource("StyleBoxFlat_n6yph")
 theme_override_styles/pressed = SubResource("StyleBoxFlat_n6yph")
 theme_override_styles/normal = SubResource("StyleBoxFlat_q37w6")
@@ -247,6 +250,7 @@ theme_override_constants/outline_size = 6
 theme_override_fonts/font = ExtResource("2_iih1v")
 theme_override_font_sizes/font_size = 46
 theme_override_styles/focus = SubResource("StyleBoxEmpty_im4xa")
+theme_override_styles/disabled = SubResource("StyleBoxFlat_kqsst")
 theme_override_styles/hover = SubResource("StyleBoxFlat_kf5au")
 theme_override_styles/pressed = SubResource("StyleBoxFlat_kf5au")
 theme_override_styles/normal = SubResource("StyleBoxFlat_kf5au")

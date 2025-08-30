@@ -21,8 +21,8 @@ const COVERED_LINE_COLOR := Color.GOLD
 const UNCOVERED_LINE_COLOR := Color.FLORAL_WHITE
 const MAJOR_TICK_COVERED_COLOR := Color.TOMATO
 const MAJOR_TICK_DEFAULT_COLOR := Color.TOMATO
-const LABEL_COVERED_COLOR := Color.GOLD
-const LABEL_DEFAULT_COLOR := Color.AQUAMARINE
+const LABEL_COVERED_COLOR := Color.FOREST_GREEN
+const LABEL_DEFAULT_COLOR := Color.INDIAN_RED
 
 ### NODES ###
 @onready var depth_line := $ScrollContainer/DepthMap/DepthLine
