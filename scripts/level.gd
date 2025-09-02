@@ -298,24 +298,28 @@ func _on_rock_timer_timeout():
 	match current_zone_type:
 		0:
 			sprite.texture = normal_texture
+			sprite.material.set_shader_parameter("texture_type", 0) # Add this
 			particles.emitting = true
 			particle_material.color = Color(1, 1, 1)
 			rock.fall_speed = rock.fall_speed_zone1
 			rock.horizontal_speed = rock.horizontal_speed_zone1
 		1:
 			sprite.texture = lava2_texture
+			sprite.material.set_shader_parameter("texture_type", 1) # Add this
 			particles.emitting = true
 			particle_material.color = Color(1, 0.6, 0)
 			rock.fall_speed = rock.fall_speed_zone2
 			rock.horizontal_speed = rock.horizontal_speed_zone2
 		2:
 			sprite.texture = lava3_texture
+			sprite.material.set_shader_parameter("texture_type", 2)
 			particles.emitting = true
 			particle_material.color = Color(1, 0.2, 0)
 			rock.fall_speed = rock.fall_speed_zone3
 			rock.horizontal_speed = rock.horizontal_speed_zone3
 		_:
 			sprite.texture = normal_texture
+			sprite.material.set_shader_parameter("texture_type", 0)
 			particles.emitting = true
 			particle_material.color = Color(1, 1, 1)
 			rock.fall_speed = rock.fall_speed_zone1

@@ -1,4 +1,4 @@
-[gd_scene load_steps=29 format=3 uid="uid://btndkc1nmjdx0"]
+[gd_scene load_steps=28 format=3 uid="uid://btndkc1nmjdx0"]
 
 [ext_resource type="Script" path="res://scripts/level.gd" id="1_24m71"]
 [ext_resource type="PackedScene" uid="uid://be3ml7efg7568" path="res://scenes/wall_bg.tscn" id="1_frcah"]
@@ -146,11 +146,6 @@ _data = {
 "RESET": SubResource("Animation_0uxw3")
 }
 
-[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_lmn8e"]
-particle_flag_disable_z = true
-gravity = Vector3(0, 98, 0)
-color = Color(1, 0.843137, 0, 1)
-
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_fkipk"]
 bg_color = Color(0, 0.552941, 0.858824, 1)
 border_width_top = 4
@@ -247,10 +242,6 @@ libraries = {
 "": SubResource("AnimationLibrary_afy14")
 }
 
-[node name="GPUParticles2D" type="GPUParticles2D" parent="UI/ProgressBar"]
-position = Vector2(42.0139, -7.92675)
-process_material = SubResource("ParticleProcessMaterial_lmn8e")
-
 [node name="JewelSpawner" type="Node2D" parent="."]
 position = Vector2(23, 42)
 script = ExtResource("4_r0cwm")
@@ -308,9 +299,9 @@ layout_mode = 1
 anchors_preset = 5
 anchor_left = 0.5
 anchor_right = 0.5
-offset_left = -46.5
+offset_left = -48.5
 offset_top = -3.0
-offset_right = 67.5
+offset_right = 65.5
 offset_bottom = 66.0
 grow_horizontal = 2
 theme_override_constants/outline_size = 6
