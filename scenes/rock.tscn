@@ -12,13 +12,17 @@ shader_parameter/texture_type = 0
 shader_parameter/lava1_color = Vector4(1, 0.4, 0, 1)
 shader_parameter/lava2_color = Vector4(1, 0.5, 0, 1)
 shader_parameter/lava3_color = Vector4(1, 0.5, 0, 1)
-shader_parameter/outline_thickness = 2.0
-shader_parameter/glow_strength = 1.8
-shader_parameter/glow_radius = 1.5
-shader_parameter/aura_strength = 0.2
+shader_parameter/outline_thickness = 3.0
+shader_parameter/fog_strength = 6.0
+shader_parameter/glow_strength = 2.2
+shader_parameter/glow_radius = 0.0
+shader_parameter/aura_strength = 0.1
 shader_parameter/shimmer_speed = 3.0
 shader_parameter/shimmer_strength = 0.2
 shader_parameter/shimmer_scale = 10.0
+shader_parameter/puff_speed = 1.5
+shader_parameter/puff_scale = 14.0
+shader_parameter/puff_intensity = 2.2
 
 [sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_i5qix"]
 blend_mode = 1
@@ -62,6 +66,7 @@ horizontal_speed_zone3 = 0.0
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 material = SubResource("ShaderMaterial_g30uh")
+scale = Vector2(1.1, 1.1)
 texture = ExtResource("1_hpbej")
 
 [node name="GPUParticles2D" type="GPUParticles2D" parent="Sprite2D"]
