@@ -287,7 +287,7 @@ func _on_rock_timer_timeout():
 		return
 	var rock = rock_scene.instantiate()
 	var sprite = rock.get_node("Sprite2D")
-	var particles = sprite.get_node("GPUParticles2D")
+	var particles = rock.get_node("GPUParticles2D")
 	var current_zone_type = -1
 	for i in range(zone_depths.size()):
 		if cycle_depth >= zone_depths[i] and cycle_depth < zone_depths[i] + zone_width:
@@ -313,15 +313,15 @@ func _on_rock_timer_timeout():
 		2:
 			sprite.texture = lava3_texture
 			sprite.material.set_shader_parameter("texture_type", 2)
-			particles.emitting = true
-			particle_material.color = Color(1, 0.2, 0)
+			particles.emitting = false
+			#particle_material.color = Color(1, 0.2, 0)
 			rock.fall_speed = rock.fall_speed_zone3
 			rock.horizontal_speed = rock.horizontal_speed_zone3
 		_:
 			sprite.texture = normal_texture
 			sprite.material.set_shader_parameter("texture_type", 0)
 			particles.emitting = true
-			particle_material.color = Color(1, 0.6, 0)
+			particle_material.color = Color(1, 0.4, 0)
 			rock.fall_speed = rock.fall_speed_zone1
 			rock.horizontal_speed = rock.horizontal_speed_zone1
 	$Rocks.add_child(rock)
