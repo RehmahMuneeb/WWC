@@ -321,7 +321,7 @@ func _on_rock_timer_timeout():
 			sprite.texture = normal_texture
 			sprite.material.set_shader_parameter("texture_type", 0)
 			particles.emitting = true
-			particle_material.color = Color(1, 0.4, 0)
+			particle_material.color = Color(1, 0.26, 0)
 			rock.fall_speed = rock.fall_speed_zone1
 			rock.horizontal_speed = rock.horizontal_speed_zone1
 	$Rocks.add_child(rock)

@@ -13,6 +13,8 @@ var horizontal_direction: int = 1
 var zone = 1
 
 const MARGIN: int = 24
+const MIN_X_DISTANCE: int = 80   # ⬅ minimum horizontal gap
+const MIN_Y_DISTANCE: int = 180   # ⬅ minimum vertical gap
 
 func set_zone(value: int) -> void:
 	zone = value
@@ -32,12 +34,27 @@ func _ready():
 	rng.randomize()
 
 	var screen_width = get_viewport().get_visible_rect().size.x
-	var random_x = rng.randi_range(MARGIN, screen_width - MARGIN)
-	var random_y = rng.randi_range(-150, -50)
+	var random_x: int
+	var random_y: int
+	var attempts := 0
+	var valid := false
+
+	while not valid and attempts < 20:
+		random_x = rng.randi_range(MARGIN, screen_width - MARGIN)
+		random_y = rng.randi_range(-150, -50)
+		valid = true
+		for rock in get_tree().get_nodes_in_group("stone"):
+			if rock == self: 
+				continue
+			# check distance on both axes
+			if abs(rock.position.x - random_x) < MIN_X_DISTANCE and abs(rock.position.y - random_y) < MIN_Y_DISTANCE:
+				valid = false
+				break
+		attempts += 1
 
 	position = Vector2(random_x, random_y)
-	horizontal_direction = 1 if rng.randf() > 0.5 else -1
 
+	horizontal_direction = 1 if rng.randf() > 0.5 else -1
 	add_to_group("stone")
 
 func _process(delta: float) -> void:
@@ -54,7 +71,6 @@ func _process(delta: float) -> void:
 
 func _on_body_entered(body: Node2D) -> void:
 	if body.is_in_group("bucket"):
-		# ✅ Check property, not method
 		if "is_immune" in body and body.is_immune:
 			return
 
@@ -66,10 +82,7 @@ func _on_body_entered(body: Node2D) -> void:
 			if sound_player:
 				sound_player.play()
 
-			# Freeze this rock now, main will tween it down with the bucket
-			set_process(false)
-
-			# Notify Level and pass this rock instance
+			set_process(false) # freeze
 			main._on_player_hit(self)
 		else:
 			printerr("Main game controller (Level) not found!")
