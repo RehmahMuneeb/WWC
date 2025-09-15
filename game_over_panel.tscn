@@ -1,4 +1,4 @@
-[gd_scene load_steps=20 format=3 uid="uid://37evxehmwk7y"]
+[gd_scene load_steps=19 format=3 uid="uid://37evxehmwk7y"]
 
 [ext_resource type="Script" path="res://game_over_panel.gd" id="1_74m2c"]
 [ext_resource type="Texture2D" uid="uid://esv2tlxbrie4" path="res://scenes/yellow.jpeg" id="2_chquc"]
@@ -73,8 +73,6 @@ corner_radius_bottom_right = 21
 corner_radius_bottom_left = 21
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_im4xa"]
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_kqsst"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_kf5au"]
 bg_color = Color(1, 0.811765, 0, 1)
@@ -250,7 +248,7 @@ theme_override_constants/outline_size = 6
 theme_override_fonts/font = ExtResource("2_iih1v")
 theme_override_font_sizes/font_size = 46
 theme_override_styles/focus = SubResource("StyleBoxEmpty_im4xa")
-theme_override_styles/disabled = SubResource("StyleBoxFlat_kqsst")
+theme_override_styles/disabled = SubResource("StyleBoxFlat_kf5au")
 theme_override_styles/hover = SubResource("StyleBoxFlat_kf5au")
 theme_override_styles/pressed = SubResource("StyleBoxFlat_kf5au")
 theme_override_styles/normal = SubResource("StyleBoxFlat_kf5au")

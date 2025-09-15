@@ -48,9 +48,9 @@ var unlock_label_shown = false
 func _ready():
 	AdController.load_interstitial()
 	AdController.load_rewarded()
-	AdController.reward_earned.connect(_on_reward_earned)
-	AdController.rewarded_failed.connect(_on_rewarded_failed)
-	AdController.rewarded_closed.connect(_on_rewarded_closed)
+	# Connect to the interstitial closed signal
+	AdController.interstitial_closed.connect(_on_interstitial_closed)
+
 	reset_game_state()
 	randomize_zones()
 	setup_game_over_panel()
@@ -61,10 +61,6 @@ func _ready():
 	var fill_stylebox = depth_bar.get("custom_styles/fill")
 	if fill_stylebox:
 		fill_stylebox.bg_color = Color(0.2, 0.6, 1.0)
-	
-
-
-
 
 func _hide_treasure_label():
 	treasure_label.visible = false
@@ -80,7 +76,7 @@ func reset_game_state():
 	score = 0
 	last_cycle = -1
 	game_active = true
-
+	rise_again_uses = 0	# Reset revive count each new session
 	depth_bar.min_value = 0
 	depth_bar.max_value = 10000
 	rock_timer.wait_time = 2.0
@@ -115,47 +111,53 @@ func show_game_over():
 	rise_again_button.disabled = false
 	give_up_button.disabled = false
 	rise_again_button.grab_focus()
+	
+	
+var rise_again_uses: int = 0
+var max_rise_again_uses: int = 2
 
 func _on_rise_again_pressed():
-	rise_again_button.disabled = true
-	give_up_button.disabled = true
-	waiting_for_reward = true
-	AdController.show_rewarded()
+	if rise_again_uses >= max_rise_again_uses:
+		# Disable the button if limit reached
+		rise_again_button.disabled = true
+		return
 
-func _on_reward_earned(amount: int, ad_type: String):
+	print("Rise Again button pressed - showing interstitial ad")
+	rise_again_button.disabled = true
+	give_up_button.disabled = false
+	waiting_for_reward = true
+	rise_again_uses += 1
+
+	# Show interstitial ad and wait for it to close
+	AdController.show_interstitial()
+	# The game will continue in _on_interstitial_closed() after ad is closed
+
+func _on_interstitial_closed():
+
 	if waiting_for_reward:
+		# Resume the game after ad is closed
 		game_over_panel.visible = false
 		get_tree().paused = false
 		game_active = true
 
-		# Restore last safe position instead of reset
+		# Restore last safe position
 		if player:
 			player.show()
 			player.set_process(true)
 			player.set_physics_process(true)
 			player.position = last_safe_position  
-			player.revive()   # ✅ Use bucket's revive
+			player.revive()
 
 		waiting_for_reward = false
 		AdController.game_over_count = 0
-	AdController.load_rewarded()
-
-
-func _on_rewarded_failed(error: String):
-	rise_again_button.disabled = false
-	give_up_button.disabled = false
-	waiting_for_reward = false
-
-func _on_rewarded_closed():
-	if waiting_for_reward:
-		rise_again_button.disabled = false
-		give_up_button.disabled = false
-	waiting_for_reward = false
-	AdController.load_rewarded()
+		
+		# Reload interstitial for next time
+		AdController.load_interstitial()
+		print("Game resumed successfully")
 
 func _on_give_up_pressed():
 	AdController.give_up_count += 1
-	if AdController.give_up_count % 3 == 0:
+	if AdController.give_up_count % 6 == 0:
 		AdController.show_interstitial()
 		await AdController.interstitial_closed
 	get_tree().paused = false
