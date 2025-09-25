@@ -632,4 +632,11 @@ offset_right = 87.0
 offset_bottom = 159.0
 texture_normal = ExtResource("28_cqg32")
 
+[node name="BookButton" type="Button" parent="."]
+layout_mode = 0
+offset_right = 77.0
+offset_bottom = 38.0
+text = "Book"
+
 [connection signal="pressed" from="TextureButton" to="." method="_on_texture_button_pressed"]
+[connection signal="pressed" from="BookButton" to="." method="_on_book_button_pressed"]
