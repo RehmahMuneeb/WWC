@@ -1,4 +1,4 @@
-[gd_scene load_steps=45 format=3 uid="uid://b1bt4udrrmx0d"]
+[gd_scene load_steps=49 format=3 uid="uid://b1bt4udrrmx0d"]
 
 [ext_resource type="Script" path="res://scripts/main.gd" id="1_fsboc"]
 [ext_resource type="Texture2D" uid="uid://bhrf3ksx88g41" path="res://Full-bucket1.png" id="2_dfu7b"]
@@ -13,7 +13,6 @@
 [ext_resource type="Script" path="res://scenes/label_2.gd" id="11_n181m"]
 [ext_resource type="Script" path="res://scenes/texturetweenscript.gd" id="11_nrto1"]
 [ext_resource type="Texture2D" uid="uid://dyi3ffk51o02r" path="res://Gemini_Generated_Image_7qwb7w7qwb7w7qwb-removebg-preview.png" id="13_hiv6t"]
-[ext_resource type="Texture2D" uid="uid://dh613wkynhpyi" path="res://scenes/Card Back of Hearthstone.jpeg" id="14_3quj4"]
 [ext_resource type="Texture2D" uid="uid://b5cptwyulm8dl" path="res://scenes/sss.png" id="15_as63b"]
 [ext_resource type="Texture2D" uid="uid://cbjv1p37myelk" path="res://scenes/gem (12).png" id="15_rdi6x"]
 [ext_resource type="Texture2D" uid="uid://dknry0kfqef41" path="res://scenes/ssss.png" id="16_ljj2i"]
@@ -85,66 +84,6 @@ shadow_color = Color(0, 0, 0, 1)
 shadow_size = 12
 shadow_offset = Vector2(0, 4)
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_58b8x"]
-bg_color = Color(1, 0.840198, 0.351863, 1)
-border_width_left = 12
-border_width_top = 12
-border_width_right = 12
-border_width_bottom = 22
-border_color = Color(1, 1, 1, 1)
-border_blend = true
-corner_radius_top_left = 20
-corner_radius_top_right = 20
-corner_radius_bottom_right = 20
-corner_radius_bottom_left = 20
-shadow_color = Color(0, 0, 0, 1)
-shadow_size = 6
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_lmr5y"]
-bg_color = Color(1, 0.839216, 0.352941, 1)
-border_width_left = 12
-border_width_top = 12
-border_width_right = 12
-border_width_bottom = 22
-border_color = Color(1, 1, 1, 1)
-border_blend = true
-corner_radius_top_left = 20
-corner_radius_top_right = 20
-corner_radius_bottom_right = 20
-corner_radius_bottom_left = 20
-shadow_color = Color(0, 0, 0, 1)
-shadow_size = 6
-
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_xtcim"]
-
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_ce3bn"]
-
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_r6ek4"]
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ribck"]
-bg_color = Color(0.0898921, 0.768239, 0.221282, 1)
-border_width_bottom = 10
-border_color = Color(0, 0, 0, 1)
-corner_radius_top_left = 22
-corner_radius_top_right = 22
-corner_radius_bottom_right = 22
-corner_radius_bottom_left = 22
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_3ju3y"]
-bg_color = Color(0.0745098, 0.698039, 0.580392, 1)
-border_width_left = 14
-border_width_top = 14
-border_width_right = 14
-border_width_bottom = 14
-border_color = Color(1, 1, 1, 1)
-border_blend = true
-corner_radius_top_left = 444
-corner_radius_top_right = 444
-corner_radius_bottom_right = 444
-corner_radius_bottom_left = 444
-shadow_color = Color(0.890196, 1, 0.588235, 0.666667)
-shadow_size = 22
-
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_5mdpg"]
 bg_color = Color(0.0733297, 0.697378, 0.578867, 1)
 border_width_left = 8
@@ -160,16 +99,51 @@ corner_radius_bottom_left = 8
 shadow_color = Color(0.32549, 0.776471, 0, 0.6)
 shadow_size = 11
 
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_s3hfa"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_eonyx"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_1ono4"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_ru1ne"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_lmg4e"]
+
 [sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_18p25"]
 blend_mode = 4
 
 [sub_resource type="GDScript" id="GDScript_58pv2"]
 script/source = "extends Sprite2D
 
-@export var rotation_speed: float = 1.0   # adjust speed
+@export var rotation_speed: float = 1.0   # base spin speed
+@onready var fade_rect: ColorRect = $\"../TransitionLayer/FadeRect\"
+@onready var globe_button: Button = $\"../TransitionLayer/GlobeButton\"
+
+var transitioning := false
 
 func _process(delta):
 	rotation += rotation_speed * delta
+
+
+
+func _on_globe_button_pressed() -> void:
+	if transitioning:
+		return
+	transitioning = true
+
+	globe_button.disabled = true
+
+	var tween = create_tween()
+	tween.tween_property(self, \"rotation_speed\", rotation_speed * 10.0, 0.45)\\
+		.set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_IN)
+	tween.tween_property(self, \"scale\", Vector2(1.6, 1.6), 0.25)\\
+		.set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_OUT)
+	tween.tween_property(fade_rect, \"modulate:a\", 1.0, 0.25)
+
+	await tween.finished
+
+	# change scene (no await here!)
+	get_tree().change_scene_to_file(\"res://scenes/RareItems.tscn\")
 "
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_144jb"]
@@ -237,6 +211,66 @@ corner_radius_bottom_right = 10
 corner_radius_bottom_left = 8
 shadow_color = Color(1, 0.434811, 0.366139, 0.6)
 shadow_size = 5
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_58b8x"]
+bg_color = Color(1, 0.840198, 0.351863, 1)
+border_width_left = 12
+border_width_top = 12
+border_width_right = 12
+border_width_bottom = 22
+border_color = Color(1, 1, 1, 1)
+border_blend = true
+corner_radius_top_left = 20
+corner_radius_top_right = 20
+corner_radius_bottom_right = 20
+corner_radius_bottom_left = 20
+shadow_color = Color(0, 0, 0, 1)
+shadow_size = 6
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_lmr5y"]
+bg_color = Color(1, 0.839216, 0.352941, 1)
+border_width_left = 12
+border_width_top = 12
+border_width_right = 12
+border_width_bottom = 22
+border_color = Color(1, 1, 1, 1)
+border_blend = true
+corner_radius_top_left = 20
+corner_radius_top_right = 20
+corner_radius_bottom_right = 20
+corner_radius_bottom_left = 20
+shadow_color = Color(0, 0, 0, 1)
+shadow_size = 6
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_xtcim"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_ce3bn"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_r6ek4"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ribck"]
+bg_color = Color(0.0898921, 0.768239, 0.221282, 1)
+border_width_bottom = 10
+border_color = Color(0, 0, 0, 1)
+corner_radius_top_left = 22
+corner_radius_top_right = 22
+corner_radius_bottom_right = 22
+corner_radius_bottom_left = 22
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_3ju3y"]
+bg_color = Color(0.0745098, 0.698039, 0.580392, 1)
+border_width_left = 14
+border_width_top = 14
+border_width_right = 14
+border_width_bottom = 14
+border_color = Color(1, 1, 1, 1)
+border_blend = true
+corner_radius_top_left = 444
+corner_radius_top_right = 444
+corner_radius_bottom_right = 444
+corner_radius_bottom_left = 444
+shadow_color = Color(0.392157, 0.694118, 0.988235, 1)
+shadow_size = 22
 
 [node name="HomeScreen" type="Control"]
 layout_mode = 3
@@ -437,7 +471,6 @@ text = "TAP ANYWHERE
 script = ExtResource("11_n181m")
 
 [node name="infopanel" type="Panel" parent="."]
-visible = false
 layout_mode = 2
 offset_left = 2.0
 offset_top = 634.0
@@ -445,7 +478,211 @@ offset_right = 478.0
 offset_bottom = 853.0
 theme_override_styles/panel = SubResource("StyleBoxFlat_lw57c")
 
+[node name="Panel" type="Panel" parent="infopanel"]
+layout_mode = 0
+offset_top = 155.0
+offset_right = 477.0
+offset_bottom = 221.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_5mdpg")
+
+[node name="TransitionLayer" type="CanvasLayer" parent="infopanel/Panel"]
+
+[node name="FadeRect" type="ColorRect" parent="infopanel/Panel/TransitionLayer"]
+visible = false
+modulate = Color(1, 1, 1, 0)
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(0, 0, 0, 1)
+
+[node name="GlobeButton" type="Button" parent="infopanel/Panel/TransitionLayer"]
+offset_left = 131.0
+offset_top = 722.0
+offset_right = 342.0
+offset_bottom = 908.0
+theme_override_styles/focus = SubResource("StyleBoxEmpty_s3hfa")
+theme_override_styles/disabled = SubResource("StyleBoxEmpty_eonyx")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_1ono4")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_ru1ne")
+theme_override_styles/normal = SubResource("StyleBoxEmpty_lmg4e")
+
+[node name="RotateGlobe" type="Sprite2D" parent="infopanel/Panel"]
+z_index = 1
+material = SubResource("CanvasItemMaterial_18p25")
+position = Vector2(235, 25)
+scale = Vector2(0.534, 0.534)
+texture = ExtResource("13_hiv6t")
+script = SubResource("GDScript_58pv2")
+
+[node name="Play" type="Button" parent="infopanel/Panel"]
+visible = false
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.687
+anchor_right = 0.687
+offset_left = -173.699
+offset_top = -54.0
+offset_right = 1.30099
+offset_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 44
+theme_override_styles/normal = SubResource("StyleBoxFlat_144jb")
+text = "PLAY"
+
+[node name="Play3" type="Button" parent="infopanel/Panel"]
+visible = false
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.687
+anchor_right = 0.687
+offset_left = -182.699
+offset_top = 8.0
+offset_right = -0.699005
+offset_bottom = 59.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 33
+theme_override_styles/normal = SubResource("StyleBoxFlat_2t4xe")
+text = "CRAFTS"
+
+[node name="Play2" type="Button" parent="infopanel/Panel"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.687
+anchor_right = 0.687
+offset_left = -327.699
+offset_top = -71.0
+offset_right = -176.699
+offset_bottom = 62.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(1, 0.827451, 0, 1)
+theme_override_font_sizes/font_size = 33
+theme_override_styles/normal = SubResource("StyleBoxFlat_c3if0")
+text = "GEMS"
+icon = ExtResource("15_rdi6x")
+icon_alignment = 1
+vertical_icon_alignment = 0
+expand_icon = true
+
+[node name="Play4" type="Button" parent="infopanel/Panel"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.687
+anchor_right = 0.687
+offset_left = -1.69897
+offset_top = -69.0
+offset_right = 149.301
+offset_bottom = 64.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(1, 0.827451, 0, 1)
+theme_override_font_sizes/font_size = 33
+theme_override_styles/normal = SubResource("StyleBoxFlat_r7w80")
+text = "SHOP"
+icon = ExtResource("19_h20ks")
+icon_alignment = 1
+vertical_icon_alignment = 0
+expand_icon = true
+
+[node name="Items" type="Button" parent="infopanel/Panel"]
+visible = false
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -245.5
+offset_top = -138.0
+offset_right = -82.5
+offset_bottom = -84.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 33
+text = "CRAFTS"
+
+[node name="Items2" type="Button" parent="infopanel/Panel"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -69.5
+offset_top = -178.0
+offset_right = 63.5
+offset_bottom = -124.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 33
+theme_override_styles/normal = SubResource("StyleBoxFlat_speqc")
+text = "PLAY"
+
+[node name="Button" type="Button" parent="infopanel/Panel"]
+visible = false
+layout_mode = 0
+offset_top = 4.0
+offset_right = 61.0
+offset_bottom = 65.0
+icon = ExtResource("15_as63b")
+expand_icon = true
+
+[node name="Button2" type="Button" parent="infopanel/Panel"]
+visible = false
+layout_mode = 0
+offset_left = 118.0
+offset_top = -110.0
+offset_right = 184.0
+offset_bottom = -44.0
+icon = ExtResource("16_ljj2i")
+expand_icon = true
+
+[node name="Button3" type="Button" parent="infopanel/Panel"]
+visible = false
+layout_mode = 0
+offset_left = 512.0
+offset_top = 9.0
+offset_right = 600.0
+offset_bottom = 97.0
+icon = ExtResource("17_0x5mj")
+
+[node name="Button4" type="Button" parent="infopanel/Panel"]
+visible = false
+layout_mode = 0
+offset_left = 59.0
+offset_top = 2.0
+offset_right = 122.0
+offset_bottom = 65.0
+icon = ExtResource("18_1ptjo")
+expand_icon = true
+
+[node name="Button5" type="Button" parent="infopanel/Panel"]
+visible = false
+layout_mode = 0
+offset_left = 343.0
+offset_top = 3.0
+offset_right = 402.0
+offset_bottom = 62.0
+icon = ExtResource("19_h20ks")
+expand_icon = true
+
+[node name="Button6" type="Button" parent="infopanel/Panel"]
+visible = false
+layout_mode = 0
+offset_left = 406.0
+offset_top = 4.0
+offset_right = 464.0
+offset_bottom = 62.0
+icon = ExtResource("20_4fn85")
+expand_icon = true
+
 [node name="Well Depth" type="Panel" parent="infopanel"]
+visible = false
 layout_mode = 0
 offset_left = 254.0
 offset_top = 17.0
@@ -485,6 +722,7 @@ texture = ExtResource("3_g2cem")
 expand_mode = 1
 
 [node name="Bucket Capacity" type="Panel" parent="infopanel"]
+visible = false
 layout_mode = 0
 offset_left = 20.0
 offset_top = 16.0
@@ -531,6 +769,7 @@ theme_override_font_sizes/font_size = 22
 text = "RARE GEMS"
 
 [node name="Cest" type="TextureRect" parent="infopanel"]
+visible = false
 layout_mode = 0
 offset_left = -97.0
 offset_top = -2.0
@@ -551,6 +790,7 @@ theme_override_styles/focus = SubResource("StyleBoxEmpty_xtcim")
 theme_override_styles/hover = SubResource("StyleBoxEmpty_ce3bn")
 
 [node name="RareGemLabel" type="Label" parent="infopanel"]
+visible = false
 layout_mode = 1
 offset_left = 47.0
 offset_top = 29.0
@@ -567,6 +807,7 @@ theme_override_font_sizes/font_size = 22
 text = "RARE  GEMS"
 
 [node name="AntiqueLabel" type="Label" parent="infopanel"]
+visible = false
 layout_mode = 1
 offset_left = 292.0
 offset_top = 27.0
@@ -583,6 +824,7 @@ theme_override_font_sizes/font_size = 22
 text = "ANTIQUES"
 
 [node name="Crafting" type="Button" parent="infopanel"]
+visible = false
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -617,9 +859,9 @@ offset_bottom = 277.0
 
 [node name="WorldTourPanel" type="Panel" parent="."]
 layout_mode = 0
-offset_left = 126.0
+offset_left = 132.0
 offset_top = 716.0
-offset_right = 349.0
+offset_right = 341.0
 offset_bottom = 945.0
 theme_override_styles/panel = SubResource("StyleBoxFlat_3ju3y")
 
@@ -644,200 +886,14 @@ SHOP
 EXIT"
 horizontal_alignment = 1
 
-[node name="Sprite2D" type="Sprite2D" parent="WorldTourPanel"]
-visible = false
-position = Vector2(362, 137)
-scale = Vector2(0.514606, 0.514606)
-texture = ExtResource("14_3quj4")
-flip_h = true
-
-[node name="Panel" type="Panel" parent="."]
-layout_mode = 0
-offset_left = 2.0
-offset_top = 789.0
-offset_right = 479.0
-offset_bottom = 855.0
-theme_override_styles/panel = SubResource("StyleBoxFlat_5mdpg")
-
-[node name="RotateGlobe" type="Sprite2D" parent="Panel"]
-z_index = 1
-material = SubResource("CanvasItemMaterial_18p25")
-position = Vector2(235, 25)
-scale = Vector2(0.534, 0.534)
-texture = ExtResource("13_hiv6t")
-script = SubResource("GDScript_58pv2")
-
-[node name="Play" type="Button" parent="Panel"]
-visible = false
-layout_mode = 1
-anchors_preset = -1
-anchor_left = 0.687
-anchor_right = 0.687
-offset_left = -173.699
-offset_top = -54.0
-offset_right = 1.30099
-offset_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-theme_override_font_sizes/font_size = 44
-theme_override_styles/normal = SubResource("StyleBoxFlat_144jb")
-text = "PLAY"
-
-[node name="Play3" type="Button" parent="Panel"]
-visible = false
-layout_mode = 1
-anchors_preset = -1
-anchor_left = 0.687
-anchor_right = 0.687
-offset_left = -182.699
-offset_top = 8.0
-offset_right = -0.699005
-offset_bottom = 59.0
-grow_horizontal = 2
-grow_vertical = 2
-theme_override_font_sizes/font_size = 33
-theme_override_styles/normal = SubResource("StyleBoxFlat_2t4xe")
-text = "CRAFTS"
-
-[node name="Play2" type="Button" parent="Panel"]
-layout_mode = 1
-anchors_preset = -1
-anchor_left = 0.687
-anchor_right = 0.687
-offset_left = -327.699
-offset_top = -71.0
-offset_right = -176.699
-offset_bottom = 62.0
-grow_horizontal = 2
-grow_vertical = 2
-theme_override_colors/font_color = Color(1, 0.827451, 0, 1)
-theme_override_font_sizes/font_size = 33
-theme_override_styles/normal = SubResource("StyleBoxFlat_c3if0")
-text = "GEMS"
-icon = ExtResource("15_rdi6x")
-icon_alignment = 1
-vertical_icon_alignment = 0
-expand_icon = true
-
-[node name="Play4" type="Button" parent="Panel"]
-layout_mode = 1
-anchors_preset = -1
-anchor_left = 0.687
-anchor_right = 0.687
-offset_left = -1.69897
-offset_top = -67.0
-offset_right = 149.301
-offset_bottom = 66.0
-grow_horizontal = 2
-grow_vertical = 2
-theme_override_colors/font_color = Color(1, 0.827451, 0, 1)
-theme_override_font_sizes/font_size = 33
-theme_override_styles/normal = SubResource("StyleBoxFlat_r7w80")
-text = "SHOP"
-icon = ExtResource("19_h20ks")
-icon_alignment = 1
-vertical_icon_alignment = 0
-expand_icon = true
-
-[node name="Items" type="Button" parent="Panel"]
-visible = false
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -245.5
-offset_top = -138.0
-offset_right = -82.5
-offset_bottom = -84.0
-grow_horizontal = 2
-grow_vertical = 2
-theme_override_font_sizes/font_size = 33
-text = "CRAFTS"
-
-[node name="Items2" type="Button" parent="Panel"]
-visible = false
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = 104.5
-offset_top = -27.0
-offset_right = 237.5
-offset_bottom = 27.0
-grow_horizontal = 2
-grow_vertical = 2
-theme_override_font_sizes/font_size = 33
-theme_override_styles/normal = SubResource("StyleBoxFlat_speqc")
-
-[node name="Button" type="Button" parent="Panel"]
-visible = false
-layout_mode = 0
-offset_top = 4.0
-offset_right = 61.0
-offset_bottom = 65.0
-icon = ExtResource("15_as63b")
-expand_icon = true
-
-[node name="Button2" type="Button" parent="Panel"]
-visible = false
-layout_mode = 0
-offset_left = 118.0
-offset_top = -110.0
-offset_right = 184.0
-offset_bottom = -44.0
-icon = ExtResource("16_ljj2i")
-expand_icon = true
-
-[node name="Button3" type="Button" parent="Panel"]
-visible = false
-layout_mode = 0
-offset_left = 512.0
-offset_top = 9.0
-offset_right = 600.0
-offset_bottom = 97.0
-icon = ExtResource("17_0x5mj")
-
-[node name="Button4" type="Button" parent="Panel"]
-visible = false
-layout_mode = 0
-offset_left = 59.0
-offset_top = 2.0
-offset_right = 122.0
-offset_bottom = 65.0
-icon = ExtResource("18_1ptjo")
-expand_icon = true
-
-[node name="Button5" type="Button" parent="Panel"]
-visible = false
-layout_mode = 0
-offset_left = 343.0
-offset_top = 3.0
-offset_right = 402.0
-offset_bottom = 62.0
-icon = ExtResource("19_h20ks")
-expand_icon = true
-
-[node name="Button6" type="Button" parent="Panel"]
-visible = false
-layout_mode = 0
-offset_left = 406.0
-offset_top = 4.0
-offset_right = 464.0
-offset_bottom = 62.0
-icon = ExtResource("20_4fn85")
-expand_icon = true
-
 [connection signal="pressed" from="Inventory" to="." method="_on_inventory_pressed"]
 [connection signal="pressed" from="ResetButton" to="." method="_on_button_pressed"]
+[connection signal="pressed" from="infopanel/Panel/TransitionLayer/GlobeButton" to="infopanel/Panel/RotateGlobe" method="_on_globe_button_pressed"]
+[connection signal="pressed" from="infopanel/Panel/Play" to="." method="_on_play_pressed"]
+[connection signal="pressed" from="infopanel/Panel/Play3" to="." method="_on_play_pressed"]
+[connection signal="pressed" from="infopanel/Panel/Play2" to="." method="_on_play_pressed"]
+[connection signal="pressed" from="infopanel/Panel/Play4" to="." method="_on_play_pressed"]
+[connection signal="pressed" from="infopanel/Panel/Items" to="." method="_on_items_pressed"]
+[connection signal="pressed" from="infopanel/Panel/Items2" to="." method="_on_items_pressed"]
 [connection signal="pressed" from="infopanel/Cest/CestButton" to="." method="_on_cest_button_pressed"]
 [connection signal="pressed" from="infopanel/Crafting" to="." method="_on_rare_items_pressed"]
-[connection signal="pressed" from="Panel/Play" to="." method="_on_play_pressed"]
-[connection signal="pressed" from="Panel/Play3" to="." method="_on_play_pressed"]
-[connection signal="pressed" from="Panel/Play2" to="." method="_on_play_pressed"]
-[connection signal="pressed" from="Panel/Play4" to="." method="_on_play_pressed"]
-[connection signal="pressed" from="Panel/Items" to="." method="_on_items_pressed"]
-[connection signal="pressed" from="Panel/Items2" to="." method="_on_items_pressed"]

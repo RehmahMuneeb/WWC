@@ -124,7 +124,7 @@ expand_mode = 1
 stretch_mode = 5
 
 [node name="LockOverlay" type="TextureRect" parent="Panel/ItemHolder/Item9"]
-self_modulate = Color(0, 0, 0, 1)
+self_modulate = Color(0.344076, 0.344076, 0.344076, 1)
 custom_minimum_size = Vector2(180, 180)
 layout_mode = 1
 offset_right = 180.0
@@ -146,11 +146,12 @@ stretch_mode = 5
 
 [node name="Label" type="Label" parent="Panel/ItemHolder/Item9/LockOverlay"]
 visible = false
+z_index = 1
 layout_mode = 0
-offset_left = 23.0
-offset_top = 89.0
-offset_right = 162.0
-offset_bottom = 131.0
+offset_left = 187.0
+offset_top = 112.0
+offset_right = 336.0
+offset_bottom = 154.0
 theme_override_colors/font_color = Color(0.980392, 0.870588, 0, 1)
 theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
 theme_override_constants/outline_size = 13
@@ -185,7 +186,7 @@ expand_mode = 1
 stretch_mode = 5
 
 [node name="LockOverlay" type="TextureRect" parent="Panel/ItemHolder/Item2"]
-self_modulate = Color(0, 0, 0, 1)
+self_modulate = Color(0.129412, 0.129412, 0.129412, 0.847059)
 custom_minimum_size = Vector2(180, 180)
 layout_mode = 1
 anchors_preset = 5
@@ -237,7 +238,7 @@ expand_mode = 1
 stretch_mode = 5
 
 [node name="LockOverlay" type="TextureRect" parent="Panel/ItemHolder/Item3"]
-self_modulate = Color(0, 0, 0, 1)
+self_modulate = Color(0.129412, 0.129412, 0.129412, 0.843137)
 custom_minimum_size = Vector2(190, 190)
 layout_mode = 1
 anchors_preset = 5
@@ -285,7 +286,7 @@ expand_mode = 1
 stretch_mode = 5
 
 [node name="LockOverlay" type="TextureRect" parent="Panel/ItemHolder/Item4"]
-self_modulate = Color(0, 0, 0, 1)
+self_modulate = Color(0.129412, 0.129412, 0.168627, 0.870588)
 custom_minimum_size = Vector2(180, 180)
 layout_mode = 0
 offset_right = 180.0
@@ -332,7 +333,7 @@ expand_mode = 1
 stretch_mode = 5
 
 [node name="LockOverlay" type="TextureRect" parent="Panel/ItemHolder/Item6"]
-self_modulate = Color(0, 0, 0, 1)
+self_modulate = Color(0.129412, 0.129412, 0.172549, 0.870588)
 custom_minimum_size = Vector2(180, 180)
 layout_mode = 1
 anchors_preset = 1
@@ -383,7 +384,7 @@ expand_mode = 1
 stretch_mode = 5
 
 [node name="LockOverlay" type="TextureRect" parent="Panel/ItemHolder/Item7"]
-self_modulate = Color(0, 0, 0, 1)
+self_modulate = Color(0.0728426, 0.0728427, 0.0728426, 0.870588)
 custom_minimum_size = Vector2(180, 180)
 layout_mode = 1
 anchors_preset = 4
@@ -442,7 +443,7 @@ expand_mode = 1
 stretch_mode = 5
 
 [node name="LockOverlay" type="TextureRect" parent="Panel/ItemHolder/Item8"]
-self_modulate = Color(0, 0, 0, 1)
+self_modulate = Color(0.129412, 0.129412, 0.0862745, 0.870588)
 custom_minimum_size = Vector2(180, 180)
 layout_mode = 0
 offset_right = 180.0
@@ -485,7 +486,7 @@ expand_mode = 1
 stretch_mode = 5
 
 [node name="LockOverlay" type="TextureRect" parent="Panel/ItemHolder/Item5"]
-self_modulate = Color(0, 0, 0, 1)
+self_modulate = Color(0.129412, 0.129412, 0, 0.870588)
 custom_minimum_size = Vector2(190, 190)
 layout_mode = 0
 offset_right = 190.0
@@ -528,7 +529,7 @@ expand_mode = 1
 stretch_mode = 5
 
 [node name="LockOverlay" type="TextureRect" parent="Panel/ItemHolder/Item1"]
-self_modulate = Color(0, 0, 0, 1)
+self_modulate = Color(0.129412, 0.129412, 0.129412, 0.847059)
 custom_minimum_size = Vector2(200, 200)
 layout_mode = 0
 offset_right = 200.0
@@ -637,6 +638,18 @@ layout_mode = 0
 offset_right = 77.0
 offset_bottom = 38.0
 text = "Book"
+
+[node name="TransitionLayer" type="CanvasLayer" parent="."]
+
+[node name="FadeRect" type="ColorRect" parent="TransitionLayer"]
+visible = false
+modulate = Color(1, 1, 1, 0)
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
 
 [connection signal="pressed" from="TextureButton" to="." method="_on_texture_button_pressed"]
 [connection signal="pressed" from="BookButton" to="." method="_on_book_button_pressed"]

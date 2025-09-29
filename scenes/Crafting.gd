@@ -1,5 +1,5 @@
 extends Control
-
+@onready var fade_rect = $TransitionLayer/FadeRect
 @onready var item_holder = $Panel/ItemHolder
 @onready var item_zoom_panel = $ZoomedItemPanel
 @onready var item_name_label = $ZoomedItemPanel/Label2
@@ -19,6 +19,11 @@ const SWIPE_THRESHOLD := 100  # Minimum swipe distance in pixels
 const SWIPE_BACK_SCENE := "res://scenes/main.tscn"  # Path to your main menu scene
 
 func _ready():
+	var color = fade_rect.modulate
+	color.a = 0.0  # start transparent
+	fade_rect.modulate = color
+	var tween = create_tween()
+	tween.tween_property(fade_rect, "modulate:a", 0.0, 0.25)
 	
 	setup_ui()
 	initialize_items()
