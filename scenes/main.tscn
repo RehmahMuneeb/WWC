@@ -1,4 +1,4 @@
-[gd_scene load_steps=27 format=3 uid="uid://b1bt4udrrmx0d"]
+[gd_scene load_steps=45 format=3 uid="uid://b1bt4udrrmx0d"]
 
 [ext_resource type="Script" path="res://scripts/main.gd" id="1_fsboc"]
 [ext_resource type="Texture2D" uid="uid://bhrf3ksx88g41" path="res://Full-bucket1.png" id="2_dfu7b"]
@@ -12,6 +12,15 @@
 [ext_resource type="Texture2D" uid="uid://bowefh18pd15" path="res://Book.png" id="11_dt0en"]
 [ext_resource type="Script" path="res://scenes/label_2.gd" id="11_n181m"]
 [ext_resource type="Script" path="res://scenes/texturetweenscript.gd" id="11_nrto1"]
+[ext_resource type="Texture2D" uid="uid://dyi3ffk51o02r" path="res://Gemini_Generated_Image_7qwb7w7qwb7w7qwb-removebg-preview.png" id="13_hiv6t"]
+[ext_resource type="Texture2D" uid="uid://dh613wkynhpyi" path="res://scenes/Card Back of Hearthstone.jpeg" id="14_3quj4"]
+[ext_resource type="Texture2D" uid="uid://b5cptwyulm8dl" path="res://scenes/sss.png" id="15_as63b"]
+[ext_resource type="Texture2D" uid="uid://cbjv1p37myelk" path="res://scenes/gem (12).png" id="15_rdi6x"]
+[ext_resource type="Texture2D" uid="uid://dknry0kfqef41" path="res://scenes/ssss.png" id="16_ljj2i"]
+[ext_resource type="Texture2D" uid="uid://1yuowowgaxj2" path="res://scenes/sssss.png" id="17_0x5mj"]
+[ext_resource type="Texture2D" uid="uid://cq47a60mhuhap" path="res://scenes/Comic_cartoon_buttons_set.png" id="18_1ptjo"]
+[ext_resource type="Texture2D" uid="uid://bo3lhm3w8uo44" path="res://scenes/shop.png" id="19_h20ks"]
+[ext_resource type="Texture2D" uid="uid://b4fcw78tyvrox" path="res://scenes/a11.png" id="20_4fn85"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_3170s"]
 
@@ -121,6 +130,114 @@ corner_radius_top_right = 22
 corner_radius_bottom_right = 22
 corner_radius_bottom_left = 22
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_3ju3y"]
+bg_color = Color(0.0745098, 0.698039, 0.580392, 1)
+border_width_left = 14
+border_width_top = 14
+border_width_right = 14
+border_width_bottom = 14
+border_color = Color(1, 1, 1, 1)
+border_blend = true
+corner_radius_top_left = 444
+corner_radius_top_right = 444
+corner_radius_bottom_right = 444
+corner_radius_bottom_left = 444
+shadow_color = Color(0.890196, 1, 0.588235, 0.666667)
+shadow_size = 22
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_5mdpg"]
+bg_color = Color(0.0733297, 0.697378, 0.578867, 1)
+border_width_left = 8
+border_width_top = 8
+border_width_right = 8
+border_width_bottom = 8
+border_color = Color(1, 1, 1, 1)
+border_blend = true
+corner_radius_top_left = 16
+corner_radius_top_right = 16
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+shadow_color = Color(0.32549, 0.776471, 0, 0.6)
+shadow_size = 11
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_18p25"]
+blend_mode = 4
+
+[sub_resource type="GDScript" id="GDScript_58pv2"]
+script/source = "extends Sprite2D
+
+@export var rotation_speed: float = 1.0   # adjust speed
+
+func _process(delta):
+	rotation += rotation_speed * delta
+"
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_144jb"]
+bg_color = Color(0.352941, 0.588235, 1, 1)
+border_width_left = 1
+border_width_right = 6
+border_width_bottom = 6
+border_color = Color(2.27177e-05, 0.388855, 0.971656, 1)
+corner_radius_top_left = 11
+corner_radius_top_right = 11
+corner_radius_bottom_right = 11
+corner_radius_bottom_left = 11
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_2t4xe"]
+bg_color = Color(1, 0.807843, 0.2, 1)
+border_width_left = 1
+border_width_right = 4
+border_width_bottom = 6
+border_color = Color(0.420694, 0.327963, 2.88785e-07, 1)
+corner_radius_top_left = 10
+corner_radius_top_right = 8
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 8
+shadow_color = Color(0.941176, 0.807843, 0, 0.6)
+shadow_size = 5
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_c3if0"]
+bg_color = Color(0.0745098, 0.65098, 0.835294, 1)
+border_width_left = 8
+border_width_top = 24
+border_width_right = 24
+border_width_bottom = 10
+border_color = Color(1, 1, 1, 1)
+border_blend = true
+corner_radius_top_left = 44
+corner_radius_top_right = 133
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 8
+shadow_color = Color(0, 0, 0, 0.870588)
+shadow_size = 6
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_r7w80"]
+bg_color = Color(0.0745098, 0.65098, 0.835294, 1)
+border_width_left = 24
+border_width_top = 24
+border_width_right = 8
+border_width_bottom = 10
+border_color = Color(1, 1, 1, 1)
+border_blend = true
+corner_radius_top_left = 133
+corner_radius_top_right = 44
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 8
+shadow_color = Color(0, 0, 0, 0.870588)
+shadow_size = 6
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_speqc"]
+bg_color = Color(0.92549, 0.231373, 0.0431373, 1)
+border_width_right = 4
+border_width_bottom = 6
+border_color = Color(0.484182, 0.0994883, 0.00667944, 1)
+corner_radius_top_left = 12
+corner_radius_top_right = 8
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 8
+shadow_color = Color(1, 0.434811, 0.366139, 0.6)
+shadow_size = 5
+
 [node name="HomeScreen" type="Control"]
 layout_mode = 3
 anchors_preset = 15
@@ -180,10 +297,10 @@ text = "COINS"
 
 [node name="TextureRect" type="TextureRect" parent="."]
 layout_mode = 0
-offset_left = -17.0
-offset_top = 138.0
-offset_right = 504.0
-offset_bottom = 822.0
+offset_left = -82.0
+offset_top = 149.0
+offset_right = 575.0
+offset_bottom = 1011.0
 texture = ExtResource("4_hxdqg")
 expand_mode = 1
 stretch_mode = 5
@@ -191,27 +308,9 @@ stretch_mode = 5
 [node name="Withoutrope3" type="Sprite2D" parent="."]
 y_sort_enabled = true
 material = SubResource("ShaderMaterial_if5ee")
-position = Vector2(247, 507)
-scale = Vector2(0.101715, 0.102922)
+position = Vector2(253.98, 617.039)
+scale = Vector2(0.12117, 0.122608)
 texture = ExtResource("6_1nad6")
-
-[node name="Items" type="Button" parent="."]
-visible = false
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = 31.0
-offset_top = -296.0
-offset_right = 241.0
-offset_bottom = -242.0
-grow_horizontal = 2
-grow_vertical = 2
-theme_override_font_sizes/font_size = 44
-text = "ITEMS
-"
 
 [node name="Inventory" type="Button" parent="."]
 visible = false
@@ -229,23 +328,6 @@ grow_horizontal = 2
 grow_vertical = 2
 theme_override_font_sizes/font_size = 44
 text = "BUY/ SELL"
-
-[node name="Play" type="Button" parent="."]
-visible = false
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -139.0
-offset_top = -242.0
-offset_right = 153.0
-offset_bottom = -187.0
-grow_horizontal = 2
-grow_vertical = 2
-theme_override_font_sizes/font_size = 44
-text = "PLAY"
 
 [node name="Label" type="Label" parent="."]
 layout_mode = 0
@@ -284,6 +366,46 @@ theme_override_fonts/font = ExtResource("3_nak5y")
 theme_override_font_sizes/font_size = 66
 text = "GEM"
 
+[node name="Label4" type="Label" parent="."]
+visible = false
+layout_mode = 0
+offset_left = 13.0
+offset_top = 109.0
+offset_right = 465.0
+offset_bottom = 203.0
+theme_override_colors/font_color = Color(0.0823529, 0.686275, 0.196078, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_colors/font_outline_color = Color(1, 1, 1, 1)
+theme_override_constants/line_spacing = 0
+theme_override_constants/shadow_offset_x = 4
+theme_override_constants/shadow_offset_y = 6
+theme_override_constants/outline_size = 18
+theme_override_constants/shadow_outline_size = 13
+theme_override_fonts/font = ExtResource("3_nak5y")
+theme_override_font_sizes/font_size = 47
+theme_override_styles/normal = SubResource("StyleBoxFlat_1gj7p")
+text = " PIRATE WORLD"
+vertical_alignment = 1
+
+[node name="Label5" type="Label" parent="."]
+visible = false
+layout_mode = 0
+offset_left = 35.0
+offset_top = 131.0
+offset_right = 507.0
+offset_bottom = 216.0
+theme_override_colors/font_color = Color(0.92549, 0.231373, 0.0431373, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_colors/font_outline_color = Color(1, 1, 1, 1)
+theme_override_constants/line_spacing = 0
+theme_override_constants/shadow_offset_x = 4
+theme_override_constants/shadow_offset_y = 6
+theme_override_constants/outline_size = 18
+theme_override_constants/shadow_outline_size = 13
+theme_override_fonts/font = ExtResource("3_nak5y")
+theme_override_font_sizes/font_size = 47
+text = "PIRATE"
+
 [node name="ResetButton" type="Button" parent="."]
 visible = false
 layout_mode = 0
@@ -298,9 +420,9 @@ anchors_preset = 5
 anchor_left = 0.5
 anchor_right = 0.5
 offset_left = -154.0
-offset_top = 168.0
+offset_top = 181.0
 offset_right = 162.0
-offset_bottom = 251.0
+offset_bottom = 264.0
 grow_horizontal = 2
 theme_override_colors/font_color = Color(0.980392, 0.839216, 0.294118, 1)
 theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
@@ -315,6 +437,7 @@ text = "TAP ANYWHERE
 script = ExtResource("11_n181m")
 
 [node name="infopanel" type="Panel" parent="."]
+visible = false
 layout_mode = 2
 offset_left = 2.0
 offset_top = 634.0
@@ -492,9 +615,229 @@ offset_top = 212.0
 offset_right = 455.0
 offset_bottom = 277.0
 
-[connection signal="pressed" from="Items" to="." method="_on_items_pressed"]
+[node name="WorldTourPanel" type="Panel" parent="."]
+layout_mode = 0
+offset_left = 126.0
+offset_top = 716.0
+offset_right = 349.0
+offset_bottom = 945.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_3ju3y")
+
+[node name="Label" type="Label" parent="WorldTourPanel"]
+visible = false
+layout_mode = 0
+offset_left = 105.0
+offset_top = 56.0
+offset_right = 247.0
+offset_bottom = 242.0
+theme_override_colors/font_color = Color(0.952681, 0, 0.0450909, 1)
+theme_override_colors/font_shadow_color = Color(1, 1, 1, 1)
+theme_override_colors/font_outline_color = Color(0, 0.803922, 0.380392, 1)
+theme_override_constants/line_spacing = 18
+theme_override_constants/outline_size = 44
+theme_override_constants/shadow_outline_size = 57
+theme_override_fonts/font = ExtResource("3_nak5y")
+theme_override_font_sizes/font_size = 24
+text = "PLAY
+SETTINGS
+SHOP 
+EXIT"
+horizontal_alignment = 1
+
+[node name="Sprite2D" type="Sprite2D" parent="WorldTourPanel"]
+visible = false
+position = Vector2(362, 137)
+scale = Vector2(0.514606, 0.514606)
+texture = ExtResource("14_3quj4")
+flip_h = true
+
+[node name="Panel" type="Panel" parent="."]
+layout_mode = 0
+offset_left = 2.0
+offset_top = 789.0
+offset_right = 479.0
+offset_bottom = 855.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_5mdpg")
+
+[node name="RotateGlobe" type="Sprite2D" parent="Panel"]
+z_index = 1
+material = SubResource("CanvasItemMaterial_18p25")
+position = Vector2(235, 25)
+scale = Vector2(0.534, 0.534)
+texture = ExtResource("13_hiv6t")
+script = SubResource("GDScript_58pv2")
+
+[node name="Play" type="Button" parent="Panel"]
+visible = false
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.687
+anchor_right = 0.687
+offset_left = -173.699
+offset_top = -54.0
+offset_right = 1.30099
+offset_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 44
+theme_override_styles/normal = SubResource("StyleBoxFlat_144jb")
+text = "PLAY"
+
+[node name="Play3" type="Button" parent="Panel"]
+visible = false
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.687
+anchor_right = 0.687
+offset_left = -182.699
+offset_top = 8.0
+offset_right = -0.699005
+offset_bottom = 59.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 33
+theme_override_styles/normal = SubResource("StyleBoxFlat_2t4xe")
+text = "CRAFTS"
+
+[node name="Play2" type="Button" parent="Panel"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.687
+anchor_right = 0.687
+offset_left = -327.699
+offset_top = -71.0
+offset_right = -176.699
+offset_bottom = 62.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(1, 0.827451, 0, 1)
+theme_override_font_sizes/font_size = 33
+theme_override_styles/normal = SubResource("StyleBoxFlat_c3if0")
+text = "GEMS"
+icon = ExtResource("15_rdi6x")
+icon_alignment = 1
+vertical_icon_alignment = 0
+expand_icon = true
+
+[node name="Play4" type="Button" parent="Panel"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.687
+anchor_right = 0.687
+offset_left = -1.69897
+offset_top = -67.0
+offset_right = 149.301
+offset_bottom = 66.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(1, 0.827451, 0, 1)
+theme_override_font_sizes/font_size = 33
+theme_override_styles/normal = SubResource("StyleBoxFlat_r7w80")
+text = "SHOP"
+icon = ExtResource("19_h20ks")
+icon_alignment = 1
+vertical_icon_alignment = 0
+expand_icon = true
+
+[node name="Items" type="Button" parent="Panel"]
+visible = false
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -245.5
+offset_top = -138.0
+offset_right = -82.5
+offset_bottom = -84.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 33
+text = "CRAFTS"
+
+[node name="Items2" type="Button" parent="Panel"]
+visible = false
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = 104.5
+offset_top = -27.0
+offset_right = 237.5
+offset_bottom = 27.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 33
+theme_override_styles/normal = SubResource("StyleBoxFlat_speqc")
+
+[node name="Button" type="Button" parent="Panel"]
+visible = false
+layout_mode = 0
+offset_top = 4.0
+offset_right = 61.0
+offset_bottom = 65.0
+icon = ExtResource("15_as63b")
+expand_icon = true
+
+[node name="Button2" type="Button" parent="Panel"]
+visible = false
+layout_mode = 0
+offset_left = 118.0
+offset_top = -110.0
+offset_right = 184.0
+offset_bottom = -44.0
+icon = ExtResource("16_ljj2i")
+expand_icon = true
+
+[node name="Button3" type="Button" parent="Panel"]
+visible = false
+layout_mode = 0
+offset_left = 512.0
+offset_top = 9.0
+offset_right = 600.0
+offset_bottom = 97.0
+icon = ExtResource("17_0x5mj")
+
+[node name="Button4" type="Button" parent="Panel"]
+visible = false
+layout_mode = 0
+offset_left = 59.0
+offset_top = 2.0
+offset_right = 122.0
+offset_bottom = 65.0
+icon = ExtResource("18_1ptjo")
+expand_icon = true
+
+[node name="Button5" type="Button" parent="Panel"]
+visible = false
+layout_mode = 0
+offset_left = 343.0
+offset_top = 3.0
+offset_right = 402.0
+offset_bottom = 62.0
+icon = ExtResource("19_h20ks")
+expand_icon = true
+
+[node name="Button6" type="Button" parent="Panel"]
+visible = false
+layout_mode = 0
+offset_left = 406.0
+offset_top = 4.0
+offset_right = 464.0
+offset_bottom = 62.0
+icon = ExtResource("20_4fn85")
+expand_icon = true
+
 [connection signal="pressed" from="Inventory" to="." method="_on_inventory_pressed"]
-[connection signal="pressed" from="Play" to="." method="_on_play_pressed"]
 [connection signal="pressed" from="ResetButton" to="." method="_on_button_pressed"]
 [connection signal="pressed" from="infopanel/Cest/CestButton" to="." method="_on_cest_button_pressed"]
 [connection signal="pressed" from="infopanel/Crafting" to="." method="_on_rare_items_pressed"]
+[connection signal="pressed" from="Panel/Play" to="." method="_on_play_pressed"]
+[connection signal="pressed" from="Panel/Play3" to="." method="_on_play_pressed"]
+[connection signal="pressed" from="Panel/Play2" to="." method="_on_play_pressed"]
+[connection signal="pressed" from="Panel/Play4" to="." method="_on_play_pressed"]
+[connection signal="pressed" from="Panel/Items" to="." method="_on_items_pressed"]
+[connection signal="pressed" from="Panel/Items2" to="." method="_on_items_pressed"]
